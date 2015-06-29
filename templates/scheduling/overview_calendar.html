@@ -1,0 +1,84 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block head %}
+<script>
+$(document).ready(function() {
+    $('#calendar').fullCalendar({
+        events:  "{% url 'apps.scheduling.perspectives.calendar_fetch' %}",
+        allDayDefault: false,
+        firstDay: 1,
+        weekNumbers: true,
+        weekMode: 'liquid',
+        aspectRatio: 1.6,
+        header: {
+            left: 'today prev,next',
+            center: 'title',
+            right: 'month,agendaWeek'
+        },
+        defaultView: 'agendaWeek',
+        loading: function(bool) {
+            if(bool) $('#loading').show();
+            else     $('#loading').hide();
+        },
+        eventRender: function(event, element) {
+            html  = "<b>Locatie:</b> " + event.location;
+            html += "<br><b>Organisatie:</b> " + event.organizers;
+            html += "<br><b>Tappers:</b> " + event.tenders;
+            if(event.canEdit) { html += "<br><a href=\"" + event.editUrl  + "\">bewerken</a>"; }
+
+            element.qtip({
+                style: { classes: 'qtip-bootstrap' },
+                position: { target: 'mouse', adjust: { mouse: false } },
+                show: 'mousedown',
+                content: {
+                    title: event.title,
+                    text: html
+                }
+            });
+        },
+
+        // week agenda view
+        minTime: 10,
+        slotMinutes: 30,
+        allDaySlot: false,
+
+        // i18n
+        timeFormat: 'HH:mm{ - HH:mm}',
+        columnFormat: {
+            week: 'ddd d/M',
+        },
+        titleFormat: {
+            week: "d MMM yyyy{ '&#8212;' d MMM yyyy}"
+        },
+        buttonText: {
+            today: 'vandaag',
+            month: 'maand',
+            week: 'week'
+        },
+        monthNames: ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
+        monthNamesShort: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'],
+        dayNames: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
+        dayNamesShort: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
+        weekNumberTitle: 'Week ',
+        axisFormat: 'H:mm',
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {% trans 'Planning' %}
+        <small id="loading" style="display: none">{% trans 'Loading...' %}</small>
+        {% if is_planner %}<a href="{% url 'apps.scheduling.views.event_add' %}" class="btn btn-primary pull-right">{% trans 'Add event' %}</a>{% endif %}
+    </h1>
+</div>
+<div id="calendar"></div>
+{% endblock %}
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },

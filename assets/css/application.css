@@ -1,0 +1,145 @@
+.logo-head {
+	height: 150px;
+	width: 100%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+	display: inline-block;
+}
+@media (max-width: 767px) {
+    /* Small logo on small screens */
+    .logo-head {
+        height: 75px;
+    }
+}
+
+.logo-head.logo-alexia {
+    background-image: url('/static/img/logo/alexia.svg');
+}
+
+hr.fix {
+	width: 100%;
+	clear: both;
+	background-color: transparent;
+	border: none;
+}
+
+.login-form { text-align: center; }
+
+label.control-label { font-weight: bold; }
+
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+.bartender_availability {
+    margin: 0;
+    height: 30px;
+    font-size: 12px;
+    width: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.input-static {
+    padding-top: 5px;
+}
+
+.table tbody > tr.tr-muted > td,
+.table tbody > tr.tr-muted > th {
+  background-color: #ebebeb;
+  font-style: italic;
+}
+
+.table-events {
+  font-size: 13px;
+}
+
+#feedback {
+  display: block;
+  position: fixed;
+  left: -7px;
+  top: 50%;
+  opacity: .5;
+  z-index: 1337;
+  margin-top: -42px;
+}
+
+#feedback img {
+  border: 0;
+}
+
+#feedback:hover {
+  opacity: 1;
+  left: 0;
+}
+
+[class^="icon-alexia"] {
+  /* Copied from Boodstrap 2.3.2
+     https://github.com/twbs/bootstrap/blob/v2.3.2/less/sprites.less line 19-28 */
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+  /* End copy */
+  background-position: 0 0;
+}
+
+.icon-alexia-ok {
+  background-image: url('/static/img/icon/alexia-ok.png');
+}
+
+.icon-alexia-notok {
+  background-image: url('/static/img/icon/alexia-notok.png');
+}
+
+.icon-alexia-pdf {
+  background-image: url('/static/img/icon/alexia-pdf.png');
+}
+
+.icon-alexia-attention {
+  background-image: url('/static/img/icon/alexia-attention.png');
+}
+
+@media print {
+  a[href]:after {
+    content: none;
+  }
+
+  .icon-alexia-ok:after {
+    content: "Ja";
+  }
+
+  #feedback {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  #feedback {
+    display: none;
+  }
+}
+
+span.inter-actief { color: blue }
+span.abacus       { color: #e5b700 }
+span.scintilla    { color: red }
+span.proto        { color: green }
+span.sirius       { color: green }
+span.stress       { color: orange  }
+
+@media (min-width: 768px) {
+    /* Force minimum size for login form in navbar when navbar is not collapsed */
+    #alexia-navbar-login {
+        min-width: 250px;
+    }
+}
+

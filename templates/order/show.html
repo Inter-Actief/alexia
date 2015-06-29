@@ -1,0 +1,97 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Orders' %}: {{ event }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% trans 'Orders' %}: {{ event }}</h2>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h3>{% trans 'Event' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>{% trans 'Name' %}</th>
+                <td>{{ event }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Date' %}</th>
+                <td>{{ event.starts_at|date:"l d F"  }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Organizer' %}</th>
+                <td>{{ event.organizer }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h3>{% trans 'Billing' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>{% trans '# Transactions' %}</th>
+                <td>{{ order_count }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Revenue' %}</th>
+                <td>&euro; {{ order_sum|floatformat:2 }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <h3>{% trans 'Sales' %}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{% trans 'Product' %}</th>
+                        <th>{% trans 'Revenue' %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for p in products %}
+                    <tr>
+                        <td>{{ p.amount }} &times;</td>
+                        <td>{{ p.product__name }}</td>
+                        <td>&euro; {{ p.price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h3>{% trans 'Orders' %}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'ID' %}</th>
+                        <th>{% trans 'Debtor' %}</th>
+                        <th>{% trans 'Amount' %}</th>
+                        <th>{% trans 'Timestamp' %}</th>
+                        <th>{% trans 'Synchronized' %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for o in orders %}
+                    <tr{% if o.amount < 0 %} class="tr-muted"{% endif %}>
+                        <td><a href="{% url 'apps.billing.views.payment_show' o.pk %}">{{ o.pk }}</a></td>
+                        <td>{{ o.authorization.user.get_full_name }}</td>
+                        <td>&euro; {{ o.amount|floatformat:2 }}</td>
+                        <td>{{ o.placed_at }}</td>
+                        <td>{% if o.synchronized %}<i class="icon-alexia-ok"></li>{% else %}<i class="icon-alexia-notok">{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

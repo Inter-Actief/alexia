@@ -1,0 +1,13 @@
+{% extends 'base_app.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}{% if object.pk %}{% blocktrans %}Edit price group {{ object }}{% endblocktrans %}{% else %}{% trans 'New price group' %}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% if object.pk %}{% blocktrans %}Edit price group {{ object }}{% endblocktrans %}{% else %}{% trans 'New price group' %}{% endif %}</h1>
+</div>
+
+{% crispy form %}
+
+{% endblock %}

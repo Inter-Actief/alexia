@@ -1,0 +1,1052 @@
+# Dutch translations for Alexia.
+# Copyright (C) 2011-2015
+# This file is distributed under the same license as the Alexia package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: alexia\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-29 17:42+0200\n"
+"PO-Revision-Date: 2015-05-09 13:33+0200\n"
+"Language-Team: WWW-commissie <www@inter-actief.net>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "organization"
+msgstr "organisatie"
+
+msgid "name"
+msgstr "naam"
+
+msgid "product groups"
+msgstr "productgroepen"
+
+msgid "price group"
+msgstr "prijscategorie"
+
+msgid "price groups"
+msgstr "prijscategoriën"
+
+msgid "product group"
+msgstr "productgroep"
+
+msgid "price"
+msgstr "prijs"
+
+msgid "{pricegroup}: {productgroup} for {price}"
+msgstr "{pricegroup}: {productgroup} voor {price}"
+
+msgid "Text color"
+msgstr "Tekstkleur"
+
+msgid "Text color for Juliana"
+msgstr "Tekstkleur voor Juliana"
+
+msgid "Enter a valid hexadecimal color"
+msgstr "Voer een geldige hexadecimale kleur in"
+
+msgid "Background color"
+msgstr "Achtergrondkleur"
+
+msgid "Background color for Juliana"
+msgstr "Achtergrondkleur voor Juliana"
+
+msgid "stock product"
+msgstr "voorraadproduct"
+
+msgid "position"
+msgstr "positie"
+
+msgid "event"
+msgstr "activiteit"
+
+msgid "identifier"
+msgstr "identifier"
+
+msgid "is active"
+msgstr "is actief"
+
+msgid "registered at"
+msgstr "geregistreerd op"
+
+msgid "user"
+msgstr "gebruiker"
+
+msgid "RFID card"
+msgstr "RFID-kaart"
+
+msgid "RFID cards"
+msgstr "RFID-kaarten"
+
+msgid "start date"
+msgstr "begindatum"
+
+msgid "end date"
+msgstr "einddatum"
+
+msgid "account"
+msgstr "bankrekening"
+
+msgid "authorization"
+msgstr "autorisatie"
+
+msgid "authorizations"
+msgstr "autorisaties"
+
+msgid "placed at"
+msgstr "geplaatst op"
+
+msgid "synchronized"
+msgstr "gesynchroniseerd"
+
+msgid "added by"
+msgstr "toegevoegd door"
+
+msgid "amount"
+msgstr "aantal"
+
+msgid "order"
+msgstr "transactie"
+
+msgid "orders"
+msgstr "transacties"
+
+msgid "product"
+msgstr "product"
+
+msgid "purchase"
+msgstr "aankoop"
+
+msgid "purchases"
+msgstr "aankopen"
+
+msgid "You are not a tender for this event"
+msgstr "Je bent geen tapper bij deze borrel!"
+
+msgid "This event is not open"
+msgstr "Deze borrel begint nog niet!"
+
+msgid "Availability"
+msgstr "Beschikbaarheid"
+
+msgid "RADIUS username"
+msgstr "RADIUS-gebruikersnaam"
+
+msgid "Student or employee account"
+msgstr "Student- of medewerkers-gebruikersnaam"
+
+msgid "Enter a valid RADIUS username"
+msgstr "Voer een geldige RADIUS-gebruikersnaam in"
+
+msgid "is public"
+msgstr "is openbaar"
+
+msgid "prevent conflicting events"
+msgstr "voorkom conflicterende activiteiten"
+
+msgid "location"
+msgstr "locatie"
+
+msgid "locations"
+msgstr "locaties"
+
+msgid "has IVA-certificate"
+msgstr "heeft IVA-certificaat"
+
+msgid "has BHV-certificate"
+msgstr "heeft BHV-diploma"
+
+msgid "certificate"
+msgstr "certificaat"
+
+msgid "current organization"
+msgstr "huidige organisatie"
+
+msgid "iCal identifier"
+msgstr "iCal identificatie"
+
+msgid "profile"
+msgstr "profiel"
+
+msgid "profiles"
+msgstr "profielen"
+
+msgid "slug"
+msgstr "slug"
+
+msgid "users"
+msgstr "gebruikers"
+
+msgid "organizations"
+msgstr "organisatie"
+
+msgid "comments"
+msgstr "commentaar"
+
+msgid "may tend on events"
+msgstr "mag op borrels tappen"
+
+msgid "may create and modify events"
+msgstr "mag borrels aanmaken en wijzigen"
+
+msgid "may create and modify users"
+msgstr "mag gebruikers aanmaken en wijzigen"
+
+msgid "membership"
+msgstr "lidmaatschap"
+
+msgid "memberships"
+msgstr "lidmaatschappen"
+
+#, python-format
+msgid "%(user)s of %(organization)s"
+msgstr "%(user)s van %(organization)s"
+
+msgid "uploaded at"
+msgstr "geüpload op"
+
+msgid "approved by"
+msgstr "goedgekeurd door"
+
+msgid "approved at"
+msgstr "goedgekeurd op"
+
+msgid "Participants"
+msgstr "Deelnemers"
+
+msgid "Location"
+msgstr "Locatie"
+
+msgid "The start time is earlier than the end time!"
+msgstr "De begintijd kan niet na de eindtijd zijn."
+
+#, python-format
+msgid "There is an event in %(location)s already!"
+msgstr "Er is al een activiteit in %(location)s!"
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "Locations"
+msgstr "Ruimtes"
+
+msgid "Organization"
+msgstr "Organisatie"
+
+msgid "From time"
+msgstr "Begintijd"
+
+msgid "Till time"
+msgstr "Eindtijd"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "subject"
+msgstr "onderwerp"
+
+msgid "template"
+msgstr "sjabloon"
+
+msgid "send at"
+msgstr "verzenden om"
+
+msgid "mail template"
+msgstr "mailsjabloon"
+
+msgid "mail templates"
+msgstr "mailsjabonen"
+
+msgid "Monday"
+msgstr "Maandag"
+
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+msgid "Wednesday"
+msgstr "Woensdag"
+
+msgid "Thursday"
+msgstr "Donderdag"
+
+msgid "Friday"
+msgstr "Vrijdag"
+
+msgid "Saturday"
+msgstr "Zaterdag"
+
+msgid "Sunday"
+msgstr "Zondag"
+
+msgid "start day"
+msgstr "begindag"
+
+msgid "start time"
+msgstr "begintijd"
+
+msgid "end day"
+msgstr "einddag"
+
+msgid "end time"
+msgstr "eindtijd"
+
+msgid "The start day can not be after the end day."
+msgstr "De begindag kan niet na de einddag zijn."
+
+msgid "The start time can not be after the end time."
+msgstr "De begintijd kan niet na de eindtijd zijn."
+
+msgid "standard reservation"
+msgstr "standaardreservering"
+
+msgid "standard reservations"
+msgstr "standaardreserveringen"
+
+msgid "organizer"
+msgstr "organisator"
+
+msgid "participants"
+msgstr "deelnemers"
+
+msgid "description"
+msgstr "omschrijving"
+
+msgid "starts at"
+msgstr "begin"
+
+msgid "ends at"
+msgstr "einde"
+
+msgid "enrolment closed"
+msgstr "inschrijving gesloten"
+
+msgid "bartenders"
+msgstr "tappers"
+
+msgid "pricegroup"
+msgstr "prijscategorie"
+
+msgid "number of kegs"
+msgstr "aantal fusten"
+
+msgid "option"
+msgstr "optie"
+
+msgid "Tender comments"
+msgstr "Tappersinstructie"
+
+msgid "events"
+msgstr "activiteiten"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Maybe"
+msgstr "Misschien"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "nature"
+msgstr "soort"
+
+msgid "availability type"
+msgstr "beschikbaarheidstype"
+
+msgid "availability types"
+msgstr "beschikbaarheidstypen"
+
+msgid "bartender"
+msgstr "tapper"
+
+msgid "availability"
+msgstr "beschikbaarheid"
+
+msgid "bartender availability"
+msgstr "tapperbeschikbaarheid"
+
+msgid "bartender availabilities"
+msgstr "tapperbeschikbaarheden"
+
+#, python-format
+msgid "Event consumption #%s"
+msgstr ""
+
+msgid "opened at"
+msgstr ""
+
+msgid "closed at"
+msgstr ""
+
+msgid "event consumption"
+msgstr ""
+
+msgid "event consumptions"
+msgstr ""
+
+msgid "ideal amount"
+msgstr ""
+
+msgid "stock products"
+msgstr ""
+
+msgid "consumption group"
+msgstr ""
+
+msgid "used at"
+msgstr ""
+
+msgid "tap"
+msgstr ""
+
+msgid "start weight"
+msgstr ""
+
+msgid "end weight"
+msgstr ""
+
+msgid "consumption"
+msgstr ""
+
+msgid "consumptions"
+msgstr ""
+
+msgid "date"
+msgstr ""
+
+msgid "is completed"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "stock count"
+msgstr ""
+
+msgid "stock counts"
+msgstr ""
+
+msgid "stock product amount"
+msgstr ""
+
+msgid "stock product amounts"
+msgstr ""
+
+msgid "Access denied"
+msgstr "Geen toegang"
+
+msgid "You don't have the rights to access this page."
+msgstr "Helaas beschik jij niet over de rechten om deze pagina op te vragen."
+
+msgid "Reason:"
+msgstr "Reden:"
+
+msgid "Not found"
+msgstr "Niet gevonden"
+
+msgid "The requested resource is not found."
+msgstr "Het opgevraagde bestand is niet gevonden."
+
+msgid "Home"
+msgstr "Home"
+
+#, python-format
+msgid ""
+"\n"
+"                    <a href=\"%(about_url)s\">Event management system "
+"Alexia</a>\n"
+"                    &mdash;\n"
+"                    &copy; 2011-2015 of\n"
+"                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
+"Inter-Actief</a> and\n"
+"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+"master/CONTRIBUTORS.md\">\n"
+"                        individual contributors\n"
+"                    </a>\n"
+"                    &mdash;\n"
+"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+"master/LICENSE.md\">\n"
+"                        BSD 3-clause License\n"
+"                    </a>\n"
+"                    "
+msgstr ""
+"\n"
+"                    <a href=\"%(about_url)s\">Borrelbeheersysteem Alexia</a> "
+"                    &mdash;\n"
+"                    &copy; 2011-2015 of\n"
+"                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
+"Inter-Actief</a> en\n"
+"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+"master/CONTRIBUTORS.md\">\n"
+"                        individuele bijdragers\n"
+"                    </a>\n"
+"                    &mdash;\n"
+"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+"master/LICENSE.md\">\n"
+"                        BSD 3-clauselicentie\n"
+"                    </a>\n"
+"                    "
+
+msgid "Planning"
+msgstr "Planning"
+
+msgid "List"
+msgstr "Lijst"
+
+msgid "Calendar"
+msgstr "Kalender"
+
+msgid "Personal schedule"
+msgstr "Tappersrooster"
+
+msgid "Users"
+msgstr "Gebruikers"
+
+msgid "Billing"
+msgstr "Financiën"
+
+msgid "Product groups"
+msgstr "Productgroepen"
+
+msgid "Products"
+msgstr "Producten"
+
+msgid "Price groups"
+msgstr "Prijscategoriën"
+
+msgid "Price matrix"
+msgstr "Prijsmatrix"
+
+msgid "Orders"
+msgstr "Transacties"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "No organization"
+msgstr "Geen organisatie"
+
+msgid "No organizations available"
+msgstr "Geen organisaties beschikbaar"
+
+msgid "My profile"
+msgstr "Mijn profiel"
+
+msgid "Log out"
+msgstr "Uitloggen"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "Permanent product"
+msgstr "Permanent product"
+
+msgid "Product information"
+msgstr "Productinformatie"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "Product group"
+msgstr "Productgroep"
+
+msgid "Stock product"
+msgstr "Voorraadproduct"
+
+msgid "Modify"
+msgstr "Wijzigen"
+
+msgid "Juliana settings"
+msgstr "Juliana-instellingen"
+
+msgid "Position"
+msgstr "Positie"
+
+msgid "Color example"
+msgstr "Kleurvoorbeeld"
+
+#, python-format
+msgid "Edit permanent product %(object)s"
+msgstr "Bewerk permanent product %(object)s"
+
+msgid "New permanent product"
+msgstr "Nieuw permanent product"
+
+#, python-format
+msgid "Permanent products of %(organization)s"
+msgstr "Permanente producten van %(organization)s"
+
+msgid "Add"
+msgstr "Toevoegen"
+
+msgid "Actions"
+msgstr "Acties"
+
+msgid "No permanent products defined."
+msgstr "Geen permanente producten gedefinieerd."
+
+msgid "Price group"
+msgstr "Prijscategorie"
+
+msgid "Prices"
+msgstr "Prijzen"
+
+msgid "Price"
+msgstr "Prijs"
+
+msgid "Delete"
+msgstr "Verwijderen"
+
+msgid "No prices defined."
+msgstr "Geen prijzen gedefinieerd."
+
+#, python-format
+msgid "Edit price group %(object)s"
+msgstr "Bewerk prijscategorie %(object)s"
+
+msgid "New price group"
+msgstr "Nieuwe prijscategorie"
+
+#, python-format
+msgid "Price groups of %(organization)s"
+msgstr "Prijscategoriën van %(organization)s"
+
+msgid "No price groups defined."
+msgstr "Geen prijscategoriën gedefinieerd."
+
+msgid "No products defined."
+msgstr "Geen producten gedefinieerd."
+
+#, python-format
+msgid "Edit product group %(object)s"
+msgstr "Bewerk productgroep %(object)s"
+
+msgid "New product group"
+msgstr "Nieuwe productgroep"
+
+#, python-format
+msgid "Product groups of %(organization)s"
+msgstr "Productgroepen van %(organization)s"
+
+msgid "No product groups defined."
+msgstr "Geen productgroepen gedefinieerd."
+
+#, python-format
+msgid "Delete selling price %(object)s"
+msgstr "Verwijder verkoopprijs %(object)s"
+
+#, python-format
+msgid "Are you sure you want to delete selling price %(object)s?"
+msgstr "Weet je zeker dat je de verkoopprijs %(object)s wil verwijderen?"
+
+msgid "Cancel"
+msgstr "Annuleren"
+
+#, python-format
+msgid "Edit selling price %(object)s"
+msgstr "Bewerk verkoopprijs %(object)s"
+
+msgid "New selling price"
+msgstr "Nieuwe verkoopprijs"
+
+msgid "Temporary product"
+msgstr "Tijdelijk product"
+
+msgid "Event"
+msgstr "Activiteit"
+
+#, python-format
+msgid "Edit temporary product %(object)s"
+msgstr "Bewerk tijdelijk product %(object)s"
+
+msgid "New temporary product"
+msgstr "Nieuw tijdelijk product"
+
+msgid "About"
+msgstr "Over"
+
+msgid "Developers"
+msgstr "Ontwikkelaars"
+
+msgid ""
+"\n"
+"            Alexia was developed for the drink basements under management of "
+"SBZ (Zilverling Drink Management Foundation). The\n"
+"            base of this application was developed during the design project "
+"course, part of the Computer Science Bachelor.\n"
+"            The following people contributed to this project:\n"
+"            "
+msgstr ""
+"\n"
+"            Alexia is ontwikkeld voor het beheer van de borrelruimtes van "
+"SBZ (Stichting Borrelbeheer Zilverling). De basis\n"
+"            van deze applicatie is gelegd tijdens het Ontwerpproject van de "
+"bachelor Technische Informatica. De volgende\n"
+"            mensen hebben daaraan bijgedragen:\n"
+"            "
+
+msgid "and"
+msgstr "en"
+
+msgid ""
+"\n"
+"            After the design project development of Alexia was continued by\n"
+"            "
+msgstr ""
+"\n"
+"            Na het Ontwerpproject is Alexia doorontwikkeld door\n"
+"            "
+
+msgid "Stats"
+msgstr "Statistieken"
+
+msgid "Drinks"
+msgstr "Borrels"
+
+msgid "Log in"
+msgstr "Inloggen"
+
+msgid "Log in with your student or employee account and password."
+msgstr "Log in met je student- of medewerkers-gebruikersnaam en wachtwoord."
+
+msgid "Registration"
+msgstr "Registratie"
+
+msgid ""
+"Your account details are not complete. Please fill in this form to continue."
+msgstr ""
+"Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te "
+"mogen."
+
+msgid "Create user"
+msgstr "Gebruiker aanmaken"
+
+#, python-format
+msgid ""
+"\n"
+"        Create user %(username)s\n"
+"        "
+msgstr ""
+"\n"
+"        Maak gebruiker %(username)s\n"
+"        "
+
+msgid "Delete user"
+msgstr "Gebruiker verwijderen"
+
+#, python-format
+msgid "Are you sure you want to delete user %(membership)s?"
+msgstr "Weet je zeker dat je de gebruiker %(membership)s wil verwijderen?"
+
+msgid "Modify user"
+msgstr "Gebruiker wijzigen"
+
+msgid "Add user"
+msgstr "Gebruiker toevoegen"
+
+#, python-format
+msgid "Users of %(organization)s"
+msgstr "Gebruikers van %(organization)s"
+
+#, python-format
+msgid "Tenders of %(organization)s"
+msgstr "Tappers van %(organization)s"
+
+msgid "Authorization"
+msgstr "Autorisatie"
+
+msgid "IVA"
+msgstr "IVA"
+
+msgid "Bartender"
+msgstr "Tapper"
+
+msgid "Planner"
+msgstr "Planner"
+
+msgid "Manager"
+msgstr "Manager"
+
+msgid "There are no users"
+msgstr "Er zijn geen gebruikers"
+
+msgid "Print IVA list"
+msgstr "IVA-lijst uitdraaien"
+
+msgid "Tended"
+msgstr "Getapt"
+
+msgid "Last tended"
+msgstr "Laatst getapt"
+
+msgid "Latest login"
+msgstr "Laatste login"
+
+msgid "Manual approved"
+msgstr "Handmatig ingesteld"
+
+msgid "Approved by"
+msgstr "Goedgekeurd door"
+
+msgid "Approve"
+msgstr "Goedkeuren"
+
+msgid "Decline"
+msgstr "Afkeuren"
+
+msgid "User details"
+msgstr "Gebruikersgegevens"
+
+msgid "Email address"
+msgstr "E-mailadres"
+
+msgid "Last tended events"
+msgstr "Laatst getapte activiteiten"
+
+msgid "Date"
+msgstr "Datum"
+
+#, python-format
+msgid "Transactions of %(organization)s"
+msgstr "Transacties van %(organization)s"
+
+msgid "Year"
+msgstr "Jaar"
+
+msgid "Revenue"
+msgstr "Omzet"
+
+msgid "Transactions"
+msgstr "Transacties"
+
+msgid "hasn't used Alexia Billing yet!"
+msgstr "heeft Alexia Financieel nog niet in gebruik!"
+
+msgid "Page"
+msgstr "Pagina"
+
+msgid "of"
+msgstr "van de"
+
+msgid "Organizer"
+msgstr "Organisator"
+
+msgid "# Transactions"
+msgstr "# Transacties"
+
+msgid "Sales"
+msgstr "Verkopen"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Debtor"
+msgstr "Debiteur"
+
+msgid "Amount"
+msgstr "Bedrag"
+
+msgid "Timestamp"
+msgstr "Tijdstempel"
+
+msgid "Synchronized"
+msgstr "Gesynchroniseerd"
+
+msgid "Month"
+msgstr "Maand"
+
+msgid "Payment"
+msgstr "Betaling"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Handled by"
+msgstr "Afgehandeld door"
+
+msgid "Items"
+msgstr "Specificatie"
+
+msgid "Empty payment!"
+msgstr "Lege transactie!"
+
+msgid "Modify profile"
+msgstr "Bewerk profiel"
+
+msgid "edit"
+msgstr "wijzigen"
+
+msgid "These are your last 5 payments."
+msgstr "Dit zijn jouw vijf laatste transacties."
+
+msgid "See all"
+msgstr "Bekijk alles"
+
+msgid "Time"
+msgstr "Tijd"
+
+msgid "There are no transactions."
+msgstr "Er zijn geen transacties."
+
+msgid "This is an overview of RFID cards linked to your account."
+msgstr ""
+"Dit is een overzicht van RFID-kaarten die aan jouw account gekoppeld zijn."
+
+msgid "ID number"
+msgstr "Identificatienr."
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Sinds"
+msgstr "Sinds"
+
+msgid "You don't have any registered RFID cards."
+msgstr "Jij hebt geen RFID-kaarten geregistreerd."
+
+msgid "Autorization"
+msgstr "Autorisatie"
+
+msgid ""
+"The following roles are assigned to you. Contact the organization in "
+"question for more details."
+msgstr ""
+"De volgende rollen zijn aan jou toegekend. Neem contact op met de "
+"betreffende vereniging voor meer details."
+
+msgid "Roles"
+msgstr "Rollen"
+
+msgid "You don't have any authorizations"
+msgstr "Je bent nergens voor geautoriseerd"
+
+msgid "iCal bartender agenda"
+msgstr "iCal tappersrooster"
+
+msgid "This is the location of your personal bartender iCal."
+msgstr "Dit is de locatie van jouw persoonlijk tappers-iCal."
+
+msgid "Generate new"
+msgstr "Genereer nieuwe"
+
+msgid "IVA certificate"
+msgstr "IVA certificaat"
+
+msgid "Manage certificate"
+msgstr "IVA-certificaat instellen"
+
+msgid "Uploaded"
+msgstr "Geüpload op"
+
+msgid "Approved"
+msgstr "Goedgekeurd op"
+
+msgid "Certificate"
+msgstr "Certificaat"
+
+msgid "view"
+msgstr "inzien"
+
+msgid "Manage IVA certificate"
+msgstr "IVA-certificaat instellen"
+
+msgid ""
+"<strong>Caution!</strong> You already have an approved IVA certificate. "
+"Uploading a new one will make the current one invalid!"
+msgstr ""
+"<strong>Pas op!</strong> Je hebt al een IVA-ceritficaat dat goedgekeurd is. "
+"Als je een nieuwe upload wordt de oude automatisch verwijderd!"
+
+msgid "My payments"
+msgstr "Mijn betalingen"
+
+msgid "There are no payments!"
+msgstr "Er zijn geen betalingen!"
+
+msgid "Edit bartender availability"
+msgstr "Bewerk tapperbeschikbaarheid"
+
+msgid "Delete event"
+msgstr "Activiteit verwijderen"
+
+#, python-format
+msgid "Are you sure you want to delete event \"%(event)s\"?"
+msgstr "Weet je zeker dat je activiteit \"%(event)s\" wil verwijderen?"
+
+msgid "Yes, I am sure"
+msgstr "Ik weet het heel, heel zeker"
+
+msgid "Edit event"
+msgstr "Activiteit bewerken"
+
+msgid "Add event"
+msgstr "Activiteit toevoegen"
+
+msgid "Start"
+msgstr "Begin"
+
+msgid "End"
+msgstr "Einde"
+
+msgid "Temporary products"
+msgstr "Tijdelijke producten"
+
+msgid "Temporary products can only be created or modified by managers."
+msgstr ""
+"Tijdelijke producten kunnen alleen aangemaakt of gewijzigd worden door "
+"managers."
+
+msgid "No temporary products defined."
+msgstr "Geen tijdelijke producten gedefinieerd."
+
+msgid "Bartenders"
+msgstr "Tappers"
+
+msgid "Unknown"
+msgstr "Onbekend"
+
+msgid "Filters"
+msgstr "Filters"
+
+msgid "Instructions"
+msgstr "Tappersinstructie"
+
+#, python-format
+msgid "No events have been planned from %(s)s until %(e)s."
+msgstr "Er zijn geen activiteiten gepland van %(s)s tot %(e)s."
+
+msgid "Loading..."
+msgstr "Laden..."
+
+msgid "Kegs"
+msgstr "Fusten"
+
+msgid "AJAX-request required"
+msgstr "AJAX-request verplicht"
+
+msgid "You are not a tender of the selected organization."
+msgstr "Je bent geen tapper bij de geselecteerde organisatie!"
+
+msgid "You are not a planner of the selected organization."
+msgstr "Je bent geen plannerbij de geselecteerde organisatie!"
+
+msgid "You are not a manager of the selected organization."
+msgstr "Je bent geen managerbij de geselecteerde organisatie!"
+
+msgid "You are not a foundation manager."
+msgstr "Je bent geen stichtingsmananger."
+
+msgid "Javascript must be enabled to reveal email address"
+msgstr "Javascript moet zijn ingeschakeld om dit e-mailadres te bekijken."

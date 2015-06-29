@@ -1,0 +1,28 @@
+{% extends 'base_app.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}{% trans 'Edit bartender availability' %}{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans 'Edit bartender availability' %}</h1>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-lg-2">{% trans 'Event' %}</label>
+            <div class="controls col-lg-8">
+                <p class="input-static"><a href="{% url 'apps.scheduling.views.event_show' event.pk %}">{{ event }}</a></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">{% trans 'Bartender' %}</label>
+            <div class="controls col-lg-8">
+                <p class="input-static">{{ user.get_full_name }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% crispy form %}
+{% endblock %}

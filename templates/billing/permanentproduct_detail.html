@@ -1,0 +1,62 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Permanent product' %}: {{ object }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Permanent product' %}: {{ object }}</h1>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h3>{% trans 'Product information' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>{% trans 'Name' %}</th>
+                <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Organization' %}</th>
+                <td>{{ object.organization }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Product group' %}</th>
+                <td><a href="{{ object.productgroup.get_absolute_url }}">{{ object.productgroup }}</a></td>
+            </tr>
+            <tr>
+                <th>{% trans 'Stock product' %}</th>
+                <td>{{ object.stockproduct|default_if_none:"&mdash;" }}</td>
+            </tr>
+        </table>
+        <p>
+            <a class="btn btn-default" href="{% url 'permanentproduct_update' object.pk %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                {% trans 'Modify' %}
+            </a>
+        </p>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h3>{% trans 'Juliana settings' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>{% trans 'Position' %}</th>
+                <td>{{ object.position }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Text color' %}</th>
+                <td>{{ object.text_color|default:"&mdash;" }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Background color' %}</th>
+                <td>{{ object.background_color|default:"&mdash;" }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Color example' %}</th>
+                <td {% if object.background_color %}style="background-color: #{{ object.background_color }};"{% endif %}>
+                    <span {% if object.text_color %}style="color: #{{ object.text_color }};"{% endif %}>{{ object.name }}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,180 @@
+body {
+  padding-top: 20px!important;
+}
+
+.tab-sale > div.well {
+	height:860px;
+	margin-bottom:0;
+	padding:10px;
+}
+
+.tab-sale .row {
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.tab-sale .row > div {
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.tab-sale .btn {
+	margin-bottom:10px;
+	height:100px;
+	white-space:normal;
+	line-height:90px;
+	padding:0;
+    font-size:20px;
+}
+
+.tab-sale .btn > span {
+	display:inline-block;
+	vertical-align:middle;
+	line-height:normal;
+}
+
+#keypad .row {
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#keypad .row > div {
+	padding-left:5px;
+	padding-right:5px;
+}
+
+#display {
+	font-size:2em;
+	padding-top:9px;
+	padding-bottom:8px;
+}
+
+.btn-keypad {
+  height: 108px;
+  line-height: 1.3em;
+  font-size: 5em;
+  margin-bottom: 10px;
+}
+
+.btn-specialpad {
+  height: 108px;
+  line-height: 3.3em;
+  font-size: 2em;
+}
+
+#display.flash {
+  background-color: #FCC;
+  color: #C00;
+}
+
+.receipt-container {
+	position:relative;
+}
+
+.receipt-container > h3 {
+	margin-top:0;
+}
+
+#receipt {
+	height: 804px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-bottom-left-radius:0;
+	border-bottom-right-radius:0;
+	padding:10px;
+    padding-top:0;
+    padding-bottom:80px;
+}
+
+#receipt-table, #log-table {
+	width: 100%;
+}
+
+#receipt-table td {
+	padding-bottom: 10px;
+	font-size:16px;
+    border-bottom:1px solid #CCC;
+    padding-top:10px;
+    position:relative;
+}
+
+#receipt-table td:last-child {
+    text-align:right;
+}
+
+#receipt-table a {
+    position:relative;
+}
+
+#receipt-table a.btn {
+    position:absolute;
+    vertical-align:middel;
+    border-radius:30px;
+}
+
+#receipt-table td span {
+    margin-left:45px;
+    display:block;
+    min-height:35px;
+}
+
+#receipt-total {
+	position:absolute;
+	bottom:0;
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+}
+
+#receipt-total span, #receipt-total input {
+	font-size:2.3em;
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+	height:80px;
+}
+
+#receipt-total input {
+    width:calc(100% - 29px);
+    text-align:right;
+}
+
+
+/*Payment/RFID screen*/
+#rfid-screen {
+    height:860px;
+    padding-top:130px;
+    padding-bottom:130px;
+}
+
+#payment-in {
+    font-size:28px;
+}
+
+#payment-countdown {
+    font-size:28px;
+    padding:10px 18px;
+    background:#888;
+    border-radius:40px;
+    color:#FFF;
+    font-weight:bold;
+}
+
+#payment-receipt {
+    font-size:20px;
+}
+
+#payment-receipt tr td:last-child, #payment-receipt tr td:nth-child(2) {
+    text-align:right;
+}
+
+#payment-buttons .btn {
+    font-size:28px;
+    padding:20px 32px;
+}
+
+/*Error screen*/
+#error-screen {
+}
+
+#current-error {
+    font-size:20px;
+}

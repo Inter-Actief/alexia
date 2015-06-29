@@ -1,0 +1,14 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Access denied' %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Access denied' %}</h1>
+</div>
+<p>{% trans "You don't have the rights to access this page." %}</p>
+{% if reason %}
+    <p>{% trans "Reason:" %} {{ reason }}</p>
+{% endif %}
+{% endblock %}

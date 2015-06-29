@@ -1,0 +1,5 @@
+{% for bartender in e.get_available_bartenders %}
+    <span title="{{ bartender.user.get_full_name }}"
+          {% if e.participants.count > 1 %}class="{% for o in bartender.user.organization_set.all %}{{ o.slug }}{% endfor %}"{% endif %}>
+        {{ bartender.user.first_name }}</span>{% if not forloop.last %}, {% endif %}
+{% endfor %}

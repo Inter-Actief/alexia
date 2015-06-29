@@ -1,0 +1,66 @@
+{% extends 'base_app.html' %}
+{% load i18n hide_email %}
+
+{% block title %}API documentation{% endblock %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-md-3 hidden-print hidden-xs hidden-sm">
+    <div class="list-group affix">
+        <a class="list-group-item" href="#introduction">Introduction</a>
+        {% for method in methods %}
+            <a class="list-group-item" href="#method_{{ method.name }}">{{ method.name }}</a>
+        {% endfor %}
+    </div>
+    </div>
+
+    <div class="col-xs-12 col-md-9">
+    <div class="page-header">
+        <h1 id="introduction">{% block headertitle %}API documentation{% endblock %}</h1>
+    </div>
+
+    {% block introduction %}{% endblock %}
+
+    <h2 id="methods">Methods</h2>
+    {% for method in methods %}
+        <h3 style="padding-top: 55px;" id="method_{{ method.name }}">{{method.name}}</h3>
+        <table class="table table-striped table-condensed table-bordered">
+            <tbody>
+            <tr>
+                <th>Signature</th>
+                <td>
+                    {{ method.name }}({% for param in method.params %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                </td>
+            </tr>
+            <tr>
+                <th>Arguments</th>
+                <td>
+                    {% if method.params %}
+                        {% for param in method.params %}
+                            {{param.name}} : <span class="type">{{param.type}}</span>
+                            {% if not forloop.last %}<br /> {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <em>None specified</em>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Return type</th>
+                <td><span class="type">{{ method.return.type }}</span></td>
+            </tr>
+            <tr>
+                <th>Idempotent</th>
+                <td>{{ method.idempotent|yesno:"yes,no" }}</td>
+            </tr>
+            <tr>
+                <th>Summary</th>
+                <td><pre>{{ method.summary }}</pre></td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}

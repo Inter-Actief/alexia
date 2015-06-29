@@ -1,0 +1,44 @@
+{% extends 'base_app.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}{% blocktrans %}Price matrix{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% blocktrans %}Price matrix{% endblocktrans %}</h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans 'Product group' %}</th>
+                <th style="text-align: right;">{% trans 'Price group' %}</th>
+                {% for pricegroup in pricegroups %}
+                    <th style="text-align: right"><a href="{{ pricegroup.get_absolute_url }}">{{ pricegroup }}</a></th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for productgroup, sellingprices in productgroups %}
+                <tr>
+                    <th colspan="2"><a href="{{ productgroup.get_absolute_url }}">{{ productgroup }}</a></th>
+                    {% for pricegroup, sellingprice in sellingprices %}
+                        <td style="text-align: right">
+                            {% if sellingprice %}
+                                <a href="{% url 'sellingprice_update' sellingprice.pk %}"
+                                        title="{{ sellingprice }}">
+                                    {{ sellingprice.price }}
+                                </a>
+                            {% else %}
+                                <a href="{% url 'sellingprice_create' pricegroup_pk=pricegroup.pk productgroup_pk=productgroup.pk %}">
+                                    &mdash;
+                                </a>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
