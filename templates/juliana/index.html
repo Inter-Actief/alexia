@@ -16,7 +16,7 @@
             event_id: {{ event.pk }},
             products: {
                 {% for product in products %}
-                    product{{ product.pk }}: {
+                    product{{ product.id }}: {
                         name: "{{ product.name|escapejs }}",
                         price: {{ product.price }}
                     },
@@ -95,7 +95,7 @@
                                 <div class="col-xs-4">
                                     <a href="#" class="btn btn-block btn-info command"
                                        {% if product.background_color %}style="background-color: #{{ product.background_color }}; border-color: #{{ product.background_color }};"{% endif %}
-                                       data-command="sales" data-product="product{{ product.pk }}">
+                                       data-command="sales" data-product="product{{ product.id }}">
                                         <span {% if product.text_color %}style="color: #{{ product.text_color }};"{% endif %}>{{ product.name }}</span>
                                     </a>
                                 </div>
