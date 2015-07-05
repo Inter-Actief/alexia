@@ -27,7 +27,7 @@ def login(request):
             auth_login(request, user)
 
             # Primaire organisatie instellen
-            if user.profile.current_organization:
+            if hasattr(user, 'profile') and user.profile.current_organization:
                 request.session['organization_pk'] = user.profile.current_organization.pk
 
             return redirect(redirect_to)
