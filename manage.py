@@ -3,7 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    sys.path.insert(0, "/data/applications/wwwers/packages/Django-1.7.8")
+    sys.path.insert(0, "/data/applications/wwwers/packages/Django-1.7.9")
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
