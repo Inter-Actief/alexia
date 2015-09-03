@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-29 17:42+0200\n"
-"PO-Revision-Date: 2015-05-09 13:33+0200\n"
+"POT-Creation-Date: 2015-09-03 15:49+0200\n"
+"PO-Revision-Date: 2015-09-03 15:49+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -245,6 +245,12 @@ msgstr "Eindtijd"
 msgid "Filter"
 msgstr "Filter"
 
+msgid "Enrollment open"
+msgstr "Inschrijving geopend"
+
+msgid "Weekly reminder"
+msgstr "Wekelijkse herinnering"
+
 msgid "subject"
 msgstr "onderwerp"
 
@@ -474,8 +480,8 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"                    <a href=\"%(about_url)s\">Borrelbeheersysteem Alexia</a> "
-"                    &mdash;\n"
+"                    <a href=\"%(about_url)s\">Borrelbeheersysteem Alexia</"
+"a>                     &mdash;\n"
 "                    &copy; 2011-2015 of\n"
 "                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
 "Inter-Actief</a> en\n"
@@ -501,6 +507,9 @@ msgstr "Kalender"
 
 msgid "Personal schedule"
 msgstr "Tappersrooster"
+
+msgid "Mail templates"
+msgstr "Mailsjabonen"
 
 msgid "Users"
 msgstr "Gebruikers"
@@ -1016,6 +1025,26 @@ msgstr "Tappers"
 
 msgid "Unknown"
 msgstr "Onbekend"
+
+msgid "Mail template"
+msgstr "Mailsjabloon"
+
+msgid "Subject"
+msgstr "Onderwerp"
+
+msgid "Is active"
+msgstr "Is actief"
+
+msgid "Template"
+msgstr "Sjabloon"
+
+#, python-format
+msgid "Edit mail template %(object)s"
+msgstr "Bewerk mailsjabloon %(object)s"
+
+#, python-format
+msgid "Mail templates of %(organization)s"
+msgstr "Mailsjablonen van %(organization)s"
 
 msgid "Filters"
 msgstr "Filters"

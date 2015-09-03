@@ -10,10 +10,12 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, \
     redirect
 from django.utils import timezone
+from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.edit import UpdateView
 
 from apps.organization.forms import BartenderAvailabilityForm
-from apps.scheduling.forms import EventForm, EditEventForm, \
-    MailTemplateForm, StandardReservationForm, FilterEventForm
+from apps.scheduling.forms import EventForm, EditEventForm, StandardReservationForm, FilterEventForm
 from apps.scheduling.models import Event, BartenderAvailability, \
     Availability, MailTemplate, StandardReservation
 from apps.organization.models import Membership, \
@@ -21,6 +23,8 @@ from apps.organization.models import Membership, \
 from utils import log
 from utils.calendar import generate_ical, IcalResponse
 from utils.auth.decorators import planner_required
+from utils.auth.mixins import ManagerRequiredMixin
+from utils.mixins import OrganizationFilterMixin, CrispyFormMixin
 
 
 # =========================================================================
@@ -253,43 +257,6 @@ def set_bartender_availability(request):
         return HttpResponse("NOTOK")
 
 
-# =========================================================================
-# Templates
-# =========================================================================
-
-
-def edit_mailtemplates(request):
-    organization = request.organization
-    if request.method == "POST":
-        form = MailTemplateForm(data=request.POST)
-        if form.is_valid():
-            mt = MailTemplate.objects.get(pk=form.cleaned_data['template_id'])
-            form = MailTemplateForm(instance=mt, data=request.POST)
-            mt = form.save(commit=False)
-            mt.organization = organization
-            mt.save()
-            return render(request, 'closepopup.html', {})
-
-    else:
-        resobject = MailTemplate.objects.get(
-            organization=organization, name='reservations')
-        enrobject = MailTemplate.objects.get(
-            organization=organization, name='enrollopen')
-        remobject = MailTemplate.objects.get(
-            organization=organization, name='reminder')
-        fusobject = MailTemplate.objects.get(
-            organization=organization, name='fustdiff')
-
-        reservations = MailTemplateForm(instance=resobject, template=resobject)
-        enrollopen = MailTemplateForm(instance=enrobject, template=enrobject)
-        reminder = MailTemplateForm(instance=remobject, template=remobject)
-        fustdiff = MailTemplateForm(instance=fusobject, template=fusobject)
-
-    return render(request, 'scheduling/mailtemplates.html',
-                  {'reservations': reservations, 'enrollopen': enrollopen,
-                   'reminder': reminder, 'fustdiff': fustdiff})
-
-
 def edit_standardreservations(request):
     StandardReservationFormset = modelformset_factory(
         StandardReservation, form=StandardReservationForm, can_delete=True)
@@ -322,3 +289,65 @@ def personal_ical(request, ical_id):
         events.append(ba.event)
     return IcalResponse(generate_ical(events,
                                       name='Tappersrooster %s' % profile.user.get_full_name(), tender=True))
+
+
+class MailTemplateListView(ManagerRequiredMixin, TemplateView):
+    """
+    List view to show all existing and possible mail templates for the current organization.
+    """
+
+    template_name = 'scheduling/mailtemplate_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MailTemplateListView, self).get_context_data(**kwargs)
+
+        organization = self.request.organization
+
+        # All possible mail template names
+        names = [name for name, description in MailTemplate.NAME_CHOICES]
+
+        # Load existing mail templates
+        mailtemplates = dict((mt.name, mt) for mt in MailTemplate.objects.filter(organization=organization))
+
+        # Add dummy mail templates for non-existing templates
+        for name in names:
+            if name not in mailtemplates:
+                mailtemplates[name] = MailTemplate(organization=organization, name=name)
+
+        context['object_list'] = mailtemplates.values()
+
+        return context
+
+
+class MailTemplateObjectMixin(SingleObjectMixin):
+    """
+    Mixin to get a mail template based on given name or create a new object for the current organization
+    with the given name.
+    """
+
+    def get_object(self, queryset=None):
+        # Use a custom queryset if provided
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        # Get name from url
+        name = self.kwargs['name']
+
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get(name=self.kwargs['name'])
+        except queryset.model.DoesNotExist:
+            # Create a new mail template with given name and current organization
+            obj = self.model(organization=self.request.organization, name=name)
+        return obj
+
+    model = MailTemplate
+
+
+class MailTemplateDetailView(MailTemplateObjectMixin, ManagerRequiredMixin, OrganizationFilterMixin, DetailView):
+    pass
+
+
+class MailTemplateUpdateView(MailTemplateObjectMixin, ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
+                             UpdateView):
+    fields = ['subject', 'template', 'is_active']

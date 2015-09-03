@@ -28,7 +28,7 @@ class EventAdmin(admin.ModelAdmin):
 class MailTemplateAdmin(admin.ModelAdmin):
     list_display = ('organization', 'name', 'subject', 'is_active')
     list_display_links = ('organization', 'name')
-    list_filter = ('organization', 'is_active')
+    list_filter = ('organization', 'name', 'is_active')
     search_fields = ('name', 'subject', 'template')
 
 

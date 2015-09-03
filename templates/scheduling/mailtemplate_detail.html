@@ -1,0 +1,42 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Mail template' %}: {{ object }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Mail template' %}: {{ object }}</h1>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <table class="table table-bordered">
+            <tr>
+                <th>{% trans 'Name' %}</th>
+                <td>{{ object.get_name_display }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Organization' %}</th>
+                <td>{{ object.organization }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Subject' %}</th>
+                <td>{{ object.subject }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Is active' %}</th>
+                <td>{{ object.is_active|yesno }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Template' %}</th>
+                <td><pre>{{ object.template }}</pre></td>
+            </tr>
+        </table>
+        <p>
+            <a class="btn btn-default" href="{% url 'mailtemplate_update' object.name %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                {% trans 'Modify' %}
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}

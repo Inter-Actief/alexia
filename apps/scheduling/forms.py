@@ -130,19 +130,6 @@ class EditEventForm(EventForm):
         return super(EventForm, self).save(*args, **kwargs)
 
 
-class MailTemplateForm(forms.ModelForm):
-    template_id = forms.IntegerField(widget=widgets.HiddenInput())
-
-    def __init__(self, template=None, *args, **kwargs):
-        super(MailTemplateForm, self).__init__(*args, **kwargs)
-        if template:
-            self.fields['template_id'].initial = template.pk
-
-    class Meta:
-        model = MailTemplate
-        exclude = ('name', 'organization',)
-
-
 class StandardReservationForm(forms.ModelForm):
     class Meta:
         model = StandardReservation

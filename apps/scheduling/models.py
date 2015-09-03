@@ -25,9 +25,15 @@ class MailTemplate(models.Model):
     send_at         -- How far before the event must the mail be send
                        (in minutes)?
     """
+
+    NAME_CHOICES = (
+        ('enrollopen', _('Enrollment open')),
+        ('reminder', _('Weekly reminder')),
+    )
+
     organization = models.ForeignKey('organization.Organization',
                                      verbose_name=_('organization'))
-    name = models.CharField(verbose_name=_('name'), max_length=32)
+    name = models.CharField(verbose_name=_('name'), max_length=32, choices=NAME_CHOICES)
     subject = models.CharField(verbose_name=_('subject'), max_length=255)
     template = models.TextField(verbose_name=_('template'))
     is_active = models.BooleanField(verbose_name=_('is active'), default=False)
@@ -35,7 +41,10 @@ class MailTemplate(models.Model):
                                           blank=True, null=True)
 
     def __unicode__(self):
-        return "%s, %s" % (self.organization, self.name)
+        return "%s, %s" % (self.organization, self.get_name_display())
+
+    def get_absolute_url(self):
+        return reverse('mailtemplate_detail', args=[self.name])
 
     class Meta:
         ordering = ('organization', 'name',)

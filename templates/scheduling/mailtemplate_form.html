@@ -1,0 +1,13 @@
+{% extends 'base_app.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}{% blocktrans %}Edit mail template {{ object }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% blocktrans %}Edit mail template {{ object }}{% endblocktrans %}</h1>
+</div>
+
+{% crispy form %}
+
+{% endblock %}
