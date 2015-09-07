@@ -197,6 +197,7 @@ Receipt = {
         }
         var amount = (sum / 100).toFixed(2);
         $('#receipt-total').find('input').val('' + amount);
+        return sum;
     },
     addText: function (text, quantity) {
         $('#receipt-table').append('<tr><td width="70%">' + text + '</td><td>' + quantity + '</td></tr>');
@@ -208,7 +209,6 @@ Receipt = {
         this.index = 0;
         this.updateTotalAmount();
     },
-
     getReceipt: function () {
         //Filter empty entries from the receipt
         var receipt = this.receipt.filter(Boolean);
@@ -233,7 +233,6 @@ Receipt = {
         }
         return cleanReceipt;
     },
-
     pay: function (rfid) {
         State.toggleTo(State.PAYING);
 
@@ -287,7 +286,6 @@ Receipt = {
             }, 1000);
         }
     },
-
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
             if (result.error) {
@@ -441,8 +439,13 @@ $(function () {
                 State.toggleTo(State.CHECK);
                 Display.set('Scan een kaart');
                 break;
-            case 'total':
-                //Sales.check();
+            case 'cash':
+                var sum = Receipt.updateTotalAmount();
+                var amount = Math.ceil(sum / 10) * 10;
+                State._hideAllScreens();
+                $('#payment-receipt').html('Dat wordt dan &euro;' + (amount/100).toFixed(2));
+                $('#countdownbox').hide();
+                $('#rfid-screen').show();
                 break;
             case 'cancelPayment':
                 State.toggleTo(State.SALES);

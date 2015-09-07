@@ -57,9 +57,9 @@ body {
 }
 
 .btn-specialpad {
-  height: 108px;
-  line-height: 3.3em;
+  line-height: 3em;
   font-size: 2em;
+  margin-bottom: 7px;
 }
 
 #display.flash {
