@@ -1,13 +1,13 @@
-"""Tool voor het versturen van reminder-mails.
+"""
+Command to send weekly reminder mails.
 
-Deze tool verstuurt reminder-mails naar alle tappers met daarin een
-lijst van borrels waarvan ze hun beschikbaarheid nog niet hebben
-aangegeven.
+This tool sends reminder mails to all tenders with a list of events with
+missing availability for the tender.
 
-Gebaseerd op de reminder-mails-script van Wietse Smid van het vorige
-borrelbeheersysteem.
+Based on the reminder script of the previous Event management system by
+Wietse Smid.
 
-Auteur: Jelte Zeilstra
+Author: Jelte Zeilstra
 """
 
 from django.conf import settings
@@ -23,33 +23,29 @@ class Command(BaseCommand):
     help = 'Send reminder mails for events with missing availabilities'
 
     def handle(self, *args, **options):
-        # TODO: Setting / parameter van organization maken
-        organizer = Organization.objects.get(name='Inter-Actief')
+        # Filter onganizations with an active reminder mail
+        organizations = Organization.objects.filter(mailtemplate__name='reminder', mailtemplate__is_active=True)
 
-        memberships = organizer.membership_set.filter(is_tender=True)
+        for organization in organizations:
+            memberships = organization.membership_set.filter(is_tender=True)
 
-        now = timezone.now()
-        events = organizer.participates.filter(
-            starts_at__gte=now, is_closed=False).order_by('starts_at', )
+            now = timezone.now()
+            events = organization.participates.filter(starts_at__gte=now, is_closed=False).order_by('starts_at', )
 
-        # Load templates
-        try:
-            mailtemplate = MailTemplate.objects.get(
-                organization=organizer, name="reminder")
-        except MailTemplate.DoesNotExist:
-            raise CommandError(
-                'MailTemplate "reminder" does not exist for %s' % organizer)
+            # Load templates
+            try:
+                mailtemplate = MailTemplate.objects.get(organization=organization, name="reminder", is_active=True)
+            except MailTemplate.DoesNotExist:
+                raise CommandError('MailTemplate "reminder" does not exist for %s' % organization)
 
-        for membership in memberships:
-            user = membership.user
-            if not user.email:
-                self.stderr.write('%s heeft geen e-mailadres.\n' % (user,))
-                continue
+            for membership in memberships:
+                user = membership.user
+                if not user.email:
+                    self.stderr.write('%s heeft geen e-mailadres.\n' % (user,))
+                    continue
 
-            missing_events = events.exclude(
-                pk__in=user.event_set.values_list('id', flat=True))
-            addressees = [user]
+                missing_events = events.exclude(pk__in=user.event_set.values_list('id', flat=True))
+                addressees = [user]
 
-            mail(settings.EMAIL_FROM, addressees, mailtemplate.subject,
-                 mailtemplate.template,
-                 extraattrs={'missing_events': missing_events, 'now': now})
+                mail(settings.EMAIL_FROM, addressees, mailtemplate.subject, mailtemplate.template,
+                     extraattrs={'missing_events': missing_events, 'now': now})
