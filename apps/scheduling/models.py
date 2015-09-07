@@ -401,6 +401,9 @@ class Availability(models.Model):
     def is_no(self):
         return self.nature == Availability.NO
 
+    def get_absolute_url(self):
+        return reverse('availability_detail', args=[self.pk])
+
     def __unicode__(self):
         return self.name
 

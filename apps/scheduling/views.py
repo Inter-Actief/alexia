@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import UpdateView
+from django.views.generic.list import ListView
 
 from apps.organization.forms import BartenderAvailabilityForm
 from apps.scheduling.forms import EventForm, EditEventForm, StandardReservationForm, FilterEventForm
@@ -24,7 +25,7 @@ from utils import log
 from utils.calendar import generate_ical, IcalResponse
 from utils.auth.decorators import planner_required
 from utils.auth.mixins import ManagerRequiredMixin
-from utils.mixins import OrganizationFilterMixin, CrispyFormMixin
+from utils.mixins import OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization
 
 
 # =========================================================================
@@ -351,3 +352,21 @@ class MailTemplateDetailView(MailTemplateObjectMixin, ManagerRequiredMixin, Orga
 class MailTemplateUpdateView(MailTemplateObjectMixin, ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
                              UpdateView):
     fields = ['subject', 'template', 'is_active']
+
+
+class AvailabilityListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):
+    model = Availability
+
+
+class AvailabilityDetailView(ManagerRequiredMixin, OrganizationFilterMixin, DetailView):
+    model = Availability
+
+
+class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization):
+    model = Availability
+    fields = ['name', 'nature']
+
+
+class AvailabilityUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, UpdateView):
+    model = Availability
+    fields = ['name', 'nature']

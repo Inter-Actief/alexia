@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url
-from apps.scheduling.views import MailTemplateListView, MailTemplateDetailView, MailTemplateUpdateView
+
+from apps.scheduling.views import MailTemplateListView, MailTemplateDetailView, MailTemplateUpdateView, \
+    AvailabilityListView, AvailabilityCreateView, AvailabilityDetailView, AvailabilityUpdateView
 
 urlpatterns = patterns(
     'apps.scheduling',
@@ -25,6 +27,12 @@ urlpatterns = patterns(
     url(r'^mailtemplate/$', MailTemplateListView.as_view(), name='mailtemplate_list'),
     url(r'^mailtemplate/(?P<name>[a-z]+)/$', MailTemplateDetailView.as_view(), name='mailtemplate_detail'),
     url(r'^mailtemplate/(?P<name>[a-z]+)/update/$', MailTemplateUpdateView.as_view(), name='mailtemplate_update'),
+
+    # Availabilities
+    url(r'^availability/$', AvailabilityListView.as_view(), name='availability_list'),
+    url(r'^availability/create/$', AvailabilityCreateView.as_view(), name='availability_create'),
+    url(r'^availability/(?P<pk>\d+)/$', AvailabilityDetailView.as_view(), name='availability_detail'),
+    url(r'^availability/(?P<pk>\d+)/update/$', AvailabilityUpdateView.as_view(), name='availability_update'),
 
     # AJAT (Asynchroon Javascript en Tekst... wie gebruikt er nog in
     # hemelsnaam XML!?)

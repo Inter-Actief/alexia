@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-03 15:49+0200\n"
-"PO-Revision-Date: 2015-09-03 15:49+0200\n"
+"POT-Creation-Date: 2015-09-07 22:39+0200\n"
+"PO-Revision-Date: 2015-09-07 22:39+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -508,6 +508,9 @@ msgstr "Kalender"
 msgid "Personal schedule"
 msgstr "Tappersrooster"
 
+msgid "Availabilities"
+msgstr "Beschikbaarheden"
+
 msgid "Mail templates"
 msgstr "Mailsjabonen"
 
@@ -983,6 +986,23 @@ msgstr "Mijn betalingen"
 
 msgid "There are no payments!"
 msgstr "Er zijn geen betalingen!"
+
+msgid "Nature"
+msgstr "Soort"
+
+#, python-format
+msgid "Edit availability %(object)s"
+msgstr "Bewerk beschikbaarheid %(object)s"
+
+msgid "New availability"
+msgstr "Nieuwe beschikbaarheid"
+
+#, python-format
+msgid "Availabilities of %(organization)s"
+msgstr "Beschikbaarheden van %(organization)s"
+
+msgid "No availabilities defined."
+msgstr "Geen beschikbaarheden gedefinieerd."
 
 msgid "Edit bartender availability"
 msgstr "Bewerk tapperbeschikbaarheid"

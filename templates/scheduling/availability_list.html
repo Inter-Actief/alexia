@@ -1,0 +1,47 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with organization=request.organization %}Availabilities of {{ organization }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<div class="page-header clearfix">
+    <h1 class="pull-left">
+         {% blocktrans with organization=request.organization %}Availabilities of {{ organization }}{% endblocktrans %}
+    </h1>
+    <div class="text-right">
+        <a class="btn btn-primary" href="{% url 'availability_create' %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            {% trans 'Add' %}
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans 'Name' %}</th>
+                <th>{% trans 'Nature' %}</th>
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></td>
+                <td>{{ object.get_nature_display }}</td>
+                <td>
+                    <a class="btn btn-xs btn-default" href="{% url 'availability_update' object.pk %}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        {% trans 'Modify' %}
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2">{% trans "No availabilities defined." %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
