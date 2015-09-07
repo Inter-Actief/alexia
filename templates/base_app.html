@@ -4,6 +4,16 @@
 {% block body %}
 <div class="navbar navbar-fixed-top navbar-default">
     <div class="container">
+        {# Forms for language selector #}
+        {% for code, name in LANGUAGES %}
+            {% if LANGUAGE_CODE != code %}
+                <form name="setLang_{{ code }}" action="{% url 'set_language' %}" method="POST">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.path }}" />
+                    <input type="hidden" name="language" value="{{ code }}" />
+                </form>
+            {% endif %}
+        {% endfor %}
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alexia-navbar-collapse" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -57,6 +67,16 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                {# Language selector #}
+                {% for code, name in LANGUAGES %}
+                    {% if LANGUAGE_CODE != code %}
+                        <li>
+                            <a href="#" onclick="document.setLang_{{ code }}.submit();return false;" title="{{ name }}">
+                                <img src="{{STATIC_URL}}img/icon/flag_{{ code }}.png" alt="{{ name }}">
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
                 <li class="{% active_menu 'apps.general.views.help_view' 'active' %}">
                     <a href="{% url 'apps.general.views.help_view' %}">
                         {% trans 'Help' %}
