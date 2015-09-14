@@ -2,7 +2,11 @@ import os
 
 from django.core.exceptions import SuspiciousOperation
 
-# Paden
+#
+#   Override Django defaults
+#
+
+# Directories
 CURRENT_DIR = os.path.dirname(__file__)
 MEDIA_ROOT = os.path.join(CURRENT_DIR, 'media')
 STATIC_ROOT = os.path.join(CURRENT_DIR, 'static')
@@ -10,7 +14,7 @@ TEMPLATE_DIRS = (os.path.join(CURRENT_DIR, 'templates'),)
 LOCALE_PATHS = (os.path.join(CURRENT_DIR, 'locale'),)
 STATICFILES_DIRS = (os.path.join(CURRENT_DIR, 'assets'),)
 
-# Generieke settings
+# General settings
 ADMINS = ()
 MANAGERS = ADMINS
 DEBUG = False
@@ -23,7 +27,7 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 ROOT_URLCONF = 'urls'
 
-# Lokalisatie
+# Internationalization / localization
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -87,6 +91,9 @@ INSTALLED_APPS = (
 
 
 def skip_suspicious_operations(record):
+    """
+    Filter to ignore SuspiciousOperation exceptions.
+    """
     if record.exc_info:
         exc_value = record.exc_info[1]
         if isinstance(exc_value, SuspiciousOperation):
@@ -138,6 +145,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "utils.context_processors.primary_organization",
 )
 
+#
+#   django-crispy-forms settings
+#
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap3',)
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+#
+#   Amelie specific settings
+#
+
 # Radius login details
 RADIUS_HOST = 'radius1.utsp.utwente.nl'
 RADIUS_PORT = 1645
@@ -145,12 +163,22 @@ RADIUS_SECRET = ''
 RADIUS_IDENTIFIER = ''
 RADIUS_DICT = os.path.join(CURRENT_DIR, 'utils/auth/radius.dict')
 
+#
+#   Load local_settings.py
+#
+
 try:
     from local_settings import *
 except ImportError:
     pass
 
+#
+#   Debug toolbar
+#
+
 if DEBUG:
+    # Enable debug toolbar if DEBUG is enabled.
+
     def show_toolbar(request):
         return True
 
@@ -159,6 +187,3 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': 'settings.show_toolbar'
     }
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap3',)
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
