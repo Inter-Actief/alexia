@@ -129,13 +129,6 @@ body {
   }
 }
 
-span.inter-actief { color: blue }
-span.abacus       { color: #e5b700 }
-span.scintilla    { color: red }
-span.proto        { color: green }
-span.sirius       { color: green }
-span.stress       { color: orange  }
-
 @media (min-width: 768px) {
     /* Force minimum size for login form in navbar when navbar is not collapsed */
     #alexia-navbar-login {

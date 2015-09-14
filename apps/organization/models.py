@@ -6,6 +6,7 @@ from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.core.validators import RegexValidator
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -148,6 +149,9 @@ class Organization(models.Model):
     name = models.CharField(_('name'), max_length=32, unique=True)
     slug = models.SlugField(_('slug'), editable=False, unique=True)
     is_public = models.BooleanField(_('is public'), default=False)
+    color = models.CharField(verbose_name=_('Color'), blank=True, max_length=6,
+                             validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
+                                                        message=_('Enter a valid hexadecimal color'))])
     members = models.ManyToManyField(
         User, through='Membership', verbose_name=_('users'))
 
