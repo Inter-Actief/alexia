@@ -20,6 +20,9 @@ class Location(models.Model):
     is_public = models.BooleanField(verbose_name=_('is public'), default=False)
     prevent_conflicting_events = models.BooleanField(
         verbose_name=_('prevent conflicting events'), default=True)
+    color = models.CharField(verbose_name=_('Color'), blank=True, max_length=6,
+                             validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
+                                                        message=_('Enter a valid hexadecimal color'))])
 
     class Meta:
         ordering = ['name']

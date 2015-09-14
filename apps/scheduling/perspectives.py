@@ -36,16 +36,19 @@ def calendar_fetch(request):
 
     for event in Event.objects.filter(starts_at__gte=from_time,
                                       starts_at__lte=till_time).prefetch_related('location'):
-        abscint = Location.objects.get(pk=1)
-        mbasement = Location.objects.get(pk=2)
-        color = 'grey'
+        # Default color
+        color = '#888888'
 
-        if abscint in event.location.all():
-            color = '#3a87ad'
-        if mbasement in event.location.all():
-            color = '#b94a48'
-        if abscint in event.location.all() and mbasement in event.location.all():
-            color = '#765AAF'
+        try:
+            location = event.location.get()
+            if location.color:
+                color = '#{}'.format(location.color)
+        except Location.DoesNotExist:
+            # No location, use default color
+            pass
+        except Location.MultipleObjectsReturned:
+            # Multiple locations, use default color
+            pass
 
         data.append({
             'id': event.pk,
