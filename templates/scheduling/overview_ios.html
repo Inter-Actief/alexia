@@ -9,7 +9,6 @@
 {% block content %}
 {% for event in events %}
 <div class="clearfix" style="height: 48px; border-bottom: 1px solid #eee; padding-top: 4px">
-    <img src="{{ STATIC_URL }}img/organization/{{ event.organizer.slug  }}.svg" width="32" height="32" class="pull-right">
     <p>
         {{ event.name }}<br>
         <span class="muted">{{ event.starts_at }}, {% for location in event.location.all %}{{ location }}{% if not forloop.last %} + {% endif %}{% endfor %}</span>
