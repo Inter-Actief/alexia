@@ -1,6 +1,8 @@
 {% extends 'base_app.html' %}
 {% load i18n %}
 
+{% block title %}{% trans 'Planning' %}{% endblock %}
+
 {% block head %}
 <script>
 $(document).ready(function() {
@@ -77,8 +79,3 @@ $(document).ready(function() {
 </div>
 <div id="calendar"></div>
 {% endblock %}
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },

@@ -34,7 +34,7 @@ def calendar_fetch(request):
     till_time = datetime.fromtimestamp(float(request.GET.get('end')))
     data = []
 
-    for event in Event.objects.filter(starts_at__gte=from_time,
+    for event in Event.objects.filter(ends_at__gte=from_time,
                                       starts_at__lte=till_time).prefetch_related('location'):
         # Default color
         color = '#888888'
