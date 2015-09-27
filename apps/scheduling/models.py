@@ -144,7 +144,7 @@ class Event(models.Model):
                                     default=False)
     """bartenders can no longer enrol"""
     bartenders = models.ManyToManyField(
-        User, through='BartenderAvailability', null=True, blank=True,
+        User, through='BartenderAvailability', blank=True,
         verbose_name=_("bartenders"))
     """bartenders who registered there availability"""
     pricegroup = models.ForeignKey(

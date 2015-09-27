@@ -127,7 +127,7 @@ class StockCount(models.Model):
     comments = models.TextField(_('comments'), blank=True)
     products = models.ManyToManyField(StockProduct,
                                       through='StockProductAmount', related_name='stockcounts',
-                                      verbose_name=_('products'), blank=True, null=True)
+                                      verbose_name=_('products'), blank=True)
 
     class Meta:
         verbose_name = _('stock count')
