@@ -2,7 +2,7 @@
 This module contains mixins for Django class-based views handling authorization tests.
 """
 
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -16,8 +16,6 @@ class PassesTestMixin(object):
     """
     Mixin for validating a access requirement for a view.
     """
-    __metaclass__ = ABCMeta
-
     needs_login = False
     """ Indicates if a current login is required for accessing this page. """
     reason = ''
