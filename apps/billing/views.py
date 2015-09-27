@@ -141,6 +141,7 @@ class ProductRedirectView(ManagerRequiredMixin, SingleObjectMixin, RedirectView)
     TemporaryProductDetailView depending on the type of product.
     """
     model = Product
+    permanent = True
 
     def get_redirect_url(self, *args, **kwargs):
         obj = self.get_object()
