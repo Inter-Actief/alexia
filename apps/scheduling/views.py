@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.db.models import Q
 from django.db.models.query import Prefetch
 from django.forms.models import modelformset_factory
@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, \
     redirect
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import UpdateView
@@ -135,6 +136,10 @@ def event_show(request, pk):
 @login_required
 @planner_required
 def event_add(request):
+    if not request.organization:
+        return render(request, 'general_error.html', {'error_msg':
+            _('Creating an event requires an primary organization.')})
+
     if request.method == 'POST':
         form = EventForm(request, request.POST)
         if form.is_valid():
