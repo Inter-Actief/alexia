@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-21 21:14+0200\n"
+"POT-Creation-Date: 2015-09-28 11:37+0200\n"
 "PO-Revision-Date: 2015-09-21 21:14+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -1026,6 +1026,9 @@ msgstr "Activiteit bewerken"
 msgid "Add event"
 msgstr "Activiteit toevoegen"
 
+msgid "yyyy-mm-dd"
+msgstr "dd-mm-yyyy"
+
 msgid "Start"
 msgstr "Begin"
 
@@ -1084,6 +1087,9 @@ msgstr "Laden..."
 
 msgid "Kegs"
 msgstr "Fusten"
+
+msgid "Kassa"
+msgstr "Point of sale"
 
 msgid "AJAX-request required"
 msgstr "AJAX-request verplicht"

@@ -28,12 +28,6 @@ $(function () {
         }, "text");
     });
 
-    $('.dateinput').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy',
-        weekStart: 1
-    });
-
     $('.timeinput').timepicker({
         defaultTime: false,
         showMeridian: false

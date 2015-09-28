@@ -9,6 +9,18 @@
 {% endif %}
 {% endblock %}
 
+{% block head %}
+    <script>
+    $(function () {
+        $('.dateinput').datepicker({
+            autoclose: true,
+            format: '{% trans 'yyyy-mm-dd' %}',
+            weekStart: 1
+        });
+    });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="page-header">
         <h1>
