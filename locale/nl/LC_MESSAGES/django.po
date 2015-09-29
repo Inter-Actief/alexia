@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-21 21:14+0200\n"
+"POT-Creation-Date: 2015-09-28 13:10+0200\n"
 "PO-Revision-Date: 2015-09-21 21:14+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -380,6 +380,9 @@ msgstr "tapperbeschikbaarheid"
 msgid "bartender availabilities"
 msgstr "tapperbeschikbaarheden"
 
+msgid "Creating an event requires an primary organization."
+msgstr "Een primaire organisatie is nodig voor het aanmaken van evenementen."
+
 #, python-format
 msgid "Event consumption #%s"
 msgstr ""
@@ -742,6 +745,9 @@ msgstr ""
 "Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te "
 "mogen."
 
+msgid "Error"
+msgstr "Fout"
+
 msgid "Create user"
 msgstr "Gebruiker aanmaken"
 
@@ -1026,6 +1032,9 @@ msgstr "Activiteit bewerken"
 msgid "Add event"
 msgstr "Activiteit toevoegen"
 
+msgid "yyyy-mm-dd"
+msgstr "dd-mm-yyyy"
+
 msgid "Start"
 msgstr "Begin"
 
@@ -1084,6 +1093,9 @@ msgstr "Laden..."
 
 msgid "Kegs"
 msgstr "Fusten"
+
+msgid "Kassa"
+msgstr "Point of sale"
 
 msgid "AJAX-request required"
 msgstr "AJAX-request verplicht"
