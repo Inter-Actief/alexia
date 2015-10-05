@@ -82,7 +82,7 @@ def order_unsynchronized(request, unused):
     result = []
     orders = Order.objects.filter(authorization__organization=request.organization, synchronized=False)
 
-    orders = orders.select_related('authorization__user', 'purchases__product')
+    orders = orders.select_related('authorization__user', 'event').prefetch_related('purchases__product')
 
     for order in orders:
         result.append(format_order(order))
