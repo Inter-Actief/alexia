@@ -265,7 +265,7 @@ Receipt = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
                 purchases: Receipt.getReceipt(),
-                rfid_id: rfid
+                rfid_data: rfid
             };
 
             var rpcRequest = {

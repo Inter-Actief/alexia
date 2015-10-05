@@ -72,17 +72,17 @@ def juliana_rfid_get(request, event_id, rfid):
     return res
 
 
-@jsonrpc_method('juliana.order.save(Number,Number,Array,Number) -> Nil', site=api_v1_site, authenticated=True)
+@jsonrpc_method('juliana.order.save(Number,Number,Array,Object) -> Nil', site=api_v1_site, authenticated=True)
 @transaction.atomic
-def juliana_order_save(request, event_id, user_id, purchases, rfid_id):
+def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     """Saves a new order in the database"""
 
-    rfid_identifier = rfid_to_identifier(rfid=rfid_id)
+    rfid_identifier = rfid_to_identifier(rfid=rfid_data)
 
     try:
         event = Event.objects.get(pk=event_id)
         user = User.objects.get(pk=user_id)
-        rfid_card = RfidCard.objects.get(identifier=rfid_identifier, is_active=True)
+        rfidcard = RfidCard.objects.get(identifier=rfid_identifier, is_active=True)
     except Event.DoesNotExist:
         raise InvalidParamsError('Event does not exist')
     except User.DoesNotExist:
@@ -101,7 +101,7 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_id):
     if not authorization:
         raise InvalidParamsError('No authorization available')
 
-    order = Order(event=event, authorization=authorization, added_by=cur_user, rfidcard=rfid_card)
+    order = Order(event=event, authorization=authorization, added_by=cur_user, rfidcard=rfidcard)
     order.save()
 
     for p in purchases:
