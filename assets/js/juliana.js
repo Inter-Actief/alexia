@@ -238,11 +238,11 @@ Receipt = {
 
         console.log('Card scanned. Retrieving userData for: ' + rfid);
         User.retrieveData(rfid, function (result) {
-            Receipt.continuePay(result);
+            Receipt.continuePay(result, rfid);
         });
 
     },
-    continuePay: function (userData) {
+    continuePay: function (userData, rfid) {
         console.log('continuePay was called: ');
         console.log(userData);
         if (!userData) {
@@ -264,7 +264,8 @@ Receipt = {
             var data = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
-                purchases: Receipt.getReceipt()
+                purchases: Receipt.getReceipt(),
+                rfid_id: rfid
             };
 
             var rpcRequest = {

@@ -33,6 +33,7 @@ def format_order(order):
 
     return {
         'id': order.pk,
+        'rfid': order.rfidcard.identifier,
         'event': format_event(order.event),
         'authorization': format_authorization(order.authorization),
         'placed_at': order.placed_at.isoformat(),
