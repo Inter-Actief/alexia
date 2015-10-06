@@ -287,7 +287,7 @@ class Order(models.Model):
     placed_at = models.DateTimeField(_('placed at'), default=timezone.now)
     synchronized = models.BooleanField(_('synchronized'), default=False)
     added_by = models.ForeignKey(User, verbose_name=_('added by'), related_name='+')
-    amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2, null=True)
+    amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2)
     rfidcard = models.ForeignKey(RfidCard, verbose_name=_('rfid card'), blank=True, null=True)
 
     def is_collected(self):
