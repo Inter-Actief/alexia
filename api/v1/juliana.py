@@ -11,20 +11,7 @@ from apps.scheduling.models import Event
 from apps.billing.models import Order, Purchase, RfidCard, Authorization, Product
 from .exceptions import ForbiddenError
 
-
-@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
-def juliana_rfid_get(request, event_id, rfid):
-    try:
-        event = Event.objects.get(pk=event_id)
-    except Event.DoesNotExist:
-        raise InvalidParamsError('Event does not exist')
-
-    cur_user = request.user
-    if not request.user.is_superuser and not event.is_tender(cur_user):
-        raise ForbiddenError('Forbidden - You are not a tender for this event')
-    if not request.user.is_superuser and not event.can_be_opened():
-        raise ForbiddenError('Forbidden - This event is not open')
-
+def rfid_to_identifier(rfid):
     if 'atqa' not in rfid:
         raise InvalidParamsError('atqa value required')
     if 'sak' not in rfid:
@@ -47,7 +34,22 @@ def juliana_rfid_get(request, event_id, rfid):
     else:
         raise InvalidParamsError('atqa/sak combination unknown')
 
-    identifier = '%s,%s' % (ia_rfid_prefix, rfid['uid'])
+    return '%s,%s' % (ia_rfid_prefix, rfid['uid'])
+
+@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
+def juliana_rfid_get(request, event_id, rfid):
+    try:
+        event = Event.objects.get(pk=event_id)
+    except Event.DoesNotExist:
+        raise InvalidParamsError('Event does not exist')
+
+    cur_user = request.user
+    if not request.user.is_superuser and not event.is_tender(cur_user):
+        raise ForbiddenError('Forbidden - You are not a tender for this event')
+    if not request.user.is_superuser and not event.can_be_opened():
+        raise ForbiddenError('Forbidden - This event is not open')
+
+    identifier = rfid_to_identifier(rfid=rfid)
 
     try:
         card = RfidCard.objects.get(identifier=identifier, is_active=True)
@@ -70,18 +72,23 @@ def juliana_rfid_get(request, event_id, rfid):
     return res
 
 
-@jsonrpc_method('juliana.order.save(Number,Number,Array) -> Nil', site=api_v1_site, authenticated=True)
+@jsonrpc_method('juliana.order.save(Number,Number,Array,Object) -> Nil', site=api_v1_site, authenticated=True)
 @transaction.atomic
-def juliana_order_save(request, event_id, user_id, purchases):
+def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     """Saves a new order in the database"""
+
+    rfid_identifier = rfid_to_identifier(rfid=rfid_data)
 
     try:
         event = Event.objects.get(pk=event_id)
         user = User.objects.get(pk=user_id)
+        rfidcard = RfidCard.objects.get(identifier=rfid_identifier, is_active=True)
     except Event.DoesNotExist:
         raise InvalidParamsError('Event does not exist')
     except User.DoesNotExist:
         raise InvalidParamsError('User does not exist')
+    except RfidCard.DoesNotExist:
+        raise InvalidParamsError('RFID card not found')
 
     cur_user = request.user
     if not request.user.is_superuser and not event.is_tender(cur_user):
@@ -94,7 +101,7 @@ def juliana_order_save(request, event_id, user_id, purchases):
     if not authorization:
         raise InvalidParamsError('No authorization available')
 
-    order = Order(event=event, authorization=authorization, added_by=cur_user)
+    order = Order(event=event, authorization=authorization, added_by=cur_user, rfidcard=rfidcard)
     order.save()
 
     for p in purchases:

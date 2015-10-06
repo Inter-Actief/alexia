@@ -288,6 +288,7 @@ class Order(models.Model):
     synchronized = models.BooleanField(_('synchronized'), default=False)
     added_by = models.ForeignKey(User, verbose_name=_('added by'), related_name='+')
     amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2, null=True)
+    rfidcard = models.ForeignKey(RfidCard, verbose_name=_('rfid card'), blank=True, null=True)
 
     def is_collected(self):
         """Returns whether the order has been collected."""
