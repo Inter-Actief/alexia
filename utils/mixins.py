@@ -83,7 +83,7 @@ class CrispyFormMixin(object):
     Mixin to add Crispy form helper.
     """
 
-    def get_form(self, form_class):
+    def get_form(self, form_class=None):
         form = super(CrispyFormMixin, self).get_form(form_class)
 
         form.helper = default_crispy_helper()
