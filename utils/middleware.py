@@ -21,11 +21,3 @@ class PrimaryOrganizationMiddleware(object):
             request.organization = Organization.objects.get(pk=request.session['organization_pk'])
         else:
             request.organization = None
-
-
-class ValidateHostMiddleware(object):
-    def process_request(self, request):
-        if not settings.DEBUG \
-                and not request.get_host().endswith(settings.ALLOWED_HOSTS[0]):
-            return redirect('https://' + settings.ALLOWED_HOSTS[0] +
-                            request.get_full_path())

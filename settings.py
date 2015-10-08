@@ -45,7 +45,6 @@ DEFAULT_FROM_EMAIL = EMAIL_FROM
 SERVER_EMAIL = EMAIL_FROM
 
 MIDDLEWARE_CLASSES = (
-    'utils.middleware.ValidateHostMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
