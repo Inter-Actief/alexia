@@ -59,6 +59,9 @@ def juliana_rfid_get(request, event_id, rfid):
     user = card.user
     authorization = Authorization.get_for_user_event(user, event)
 
+    if not authorization:
+        raise InvalidParamsError('No authorization found for user')
+
     res = {
         'user': {
             'id': user.pk,
