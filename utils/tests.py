@@ -17,6 +17,9 @@ from apps.scheduling.models import Event
 
 
 class SimpleTestCase(testcases.SimpleTestCase):
+    # Do not limit diff length on failure
+    maxDiff = None
+
     def assertJSONEqual(self, raw, expected_data, msg=None):
         if not isinstance(expected_data, six.string_types):
             # Encode non-string input as JSON to fix a bug timestamps not comparing equal.
