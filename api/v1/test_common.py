@@ -119,7 +119,7 @@ class CommonTest(TestCase):
             'id': order.id,
             'rfid': None,
             'event': {
-                'id': 1,
+                'id': event.id,
                 'name': 'Test event',
             },
             'authorization': format_authorization(authorization),
