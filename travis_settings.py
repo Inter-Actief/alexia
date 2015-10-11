@@ -8,10 +8,10 @@ from settings import *
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',  # 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'alexia_test',                       # Of pad naar sqlite3 database
         # Hieronder negeren voor sqlite3
-        'USER': '',
+        'USER': 'travis',
         'PASSWORD': '',
         'HOST': '',                       # Leeg voor localhost
         'PORT': '',                       # Leeg is default
