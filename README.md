@@ -1,5 +1,7 @@
 # Alexia
 
+[![Build Status](https://travis-ci.org/Inter-Actief/alexia.svg?branch=master)](https://travis-ci.org/Inter-Actief/alexia)
+
  * Alexia is het borrelbeheersysteem voor de borrelruimtes in de
    Zilverling op de Universiteit Twente, de Abscint en MBasement.
  * [alex.ia.utwente.nl](https://alex.ia.utwente.nl)
