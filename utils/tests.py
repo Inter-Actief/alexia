@@ -13,10 +13,12 @@ from django.test import Client
 from apps.billing.models import Authorization, PriceGroup, PermanentProduct, ProductGroup, TemporaryProduct, \
     Order, Purchase
 from apps.organization.models import Profile, Organization, Location
-from apps.scheduling.models import Event
+from apps.scheduling.models import Event, Availability
 
 
 class SimpleTestCase(testcases.SimpleTestCase):
+    # Use long messages on failure
+    longMessage = True
     # Do not limit diff length on failure
     maxDiff = None
 
@@ -85,7 +87,7 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['organization1'].save()
 
         data['organization2'] = Organization(name='Organization 2')
-        data['organization1'].save()
+        data['organization2'].save()
 
         # Location
         data['location1'] = Location(name='Location 1', is_public=True, prevent_conflicting_events=True)
@@ -115,6 +117,21 @@ class TestCase(TransactionTestCase, testcases.TestCase):
 
     def load_scheduling_data(self):
         data = self.data
+
+        data['availability1'] = Availability(organization=data['organization1'],
+                                             name='Yes',
+                                             nature=Availability.YES)
+        data['availability1'].save()
+
+        data['availability2'] = Availability(organization=data['organization1'],
+                                             name='Maybe',
+                                             nature=Availability.MAYBE)
+        data['availability2'].save()
+
+        data['availability3'] = Availability(organization=data['organization1'],
+                                             name='No',
+                                             nature=Availability.NO)
+        data['availability3'].save()
 
         data['event1'] = Event(organizer=data['organization1'],
                                name='Test event 1',
@@ -155,9 +172,20 @@ class APITestCase(TestCase):
 
         # Every test needs a client.
         self.client = Client()
-        self.client.login(username=self.data['user1'].username, password=self.data['password1'])
+        self.login(username=self.data['user1'].username,
+                   password=self.data['password1'],
+                   organization_slug=self.data['organization1'].slug)
 
-        self.send_and_compare_request('organization.current.set', [self.data['organization1'].slug], True)
+    def login(self, username, password, organization_slug=None):
+        """
+        Login the test client.
+        :param username: Username
+        :param password: Password
+        :param organization_slug: Slug of organization to set as current organization.
+        """
+
+        self.client.login(username=username, password=password)
+        self.send_and_compare_request('organization.current.set', [organization_slug], True)
 
     def send_request(self, method, params):
         """
@@ -210,6 +238,9 @@ class APITestCase(TestCase):
         :param status_code: Expected HTTP status code.
         """
         response = self.send_request(method, params)
+
+        if response.status_code != status_code:
+            self.fail(response.content)
 
         self.assertEqual(response.status_code, status_code, 'HTTP status code')
 
