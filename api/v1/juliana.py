@@ -11,6 +11,7 @@ from apps.scheduling.models import Event
 from apps.billing.models import Order, Purchase, RfidCard, Authorization, Product
 from .exceptions import ForbiddenError
 
+
 def rfid_to_identifier(rfid):
     if 'atqa' not in rfid:
         raise InvalidParamsError('atqa value required')
@@ -36,8 +37,16 @@ def rfid_to_identifier(rfid):
 
     return '%s,%s' % (ia_rfid_prefix, rfid['uid'])
 
-@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
-def juliana_rfid_get(request, event_id, rfid):
+
+def _get_validate_event(request, event_id):
+    """
+    Get and validate access to the given event id.
+    :param request: Request object.
+    :param event_id: Event id.
+    :return: Event
+    :raises InvalidParamsError: If the event id is invalid.
+    :raises ForbiddenError: If the current user may not access the event.
+    """
     try:
         event = Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
@@ -48,6 +57,13 @@ def juliana_rfid_get(request, event_id, rfid):
         raise ForbiddenError('Forbidden - You are not a tender for this event')
     if not request.user.is_superuser and not event.can_be_opened():
         raise ForbiddenError('Forbidden - This event is not open')
+
+    return event
+
+
+@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
+def juliana_rfid_get(request, event_id, rfid):
+    event = _get_validate_event(request, event_id)
 
     identifier = rfid_to_identifier(rfid=rfid)
 
@@ -79,25 +95,19 @@ def juliana_rfid_get(request, event_id, rfid):
 @transaction.atomic
 def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     """Saves a new order in the database"""
+    event = _get_validate_event(request, event_id)
 
     rfid_identifier = rfid_to_identifier(rfid=rfid_data)
 
     try:
-        event = Event.objects.get(pk=event_id)
         user = User.objects.get(pk=user_id)
         rfidcard = RfidCard.objects.get(identifier=rfid_identifier, is_active=True)
-    except Event.DoesNotExist:
-        raise InvalidParamsError('Event does not exist')
     except User.DoesNotExist:
         raise InvalidParamsError('User does not exist')
     except RfidCard.DoesNotExist:
         raise InvalidParamsError('RFID card not found')
 
     cur_user = request.user
-    if not request.user.is_superuser and not event.is_tender(cur_user):
-        raise ForbiddenError('Forbidden - You are not a tender for this event')
-    if not request.user.is_superuser and not event.can_be_opened():
-        raise ForbiddenError('Forbidden - This event is not open')
 
     authorization = Authorization.get_for_user_event(user, event)
 
@@ -149,21 +159,12 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
 
 @jsonrpc_method('juliana.user.check(Number, Number) -> Number', site=api_v1_site, safe=True, authenticated=True)
 def juliana_user_check(request, event_id, user_id):
-    try:
-        event = Event.objects.get(pk=event_id)
-    except Event.DoesNotExist:
-        raise InvalidParamsError('Event does not exist')
+    event = _get_validate_event(request, event_id)
 
     try:
         user = User.objects.get(pk=user_id)
     except User.DoesNotExist:
         raise InvalidParamsError('User does not exist')
-
-    cur_user = request.user
-    if not request.user.is_superuser and not event.is_tender(cur_user):
-        raise ForbiddenError('Forbidden - You are not a tender for this event')
-    if not request.user.is_superuser and not event.can_be_opened():
-        raise ForbiddenError('Forbidden - This event is not open')
 
     order_sum = Order.objects \
         .filter(authorization__in=user.authorizations.all(), event=event) \
