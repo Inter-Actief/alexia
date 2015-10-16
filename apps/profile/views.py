@@ -4,6 +4,7 @@ import random
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Sum
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
@@ -18,6 +19,14 @@ def index(request):
         authorization__in=request.user.authorizations.all())
     order_count = len(order_list)
     orders = order_list.order_by('-placed_at')[:5]
+    
+    shares = []
+    for authorization in request.user.authorizations.all():
+        my_order_sum  = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
+        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization).aggregate(total=Sum('amount'))
+        percentage    = (my_order_sum['total'] / all_order_sum['total']) * 100
+        shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
+
     return render(request, 'profile/index.html', locals())
 
 

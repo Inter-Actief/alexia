@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-28 13:10+0200\n"
+"POT-Creation-Date: 2015-10-16 16:36+0200\n"
 "PO-Revision-Date: 2015-09-21 21:14+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -107,6 +107,9 @@ msgstr "toegevoegd door"
 
 msgid "amount"
 msgstr "aantal"
+
+msgid "rfid card"
+msgstr ""
 
 msgid "order"
 msgstr "transactie"
@@ -936,6 +939,12 @@ msgstr "Sinds"
 
 msgid "You don't have any registered RFID cards."
 msgstr "Jij hebt geen RFID-kaarten geregistreerd."
+
+msgid "Share"
+msgstr "Aandeel"
+
+msgid "The percentage of sales which you are responsible for."
+msgstr "Het aandeel van de omzet waarvoor jij verantwoordelijk bent."
 
 msgid "Autorization"
 msgstr "Autorisatie"

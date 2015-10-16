@@ -95,6 +95,28 @@
                         </table>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-lg-6">
+                        <h4>{% trans 'Share' %}</h4>
+                        <p>{% trans 'The percentage of sales which you are responsible for.' %}</p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>{% trans 'Organization' %}</th>
+                                    <th>{% trans 'Share' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for share in shares %}
+                                <tr>
+                                    <td>{{ share.organization }}</td>
+                                    <td>{{ share.percentage }}%</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             {% if user.profile.is_tender %}
             <div class="tab-pane" id="bartender">
@@ -159,5 +181,4 @@
         </div>
     </div>
 </div>
-<hr>
 {% endblock content %}
