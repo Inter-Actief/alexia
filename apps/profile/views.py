@@ -24,7 +24,10 @@ def index(request):
     for authorization in request.user.authorizations.all():
         my_order_sum  = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
         all_order_sum = Order.objects.filter(authorization__organization=authorization.organization).aggregate(total=Sum('amount'))
-        percentage    = (my_order_sum['total'] / all_order_sum['total']) * 100
+        if not my_order_sum['total'] or not all_order_sum['total']:
+            percentage = 0
+        else:
+            percentage = (my_order_sum['total'] / all_order_sum['total']) * 100
         shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
 
     return render(request, 'profile/index.html', locals())
