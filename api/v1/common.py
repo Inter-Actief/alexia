@@ -14,10 +14,49 @@ def format_authorization(authorization):
     }
 
 
+def format_location(location):
+    """
+    :type location: apps.organization.models.Location
+    """
+    return {
+        'id': location.pk,
+        'name': location.name
+    }
+
+
 def format_event(event):
+    """
+    :type event: apps.scheduling.models.Event
+    """
+    return {
+        'id': event.pk,
+        'name': event.name
+    }
+
+
+def format_event_extended(event):
+    """
+    :type event: apps.scheduling.models.Event
+    """
     return {
         'id': event.pk,
         'name': event.name,
+        'organizer': format_organization(event.organizer),
+        'participants': [format_organization(x) for x in event.participants.all()],
+        'locations': [format_location(x) for x in event.location.all()],
+        'starts_at': event.starts_at.isoformat(),
+        'ends_at': event.ends_at.isoformat()
+    }
+
+
+
+def format_organization(organization):
+    """
+    :type organization: apps.organization.models.Organization
+    """
+    return {
+        'slug': organization.slug,
+        'name': organization.name
     }
 
 

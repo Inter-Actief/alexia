@@ -1,1 +1,1 @@
-from . import api, authorization, billing, juliana, organization, rfid, user
+from . import api, authorization, billing, event, juliana, organization, rfid, user
