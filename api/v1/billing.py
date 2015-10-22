@@ -103,7 +103,6 @@ def order_unsynchronized(request, organizations=None):
 
 
 @jsonrpc_method('order.get(order_id=Number) -> Object', site=api_v1_site, safe=True, authenticated=True)
-@manager_required
 def order_get(request, order_id):
     """
     Return a specific order.
@@ -147,7 +146,9 @@ def order_get(request, order_id):
     }
     """
     try:
-        order = Order.objects.get(authorization__organization=request.organization, pk=order_id)
+        order = Order.objects.get(pk=order_id)
+        if not request.user.is_superuser and not request.user.profile.is_manager(order.authorization.organization):
+            raise PermissionDenied
     except Order.DoesNotExist:
         raise NotFoundError
 
@@ -155,7 +156,6 @@ def order_get(request, order_id):
 
 
 @jsonrpc_method('order.marksynchronized(order_id=Number) -> Boolean', site=api_v1_site, authenticated=True)
-@manager_required
 @transaction.atomic()
 def order_marksynchronized(request, order_id):
     """
@@ -170,7 +170,9 @@ def order_marksynchronized(request, order_id):
     Raises error 404 if provided order id cannot be found.
     """
     try:
-        order = Order.objects.select_for_update().get(authorization__organization=request.organization, pk=order_id)
+        order = Order.objects.select_for_update().get(pk=order_id)
+        if not request.user.is_superuser and not request.user.profile.is_manager(order.authorization.organization):
+            raise PermissionDenied
     except Order.DoesNotExist:
         raise NotFoundError
 
