@@ -1,21 +1,36 @@
 from datetime import timedelta, datetime
 
+from django.core.exceptions import PermissionDenied
 from django.forms.models import model_to_dict
 from jsonrpc import jsonrpc_method
 
 from .common import api_v1_site, format_event_extended
-from apps.organization.models import Location
+from apps.organization.models import Location, Organization
 from apps.scheduling.models import Event, StandardReservation
 
 
-@jsonrpc_method('event.list(String, String, String, String) -> Array', site=api_v1_site, safe=True, authenticated=True)
-def event_list(request, start_date, start_time, end_date, end_time):
+@jsonrpc_method('event.list(String, String, String, String, Boolean, Array) -> Array', site=api_v1_site, safe=True, authenticated=True)
+def event_list(request, start_date, start_time, end_date, end_time, only_unsynchronized=False, organizations=None):
     """Returns all events in the specified time span"""
 
     start = datetime.strptime("%s %s" % (start_date, start_time), "%Y-%m-%d %H:%M")
     end = datetime.strptime("%s %s" % (end_date, end_time), "%Y-%m-%d %H:%M")
 
     events = Event.objects.filter(starts_at__gte=start, ends_at__lte=end)
+
+    organizations_objects = Organization.objects.filter(slug__in=organizations) if organizations is not None else None
+    if organizations is not None:
+        events = events.filter(organizer__in=organizations_objects)
+
+    if only_unsynchronized:
+        if organizations is None:
+            raise NotImplementedError("Please specify organizations when requesting unsynchronized events")
+        for organization in organizations_objects:
+            if not request.user.profile.is_manager(organization):
+                raise PermissionDenied
+
+        events = events.filter(orders__synchronized=0).distinct()
+
     events.select_related('organizer').prefetch_related('participants', 'location')
     return [format_event_extended(event) for event in events]
 
