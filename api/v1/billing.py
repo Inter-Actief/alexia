@@ -1,24 +1,26 @@
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
 from .common import api_v1_site, format_order
 from .exceptions import NotFoundError
 from apps.billing.models import Order
+from apps.organization.models import Organization
 from utils.auth.decorators import manager_required
 
 
-@jsonrpc_method('order.unsynchronized(unused=Number) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@jsonrpc_method('order.unsynchronized(organizations=Array) -> Array', site=api_v1_site, safe=True, authenticated=True)
 @manager_required
-def order_unsynchronized(request, unused):
+def order_unsynchronized(request, organizations=None):
     """
     Return a list of unsynchronized orders.
 
     Required user level: Manager
 
-    Requires an unused parameter because of a competability issue between the
-    jsonrpc server en jsonrpclib client.
-
     Returns a list of Order objects.
+
+    organizations -- List of slugs of organizations for which unsynchronized
+    orders are retrieved. Authenticated user must be a manager in each organization.
 
     Example return value:
     [
@@ -81,8 +83,16 @@ def order_unsynchronized(request, unused):
         }
     ]
     """
+    if organizations is None:
+        organizations_objects = [request.organization]
+    else:
+        organizations_objects = Organization.objects.filter(slug__in=organizations)
+        for organization in organizations_objects:
+            if not request.user.profile.is_manager(organization):
+                raise PermissionDenied
+
     result = []
-    orders = Order.objects.filter(authorization__organization=request.organization, synchronized=False)
+    orders = Order.objects.filter(authorization__organization__in=organizations_objects, synchronized=False)
 
     orders = orders.select_related('authorization__user', 'event').prefetch_related('purchases__product')
 
