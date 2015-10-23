@@ -12,32 +12,6 @@ from apps.billing.models import Order, Purchase, RfidCard, Authorization, Produc
 from .exceptions import ForbiddenError
 
 
-def rfid_to_identifier(rfid):
-    if 'atqa' not in rfid:
-        raise InvalidParamsError('atqa value required')
-    if 'sak' not in rfid:
-        raise InvalidParamsError('sak value required')
-    if 'uid' not in rfid:
-        raise InvalidParamsError('uid value required')
-
-    if rfid['atqa'] == "00:04" and rfid['sak'] == "08":
-        # MIFARE Classic 1k
-        ia_rfid_prefix = '02'
-    elif rfid['atqa'] == "00:02" and rfid['sak'] == "18":
-        # MIFARE Classic 4k
-        ia_rfid_prefix = '03'
-    elif rfid['atqa'] == "03:44" and rfid['sak'] == "20":
-        # MIFARE DESFire
-        ia_rfid_prefix = '04'
-    elif rfid['atqa'] == "00:44" and rfid['sak'] == "00":
-        # MIFARE Ultralight
-        ia_rfid_prefix = '05'
-    else:
-        raise InvalidParamsError('atqa/sak combination unknown')
-
-    return '%s,%s' % (ia_rfid_prefix, rfid['uid'])
-
-
 def _get_validate_event(request, event_id):
     """
     Get and validate access to the given event id.
@@ -60,15 +34,21 @@ def _get_validate_event(request, event_id):
 
     return event
 
+def _preprocess_rfiddata(rfid_data):
+    return {
+        'atqa': rfid_data['atqa'].replace(':', '').lower(),
+        'sak': rfid_data['sak'].replace(':', '').lower(),
+        'uid': rfid_data['uid'].replace(':', '').lower()
+    }
+
 
 @jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
 def juliana_rfid_get(request, event_id, rfid):
     event = _get_validate_event(request, event_id)
-
-    identifier = rfid_to_identifier(rfid=rfid)
+    rfid = _preprocess_rfiddata(rfid)
 
     try:
-        card = RfidCard.objects.get(identifier=identifier, is_active=True)
+        card = RfidCard.objects.get(atqa=rfid['atqa'], sak=rfid['sak'], uid=rfid['uid'], is_active=True)
     except RfidCard.DoesNotExist:
         raise InvalidParamsError('RFID card not found')
 
@@ -96,12 +76,11 @@ def juliana_rfid_get(request, event_id, rfid):
 def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     """Saves a new order in the database"""
     event = _get_validate_event(request, event_id)
-
-    rfid_identifier = rfid_to_identifier(rfid=rfid_data)
+    rfid_data = _preprocess_rfiddata(rfid_data)
 
     try:
         user = User.objects.get(pk=user_id)
-        rfidcard = RfidCard.objects.get(identifier=rfid_identifier, is_active=True)
+        rfidcard = RfidCard.objects.get(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
     except User.DoesNotExist:
         raise InvalidParamsError('User does not exist')
     except RfidCard.DoesNotExist:

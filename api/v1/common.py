@@ -31,9 +31,17 @@ def format_order(order):
         'price': p.price,
     } for p in order.purchases.all()]
 
+    rfid = None
+    if order.rfidcard:
+        rfid = {
+            'atqa': order.rfidcard.atqa,
+            'sak': order.rfidcard.sak,
+            'uid': order.rfidcard.uid
+        }
+
     return {
         'id': order.pk,
-        'rfid': order.rfidcard.identifier if order.rfidcard else None,
+        'rfid': rfid,
         'event': format_event(order.event),
         'authorization': format_authorization(order.authorization),
         'placed_at': order.placed_at.isoformat(),
@@ -48,7 +56,9 @@ def format_rfidcard(rfidcard):
     :type rfidcard: apps.billing.models.RfidCard
     """
     return {
-        'identifier': rfidcard.identifier,
+        'atqa': rfidcard.atqa,
+        'sak': rfidcard.sak,
+        'uid': rfidcard.uid,
         'registered_at': rfidcard.registered_at.isoformat(),
         'user': rfidcard.user.username,
     }

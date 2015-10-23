@@ -8,79 +8,8 @@ from jsonrpc.exceptions import InvalidParamsError
 from apps.billing.models import RfidCard
 from .common import format_authorization
 from .exceptions import ForbiddenError
-from .juliana import _get_validate_event, rfid_to_identifier
+from .juliana import _get_validate_event
 from utils.tests import TestCase, APITestCase
-
-
-class JulianaRfidToIdentifierTest(SimpleTestCase):
-    """
-    Tests for the api.v1.juliana.rfid_to_identifier method.
-    """
-
-    def test_mifare_clasic_1k(self):
-        rfid = {
-            'atqa': '00:04',
-            'sak': '08',
-            'uid': '98:ab:54:ef',
-        }
-        self.assertEqual(rfid_to_identifier(rfid), '02,98:ab:54:ef')
-
-    def test_mifare_clasic_4k(self):
-        rfid = {
-            'atqa': '00:02',
-            'sak': '18',
-            'uid': '98:ab:54:ef',
-        }
-        self.assertEqual(rfid_to_identifier(rfid), '03,98:ab:54:ef')
-
-    def test_mifare_clasic_desfire(self):
-        rfid = {
-            'atqa': '03:44',
-            'sak': '20',
-            'uid': '98:ab:54:ef:10:cb:76',
-        }
-        self.assertEqual(rfid_to_identifier(rfid), '04,98:ab:54:ef:10:cb:76')
-
-    def test_mifare_clasic_ultralight(self):
-        rfid = {
-            'atqa': '00:44',
-            'sak': '00',
-            'uid': '98:ab:54:ef:10:cb:76',
-        }
-        self.assertEqual(rfid_to_identifier(rfid), '05,98:ab:54:ef:10:cb:76')
-
-    def test_mifare_invalid_combination(self):
-        rfid = {
-            'atqa': '00:05',
-            'sak': '08',
-            'uid': '98:ab:54:ef',
-        }
-        with self.assertRaises(InvalidParamsError):
-            rfid_to_identifier(rfid)
-
-    def test_mifare_no_atqa(self):
-        rfid = {
-            'sak': '08',
-            'uid': '98:ab:54:ef',
-        }
-        with self.assertRaises(InvalidParamsError):
-            rfid_to_identifier(rfid)
-
-    def test_mifare_no_sak(self):
-        rfid = {
-            'atqa': '00:04',
-            'uid': '98:ab:54:ef',
-        }
-        with self.assertRaises(InvalidParamsError):
-            rfid_to_identifier(rfid)
-
-    def test_mifare_no_uid(self):
-        rfid = {
-            'atqa': '00:04',
-            'sak': '08',
-        }
-        with self.assertRaises(InvalidParamsError):
-            rfid_to_identifier(rfid)
 
 
 class JulianaGetValidateEventTest(TestCase):
@@ -216,7 +145,7 @@ class JulianaTest(APITestCase):
             'uid': '98:ab:54:ef',
         }
 
-        self.data['user2'].rfids.create(identifier='02,98:ab:54:ef', is_active=True)
+        self.data['user2'].rfids.create(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
         authorization = self.data['user2'].authorizations.create(organization=self.data['organization1'])
         # Ignore microseconds
         authorization.start_date = authorization.start_date.replace(microsecond=0)
@@ -260,7 +189,7 @@ class JulianaTest(APITestCase):
             'uid': '98:ab:54:ef',
         }
 
-        rfidcard = RfidCard(identifier='02,98:ab:54:ef', is_active=True, user=self.data['user2'])
+        rfidcard = RfidCard(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True, user=self.data['user2'])
         rfidcard.save()
 
         self.send_and_compare_request_error(
@@ -275,12 +204,12 @@ class JulianaTest(APITestCase):
         event_id = self.data['event1'].id
 
         rfid_data = {
-            'atqa': '00:04',
+            'atqa': '0004',
             'sak': '08',
             'uid': '98:ab:54:ef',
         }
 
-        self.data['user2'].rfids.create(identifier='02,98:ab:54:ef', is_active=True)
+        self.data['user2'].rfids.create(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
         self.data['user2'].authorizations.create(organization=self.data['organization2'])
 
         self.send_and_compare_request_error(

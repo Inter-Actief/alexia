@@ -25,22 +25,16 @@ def rfid_list(request, radius_username=None):
     Example return value:
     [
         {
-            "identifier": "02,98:76:54:32",
+            "atqa": "0004",
+            "sak": "08",
+            "uid": "98765432",
             "registered_at": "2014-09-21T14:16:06+00:00"
             "user": "s0000000"
         },
         {
-            "identifier": "02,dd:ee:ff:00",
-            "registered_at": "2014-09-21T14:16:06+00:00"
-            "user": "s0000000"
-        },
-        {
-            "identifier": "03,fe:dc:ba:98",
-            "registered_at": "2014-09-21T14:16:06+00:00"
-            "user": "s0000000"
-        },
-        {
-            "identifier": "05,01:23:45:67:89:ab:cd",
+            "atqa": "0044",
+            "sak": "00",
+            "uid": "0123456789abcd",
             "registered_at": "2014-09-21T14:16:06+00:00"
             "user": "s0000019"
         }
@@ -61,42 +55,10 @@ def rfid_list(request, radius_username=None):
     return result
 
 
-@jsonrpc_method('rfid.get(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
-@manager_required
-def rfid_get(request, radius_username):
-    """
-    ***DEPRECATED***
-    Retrieve registered RFID cards for a specified user and current selected
-    organization.
-
-    Required user level: Manager
-
-    Returns an array of registered RFID cards.
-
-    radius_username    -- RADIUS username to search for.
-
-    Example return value:
-    [
-        "02,98:76:54:32",
-        "02,dd:ee:ff:00",
-        "03,fe:dc:ba:98",
-        "05,01:23:45:67:89:ab:cd"
-    ]
-    """
-
-    result = []
-    rfidcards = RfidCard.objects.filter(user__profile__radius_username=radius_username, managed_by=request.organization)
-
-    for rfidcard in rfidcards:
-        result.append(rfidcard.identifier)
-
-    return result
-
-
-@jsonrpc_method('rfid.add(radius_username=String, identifier=String) -> Object', site=api_v1_site, authenticated=True)
+@jsonrpc_method('rfid.add(radius_username=String, atqa=String, sak=String, uid=String) -> Object', site=api_v1_site, authenticated=True)
 @manager_required
 @transaction.atomic()
-def rfid_add(request, radius_username, identifier):
+def rfid_add(request, radius_username, atqa, sak, uid):
     """
     Add a new RFID card to the specified user.
 
@@ -105,11 +67,15 @@ def rfid_add(request, radius_username, identifier):
     Returns the RFID card on success.
 
     radius_username    -- RADIUS username to search for.
-    identifier         -- RFID card hardware identiefier.
+    atqa               -- ATQA of the card (hexadecimal lowercase string, no colons)
+    sak                -- SAK of the card (hexadecimal lowercase string, no colons)
+    uid                -- UID of the card (hexadecimal lowercase string, no colons)
 
     Example return value:
     {
-        "identifier": "02,98:76:54:32",
+        "atqa": "0004",
+        "sak": "08",
+        "uid": "98765432",
         "registered_at": "2014-09-21T14:16:06+00:00"
         "user": "s0000000"
     }
@@ -125,12 +91,12 @@ def rfid_add(request, radius_username, identifier):
         raise InvalidParametersError('User with provided radius_username does not exits')
 
     try:
-        rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
+        rfidcard = RfidCard.objects.select_for_update().get(user=user, atqa=atqa, sak=sak, uid=uid)
     except RfidCard.DoesNotExist:
-        if RfidCard.objects.select_for_update().filter(identifier=identifier).exists():
-            raise InvalidParametersError('RFID card with provided identifier already registered by someone else')
+        if RfidCard.objects.select_for_update().filter(atqa=atqa, sak=sak, uid=uid).exists():
+            raise InvalidParametersError('RFID card already registered by someone else')
 
-        rfidcard = RfidCard(user=user, identifier=identifier, is_active=True)
+        rfidcard = RfidCard(user=user, atqa=atqa, sak=sak, uid=uid, is_active=True)
         rfidcard.save()
 
     if request.organization not in rfidcard.managed_by.all().select_for_update():
@@ -138,28 +104,30 @@ def rfid_add(request, radius_username, identifier):
         rfidcard.save()
         return format_rfidcard(rfidcard)
     else:
-        raise InvalidParametersError('RFID card with provided identifier already exists for this person')
+        raise InvalidParametersError('RFID card already exists for this person')
 
 
-@jsonrpc_method('rfid.remove(radius_username=String, identifier=String) -> Nil',
+@jsonrpc_method('rfid.remove(radius_username=String, atqa=String, sak=String, uid=String) -> Nil',
                 site=api_v1_site, authenticated=True)
 @manager_required
 @transaction.atomic()
-def rfid_remove(request, radius_username, identifier):
+def rfid_remove(request, radius_username, atqa, sak, uid):
     """
     Remove a RFID card from the specified user.
 
     Required user level: Manager
 
     radius_username    -- RADIUS username to search for.
-    identifier         -- RFID card hardware identiefier.
+    atqa               -- ATQA of the card (hexadecimal lowercase string, no colons)
+    sak                -- SAK of the card (hexadecimal lowercase string, no colons)
+    uid                -- UID of the card (hexadecimal lowercase string, no colons)
 
     Raises error 404 if provided order id cannot be found.
     """
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user__profile__radius_username=radius_username,
-                                                            identifier=identifier)
+                                                            atqa=atqa, sak=sak, uid=uid)
     except RfidCard.DoesNotExist:
         raise NotFoundError
 

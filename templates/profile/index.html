@@ -76,7 +76,7 @@
                                 {% for rfid_card in user.rfids.all %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ rfid_card.identifier }}</td>
+                                    <td>{{ rfid_card.uid }}</td>
                                     <td>
                                     {% if rfid_card.is_active %}
                                         {% trans 'Yes' %}
