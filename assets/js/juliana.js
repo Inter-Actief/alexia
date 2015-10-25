@@ -123,6 +123,7 @@ Scanner = {
                 Receipt.pay(rfid);
             } else {
                 console.log('Info: receipt empty');
+                Display.set('Please select products!');
             }
         } else if (State.current === State.CHECK) {
             console.log('Requesting check');
