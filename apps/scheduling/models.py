@@ -401,6 +401,14 @@ class Availability(models.Model):
     def is_no(self):
         return self.nature == Availability.NO
 
+    def css_class(self):
+        if self.is_yes():
+            return 'success'
+        if self.is_maybe():
+            return 'warning'
+        if self.is_no():
+            return 'danger'
+
     def get_absolute_url(self):
         return reverse('availability_detail', args=[self.pk])
 

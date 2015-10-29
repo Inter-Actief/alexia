@@ -1,3 +1,4 @@
+import collections
 from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
@@ -114,19 +115,19 @@ def event_show(request, pk):
     if event.organizer != request.organization:
         raise PermissionDenied
 
-    tenders = Membership.objects.filter(
+    tenders = Membership.objects.select_related('user').filter(
         organization__in=event.participants.all(), is_tender=True). \
         order_by("user__first_name")
+    bas = collections.defaultdict(list)
 
-    availability = BartenderAvailability.objects.filter(event=event)
-    available_yes = availability.filter(
-        availability__nature=Availability.YES). \
-        values_list('user_id', flat=True)
-    available_maybe = availability.filter(
-        availability__nature=Availability.MAYBE). \
-        values_list('user_id', flat=True)
-    available_no = availability.filter(
-        availability__nature=Availability.NO).values_list('user_id', flat=True)
+    for ba in BartenderAvailability.objects.select_related().filter(event=event):
+        bas[ba.user].append(ba)
+
+    availabilities = []
+    for t in tenders:
+        ba = bas[t.user]
+        a = ba[0].availability if ba else None
+        availabilities.append(dict({'user': t.user, 'availability': a}))
 
     is_manager = request.user.profile.is_manager(request.organization)
 

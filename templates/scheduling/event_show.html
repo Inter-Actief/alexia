@@ -92,22 +92,15 @@
     <div class="col-xs-12 col-sm-6">
         <h3>{% trans 'Bartenders' %}</h3>
         <table class="table table-condensed">
-            {% for tender in tenders %}
+            {% for a in availabilities %}
             <tr>
-                <td>{{ tender.user.first_name }} {{ tender.user.last_name }}</td>
+                <td>{{ a.user.get_full_name }}</td>
                 <td>
-                    <a href="{% url 'apps.scheduling.views.event_edit_bartender_availability' pk=event.pk user_pk=tender.user.pk %}">
-                        {% if tender.user.pk in available_yes %}
-                        <span class="label label-success">{% trans 'Yes' %}</span>
-                        {% elif tender.user.pk in available_maybe %}
-                        <span class="label label-warning">{% trans 'Maybe' %}</span>
-                        {% elif tender.user.pk in available_no %}
-                        <span class="label label-danger">{% trans 'No' %}</span>
-                        {% else %}
-                        <span class="label label-default">{% trans 'Unknown' %}</span>
-                        {% endif %}
+                    <a href="{% url 'apps.scheduling.views.event_edit_bartender_availability' pk=event.pk user_pk=a.user.pk %}">
+                        <span class="label label-{{ a.availability.css_class|default:'default' }}">{{ a.availability|default:_("Unknown") }}</span>
                     </a>
                 </td>
+            </tr>
             </tr>
             {% endfor %}
         </table>
