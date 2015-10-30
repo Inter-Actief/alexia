@@ -8,7 +8,7 @@ from utils.tests import APITestCase
 class BillingTest(APITestCase):
 
     def test_order_unsynchronized_empty(self):
-        self.send_and_compare_request('order.unsynchronized', [0], [])
+        self.send_and_compare_request('order.unsynchronized', [None], [])
 
     def test_order_unsynchronized(self):
         # Load data
@@ -21,7 +21,7 @@ class BillingTest(APITestCase):
             format_order(self.data['order2']),
         ]
 
-        self.send_and_compare_request('order.unsynchronized', [0], expected_result)
+        self.send_and_compare_request('order.unsynchronized', [None], expected_result)
 
     def test_order_unsynchronized_synchronized(self):
         # Load data
@@ -36,7 +36,7 @@ class BillingTest(APITestCase):
             format_order(self.data['order2']),
         ]
 
-        self.send_and_compare_request('order.unsynchronized', [0], expected_result)
+        self.send_and_compare_request('order.unsynchronized', [None], expected_result)
 
     def test_order_marksynchronized(self):
         # Load data
