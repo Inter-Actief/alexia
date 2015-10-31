@@ -1115,8 +1115,8 @@ msgstr "Fusten"
 msgid "Risky activity"
 msgstr "Risicoactiviteit"
 
-msgid "Kassa"
-msgstr "Point of sale"
+msgid "Point of sale"
+msgstr "Kassa"
 
 msgid "AJAX-request required"
 msgstr "AJAX-request verplicht"
