@@ -10,7 +10,6 @@ from utils.auth.decorators import manager_required
 
 
 @jsonrpc_method('order.unsynchronized(organizations=Array) -> Array', site=api_v1_site, safe=True, authenticated=True)
-@manager_required
 def order_unsynchronized(request, organizations=None):
     """
     Return a list of unsynchronized orders.
@@ -84,6 +83,8 @@ def order_unsynchronized(request, organizations=None):
     ]
     """
     if organizations is None:
+        if not request.organization or not request.user.profile.is_manager(request.organization):
+            raise PermissionDenied
         organizations_objects = [request.organization]
     else:
         organizations_objects = Organization.objects.filter(slug__in=organizations)
