@@ -83,13 +83,14 @@ def order_unsynchronized(request, organizations=None):
     ]
     """
     if organizations is None:
-        if not request.organization or not request.user.profile.is_manager(request.organization):
+        if not request.user.is_superuser and (not request.organization or
+                                              not request.user.profile.is_manager(request.organization)):
             raise PermissionDenied
         organizations_objects = [request.organization]
     else:
         organizations_objects = Organization.objects.filter(slug__in=organizations)
         for organization in organizations_objects:
-            if not request.user.profile.is_manager(organization):
+            if not request.user.is_superuser and not request.user.profile.is_manager(organization):
                 raise PermissionDenied
 
     result = []
