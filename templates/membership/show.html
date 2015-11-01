@@ -14,9 +14,6 @@
             <dt>{% trans 'Name' %}</dt>
             <dd>{{ membership.user.get_full_name|default:"&mdash;" }}</dd>
 
-            <dt>{% trans 'RADIUS username' %}</dt>
-            <dd>{{ membership.user.profile.radius_username|default:"&mdash;" }}</dd>
-
             <dt>{% trans 'Email address' %}</dt>
             <dd>{{ membership.user.email|default:"&mdash;" }}</dd>
         </dl>

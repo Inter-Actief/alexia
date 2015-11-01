@@ -12,7 +12,7 @@
         <div class="well">
             <dl class="dl-vertical">
                 <dt>{% trans 'RADIUS username' %}</dt>
-                <dd>{{ user.profile.radius_username|default:"&mdash;" }}</dd>
+                <dd>{{ radius_username|default:"&mdash;" }}</dd>
                 <dt>{% trans 'Email address' %} <a href="{% url 'apps.profile.views.edit' %}">({% trans 'edit' %})</a></dt>
                 <dd>{{ user.email }}</dd>
             </dl>

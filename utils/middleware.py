@@ -12,7 +12,7 @@ class ProfileRequirementMiddleware(object):
             return redirect(register)
 
         if request.user.is_authenticated() and not Profile.objects.filter(user=request.user).exists():
-            Profile(user=request.user, radius_username='').save()
+            Profile(user=request.user).save()
 
 
 class PrimaryOrganizationMiddleware(object):

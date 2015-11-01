@@ -7,8 +7,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from utils import log
 from utils.auth.decorators import manager_required
+from utils.auth.backends import RADIUS_BACKEND_NAME
 from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm
-from .models import Membership, Profile
+from .models import Membership, Profile, AuthenticationData
 
 
 @login_required
@@ -35,11 +36,12 @@ def membership_add(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             try:
-                profile = Profile.objects.get(radius_username=username)
-            except Profile.DoesNotExist:
+                authentication_data = AuthenticationData.objects.get(
+                    username=username, backend=RADIUS_BACKEND_NAME)
+            except AuthenticationData.DoesNotExist:
                 return redirect(membership_create_user, username=username)
 
-            user = profile.user
+            user = authentication_data.user
             membership, membership_created = Membership.objects.get_or_create(
                 user=user, organization=request.organization)
             if membership_created:
@@ -55,10 +57,10 @@ def membership_add(request):
 @manager_required
 def membership_create_user(request, username):
     try:
-        Profile.objects.get(radius_username=username)
+        AuthenticationData.objects.get(username=username, backend=RADIUS_BACKEND_NAME)
         # Account already exists
         raise Http404
-    except Profile.DoesNotExist:
+    except AuthenticationData.DoesNotExist:
         pass
 
     if request.method == 'POST':
@@ -69,7 +71,10 @@ def membership_create_user(request, username):
             user.set_unusable_password()
             user.save()
 
-            profile = Profile(user=user, radius_username=username)
+            data = AuthenticationData(user=user, backend=RADIUS_BACKEND_NAME, username=username)
+            data.save()
+
+            profile = Profile(user=user)
             profile.save()
 
             membership, membership_created = Membership.objects.get_or_create(

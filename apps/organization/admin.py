@@ -18,7 +18,7 @@ class ProfileInline(admin.StackedInline):
     model = Profile
     max_num = 1
     can_delete = False
-    fields = ('radius_username', 'is_bhv', 'is_iva')
+    fields = ('is_bhv', 'is_iva')
 
 
 class UserAdmin(UserAdmin):

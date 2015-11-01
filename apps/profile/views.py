@@ -9,7 +9,9 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
 from apps.billing.models import Order
+from apps.organization.models import AuthenticationData
 from utils.auth.decorators import tender_required
+from utils.auth.backends import RADIUS_BACKEND_NAME
 from .forms import ProfileForm, IvaForm
 
 
@@ -29,6 +31,11 @@ def index(request):
         else:
             percentage = (my_order_sum['total'] / all_order_sum['total']) * 100
         shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
+
+    try:
+        radius_username = request.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+    except AuthenticationData.DoesNotExist:
+        radius_username = None
 
     return render(request, 'profile/index.html', locals())
 
@@ -70,7 +77,6 @@ def iva(request):
             # Save the new
             certificate = form.save(commit=False)
             certificate._id = str(profile.user.pk)
-            certificate._radius = profile.radius_username
             certificate.save()
             # Attach to profile
             profile.certificate = certificate

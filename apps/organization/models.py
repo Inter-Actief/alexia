@@ -216,7 +216,7 @@ class Membership(models.Model):
 def get_certificate_path(instance, filename):
     path = "certificates"
     ext = os.path.splitext(filename)[1]
-    filename = instance._radius if instance._radius else "user" + instance._id
+    filename = "user" + instance._id
     return os.path.join(path, filename + ext)
 
 

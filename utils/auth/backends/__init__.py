@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 
 from apps.organization.models import Profile, AuthenticationData
 
+RADIUS_BACKEND_NAME = "utils.auth.backends.radius.RadiusBackend"
+
 
 def get_or_create_user(backend, username):
     try:
