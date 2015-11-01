@@ -381,9 +381,10 @@ pre_save.connect(notify_tenders, Event)
 
 class Availability(models.Model):
     ASSIGNED = 'A'
+    YES = 'Y'
     MAYBE = 'M'
     NO = 'N'
-    NATURES = ((ASSIGNED, _("Assigned")), (MAYBE, _("Maybe")), (NO, _("No")))
+    NATURES = ((ASSIGNED, _("Assigned")), (YES, _("Yes")), (MAYBE, _("Maybe")), (NO, _("No")))
 
     organization = models.ForeignKey(
         'organization.Organization', related_name='availabilities',
@@ -395,6 +396,9 @@ class Availability(models.Model):
     def is_assigned(self):
         return self.nature == Availability.ASSIGNED
 
+    def is_yes(self):
+        return self.nature == Availability.YES
+
     def is_maybe(self):
         return self.nature == Availability.MAYBE
 
@@ -404,6 +408,8 @@ class Availability(models.Model):
     def css_class(self):
         if self.is_assigned():
             return 'info'
+        if self.is_yes():
+            return 'success'
         if self.is_maybe():
             return 'warning'
         if self.is_no():
