@@ -88,8 +88,14 @@ def overview(request):
             .select_related(None).prefetch_related(None).order_by()
 
     # Beschikbaarheden in een lijstje stoppen
-    availabilities = list(request.organization.availabilities.all()) \
-        if request.organization else []
+    if not request.organization:
+        availabilities = []
+    elif request.user.is_superuser \
+            or request.user.profile.is_planner(request.organization) \
+            or not request.organization.assigns_tenders:
+        availabilities = list(request.organization.availabilities.all())
+    else:
+        availabilities = list(request.organization.availabilities.exclude(nature=Availability.ASSIGNED))
     # Net als onze BartenderAvailabilities
     bartender_availabilities = BartenderAvailability.objects.filter(
         user_id=request.user.pk).values('event_id', 'availability_id')
@@ -240,6 +246,14 @@ def set_bartender_availability(request):
     if (request.organization not in event.participants.all()) or \
             not request.user.profile.is_tender(request.organization) or \
             event.is_closed:
+        raise PermissionDenied
+
+    # When the organizer assigns tenders, only planners and higher are allowed
+    # to set availability to assigned.
+    if event.organizer.assigns_tenders and \
+            not request.user.is_superuser and \
+            not request.user.profile.is_planner(event.organizer) and \
+            availability.nature == Availability.ASSIGNED:
         raise PermissionDenied
 
     if request.method == 'POST' and request.is_ajax():
