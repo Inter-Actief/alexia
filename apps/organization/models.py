@@ -155,6 +155,7 @@ class Organization(models.Model):
     color = models.CharField(verbose_name=_('Color'), blank=True, max_length=6,
                              validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
                                                         message=_('Enter a valid hexadecimal color'))])
+    assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     members = models.ManyToManyField(
         User, through='Membership', verbose_name=_('users'))
 
