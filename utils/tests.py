@@ -120,7 +120,7 @@ class TestCase(TransactionTestCase, testcases.TestCase):
 
         data['availability1'] = Availability(organization=data['organization1'],
                                              name='Yes',
-                                             nature=Availability.YES)
+                                             nature=Availability.ASSIGNED)
         data['availability1'].save()
 
         data['availability2'] = Availability(organization=data['organization1'],

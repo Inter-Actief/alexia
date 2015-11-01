@@ -13,7 +13,7 @@ from .models import Event, Availability
 @tender_required
 def bartender(request):
     events = Event.objects.filter(ends_at__gte=timezone.now(),
-                                  bartender_availabilities__availability__nature=Availability.YES,
+                                  bartender_availabilities__availability__nature=Availability.ASSIGNED,
                                   bartender_availabilities__user=request.user).order_by('starts_at')
 
     return render(request, 'scheduling/overview_bartender.html', locals())
@@ -60,7 +60,7 @@ def calendar_fetch(request):
                                         event.participants.all())),
             'location': ', '.join(map(lambda x: x.name, event.location.all())),
             'tenders': ', '.join(map(lambda x: x.user.first_name,
-                                     event.get_available_bartenders())) or '<i>geen</i>',
+                                     event.get_assigned_bartenders())) or '<i>geen</i>',
             'canEdit': request.user.profile.is_planner(event.organizer) if hasattr(request.user, 'profile') else False,
             'editUrl': event.get_absolute_url()
         })

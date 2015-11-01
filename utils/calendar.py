@@ -36,7 +36,7 @@ def generate_ical(events, name='Alexia', tender=False):
         if description:
             e.add('description', description)
 
-        for ba in event.get_available_bartenders():
+        for ba in event.get_assigned_bartenders():
             bartender = icalendar.vCalAddress('MAILTO:noreply@alex.ia.utwente.nl')
             bartender.params['cn'] = icalendar.vText(ba.user.get_full_name())
             bartender.params['partstat'] = icalendar.vText('ACCEPTED')

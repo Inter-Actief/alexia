@@ -73,7 +73,7 @@ class Profile(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__gte=timezone.now(),
-            availability__nature=Availability.YES) \
+            availability__nature=Availability.ASSIGNED) \
             .order_by('event__starts_at')[0].event
 
     def ical_url(self):
@@ -145,7 +145,7 @@ class Profile(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
-            availability__nature=Availability.YES).count()
+            availability__nature=Availability.ASSIGNED).count()
 
 
 class Organization(models.Model):
@@ -203,7 +203,7 @@ class Membership(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
-            availability__nature=Availability.YES). \
+            availability__nature=Availability.ASSIGNED). \
             order_by('-event__starts_at')
 
 

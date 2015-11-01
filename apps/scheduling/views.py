@@ -41,12 +41,12 @@ def overview(request):
         'participants', 'location').order_by('starts_at')
     events = events.prefetch_related(Prefetch('bartender_availabilities',
                                               queryset=BartenderAvailability.objects.filter(
-                                                  availability__nature=Availability.YES),
-                                              to_attr='bartender_availabilities_yes'),
-                                     'bartender_availabilities_yes__user',
+                                                  availability__nature=Availability.ASSIGNED),
+                                              to_attr='bartender_availabilities_assigned'),
+                                     'bartender_availabilities_assigned__user',
                                      Prefetch('bartender_availabilities',
                                               queryset=BartenderAvailability.objects.filter(
-                                                  Q(availability__nature=Availability.YES),
+                                                  Q(availability__nature=Availability.ASSIGNED),
                                                   Q(user__profile__is_iva=True) |
                                                   Q(user__profile__certificate__approved_at__isnull=False)),
                                               to_attr='bartender_availabilities_iva'),
@@ -83,7 +83,7 @@ def overview(request):
     events = events.distinct()
 
     if request.user.is_authenticated():
-        events_tending = events.filter(bartender_availabilities__availability__nature=Availability.YES,
+        events_tending = events.filter(bartender_availabilities__availability__nature=Availability.ASSIGNED,
                                        bartender_availabilities__user=request.user) \
             .select_related(None).prefetch_related(None).order_by()
 
@@ -288,7 +288,7 @@ def ical(request):
 def personal_ical(request, ical_id):
     profile = get_object_or_404(Profile, ical_id=ical_id)
     bas = profile.user.bartender_availability_set.filter(
-        availability__nature=Availability.YES,
+        availability__nature=Availability.ASSIGNED,
         event__starts_at__gte=timezone.now() - timedelta(100)
     ). order_by('event__starts_at')
     events = []

@@ -336,12 +336,12 @@ class Event(models.Model):
                         if f not in self._meta.parents.values()])
         return self.__class__(**initial)
 
-    def get_available_bartenders(self):
+    def get_assigned_bartenders(self):
         # Result could be cached by earlier call or prefetch
-        if not hasattr(self, 'bartender_availabilities_yes'):
-            self.bartender_availabilities_yes = self.bartender_availabilities.filter(
-                availability__nature=Availability.YES)
-        return self.bartender_availabilities_yes
+        if not hasattr(self, 'bartender_availabilities_assigned'):
+            self.bartender_availabilities_assigned = self.bartender_availabilities.filter(
+                availability__nature=Availability.ASSIGNED)
+        return self.bartender_availabilities_assigned
 
     def can_be_opened(self):
         now = timezone.now()
@@ -353,13 +353,13 @@ class Event(models.Model):
         """
         Returns if the given person is a tender for this event.
         """
-        return person in [ba.user for ba in self.get_available_bartenders()]
+        return person in [ba.user for ba in self.get_assigned_bartenders()]
 
     def meets_iva_requirement(self):
         # Result could be cached by earlier call or prefetch
         if not hasattr(self, 'bartender_availabilities_iva'):
             self.bartender_availabilities_iva = self.bartender_availabilities.filter(
-                Q(availability__nature=Availability.YES),
+                Q(availability__nature=Availability.ASSIGNED),
                 Q(user__profile__is_iva=True) | Q(user__profile__certificate__approved_at__isnull=False)).exists()
 
         return bool(self.bartender_availabilities_iva)
@@ -380,10 +380,10 @@ pre_save.connect(notify_tenders, Event)
 
 
 class Availability(models.Model):
-    YES = 'Y'
+    ASSIGNED = 'A'
     MAYBE = 'M'
     NO = 'N'
-    NATURES = ((YES, _("Yes")), (MAYBE, _("Maybe")), (NO, _("No")))
+    NATURES = ((ASSIGNED, _("Assigned")), (MAYBE, _("Maybe")), (NO, _("No")))
 
     organization = models.ForeignKey(
         'organization.Organization', related_name='availabilities',
@@ -392,8 +392,8 @@ class Availability(models.Model):
     nature = models.CharField(
         _("nature"), max_length=1, choices=NATURES)
 
-    def is_yes(self):
-        return self.nature == Availability.YES
+    def is_assigned(self):
+        return self.nature == Availability.ASSIGNED
 
     def is_maybe(self):
         return self.nature == Availability.MAYBE
@@ -402,8 +402,8 @@ class Availability(models.Model):
         return self.nature == Availability.NO
 
     def css_class(self):
-        if self.is_yes():
-            return 'success'
+        if self.is_assigned():
+            return 'info'
         if self.is_maybe():
             return 'warning'
         if self.is_no():
