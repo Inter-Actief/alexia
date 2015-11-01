@@ -130,7 +130,7 @@ LOGGING = {
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'utils.auth.backends.RadiusBackend',
+    'utils.auth.backends.radius.RadiusBackend',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
