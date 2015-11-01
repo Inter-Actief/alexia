@@ -48,6 +48,13 @@ class Location(models.Model):
         return result
 
 
+class AuthenticationData(models.Model):
+    user = models.ForeignKey(User, verbose_name=_('user'))
+    backend = models.CharField(_('Authentication backend'), max_length=50)
+    username = models.CharField(_('Username'), max_length=50)
+    additional_data = models.TextField(_('Additional data'), null=True)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'))
     radius_username = models.CharField(_('RADIUS username'), max_length=10,
