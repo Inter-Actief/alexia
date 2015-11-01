@@ -1106,6 +1106,10 @@ msgstr "Tappersinstructie"
 msgid "No events have been planned from %(s)s until %(e)s."
 msgstr "Er zijn geen activiteiten gepland van %(s)s tot %(e)s."
 
+#, python-format
+msgid "No events have been planned after %(s)s."
+msgstr "Er zijn geen activiteiten gepland na %(s)s."
+
 msgid "Loading..."
 msgstr "Laden..."
 

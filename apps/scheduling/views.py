@@ -54,6 +54,7 @@ def overview(request):
 
     # Default from_time is now.
     from_time = timezone.now()
+    end_time = None
 
     # Filterformulier maken, al dan niet met huidige waarden
     if request.GET:
@@ -72,12 +73,14 @@ def overview(request):
                 from_time = data['from_time']
 
             if data['till_time']:
-                events = events.filter(starts_at__lte=data['till_time'])
+                end_time = data['till_time']
 
     else:
         filter_form = FilterEventForm()
 
     events = events.filter(ends_at__gte=from_time)
+    if end_time:
+        events = events.filter(starts_at__lte=end_time)
 
     # Dubbele resultaten weghalen
     events = events.distinct()
