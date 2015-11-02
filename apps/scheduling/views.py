@@ -271,7 +271,7 @@ def set_bartender_availability(request):
         else:
             log.availability_created(
                 request.user, event, request.user, availability)
-        return render(request, 'scheduling/partials/available_bartenders.html',
+        return render(request, 'scheduling/partials/assigned_bartenders.html',
                       {'e': event})
     else:
         # TODO Better error message and HTTP status code [JZ]

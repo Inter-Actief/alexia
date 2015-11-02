@@ -63,8 +63,8 @@
                     &mdash;
                     {% endif %}
                 </td>
-                <td id="available_bartenders_{{ e.pk }}">
-                    {% include 'scheduling/partials/available_bartenders.html' with e=e %}
+                <td id="assigned_bartenders_{{ e.pk }}">
+                    {% include 'scheduling/partials/assigned_bartenders.html' with e=e %}
                 </td>
                 {% if is_tender %}
                 <td>
