@@ -26,7 +26,7 @@ def event_list(request, start_date, start_time, end_date, end_time, only_unsynch
         if organizations is None:
             raise NotImplementedError("Please specify organizations when requesting unsynchronized events")
         for organization in organizations_objects:
-            if not request.user.profile.is_manager(organization):
+            if not request.user.is_superuser and not request.user.profile.is_manager(organization):
                 raise PermissionDenied
 
         events = events.filter(orders__synchronized=0).distinct()
