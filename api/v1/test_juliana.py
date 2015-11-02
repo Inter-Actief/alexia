@@ -140,9 +140,9 @@ class JulianaTest(APITestCase):
         event_id = self.data['event1'].id
 
         rfid_data = {
-            'atqa': '00:04',
+            'atqa': '0004',
             'sak': '08',
-            'uid': '98:ab:54:ef',
+            'uid': '98ab54ef',
         }
 
         self.data['user2'].rfids.create(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
@@ -167,9 +167,9 @@ class JulianaTest(APITestCase):
         event_id = self.data['event1'].id
 
         rfid_data = {
-            'atqa': '00:04',
+            'atqa': '0004',
             'sak': '08',
-            'uid': '98:ab:54:ef',
+            'uid': '98ab54ef',
         }
 
         self.send_and_compare_request_error(
@@ -184,9 +184,9 @@ class JulianaTest(APITestCase):
         event_id = self.data['event1'].id
 
         rfid_data = {
-            'atqa': '00:04',
+            'atqa': '0004',
             'sak': '08',
-            'uid': '98:ab:54:ef',
+            'uid': '98ab54ef',
         }
 
         rfidcard = RfidCard(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True, user=self.data['user2'])
@@ -206,7 +206,7 @@ class JulianaTest(APITestCase):
         rfid_data = {
             'atqa': '0004',
             'sak': '08',
-            'uid': '98:ab:54:ef',
+            'uid': '98ab54ef',
         }
 
         self.data['user2'].rfids.create(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
@@ -224,9 +224,9 @@ class JulianaTest(APITestCase):
         event_id = self.data['event1'].id * 100
 
         rfid_data = {
-            'atqa': '00:04',
+            'atqa': '0004',
             'sak': '08',
-            'uid': '98:ab:54:ef',
+            'uid': '98ab54ef',
         }
 
         self.send_and_compare_request_error(
