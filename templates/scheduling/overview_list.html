@@ -69,12 +69,14 @@
                 {% if is_tender %}
                 <td>
                     {% if not e.is_closed and request.organization in e.participants.all %}
+                    {% if not e.organizer.assigns_tenders or not user in e.get_assigned_bartenders %}
                     <select class="bartender_availability form-control" data-event-id="{{ e.pk }}">
                         <option value="-1">---</option>
                         {% for a in availabilities %}
                             <option value="{{ a.pk }}"{% for ba in bartender_availabilities %}{% if ba.event_id == e.pk and ba.availability_id == a.pk %} selected="selected"{% endif %}{% endfor %}>{{ a.name }}</option>
                         {% endfor %}
                     </select>
+                    {% endif %}
                     {% endif %}
                 </td>
                 {% endif %}

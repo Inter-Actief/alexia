@@ -341,7 +341,7 @@ class Event(models.Model):
         if not hasattr(self, 'bartender_availabilities_assigned'):
             self.bartender_availabilities_assigned = self.bartender_availabilities.filter(
                 availability__nature=Availability.ASSIGNED)
-        return self.bartender_availabilities_assigned
+        return [x.user for x in self.bartender_availabilities_assigned]
 
     def can_be_opened(self):
         now = timezone.now()
@@ -353,7 +353,7 @@ class Event(models.Model):
         """
         Returns if the given person is a tender for this event.
         """
-        return person in [ba.user for ba in self.get_assigned_bartenders()]
+        return person in self.get_assigned_bartenders()
 
     def meets_iva_requirement(self):
         # Result could be cached by earlier call or prefetch

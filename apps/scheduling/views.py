@@ -107,6 +107,9 @@ def overview(request):
     is_tender = request.organization and request.user.profile.is_tender(
         request.organization)
 
+    # Gebruiker opslaan
+    user = request.user
+
     return render(request, 'scheduling/overview_list.html', locals())
 
 
@@ -254,6 +257,13 @@ def set_bartender_availability(request):
             not request.user.is_superuser and \
             not request.user.profile.is_planner(event.organizer) and \
             availability.nature == Availability.ASSIGNED:
+        raise PermissionDenied
+
+    # And if you're already assigned, you can't change your own availability.
+    if event.organizer.assigns_tenders and \
+            not request.user.is_superuser and \
+            not request.user.profile.is_planner(event.organizer) and \
+            request.user in event.get_assigned_bartenders():
         raise PermissionDenied
 
     if request.method == 'POST' and request.is_ajax():

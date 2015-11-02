@@ -59,7 +59,7 @@ def calendar_fetch(request):
             'organizers': ', '.join(map(lambda x: x.name,
                                         event.participants.all())),
             'location': ', '.join(map(lambda x: x.name, event.location.all())),
-            'tenders': ', '.join(map(lambda x: x.user.first_name,
+            'tenders': ', '.join(map(lambda x: x.first_name,
                                      event.get_assigned_bartenders())) or '<i>geen</i>',
             'canEdit': request.user.profile.is_planner(event.organizer) if hasattr(request.user, 'profile') else False,
             'editUrl': event.get_absolute_url()
