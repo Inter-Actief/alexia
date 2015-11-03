@@ -24,7 +24,7 @@ $(function () {
             availability_id: $(this).val(),
             csrfmiddlewaretoken: getCookie('csrftoken')
         }, function (data) {
-            $('#available_bartenders_' + event_id).html(data).effect("highlight");
+            $('#assigned_bartenders_' + event_id).html(data).effect("highlight");
         }, "text");
     });
 
