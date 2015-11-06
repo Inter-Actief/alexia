@@ -22,20 +22,9 @@
                     },
                 {% endfor %}
             },
-            location: 'Abscint',
             androidapp: {{ androidapp|yesno:"true,false" }},
             countdown: {{ countdown }}
         };
-
-        /*
-         juliana_order_save(
-         event_id,
-         user_id,
-         [{'product': product_id,
-         'amount': amount,
-         'price': totalprice}]
-         );
-         */
     </script>
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-3.3.5.min.css">

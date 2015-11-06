@@ -262,15 +262,6 @@ Receipt = {
         } else if (userData.error) {
             State.toggleTo(State.ERROR, 'Error authenticating: ' + userData.error.message);
         } else {
-            /*
-             juliana_order_save(
-             event_id,
-             user_id,
-             [{'product': product_id,
-             'amount': amount,
-             'price': totalprice}]
-             );
-             */
             console.log('Userdata received correctly. Proceeding to countdown.');
 
             Receipt.payData = {
@@ -434,8 +425,6 @@ $(function () {
     Scanner.init();
 
     State.toggleTo(State.SALES);
-
-    $('#welcome').modal();
 
     $('.btn-keypad').click(function () {
         Input.stroke($(this).html());
