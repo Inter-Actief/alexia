@@ -441,6 +441,11 @@ $(function () {
         Input.stroke($(this).html());
     });
 
+    $(document).keypress(function (event) {
+        if(event.key >= '0' && event.key <= '9')
+            Input.stroke(event.key);
+    });
+
     $('.command').click(function () {
         var reset = true;
 
