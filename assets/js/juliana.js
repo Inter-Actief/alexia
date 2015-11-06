@@ -153,6 +153,7 @@ Receipt = {
     index: 0,
     receipt: [],
     counterInterval: null,
+    payData: null,
     add: function (product, quantity) {
         if (State.current !== State.SALES) {
             console.log('Error: not on SALES screen');
@@ -262,18 +263,11 @@ Receipt = {
              */
             console.log('Userdata received correctly. Proceeding to countdown.');
 
-            var data = {
+            Receipt.payData = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
                 purchases: Receipt.getReceipt(),
                 rfid_data: rfid
-            };
-
-            var rpcRequest = {
-                jsonrpc: '2.0',
-                method: 'juliana.order.save',
-                params: data,
-                id: 1
             };
 
             var countdown = 4;
@@ -281,12 +275,24 @@ Receipt = {
             Receipt.counterInterval = setInterval(function () {
                 $('#payment-countdown').text(countdown);
                 if (countdown === 0) {
-                    clearInterval(Receipt.counterInterval);
-                    Receipt.confirmPay(rpcRequest);
+                    Receipt.payNow();
                 }
                 countdown--;
             }, 1000);
         }
+    },
+    payNow: function () {
+        console.log('Processing payment now.');
+        var rpcRequest = {
+            jsonrpc: '2.0',
+            method: 'juliana.order.save',
+            params: Receipt.payData,
+            id: 1
+        };
+
+        clearInterval(Receipt.counterInterval);
+        Receipt.confirmPay(rpcRequest);
+
     },
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
@@ -451,6 +457,9 @@ $(function () {
                 break;
             case 'cancelPayment':
                 State.toggleTo(State.SALES);
+                break;
+            case 'payNow':
+                Receipt.payNow();
                 break;
             default:
                 Display.set('ongeimplementeerde functie');
