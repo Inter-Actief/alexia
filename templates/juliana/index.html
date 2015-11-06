@@ -23,7 +23,8 @@
                 {% endfor %}
             },
             location: 'Abscint',
-            androidapp: {{ androidapp|yesno:"true,false" }}
+            androidapp: {{ androidapp|yesno:"true,false" }},
+            countdown: {{ countdown }}
         };
 
         /*

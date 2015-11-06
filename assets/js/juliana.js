@@ -280,7 +280,7 @@ Receipt = {
                 rfid_data: rfid
             };
 
-            var countdown = 4;
+            var countdown = Settings.countdown - 1;
             $('#payment-countdown').text(countdown + 1);
             Receipt.counterInterval = setInterval(function () {
                 $('#payment-countdown').text(countdown);

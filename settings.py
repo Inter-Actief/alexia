@@ -162,6 +162,9 @@ RADIUS_SECRET = ''
 RADIUS_IDENTIFIER = ''
 RADIUS_DICT = os.path.join(CURRENT_DIR, 'utils/auth/radius.dict')
 
+# Countdown in Juliana
+JULIANA_COUNTDOWN = 5
+
 #
 #   Load local_settings.py
 #
