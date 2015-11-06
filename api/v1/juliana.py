@@ -118,13 +118,8 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     order.save()
 
     for p in purchases:
-        if p['product'][0:7] != 'product':
-            raise InvalidParamsError('Product %s invalid' % p['product'])
-
-        product_pk = int(p['product'][7:])
-
         try:
-            product = Product.objects.get(pk=product_pk)
+            product = Product.objects.get(pk=p['product'])
         except Product.DoesNotExist:
             raise InvalidParamsError('Product %s not found' % p['product'])
 
