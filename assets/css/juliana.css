@@ -176,3 +176,8 @@ body {
 #current-error {
     font-size:20px;
 }
+
+/* Mesage screen */
+#message-screen {
+	padding-top: 130px;
+}

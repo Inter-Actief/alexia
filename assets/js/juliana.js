@@ -29,6 +29,7 @@ State = {
     PAYING: 1,
     ERROR: 2,
     CHECK: 3,
+    MESSAGE: 4,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -78,6 +79,14 @@ State = {
 
                 $('#error-screen').show();
                 break;
+            case this.MESSAGE:
+                console.log('Changing to MESSAGE...');
+                this.current = this.MESSAGE;
+                this._hideAllScreens();
+
+                $('#current-message').html(argument);
+                $('#message-screen').show();
+                break;
             default:
                 console.log('Error: no known state');
                 break;
@@ -91,6 +100,7 @@ State = {
         $('#rfid-screen').hide();
         $('#cashier-screen').hide();
         $('#error-screen').hide();
+        $('#message-screen').hide();
     }
 };
 
@@ -302,6 +312,12 @@ Receipt = {
                 State.toggleTo(State.SALES);
             }
         });
+    },
+    cash: function () {
+        console.log('Paying cash');
+        var sum = Receipt.updateTotalAmount();
+        var amount = Math.ceil(sum / 10) * 10;
+        State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
     }
 };
 
@@ -384,10 +400,7 @@ User = {
             id: 1
         };
         IAjax.request(rpcRequest, function (data) {
-            State._hideAllScreens();
-            $('#payment-receipt').html(user.first_name + " heeft op deze borrel al &euro;" + (data.result / 100).toFixed(2) + " verbruikt.");
-            $('#countdownbox').hide();
-            $('#rfid-screen').show();
+            State.toggleTo(State.MESSAGE, user.first_name + " heeft op deze borrel al &euro;" + (data.result / 100).toFixed(2) + " verbruikt.");
         });
     }
 };
@@ -448,18 +461,16 @@ $(function () {
                 Display.set('Scan een kaart');
                 break;
             case 'cash':
-                var sum = Receipt.updateTotalAmount();
-                var amount = Math.ceil(sum / 10) * 10;
-                State._hideAllScreens();
-                $('#payment-receipt').html('Dat wordt dan &euro;' + (amount/100).toFixed(2));
-                $('#countdownbox').hide();
-                $('#rfid-screen').show();
+                Receipt.cash();
                 break;
             case 'cancelPayment':
                 State.toggleTo(State.SALES);
                 break;
             case 'payNow':
                 Receipt.payNow();
+                break;
+            case 'ok':
+                State.toggleTo(State.SALES);
                 break;
             default:
                 Display.set('ongeimplementeerde functie');
