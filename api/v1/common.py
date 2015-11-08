@@ -1,5 +1,8 @@
 from jsonrpc.site import JSONRPCSite
 
+from apps.organization.models import AuthenticationData
+from utils.auth.backends import RADIUS_BACKEND_NAME
+
 api_v1_site = JSONRPCSite()
 api_v1_site.name = 'Alexia API v1'
 
@@ -59,8 +62,13 @@ def format_user(user):
 
     :type user: django.contrib.auth.models.User
     """
+    try:
+        user_name = user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+    except AuthenticationData.DoesNotExist:
+        user_name = None
+
     return {
-        'radius_username': user.profile.radius_username,
+        'radius_username': user_name,
         'first_name': user.first_name,
         'last_name': user.last_name,
     }

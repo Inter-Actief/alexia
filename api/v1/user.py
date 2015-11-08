@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 
 from .common import api_v1_site, format_user
 from .exceptions import NotFoundError, InvalidParametersError
-from apps.organization.models import Profile
+from apps.organization.models import Profile, AuthenticationData
+from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
 
 
@@ -35,13 +36,16 @@ def user_add(request, radius_username, first_name, last_name, email):
     Raises error -32602 (Invalid params) if the radius_username already exists.
     """
     if User.objects.filter(username=radius_username).exists() or \
-            Profile.objects.filter(radius_username=radius_username).exists():
+            AuthenticationData.objects.filter(backend=RADIUS_BACKEND_NAME, username__iexact=radius_username).exists():
         raise InvalidParametersError('User with provided radius_username already exists')
 
     user = User(username=radius_username, first_name=first_name, last_name=last_name, email=email)
     user.save()
 
-    user.profile = Profile(radius_username=radius_username)
+    data = AuthenticationData(user=user, backend=RADIUS_BACKEND_NAME, username=radius_username.lower())
+    data.save()
+
+    user.profile = Profile()
     user.profile.save()
 
     return format_user(user)
@@ -58,7 +62,8 @@ def user_exists(request, radius_username):
     radius_username    -- RADIUS username to search for.
     """
 
-    return User.objects.filter(profile__radius_username=radius_username).exists()
+    return User.objects.filter(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                               authenticationdata__username=radius_username).exists()
 
 
 @jsonrpc_method('user.get(radius_username=String) -> Object',
@@ -83,7 +88,8 @@ def user_get(request, radius_username):
     """
 
     try:
-        user = User.objects.get(profile__radius_username=radius_username)
+        user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                authenticationdata__username=radius_username)
     except User.DoesNotExist:
         raise NotFoundError
 

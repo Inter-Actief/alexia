@@ -6,6 +6,7 @@ from .common import api_v1_site
 from apps.organization.forms import BartenderAvailabilityForm
 from apps.organization.models import Membership, Profile
 from apps.scheduling.models import Event
+from utils.auth.backends import RADIUS_BACKEND_NAME
 
 
 @jsonrpc_method('bartender.list() -> Array', site=api_v1_site, authenticated=True)
@@ -24,11 +25,13 @@ def bartender_add(request, radius_username):
     """
     try:
         Membership.objects.get(
-            user__profile__radius_username=radius_username,
+            user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+            user__authenticationdata__username=radius_username,
             organization=request.organization)
     except Membership.DoesNotExist:
-        profile = Profile.objects.get(radius_username=radius_username)
-        bartender = Membership(user=profile.user, organization=request.organization)
+        user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                authenticationdata__username=radius_username)
+        bartender = Membership(user=user, organization=request.organization)
         bartender.save()
 
     return True
@@ -42,7 +45,8 @@ def bartender_remove(request, radius_username):
     """
     try:
         Membership.objects.get(
-            user__profile__radius_username=radius_username,
+            user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+            user__authenticationdata__username=radius_username,
             organization=request.organization).delete()
     except Membership.DoesNotExist:
         pass
