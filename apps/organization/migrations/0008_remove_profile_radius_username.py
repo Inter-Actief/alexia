@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization', '0006_convert_radius_username'),
+        ('organization', '0007_convert_radius_username'),
     ]
 
     operations = [

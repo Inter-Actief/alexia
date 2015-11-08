@@ -28,7 +28,7 @@ def reverse_convert_radius_username(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization', '0005_authenticationdata'),
+        ('organization', '0006_authenticationdata'),
     ]
 
     operations = [
