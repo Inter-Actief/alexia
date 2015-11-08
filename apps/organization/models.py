@@ -57,8 +57,6 @@ class AuthenticationData(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'))
-    radius_username = models.CharField(_('RADIUS username'), max_length=10,
-                                       unique=True)
     is_iva = models.BooleanField(_('has IVA-certificate'), default=False)
     is_bhv = models.BooleanField(_('has BHV-certificate'), default=False)
     certificate = models.OneToOneField('Certificate', null=True,

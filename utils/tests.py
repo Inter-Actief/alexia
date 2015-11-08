@@ -73,7 +73,7 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['user1'].set_password(data['password1'])
         data['user1'].save()
 
-        data['user1'].profile = Profile(radius_username=username1)
+        data['user1'].profile = Profile()
         data['user1'].profile.save()
 
         data['authenticationdata1'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username1, user=data['user1'])
@@ -83,7 +83,7 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['user2'].set_password(data['password2'])
         data['user2'].save()
 
-        data['user2'].profile = Profile(radius_username=username2)
+        data['user2'].profile = Profile()
         data['user2'].profile.save()
 
         data['authenticationdata2'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username2, user=data['user2'])
