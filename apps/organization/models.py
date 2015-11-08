@@ -78,7 +78,7 @@ class Profile(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__gte=timezone.now(),
-            availability__nature=Availability.YES) \
+            availability__nature=Availability.ASSIGNED) \
             .order_by('event__starts_at')[0].event
 
     def ical_url(self):
@@ -150,7 +150,7 @@ class Profile(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
-            availability__nature=Availability.YES).count()
+            availability__nature=Availability.ASSIGNED).count()
 
 
 class Organization(models.Model):
@@ -160,6 +160,7 @@ class Organization(models.Model):
     color = models.CharField(verbose_name=_('Color'), blank=True, max_length=6,
                              validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
                                                         message=_('Enter a valid hexadecimal color'))])
+    assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     members = models.ManyToManyField(
         User, through='Membership', verbose_name=_('users'))
 
@@ -207,7 +208,7 @@ class Membership(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
-            availability__nature=Availability.YES). \
+            availability__nature=Availability.ASSIGNED). \
             order_by('-event__starts_at')
 
 

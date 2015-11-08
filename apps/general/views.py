@@ -72,7 +72,9 @@ def about(request):
         'events': Event.objects.count(),
         'bartender_availabilities': BartenderAvailability.objects.count(),
         'bartender_availabilities_yes': BartenderAvailability.objects.filter(
-            availability__nature=Availability.YES).count(),
+            availability__nature__in=(Availability.ASSIGNED, Availability.YES)).count(),
+        'bartender_availabilities_assigned': BartenderAvailability.objects.filter(
+            availability__nature=Availability.ASSIGNED).count(),
     }
     return render(request, 'general/about.html', locals())
 
