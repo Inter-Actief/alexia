@@ -157,7 +157,7 @@ class Event(models.Model):
     """whether this reservation is definitive or not"""
     tender_comments = models.TextField(_("Tender comments"), blank=True)
     """instructions for the bartenders"""
-    is_risky = models.BooleanField(verbose_name=("risky"), default=False)
+    is_risky = models.BooleanField(verbose_name=_("risky"), default=False)
     """whether this event is risky or not"""
 
     def get_absolute_url(self):
