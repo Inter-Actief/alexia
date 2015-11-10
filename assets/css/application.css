@@ -56,6 +56,11 @@ body {
   font-style: italic;
 }
 
+.table tbody > tr.tr-yellow > td,
+.table tbody > tr.tr-yellow > th {
+  background-color: #fdfd96;
+}
+
 .table-events {
   font-size: 13px;
 }

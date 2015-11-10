@@ -110,8 +110,8 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ('participants', 'name', 'description', 'starts_at',
-                  'ends_at', 'is_closed', 'option', 'location', 'kegs',
-                  'pricegroup', 'tender_comments')
+                  'ends_at', 'is_closed', 'option', 'is_risky', 'location',
+                  'kegs', 'pricegroup', 'tender_comments')
         widgets = {
             'starts_at': widgets.SplitDateTimeWidget,
             'ends_at': widgets.SplitDateTimeWidget,

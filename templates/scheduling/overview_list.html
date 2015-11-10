@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             {% for e in events %}
-            <tr{% if e.option %} class="tr-muted"{% endif %}>
+            <tr{% if e.option or e.is_risky %} class="{% if e.option %}tr-muted{% endif %}{% if e.is_risky %} tr-yellow {% endif %}"{% endif %}>
                 <td>
                     {% if e.starts_at|date == e.ends_at|date %}
                         {{ e.starts_at|date:"D d b" }}
@@ -49,6 +49,9 @@
                         <a href="{% url 'apps.scheduling.views.event_show' e.pk %}">{{ e.name }}</a>
                     {% else %}
                         {{ e.name }}
+                    {% endif %}
+                    {% if e.is_risky %}
+                        <span class="glyphicon glyphicon-warning-sign" title="{% trans 'Risky activity' %}"></span>
                     {% endif %}
                 </td>
                 <td>{{ e.kegs|default:'&mdash;' }}</td>
