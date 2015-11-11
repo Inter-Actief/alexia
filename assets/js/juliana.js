@@ -54,7 +54,7 @@ State = {
                 this.current = this.PAYING;
                 this._hideAllScreens();
 
-                var receipt = Receipt.getReceipt();
+                var receipt = Receipt.receipt;
                 var receiptHTML = '';
                 var total = 0;
                 for (var i = 0; i < receipt.length; i++) {
@@ -119,7 +119,7 @@ Scanner = {
     action: function (rfid) {
         console.log('CurrentState: ' + State.current);
         if (State.current === State.SALES) {
-            if (Receipt.getReceipt().length > 0) {
+            if (Receipt.receipt.length > 0) {
                 Receipt.pay(rfid);
             } else {
                 console.log('Info: receipt empty');
@@ -150,7 +150,6 @@ Display = {
  * RECEIPT - left panel
  */
 Receipt = {
-    index: 0,
     receipt: [],
     counterInterval: null,
     add: function (product, quantity) {
@@ -160,33 +159,49 @@ Receipt = {
             return;
         }
 
-        //add product to receipt (visually)
-        var desc = $('.tab-sale a[data-product="' + product + '"]').text();
-        if (quantity !== 1) desc += ' &times; ' + quantity;
-
-        var price = ((quantity * Settings.products[product].price) / 100).toFixed(2);
-
-        $('#receipt-table').append('<tr data-pid="' + this.index + '"><td width="70%"><a onclick="Receipt.remove($(this).data(\'pid\'));" class="btn btn-danger command" href="#" data-pid="' + this.index + '">X</a><span>' + desc + '</span></td><td>€' + price + '</td></tr>');
-
-        //add product to actual receipt
-        this.receipt[this.index] = {
-            'product': product,
-            'amount': quantity,
-            'price': quantity * Settings.products[product].price
-        };
-        this.index++;
+        //Try to update the quantity of an old receipt entry
+        var foundProduct = false;
+        for (var i in this.receipt) {
+            if (this.receipt[i].product==product) {
+                this.receipt[i].amount += quantity;
+                this.receipt[i].price += quantity * Settings.products[product].price;
+                foundProduct = true;
+            }
+        }
+        if (!foundProduct) {
+            //add product to actual receipt
+            this.receipt.push({
+                'product': product,
+                'amount': quantity,
+                'price': quantity * Settings.products[product].price
+            });
+        }
 
         this.updateTotalAmount();
+        this.updateReceipt();
 
         Display.set('OK');
     },
-    remove: function (index) {
-        //remove product from receipt (visually)
-        $('#receipt-table').find('tr[data-pid="' + index + '"]').remove();
+    updateReceipt: function() {
+        $('#receipt-table').empty();
+        for (var i in this.receipt) {
+            if (this.receipt[i]===undefined) continue;
 
+            var product = this.receipt[i].product;
+            var quantity = this.receipt[i].amount;
+            var desc = $('.tab-sale a[data-product="' + product + '"]').text();
+            if (quantity !== 1) desc += ' &times; ' + quantity;
+
+            var price = ((quantity * Settings.products[product].price) / 100).toFixed(2);
+
+            $('#receipt-table').append('<tr data-pid="' + i + '"><td width="70%"><a onclick="Receipt.remove($(this).data(\'pid\'));" class="btn btn-danger command" href="#" data-pid="' + i + '">X</a><span>' + desc + '</span></td><td>€' + price + '</td></tr>');
+        }
+    },
+    remove: function (index) {
         //remove product from actual receipt
-        this.receipt[index] = undefined;
+        this.receipt.splice(index, 1);
         this.updateTotalAmount();
+        this.updateReceipt();
     },
     updateTotalAmount: function () {
         // generate total
@@ -207,32 +222,7 @@ Receipt = {
     clear: function () {
         $('#receipt-table').empty();
         this.receipt = [];
-        this.index = 0;
         this.updateTotalAmount();
-    },
-    getReceipt: function () {
-        //Filter empty entries from the receipt
-        var receipt = this.receipt.filter(Boolean);
-
-        var cleanReceipt = [];
-        var foundProducts = [];
-        for (var i = 0; i < receipt.length; i++) {
-            if ($.inArray(receipt[i].product, foundProducts) !== -1) {
-                //add to existing product in receipt
-                for (var j = 0; j < cleanReceipt.length; j++) {
-                    if (cleanReceipt[j].product === receipt[i].product) {
-                        cleanReceipt[j].amount += receipt[i].amount;
-                        cleanReceipt[j].price += receipt[i].price;
-                    }
-                }
-            } else {
-                //First time this product get's added
-                //add product to foundProducts and cleanReceipt
-                foundProducts.push(receipt[i].product);
-                cleanReceipt.push($.extend({}, receipt[i]));
-            }
-        }
-        return cleanReceipt;
     },
     pay: function (rfid) {
         State.toggleTo(State.PAYING);
@@ -265,7 +255,7 @@ Receipt = {
             var data = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
-                purchases: Receipt.getReceipt(),
+                purchases: Receipt.receipt,
                 rfid_data: rfid
             };
 
