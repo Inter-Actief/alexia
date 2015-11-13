@@ -6,22 +6,25 @@ from utils.mail import mail
 def notify_tenders(sender, instance, **kwargs):
     from apps.scheduling.models import Event, MailTemplate
 
-    send_mail = False
+    mail_template = None
 
-    if instance.pk is not None:
-        orig = Event.objects.get(pk=instance.pk)
-        if orig.is_closed != instance.is_closed and not instance.is_closed:
-            send_mail = True
+    if instance.pk is None:
+        if not instance.is_closed:
+            mail_template = "enrollopen"
     else:
-        send_mail = not instance.is_closed
+        orig = Event.objects.get(pk=instance.pk)
+        if orig.is_closed and not instance.is_closed:
+            mail_template = "enrollopen"
+        elif not orig.is_closed and instance.is_closed:
+            mail_template = "enrollclosed"
 
-    if send_mail:
+    if mail_template:
         try:
             mt = MailTemplate.objects.get(organization=instance.organizer,
-                                          name="enrollopen")
+                                          name=mail_template)
             if mt.is_active:
-                addressees = [m.user for m in instance.organizer.membership_set.filter(is_tender=True)]
-                mail(settings.EMAIL_FROM, addressees, mt.subject, mt.template,
-                     extraattrs={'event': instance})
+                members = instance.organizer.membership_set.filter(is_tender=True).exclude(user__email="")
+                addressees = [m.user for m in members]
+                mail(settings.EMAIL_FROM, addressees, mt.subject, mt.template, extraattrs={'event': instance})
         except MailTemplate.DoesNotExist:
             pass

@@ -28,6 +28,7 @@ class MailTemplate(models.Model):
 
     NAME_CHOICES = (
         ('enrollopen', _('Enrollment open')),
+        ('enrollclosed', _('Enrollment closed')),
         ('reminder', _('Weekly reminder')),
     )
 
