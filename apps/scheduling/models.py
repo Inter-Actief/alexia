@@ -47,6 +47,9 @@ class MailTemplate(models.Model):
     def get_absolute_url(self):
         return reverse('mailtemplate_detail', args=[self.name])
 
+    def has_send_at(self):
+        return self.name == 'reminder'
+
     class Meta:
         ordering = ('organization', 'name',)
         unique_together = (('organization', 'name',),)
