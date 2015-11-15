@@ -94,3 +94,28 @@ def user_get(request, radius_username):
         raise NotFoundError
 
     return format_user(user)
+
+
+@jsonrpc_method('user.get_by_id(user_id=Number) -> Object', site=api_v1_site, authenticated=True, safe=True)
+def user_get_by_id(request, user_id):
+    """
+    Retrieve information about a specific user.
+
+    user_id    -- User id to search for.
+
+    Raises error 404 if provided username cannot be found.
+
+    Example result value:
+    {
+        "first_name": "John",
+        "last_name": "Doe",
+        "radius_username": "s0000000"
+    }
+    """
+
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        raise NotFoundError
+
+    return format_user(user)

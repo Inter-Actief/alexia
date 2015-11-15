@@ -11,6 +11,7 @@ def format_authorization(authorization):
     return {
         'id': authorization.pk,
         'user': authorization.user.username,
+        'user_id': authorization.user.id,
         'start_date': authorization.start_date.isoformat(),
         'end_date': authorization.end_date.isoformat() if authorization.end_date else None,
         'account': authorization.account,
@@ -67,8 +68,15 @@ def format_user(user):
     except AuthenticationData.DoesNotExist:
         user_name = None
 
+    auth_data = [{
+        'backend': u.backend,
+        'username': u.username,
+    } for u in user.authenticationdata_set.all()]
+
     return {
+        'id': user.id,
         'radius_username': user_name,
         'first_name': user.first_name,
         'last_name': user.last_name,
+        'authentication_data': auth_data
     }
