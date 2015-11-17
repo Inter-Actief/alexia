@@ -282,13 +282,15 @@ class Order(models.Model):
     placed_at    -- The date (and time) at which the order was placed
     purchases    -- The purchases placed in this order
     """
-    event = models.ForeignKey(Event, related_name='orders', verbose_name=_('event'))
-    authorization = models.ForeignKey(Authorization, related_name='orders', verbose_name=_('authorization'))
+    event = models.ForeignKey(Event, related_name='orders', verbose_name=_('event'), on_delete=models.PROTECT)
+    authorization = models.ForeignKey(Authorization, related_name='orders', verbose_name=_('authorization'),
+                                      on_delete=models.PROTECT)
     placed_at = models.DateTimeField(_('placed at'), default=timezone.now)
     synchronized = models.BooleanField(_('synchronized'), default=False)
-    added_by = models.ForeignKey(User, verbose_name=_('added by'), related_name='+')
+    added_by = models.ForeignKey(User, verbose_name=_('added by'), related_name='+', on_delete=models.PROTECT)
     amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2)
-    rfidcard = models.ForeignKey(RfidCard, verbose_name=_('rfid card'), blank=True, null=True)
+    rfidcard = models.ForeignKey(RfidCard, verbose_name=_('rfid card'), blank=True, null=True,
+                                 on_delete=models.PROTECT)
 
     def is_collected(self):
         """Returns whether the order has been collected."""
@@ -322,8 +324,8 @@ class Purchase(models.Model):
     price   -- The total price of the purchase
     """
 
-    order = models.ForeignKey(Order, related_name='purchases', verbose_name=_('order'))
-    product = models.ForeignKey(Product, related_name='purchases', verbose_name=_('product'))
+    order = models.ForeignKey(Order, related_name='purchases', verbose_name=_('order'), on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, related_name='purchases', verbose_name=_('product'), on_delete=models.PROTECT)
     amount = models.IntegerField(_('amount'))
     price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)
 
