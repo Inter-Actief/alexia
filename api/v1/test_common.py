@@ -30,6 +30,7 @@ class CommonTest(TestCase):
         auth_json = {
             'id': auth.id,
             'user': self.data['user1'].username,
+            'user_id': self.data['user1'].id,
             'start_date': '2014-09-21T14:16:06+00:00',
             'end_date': None,
             'account': 'NL13TEST0123456789',
@@ -52,6 +53,7 @@ class CommonTest(TestCase):
         auth_json = {
             'id': auth.id,
             'user': self.data['user1'].username,
+            'user_id': self.data['user1'].id,
             'start_date': '2014-09-21T14:16:06+00:00',
             'end_date': None,
             'account': None,
@@ -76,6 +78,7 @@ class CommonTest(TestCase):
         auth_json = {
             'id': auth.id,
             'user': self.data['user1'].username,
+            'user_id': self.data['user1'].id,
             'start_date': '2014-09-21T14:16:06+00:00',
             'end_date': '2015-04-16T02:56:33+00:00',
             'account': 'NL13TEST0123456789',
