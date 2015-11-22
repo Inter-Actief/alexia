@@ -230,6 +230,7 @@ class RfidCard(models.Model):
     class Meta:
         verbose_name = _('RFID card')
         verbose_name_plural = _('RFID cards')
+        unique_together = ('atqa', 'sak', 'uid')
 
 
 class Authorization(models.Model):
