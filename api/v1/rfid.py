@@ -32,7 +32,7 @@ def rfid_list(request, radius_username=None):
             "user": "s0000000"
         },
         {
-            "atqa": "0044",
+            "atqa": None,
             "sak": "00",
             "uid": "0123456789abcd",
             "registered_at": "2014-09-21T14:16:06+00:00"
@@ -67,8 +67,8 @@ def rfid_add(request, radius_username, atqa, sak, uid):
     Returns the RFID card on success.
 
     radius_username    -- RADIUS username to search for.
-    atqa               -- ATQA of the card (hexadecimal lowercase string, no colons)
-    sak                -- SAK of the card (hexadecimal lowercase string, no colons)
+    atqa               -- ATQA of the card (hexadecimal lowercase string, no colons, may be empty as a wildcard)
+    sak                -- SAK of the card (hexadecimal lowercase string, no colons, may be empty as a wildcard)
     uid                -- UID of the card (hexadecimal lowercase string, no colons)
 
     Example return value:

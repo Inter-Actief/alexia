@@ -145,7 +145,7 @@ class JulianaTest(APITestCase):
             'uid': '98ab54ef',
         }
 
-        self.data['user2'].rfids.create(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
+        rfid_card = self.data['user2'].rfids.create(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
         authorization = self.data['user2'].authorizations.create(organization=self.data['organization1'])
         # Ignore microseconds
         authorization.start_date = authorization.start_date.replace(microsecond=0)
@@ -161,6 +161,16 @@ class JulianaTest(APITestCase):
             'authorization': format_authorization(authorization),
         }
 
+        self.send_and_compare_request('juliana.rfid.get', [event_id, rfid_data], expected_result)
+
+        # Test wildcard ATQA and SAK
+        rfid_card.atqa = ""
+        rfid_card.save()
+        self.send_and_compare_request('juliana.rfid.get', [event_id, rfid_data], expected_result)
+
+        rfid_card.atqa = rfid_data['atqa']
+        rfid_card.sak = ""
+        rfid_card.save()
         self.send_and_compare_request('juliana.rfid.get', [event_id, rfid_data], expected_result)
 
     def test_rfid_get_no_rfid(self):

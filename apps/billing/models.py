@@ -208,17 +208,17 @@ class TemporaryProduct(Product):
 class RfidCard(models.Model):
     """A representation of an RFID card, which belongs to some profile.
     
-    atqa          -- ATQA of this RFID card (hexadecimal lowercase string, no colons)
-    sak           -- SAK of this RFID card (hexadecimal lowercase string, no colons)
+    atqa          -- ATQA of this RFID card (hexadecimal lowercase string, no colons, may be empty as a wildcard)
+    sak           -- SAK of this RFID card (hexadecimal lowercase string, no colons, may be empty as a wildcard)
     uid           -- UID of this RFID card (hexadecimal lowercase string, no colons)
     is_active     -- Boolean indicating whether this card has been activated.
     registered_at -- Date and time at which the card was registered.
     profile       -- The user to which this card belongs.
     """
 
-    atqa = models.CharField(_('atqa'), max_length=16, default="")
-    sak = models.CharField(_('sak'), max_length=16, default="")
-    uid = models.CharField(_('uid'), max_length=32)
+    atqa = models.CharField(_('ATQA'), max_length=16, default="", blank=True)
+    sak = models.CharField(_('SAK'), max_length=16, default="", blank=True)
+    uid = models.CharField(_('UID'), max_length=32)
     is_active = models.BooleanField(_('is active'), default=False)
     registered_at = models.DateTimeField(_('registered at'), default=timezone.now)
     user = models.ForeignKey(User, related_name='rfids', verbose_name=_('user'))

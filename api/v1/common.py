@@ -34,8 +34,8 @@ def format_order(order):
     rfid = None
     if order.rfidcard:
         rfid = {
-            'atqa': order.rfidcard.atqa,
-            'sak': order.rfidcard.sak,
+            'atqa': order.rfidcard.atqa if len(order.rfidcard.atqa) > 0 else None,
+            'sak': order.rfidcard.sak if len(order.rfidcard.sak) > 0 else None,
             'uid': order.rfidcard.uid
         }
 
@@ -56,8 +56,8 @@ def format_rfidcard(rfidcard):
     :type rfidcard: apps.billing.models.RfidCard
     """
     return {
-        'atqa': rfidcard.atqa,
-        'sak': rfidcard.sak,
+        'atqa': rfidcard.atqa if len(rfidcard.atqa) > 0 else None,
+        'sak': rfidcard.sak if len(rfidcard.sak) > 0 else None,
         'uid': rfidcard.uid,
         'registered_at': rfidcard.registered_at.isoformat(),
         'user': rfidcard.user.username,

@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from jsonrpc import jsonrpc_method
 from jsonrpc.exceptions import InvalidParamsError, OtherError
 
@@ -34,6 +34,7 @@ def _get_validate_event(request, event_id):
 
     return event
 
+
 def _preprocess_rfiddata(rfid_data):
     return {
         'atqa': rfid_data['atqa'].replace(':', '').lower(),
@@ -42,16 +43,24 @@ def _preprocess_rfiddata(rfid_data):
     }
 
 
-@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
-def juliana_rfid_get(request, event_id, rfid):
-    event = _get_validate_event(request, event_id)
-    rfid = _preprocess_rfiddata(rfid)
+def _retrieve_rfidcard(rfid_data):
+    rfid = _preprocess_rfiddata(rfid_data)
 
     try:
-        card = RfidCard.objects.get(atqa=rfid['atqa'], sak=rfid['sak'], uid=rfid['uid'], is_active=True)
+        return RfidCard.objects.get(
+            (Q(atqa=rfid['atqa']) | Q(atqa="")) &
+            (Q(sak=rfid['sak']) | Q(sak="")) &
+            Q(uid=rfid['uid']) &
+            Q(is_active=True)
+         )
     except RfidCard.DoesNotExist:
         raise InvalidParamsError('RFID card not found')
 
+
+@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
+def juliana_rfid_get(request, event_id, rfid):
+    event = _get_validate_event(request, event_id)
+    card = _retrieve_rfidcard(rfid)
     user = card.user
     authorization = Authorization.get_for_user_event(user, event)
 
@@ -76,23 +85,20 @@ def juliana_rfid_get(request, event_id, rfid):
 def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     """Saves a new order in the database"""
     event = _get_validate_event(request, event_id)
-    rfid_data = _preprocess_rfiddata(rfid_data)
+    rfidcard = _retrieve_rfidcard(rfid_data)
 
     try:
         user = User.objects.get(pk=user_id)
-        rfidcard = RfidCard.objects.get(atqa=rfid_data['atqa'], sak=rfid_data['sak'], uid=rfid_data['uid'], is_active=True)
     except User.DoesNotExist:
         raise InvalidParamsError('User does not exist')
-    except RfidCard.DoesNotExist:
-        raise InvalidParamsError('RFID card not found')
 
-    cur_user = request.user
-
+    if rfidcard.user != user:
+        raise InvalidParamsError('RFID card and user id do not match')
     authorization = Authorization.get_for_user_event(user, event)
-
     if not authorization:
         raise InvalidParamsError('No authorization available')
 
+    cur_user = request.user
     order = Order(event=event, authorization=authorization, added_by=cur_user, rfidcard=rfidcard)
     order.save()
 

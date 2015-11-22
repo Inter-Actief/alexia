@@ -85,7 +85,7 @@ class PermanentProductAdmin(admin.ModelAdmin):
 
 
 class RfidCardAdmin(admin.ModelAdmin):
-    list_display = ('atqa', 'sak', 'uid', 'user', 'is_active',)
+    list_display = ('user', 'atqa', 'sak', 'uid', 'is_active',)
     list_filter = ('is_active', 'managed_by',)
     raw_id_fields = ('user',)
     readonly_fields = ('registered_at',)
