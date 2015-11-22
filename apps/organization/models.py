@@ -54,6 +54,9 @@ class AuthenticationData(models.Model):
     username = models.CharField(_('Username'), max_length=50)
     additional_data = models.TextField(_('Additional data'), null=True)
 
+    class Meta:
+        unique_together = (('backend', 'username'), ('user', 'backend'))
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'))
