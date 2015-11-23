@@ -10,6 +10,8 @@ Wietse Smid.
 Author: Jelte Zeilstra
 """
 
+import datetime
+
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
@@ -32,9 +34,10 @@ class Command(BaseCommand):
             now = timezone.now()
             events = organization.participates.filter(starts_at__gte=now, is_closed=False).order_by('starts_at', )
 
-            # Load templates
+            # Load template and settings
             try:
                 mailtemplate = MailTemplate.objects.get(organization=organization, name="reminder", is_active=True)
+                starts_before = now + datetime.timedelta(minutes=mailtemplate.send_at) if mailtemplate.send_at else None
             except MailTemplate.DoesNotExist:
                 raise CommandError('MailTemplate "reminder" does not exist for %s' % organization)
 
@@ -45,7 +48,10 @@ class Command(BaseCommand):
                     continue
 
                 missing_events = events.exclude(pk__in=user.event_set.values_list('id', flat=True))
+                if starts_before is not None:
+                    missing_events = missing_events.exclude(starts_at__gte=starts_before)
                 addressees = [user]
 
-                mail(settings.EMAIL_FROM, addressees, mailtemplate.subject, mailtemplate.template,
-                     extraattrs={'missing_events': missing_events, 'now': now})
+                if len(missing_events) > 0:
+                    mail(settings.EMAIL_FROM, addressees, mailtemplate.subject, mailtemplate.template,
+                         extraattrs={'missing_events': missing_events, 'now': now})

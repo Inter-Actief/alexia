@@ -28,6 +28,7 @@ class MailTemplate(models.Model):
 
     NAME_CHOICES = (
         ('enrollopen', _('Enrollment open')),
+        ('enrollclosed', _('Enrollment closed')),
         ('reminder', _('Weekly reminder')),
     )
 
@@ -45,6 +46,9 @@ class MailTemplate(models.Model):
 
     def get_absolute_url(self):
         return reverse('mailtemplate_detail', args=[self.name])
+
+    def has_send_at(self):
+        return self.name == 'reminder'
 
     class Meta:
         ordering = ('organization', 'name',)
