@@ -30,6 +30,10 @@ def login(request):
             if hasattr(user, 'profile') and user.profile.current_organization:
                 request.session['organization_pk'] = user.profile.current_organization.pk
 
+            if not user.first_name or not user.email:
+                # User information is not complete, redirect to register page.
+                return redirect(register)
+
             return redirect(redirect_to)
     else:
         form = AuthenticationForm(request)
