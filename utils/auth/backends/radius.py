@@ -1,7 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from apps.organization.models import Profile
+from utils.auth.backends import get_or_create_user
+
+import pyrad.packet
+from pyrad.client import Client
+from pyrad.dictionary import Dictionary
 
 
 class RadiusBackend(object):
@@ -13,17 +17,6 @@ class RadiusBackend(object):
 
     def authenticate(self, username=None, password=None):
         """Authenticate against the RADIUS server"""
-
-        # Some imports. Placed here to not break when someone does not have
-        # pyrad installed, which is only required for the authentication for
-        # this backend.
-        try:
-            import pyrad.packet  # @UnresolvedImport
-            from pyrad.client import Client  # @UnresolvedImport
-            from pyrad.dictionary import Dictionary  # @UnresolvedImport
-        except:
-            # Without pyrad, we just continue :-)
-            return None
 
         # Create a RADIUS client
         radius_dict = Dictionary(settings.RADIUS_DICT)
@@ -54,17 +47,9 @@ class RadiusBackend(object):
             # Some error
             return None
         else:
-            try:
-                profile = Profile.objects.get(radius_username=username)
-                return profile.user
-            except Profile.DoesNotExist:
-                # may be create the user?
-                user = User(username=username)
-                user.set_unusable_password()
-                user.save()
-                profile = Profile(user=user, radius_username=username)
-                profile.save()
-                return user
+            backend = self.__module__ + "." + self.__class__.__name__
+            user, created = get_or_create_user(backend, username)
+            return user
 
     def get_user(self, user_id):
         """Retrieves an user by its id."""

@@ -3,7 +3,7 @@
 
 # Load default settings
 # noinspection PyUnresolvedReferences
-from settings import *
+from default import *
 
 # Database
 DATABASES = {

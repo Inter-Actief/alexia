@@ -6,6 +6,7 @@ from django.utils import timezone
 from .common import api_v1_site, format_authorization
 from .exceptions import NotFoundError, InvalidParametersError
 from apps.billing.models import Authorization
+from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
 
 
@@ -43,7 +44,8 @@ def authorization_list(request, radius_username=None):
 
     if radius_username is not None:
         try:
-            user = User.objects.get(profile__radius_username=radius_username)
+            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
         except User.DoesNotExist:
             raise InvalidParametersError('User with provided radius_username does not exits')
 
@@ -84,7 +86,8 @@ def authorization_get(request, radius_username):
     """
 
     result = []
-    authorizations = Authorization.objects.filter(user__profile__radius_username=radius_username,
+    authorizations = Authorization.objects.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                                  user__authenticationdata__username=radius_username,
                                                   organization=request.organization)
 
     for authorization in authorizations:
@@ -126,7 +129,8 @@ def authorization_add(request, radius_username, account):
     """
 
     try:
-        user = User.objects.get(profile__radius_username=radius_username)
+        user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                authenticationdata__username=radius_username)
     except User.DoesNotExist:
         raise InvalidParametersError('User with provided radius_username does not exits')
 
@@ -155,7 +159,8 @@ def authorization_end(request, radius_username, authorization_id):
     """
 
     try:
-        authorization = Authorization.objects.select_for_update().get(user__profile__radius_username=radius_username,
+        authorization = Authorization.objects.select_for_update().get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                                                      user__authenticationdata__username=radius_username,
                                                                       organization=request.organization,
                                                                       pk=authorization_id)
     except Authorization.DoesNotExist:

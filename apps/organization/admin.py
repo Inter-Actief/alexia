@@ -6,7 +6,7 @@ from apps.billing.admin import AuthorizationInline, RfidCardInline, \
     PriceGroupInline, ProductGroupInline
 from apps.scheduling.admin import AvailabilityInline, \
     StandardReservationInline
-from .models import Location, Profile, Organization, Membership, Certificate
+from .models import Location, AuthenticationData, Profile, Organization, Membership, Certificate
 
 
 class MembershipInline(admin.TabularInline):
@@ -14,15 +14,27 @@ class MembershipInline(admin.TabularInline):
     extra = 1
 
 
+class AuthenticationDataInline(admin.TabularInline):
+    model = AuthenticationData
+    extra = 1
+    fields = ('backend', 'username', 'additional_data')
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     max_num = 1
     can_delete = False
-    fields = ('radius_username', 'is_bhv', 'is_iva')
+    fields = ('is_bhv', 'is_iva')
 
 
 class UserAdmin(UserAdmin):
-    inlines = (ProfileInline, MembershipInline, AuthorizationInline, RfidCardInline)
+    inlines = (AuthenticationDataInline, ProfileInline, MembershipInline, AuthorizationInline, RfidCardInline)
+
+
+class AuthenticationDataAdmin(admin.ModelAdmin):
+    list_display = ('username', 'backend', 'user')
+    list_filter = ('backend', )
+    search_fields = ('username', 'backend', 'user__username', 'user__first_name', 'user__last_name')
 
 
 class OrganizationAdmin(admin.ModelAdmin):
@@ -46,6 +58,7 @@ class CertificateAdmin(admin.ModelAdmin):
 admin.site.unregister(User)
 
 admin.site.register(User, UserAdmin)
+admin.site.register(AuthenticationData, AuthenticationDataAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Certificate, CertificateAdmin)

@@ -1,4 +1,8 @@
 # Helpers
+
+from utils.auth.backends import RADIUS_BACKEND_NAME
+
+
 def user_list(organization, objects):
     """Helper function to list users to an array
 
@@ -11,9 +15,10 @@ def user_list(organization, objects):
     users = objects.filter(
         organization=organization,
         user__profile__isnull=False).exclude(
-        user__profile__radius_username="")
+        user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+        user__authenticationdata__username="")
 
     for u in users:
-        result.append(u.user.profile.radius_username)
+        result.append(u.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username)
 
     return result

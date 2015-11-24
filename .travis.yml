@@ -16,4 +16,4 @@ matrix:
 install:
   - pip install -r config/requirements.txt
 # command to run tests
-script: python manage.py test --settings travis_settings
+script: python manage.py test --settings settings.travis

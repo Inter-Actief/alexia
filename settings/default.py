@@ -7,12 +7,12 @@ from django.core.exceptions import SuspiciousOperation
 #
 
 # Directories
-CURRENT_DIR = os.path.dirname(__file__)
-MEDIA_ROOT = os.path.join(CURRENT_DIR, 'media')
-STATIC_ROOT = os.path.join(CURRENT_DIR, 'static')
-TEMPLATE_DIRS = (os.path.join(CURRENT_DIR, 'templates'),)
-LOCALE_PATHS = (os.path.join(CURRENT_DIR, 'locale'),)
-STATICFILES_DIRS = (os.path.join(CURRENT_DIR, 'assets'),)
+ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
+STATIC_ROOT = os.path.join(ROOT_DIR, 'static')
+TEMPLATE_DIRS = (os.path.join(ROOT_DIR, 'templates'),)
+LOCALE_PATHS = (os.path.join(ROOT_DIR, 'locale'),)
+STATICFILES_DIRS = (os.path.join(ROOT_DIR, 'assets'),)
 
 # General settings
 ADMINS = ()
@@ -130,7 +130,7 @@ LOGGING = {
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'utils.auth.backends.RadiusBackend',
+    'utils.auth.backends.radius.RadiusBackend',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -160,29 +160,4 @@ RADIUS_HOST = 'radius1.utsp.utwente.nl'
 RADIUS_PORT = 1645
 RADIUS_SECRET = ''
 RADIUS_IDENTIFIER = ''
-RADIUS_DICT = os.path.join(CURRENT_DIR, 'utils/auth/radius.dict')
-
-#
-#   Load local_settings.py
-#
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
-
-#
-#   Debug toolbar
-#
-
-if DEBUG:
-    # Enable debug toolbar if DEBUG is enabled.
-
-    def show_toolbar(request):
-        return True
-
-    INSTALLED_APPS += ('debug_toolbar',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': 'settings.show_toolbar'
-    }
+RADIUS_DICT = os.path.join(ROOT_DIR, 'utils/auth/radius.dict')

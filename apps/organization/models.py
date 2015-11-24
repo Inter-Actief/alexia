@@ -48,10 +48,18 @@ class Location(models.Model):
         return result
 
 
+class AuthenticationData(models.Model):
+    user = models.ForeignKey(User, verbose_name=_('user'))
+    backend = models.CharField(_('Authentication backend'), max_length=50)
+    username = models.CharField(_('Username'), max_length=50)
+    additional_data = models.TextField(_('Additional data'), null=True)
+
+    class Meta:
+        unique_together = (('backend', 'username'), ('user', 'backend'))
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'))
-    radius_username = models.CharField(_('RADIUS username'), max_length=10,
-                                       unique=True)
     is_iva = models.BooleanField(_('has IVA-certificate'), default=False)
     is_bhv = models.BooleanField(_('has BHV-certificate'), default=False)
     certificate = models.OneToOneField('Certificate', null=True,
@@ -210,7 +218,7 @@ class Membership(models.Model):
 def get_certificate_path(instance, filename):
     path = "certificates"
     ext = os.path.splitext(filename)[1]
-    filename = instance._radius if instance._radius else "user" + instance._id
+    filename = "user" + instance._id
     return os.path.join(path, filename + ext)
 
 

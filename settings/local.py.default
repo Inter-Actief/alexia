@@ -1,5 +1,7 @@
-# Voorbeeld voor lokale settings, wordt geimporteerd door settings.py
+# Voorbeeld voor lokale settings, wordt geimporteerd door __init__.py
 #
+
+from default import *
 
 # Debug aan voor lokaal
 DEBUG = True
@@ -30,7 +32,7 @@ DATABASES = {
 SECRET_KEY = ''
 
 # UT Radius login
-RADIUS_SECRET = '' 
+RADIUS_SECRET = ''
 RADIUS_IDENTIFIER = ''
 
 # Email settings

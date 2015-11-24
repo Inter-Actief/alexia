@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .common import api_v1_site, format_rfidcard
 from .exceptions import NotFoundError, InvalidParametersError
 from apps.billing.models import RfidCard
+from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
 
 
@@ -51,7 +52,8 @@ def rfid_list(request, radius_username=None):
     rfidcards = RfidCard.objects.filter(managed_by=request.organization)
 
     if radius_username is not None:
-        rfidcards = rfidcards.filter(user__profile__radius_username=radius_username)
+        rfidcards = rfidcards.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                     user__authenticationdata__username=radius_username)
 
     rfidcards = rfidcards.select_related('user')
 
@@ -85,7 +87,9 @@ def rfid_get(request, radius_username):
     """
 
     result = []
-    rfidcards = RfidCard.objects.filter(user__profile__radius_username=radius_username, managed_by=request.organization)
+    rfidcards = RfidCard.objects.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                        user__authenticationdata__username=radius_username,
+                                        managed_by=request.organization)
 
     for rfidcard in rfidcards:
         result.append(rfidcard.identifier)
@@ -120,7 +124,8 @@ def rfid_add(request, radius_username, identifier):
     """
 
     try:
-        user = User.objects.select_for_update().get(profile__radius_username=radius_username)
+        user = User.objects.select_for_update().get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                                    authenticationdata__username=radius_username)
     except User.DoesNotExist:
         raise InvalidParametersError('User with provided radius_username does not exits')
 
@@ -158,7 +163,8 @@ def rfid_remove(request, radius_username, identifier):
     """
 
     try:
-        rfidcard = RfidCard.objects.select_for_update().get(user__profile__radius_username=radius_username,
+        rfidcard = RfidCard.objects.select_for_update().get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                                            user__authenticationdata__username=radius_username,
                                                             identifier=identifier)
     except RfidCard.DoesNotExist:
         raise NotFoundError
