@@ -54,9 +54,9 @@ class Command(BaseCommand):
         products = PermanentProduct.objects.filter(productgroup__pricegroups__events=event)
 
         for i in range(order_count):
-            print '-----'
+            print('-----')
             product_count = random.randint(1, 10)
-            print '%s products' % product_count
+            print('%s products' % product_count)
 
             order = Order(event=event, authorization=random.choice(authorizations), added_by=user)
             order.save()

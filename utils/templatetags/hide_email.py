@@ -83,8 +83,9 @@ def do_hide_email(parser, token):
             format_string.append(format_string[1])
 
     except:
-        raise template.TemplateSyntaxError, "'%r' tag requires at least an email address or an email address and a person's name ({% hide_email user@example.com %} or {% hide_email \"user@example.com\" \"John Smith\" %})" % \
-                                            token.contents.split()[0]
+        raise template.TemplateSyntaxError(
+            "'%r' tag requires at least an email address or an email address and a person's name ({% hide_email user@example.com %} or {% hide_email \"user@example.com\" \"John Smith\" %})" % \
+            token.contents.split()[0])
 
     return HideEmailNode(format_string[1], format_string[2])
 

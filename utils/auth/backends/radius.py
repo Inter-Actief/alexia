@@ -35,7 +35,7 @@ class RadiusBackend(object):
         # .. and send it
         try:
             reply = client.SendPacket(req)
-        except Exception, e:
+        except Exception as e:
             # Something went wrong with the packet. Just fall through
             return None
 
