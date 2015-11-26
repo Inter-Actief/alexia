@@ -1,9 +1,11 @@
+from __future__ import absolute_import
+
 # Load default settings
-from default import *
+from .default import *
 
 # Load local settings
 try:
-    from local import *
+    from .local import *
 except ImportError:
     pass
 

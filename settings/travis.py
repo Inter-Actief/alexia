@@ -1,9 +1,10 @@
+from __future__ import absolute_import
 # Settings used for running tests in Travis
 #
 
 # Load default settings
 # noinspection PyUnresolvedReferences
-from default import *
+from .default import *
 
 # Database
 DATABASES = {
