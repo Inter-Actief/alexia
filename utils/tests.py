@@ -223,6 +223,10 @@ class APITestCase(TestCase):
 
         response = self.send_request(method, params)
 
+        self.assertEqual(response['Content-Type'], 'application/json-rpc')
+
+        content = response.content.decode('utf-8')
+
         expected_data = {
             'jsonrpc': '1.0',
             'id': 'jsonrpc',
@@ -230,7 +234,7 @@ class APITestCase(TestCase):
             'result': expected_result,
         }
 
-        self.assertJSONEqual(response.content, expected_data)
+        self.assertJSONEqual(content, expected_data)
 
     def send_and_compare_request_error(self, method, params, error_code, error_name, error_message, error_data=None,
                                        status_code=200):
@@ -251,6 +255,10 @@ class APITestCase(TestCase):
 
         self.assertEqual(response.status_code, status_code, 'HTTP status code')
 
+        self.assertEqual(response['Content-Type'], 'application/json-rpc')
+
+        content = response.content.decode('utf-8')
+
         expected_data = {
             'jsonrpc': '1.0',
             'id': 'jsonrpc',
@@ -263,4 +271,4 @@ class APITestCase(TestCase):
             'result': None,
         }
 
-        self.assertJSONEqual(response.content, expected_data, 'JSON RPC result')
+        self.assertJSONEqual(content, expected_data, 'JSON RPC result')
