@@ -88,7 +88,7 @@ def overview(request):
             .select_related(None).prefetch_related(None).order_by()
 
     # Beschikbaarheden in een lijstje stoppen
-    if not request.organization:
+    if not request.user.is_authenticated() or not request.organization:
         availabilities = []
     elif request.user.is_superuser \
             or request.user.profile.is_planner(request.organization) \
