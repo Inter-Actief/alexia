@@ -9,14 +9,14 @@ from utils.auth.decorators import manager_required
 
 @jsonrpc_method('order.unsynchronized(unused=Number) -> Array', site=api_v1_site, safe=True, authenticated=True)
 @manager_required
-def order_unsynchronized(request, unused):
+def order_unsynchronized(request, unused=0):
     """
     Return a list of unsynchronized orders.
 
     Required user level: Manager
 
-    Requires an unused parameter because of a competability issue between the
-    jsonrpc server en jsonrpclib client.
+    Optionally gets an unused parameter because of a former compatibility issue
+    between the jsonrpc server en jsonrpclib client.
 
     Returns a list of Order objects.
 

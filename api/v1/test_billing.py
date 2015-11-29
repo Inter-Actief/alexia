@@ -10,7 +10,7 @@ class BillingTest(APITestCase):
     def test_order_unsynchronized_empty(self):
         self.send_and_compare_request('order.unsynchronized', [0], [])
 
-    def test_order_unsynchronized(self):
+    def test_order_unsynchronized_with_parameter(self):
         # Load data
         self.load_billing_data()
         self.load_scheduling_data()
@@ -22,6 +22,19 @@ class BillingTest(APITestCase):
         ]
 
         self.send_and_compare_request('order.unsynchronized', [0], expected_result)
+
+    def test_order_unsynchronized_without_parameter(self):
+        # Load data
+        self.load_billing_data()
+        self.load_scheduling_data()
+        self.load_billing_order_data()
+
+        expected_result = [
+            format_order(self.data['order1']),
+            format_order(self.data['order2']),
+        ]
+
+        self.send_and_compare_request('order.unsynchronized', [], expected_result)
 
     def test_order_unsynchronized_synchronized(self):
         # Load data
