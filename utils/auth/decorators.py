@@ -23,8 +23,8 @@ def ajax_required(f):
 def tender_required(f):
     @wraps(f)
     def wrap(request, *args, **kwargs):
-        if not request.user.is_superuser and (not request.organization or
-                                              not request.user.profile.is_tender(request.organization)):
+        if not request.user.is_authenticated() or not request.user.is_superuser and (
+                not request.organization or not request.user.profile.is_tender(request.organization)):
             raise PermissionDenied
         return f(request, *args, **kwargs)
 
@@ -34,8 +34,8 @@ def tender_required(f):
 def planner_required(f):
     @wraps(f)
     def wrap(request, *args, **kwargs):
-        if not request.user.is_superuser and (not request.organization or
-                                              not request.user.profile.is_planner(request.organization)):
+        if not request.user.is_authenticated() or not request.user.is_superuser and (
+                not request.organization or not request.user.profile.is_planner(request.organization)):
             raise PermissionDenied
         return f(request, *args, **kwargs)
 
@@ -45,8 +45,8 @@ def planner_required(f):
 def manager_required(f):
     @wraps(f)
     def wrap(request, *args, **kwargs):
-        if not request.user.is_superuser and (not request.organization or
-                                              not request.user.profile.is_manager(request.organization)):
+        if not request.user.is_authenticated() or not request.user.is_superuser and (
+                not request.organization or not request.user.profile.is_manager(request.organization)):
             raise PermissionDenied
         return f(request, *args, **kwargs)
 
@@ -59,7 +59,8 @@ def foundation_manager_required(f):
 
     @wraps(f)
     def wrap(request, *args, **kwargs):
-        if not request.user.is_superuser and not request.user.profile.is_foundation_manager():
+        if not request.user.is_authenticated() or not request.user.is_superuser and \
+                not request.user.profile.is_foundation_manager():
             return redirect_to_login(request)
         return f(request, *args, **kwargs)
 

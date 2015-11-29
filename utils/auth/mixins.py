@@ -55,8 +55,9 @@ class TenderRequiredMixin(PassesTestMixin):
     reason = _('You are not a tender of the selected organization.')
 
     def test_requirement(self, request):
-        return request.user.is_superuser or (request.organization and
-                                             request.user.profile.is_tender(request.organization))
+        return request.user.is_authenticated() and (
+            request.user.is_superuser or (
+                request.organization and request.user.profile.is_tender(request.organization)))
 
 
 class PlannerRequiredMixin(PassesTestMixin):
@@ -67,8 +68,9 @@ class PlannerRequiredMixin(PassesTestMixin):
     reason = _('You are not a planner of the selected organization.')
 
     def test_requirement(self, request):
-        return request.user.is_superuser or (request.organization and
-                                             request.user.profile.is_planner(request.organization))
+        return request.user.is_authenticated() and (
+            request.user.is_superuser or (
+                request.organization and request.user.profile.is_planner(request.organization)))
 
 
 class ManagerRequiredMixin(PassesTestMixin):
@@ -79,8 +81,9 @@ class ManagerRequiredMixin(PassesTestMixin):
     reason = _('You are not a manager of the selected organization.')
 
     def test_requirement(self, request):
-        return request.user.is_superuser or (request.organization and
-                                             request.user.profile.is_manager(request.organization))
+        return request.user.is_authenticated() and (
+            request.user.is_superuser or (
+                request.organization and request.user.profile.is_manager(request.organization)))
 
 
 class FoundationManagerRequiredMixin(PassesTestMixin):
@@ -91,4 +94,5 @@ class FoundationManagerRequiredMixin(PassesTestMixin):
     reason = _('You are not a foundation manager.')
 
     def test_requirement(self, request):
-        return request.user.is_superuser or request.user.profile.is_foundation_manager()
+        return request.user.is_authenticated() and (
+            request.user.is_superuser or request.user.profile.is_foundation_manager())

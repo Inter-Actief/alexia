@@ -101,10 +101,9 @@ def overview(request):
         user_id=request.user.pk).values('event_id', 'availability_id')
 
     # Rechten opslaan
-    is_planner = request.user.is_superuser or (
-        request.organization and
-        request.user.profile.is_planner(request.organization))
-    is_tender = request.organization and request.user.profile.is_tender(
+    is_planner = request.user.is_authenticated() and (
+        request.user.is_superuser or (request.organization and request.user.profile.is_planner(request.organization)))
+    is_tender = request.user.is_authenticated() and request.organization and request.user.profile.is_tender(
         request.organization)
 
     # Gebruiker opslaan

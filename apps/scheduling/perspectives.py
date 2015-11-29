@@ -20,7 +20,7 @@ def bartender(request):
 
 
 def calendar(request):
-    is_planner = request.organization and request.user.profile.is_planner(
+    is_planner = request.user.is_authenticated() and request.organization and request.user.profile.is_planner(
         request.organization)
     return render(request, 'scheduling/overview_calendar.html', locals())
 
