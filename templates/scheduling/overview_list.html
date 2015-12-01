@@ -45,10 +45,13 @@
                     {% endfor %}
                 </td>
                 <td>
-                    {% if e.organizer == request.organization and is_planner %}
-                        <a href="{% url 'apps.scheduling.views.event_show' e.pk %}">{{ e.name }}</a>
-                    {% else %}
+                    <a href="{% url 'apps.scheduling.views.event_show' e.pk %}">
                         {{ e.name }}
+                    </a>
+                    {% if e.tender_comments and e in events_tending %}
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"
+                                title="{% trans 'Has tender comments' %}"></span>
+                        <span class="sr-only">{% trans 'Has tender comments' %}</span>
                     {% endif %}
                     {% if e.is_risky %}
                         <span class="glyphicon glyphicon-warning-sign" title="{% trans 'Risky activity' %}"></span>

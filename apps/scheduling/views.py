@@ -115,29 +115,27 @@ def overview(request):
 # =========================================================================
 # Events
 # =========================================================================
-@login_required
-@planner_required
 def event_show(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
-    if event.organizer != request.organization:
-        raise PermissionDenied
+    is_tender = event.is_tender(request.user)
+    is_planner = request.user.is_authenticated() and request.user.profile.is_planner(event.organizer)
+    is_manager = request.user.is_authenticated() and request.user.profile.is_manager(event.organizer)
 
-    tenders = Membership.objects.select_related('user').filter(
-        organization__in=event.participants.all(), is_tender=True). \
-        order_by("user__first_name")
-    bas = collections.defaultdict(list)
+    if is_planner:
+        tenders = Membership.objects.select_related('user').filter(
+            organization__in=event.participants.all(), is_tender=True). \
+            order_by("user__first_name")
+        bas = collections.defaultdict(list)
 
-    for ba in BartenderAvailability.objects.select_related().filter(event=event):
-        bas[ba.user].append(ba)
+        for ba in BartenderAvailability.objects.select_related().filter(event=event):
+            bas[ba.user].append(ba)
 
-    availabilities = []
-    for t in tenders:
-        ba = bas[t.user]
-        a = ba[0].availability if ba else None
-        availabilities.append(dict({'user': t.user, 'availability': a}))
-
-    is_manager = request.user.profile.is_manager(request.organization)
+        availabilities = []
+        for t in tenders:
+            ba = bas[t.user]
+            a = ba[0].availability if ba else None
+            availabilities.append(dict({'user': t.user, 'availability': a}))
 
     return render(request, 'scheduling/event_show.html', locals())
 
