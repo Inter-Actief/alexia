@@ -45,7 +45,7 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a href="{% url 'apps.scheduling.views.event_show' e.pk %}">
+                    <a style="{% if e.organizer.color %}color: #{{ e.organizer.color }};{% endif %}" href="{% url 'apps.scheduling.views.event_show' e.pk %}">
                         {{ e.name }}
                     </a>
                     {% if e.tender_comments and e in events_tending %}
