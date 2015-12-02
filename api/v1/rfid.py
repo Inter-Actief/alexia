@@ -49,7 +49,7 @@ def rfid_list(request, radius_username=None):
     """
 
     result = []
-    rfidcards = RfidCard.objects.filter(managed_by=request.organization)
+    rfidcards = RfidCard.objects.filter(managed_by=request.organization, is_active=True)
 
     if radius_username is not None:
         rfidcards = rfidcards.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
@@ -89,7 +89,8 @@ def rfid_get(request, radius_username):
     result = []
     rfidcards = RfidCard.objects.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
                                         user__authenticationdata__username=radius_username,
-                                        managed_by=request.organization)
+                                        managed_by=request.organization,
+                                        is_active=True)
 
     for rfidcard in rfidcards:
         result.append(rfidcard.identifier)
@@ -140,6 +141,7 @@ def rfid_add(request, radius_username, identifier):
 
     if request.organization not in rfidcard.managed_by.all().select_for_update():
         rfidcard.managed_by.add(request.organization)
+        rfidcard.is_active = True
         rfidcard.save()
         return format_rfidcard(rfidcard)
     else:
@@ -177,6 +179,7 @@ def rfid_remove(request, radius_username, identifier):
 
     if len(managed_by) == 1:
         # Only this organization left
-        rfidcard.delete()
+        rfidcard.is_active = False
+        rfidcard.save()
     else:
         rfidcard.managed_by.remove(request.organization)
