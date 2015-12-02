@@ -52,7 +52,7 @@ class MembershipAddForm(forms.Form):
 class MembershipEditForm(forms.ModelForm):
     class Meta:
         model = Membership
-        fields = ('is_tender', 'is_planner', 'is_manager', 'comments')
+        fields = ('is_active', 'is_tender', 'is_planner', 'is_manager', 'comments')
 
     helper = default_crispy_helper()
 
