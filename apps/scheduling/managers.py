@@ -6,6 +6,8 @@ from django.db.models.query_utils import Q
 
 class EventManager(models.Manager):
     """Provides several extra handy methods to find events."""
+    def get_queryset(self):
+        return super(EventManager, self).get_queryset().filter(deleted=False)
 
     def occuring_at(self, start, end):
         """Returns the events that occur (partially or entirely) between the

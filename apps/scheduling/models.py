@@ -163,6 +163,7 @@ class Event(models.Model):
     """instructions for the bartenders"""
     is_risky = models.BooleanField(verbose_name=_("risky"), default=False)
     """whether this event is risky or not"""
+    deleted = models.BooleanField(verbose_name=_("deleted"), default=False)
 
     def get_absolute_url(self):
         return reverse('apps.scheduling.views.event_show', args=[self.pk])
