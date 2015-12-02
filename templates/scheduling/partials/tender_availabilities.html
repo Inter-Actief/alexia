@@ -1,0 +1,12 @@
+<table class="table table-condensed">
+    {% for a in tenders %}
+    <tr>
+        <td>{{ a.user.get_full_name }}</td>
+        <td>
+            <a href="{% url 'apps.scheduling.views.event_edit_bartender_availability' pk=event.pk user_pk=a.user.pk %}">
+                <span class="label label-{{ a.availability.css_class|default:'default' }}">{{ a.availability|default:_("Unknown") }}</span>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
