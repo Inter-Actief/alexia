@@ -16,25 +16,15 @@
             event_id: {{ event.pk }},
             products: {
                 {% for product in products %}
-                    product{{ product.id }}: {
+                    {{ product.id }}: {
                         name: "{{ product.name|escapejs }}",
                         price: {{ product.price }}
                     },
                 {% endfor %}
             },
-            location: 'Abscint',
-            androidapp: {{ androidapp|yesno:"true,false" }}
+            androidapp: {{ androidapp|yesno:"true,false" }},
+            countdown: {{ countdown }}
         };
-
-        /*
-         juliana_order_save(
-         event_id,
-         user_id,
-         [{'product': product_id,
-         'amount': amount,
-         'price': totalprice}]
-         );
-         */
     </script>
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-3.3.5.min.css">
@@ -73,7 +63,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-8"><a href="#" class="btn btn-default btn-block btn-keypad">0</a></div>
-                    <div class="col-xs-4"><a href="#" class="btn btn-block btn-primary btn-specialpad command"
+                    <div class="col-xs-4"><a href="#" class="btn btn-block btn-primary btn-keypad btn-specialpad command"
                                              data-command="clear">Herstel</a></div>
                 </div>
                 <div class="row">
@@ -93,7 +83,7 @@
                                 <div class="col-xs-4">
                                     <a href="#" class="btn btn-block btn-info command"
                                        {% if product.background_color %}style="background-color: #{{ product.background_color }}; border-color: #{{ product.background_color }};"{% endif %}
-                                       data-command="sales" data-product="product{{ product.id }}">
+                                       data-command="sales" data-product="{{ product.id }}">
                                         <span {% if product.text_color %}style="color: #{{ product.text_color }};"{% endif %}>{{ product.name }}</span>
                                     </a>
                                 </div>
@@ -126,7 +116,7 @@
             <div class="col-xs-10 col-xs-offset-1" id="countdownbox">
                 <div class="alert alert-info">
                     <span id="payment-in">Automatisch betalen over:</span>
-                    <span id="payment-countdown">5</span>
+                    <span id="payment-countdown">{{ countdown }}</span>
                 </div>
             </div>
         </div>
@@ -141,8 +131,21 @@
                 <div class="" id="payment-buttons">
                     <a class="btn btn-lg btn-danger command" data-command="cancelPayment"
                        id="cancel-payment">Annuleren</a>
-                    <!--<a class="btn btn-lg btn-success pull-right" id="pay-now">Betalen</a>-->
+                    <a class="btn btn-lg btn-success pull-right command" data-command="payNow" id="pay-now">Ok</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-screen">
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="row">
+                <div class="alert alert-info" id="current-message">
+                    Message
+                </div>
+            </div>
+            <div class="row">
+                <a class="btn btn-lg btn-success pull-right command" data-command="ok">Ok</a>
             </div>
         </div>
     </div>

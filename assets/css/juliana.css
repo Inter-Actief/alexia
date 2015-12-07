@@ -76,14 +76,14 @@ body {
 }
 
 #receipt {
-	height: 804px;
+	height: 744px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	border-bottom-left-radius:0;
 	border-bottom-right-radius:0;
-	padding:10px;
-    padding-top:0;
-    padding-bottom:80px;
+	border-bottom: 0;
+	padding: 0 10px;
+	margin-bottom: 0;
 }
 
 #receipt-table, #log-table {
@@ -119,10 +119,9 @@ body {
 }
 
 #receipt-total {
-	position:absolute;
-	bottom:0;
 	border-top-left-radius:0;
 	border-top-right-radius:0;
+	width: 100%;
 }
 
 #receipt-total span, #receipt-total input {
@@ -133,7 +132,6 @@ body {
 }
 
 #receipt-total input {
-    width:calc(100% - 29px);
     text-align:right;
 }
 
@@ -177,4 +175,9 @@ body {
 
 #current-error {
     font-size:20px;
+}
+
+/* Mesage screen */
+#message-screen {
+	padding-top: 130px;
 }
