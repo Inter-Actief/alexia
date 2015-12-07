@@ -1,3 +1,8 @@
+@keyframes flash-receipt {
+    from { box-shadow: 0 0 15px 0px #5BC0DE; }
+    to { box-shadow: 0 0 0px 0px #5BC0DE; }
+}
+
 body {
   padding-top: 20px!important;
 }
@@ -88,6 +93,12 @@ body {
 
 #receipt-table, #log-table {
 	width: 100%;
+}
+
+#receipt-table tr.flash {
+    animation-name: flash-receipt;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
 }
 
 #receipt-table td {
