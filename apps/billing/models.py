@@ -112,6 +112,7 @@ class Product(models.Model):
                                         help_text=_('Background color for Juliana'), max_length=6,
                                         validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
                                                                    message=_('Enter a valid hexadecimal color'))])
+    deleted = models.BooleanField(verbose_name=_("deleted"), default=False)
 
     @property
     def is_permanent(self):
@@ -122,6 +123,10 @@ class Product(models.Model):
     def is_temporary(self):
         """Indicates whether this is a TemporaryProduct"""
         return hasattr(self, 'temporaryproduct')
+
+    @property
+    def is_deleted(self):
+        return self.deleted
 
     def get_price(self, event):
         """Gets the price for a given event."""
