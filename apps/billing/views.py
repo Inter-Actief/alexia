@@ -137,6 +137,13 @@ class ProductGroupUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, Cris
     fields = ['name']
 
 
+class ProductGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, DeleteView):
+    model = ProductGroup
+
+    def get_success_url(self):
+        return reverse('productgroup_list')
+
+
 class ProductRedirectView(ManagerRequiredMixin, SingleObjectMixin, RedirectView):
     """
     View to redirect to either the PermanentProductDetailView or the

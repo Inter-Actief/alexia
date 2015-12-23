@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, url
 
 from apps.billing.views import PriceGroupListView, PriceGroupCreateView, PriceGroupDetailView, PriceGroupUpdateView, \
-    ProductGroupListView, ProductGroupCreateView, ProductGroupDetailView, ProductGroupUpdateView, ProductRedirectView, \
+    ProductGroupListView, ProductGroupCreateView, ProductGroupDetailView, ProductGroupUpdateView, ProductGroupDeleteView, \
+    ProductRedirectView, \
     PermanentProductListView, PermanentProductCreateView, PermanentProductDetailView, PermanentProductUpdateView, \
     PermanentProductDeleteView, TemporaryProductDeleteView, \
     TemporaryProductCreateView, TemporaryProductDetailView, TemporaryProductUpdateView, SellingPriceMatrixView, \
@@ -25,6 +26,7 @@ urlpatterns = patterns(
     url(r'^productgroup/create/$', ProductGroupCreateView.as_view(), name='productgroup_create'),
     url(r'^productgroup/(?P<pk>\d+)/$', ProductGroupDetailView.as_view(), name='productgroup_detail'),
     url(r'^productgroup/(?P<pk>\d+)/update/$', ProductGroupUpdateView.as_view(), name='productgroup_update'),
+    url(r'^productgroup/(?P<pk>\d+)/delete/$', ProductGroupDeleteView.as_view(), name='productgroup_delete'),
 
     url(r'^product/(?P<pk>\d+)/$', ProductRedirectView.as_view(), name='product_detail'),
     url(r'^product/permanent/$', PermanentProductListView.as_view(), name='permanentproduct_list'),
