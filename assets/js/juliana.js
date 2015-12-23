@@ -123,7 +123,7 @@ Scanner = {
         socket.onmessage = function (event) {
             var rfid = JSON.parse(event.data);
             scanner.action(rfid);
-        }
+        };
 
     },
     action: function (rfid) {
@@ -152,7 +152,7 @@ Display = {
         $('#display').html(text);
     },
     flash: function () {
-        $('#display').effect('shake').effect('highlight', {color: '#fcc'})
+        $('#display').effect('shake').effect('highlight', {color: '#fcc'});
     }
 };
 
