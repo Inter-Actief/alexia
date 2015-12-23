@@ -54,6 +54,10 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 {% trans 'Modify' %}
                             </a>
+                            <a class="btn btn-xs btn-danger" href="{% url 'permanentproduct_delete' permanentproduct.pk %}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                {% trans 'Delete' %}
+                            </a>
                         </td>
                     </tr>
                 {% empty %}

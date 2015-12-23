@@ -94,6 +94,10 @@
                                     <span class="glyphicon glyphicon-pencil"></span>
                                     {% trans 'Modify' %}
                                 </a>
+                               <a class="btn btn-danger btn-sm" href="{% url 'temporaryproduct_delete' temporaryproduct.pk %}">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                    {% trans 'Delete' %}
+                                </a>
                             </td>
                             {% endif %}
                         </tr>

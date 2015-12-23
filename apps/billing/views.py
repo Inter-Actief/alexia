@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 from django.db.models import Count, Sum
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
@@ -191,6 +193,18 @@ class PermanentProductUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, 
     form_class = PermanentProductForm
 
 
+class PermanentProductDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, OrganizationFormMixin, CrispyFormMixin,
+                                 DeleteView):
+    model = PermanentProduct
+    template_name = "billing/product_confirm_delete.html"
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.deleted = True
+        self.object.save()
+        return HttpResponseRedirect(reverse('permanentproduct_list'))
+
+
 class TemporaryProductDetailView(ManagerRequiredMixin, EventOrganizerFilterMixin, DetailView):
     model = TemporaryProduct
 
@@ -207,6 +221,17 @@ class TemporaryProductCreateView(ManagerRequiredMixin, CrispyFormMixin, FixedVal
 class TemporaryProductUpdateView(ManagerRequiredMixin, EventOrganizerFilterMixin, CrispyFormMixin, UpdateView):
     model = TemporaryProduct
     fields = ['name', 'price', 'text_color', 'background_color']
+
+
+class TemporaryProductDeleteView(ManagerRequiredMixin, EventOrganizerFilterMixin, CrispyFormMixin, DeleteView):
+    model = TemporaryProduct
+    template_name = "billing/product_confirm_delete.html"
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.deleted = True
+        self.object.save()
+        return HttpResponseRedirect(self.object.event.get_absolute_url())
 
 
 class SellingPriceCreateView(ManagerRequiredMixin, OrganizationFormMixin, CrispyFormMixin, CreateView):

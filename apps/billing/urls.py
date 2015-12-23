@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url
 from apps.billing.views import PriceGroupListView, PriceGroupCreateView, PriceGroupDetailView, PriceGroupUpdateView, \
     ProductGroupListView, ProductGroupCreateView, ProductGroupDetailView, ProductGroupUpdateView, ProductRedirectView, \
     PermanentProductListView, PermanentProductCreateView, PermanentProductDetailView, PermanentProductUpdateView, \
+    PermanentProductDeleteView, TemporaryProductDeleteView, \
     TemporaryProductCreateView, TemporaryProductDetailView, TemporaryProductUpdateView, SellingPriceMatrixView, \
     SellingPriceCreateView, SellingPriceUpdateView, SellingPriceDeleteView
 
@@ -33,11 +34,15 @@ urlpatterns = patterns(
     url(r'^product/permanent/(?P<pk>\d+)/$', PermanentProductDetailView.as_view(), name='permanentproduct_detail'),
     url(r'^product/permanent/(?P<pk>\d+)/update/$', PermanentProductUpdateView.as_view(),
         name='permanentproduct_update'),
+    url(r'^product/permanent/(?P<pk>\d+)/delete/$', PermanentProductDeleteView.as_view(),
+        name='permanentproduct_delete'),
     url(r'^product/temporary/create/event/(?P<event_pk>\d+)/$', TemporaryProductCreateView.as_view(),
         name='temporaryproduct_create'),
     url(r'^product/temporary/(?P<pk>\d+)/$', TemporaryProductDetailView.as_view(), name='temporaryproduct_detail'),
     url(r'^product/temporary/(?P<pk>\d+)/update/$', TemporaryProductUpdateView.as_view(),
         name='temporaryproduct_update'),
+    url(r'^product/temporary/(?P<pk>\d+)/delete/$', TemporaryProductDeleteView.as_view(),
+        name='temporaryproduct_delete'),
 
     url(r'^sellingprice/matrix/$', SellingPriceMatrixView.as_view(), name='sellingprice_matrix'),
     url(r'^sellingprice/create/$', SellingPriceCreateView.as_view(), name='sellingprice_create'),

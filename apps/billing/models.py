@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from apps.billing.managers import TemporaryProductManager, PermanentProductManager
 from apps.scheduling.models import Event
 from apps.organization.models import Organization
 from apps.stock.models import StockProduct
@@ -165,6 +166,8 @@ class PermanentProduct(Product):
     stockproduct = models.ForeignKey(StockProduct, verbose_name=_('stock product'), blank=True, null=True)
     position = models.IntegerField(verbose_name=_('position'))
 
+    objects = PermanentProductManager()
+
     def is_permanent(self):
         return True
 
@@ -196,6 +199,8 @@ class TemporaryProduct(Product):
     """
     event = models.ForeignKey(Event, related_name='temporaryproducts', verbose_name=_('event'))
     price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)
+
+    objects = TemporaryProductManager()
 
     def is_permanent(self):
         return True
