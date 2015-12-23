@@ -161,7 +161,7 @@ class PermanentProduct(Product):
     stockproduct -- If - and only if - the permanent product maps directly to a
                     stock product, this should refer to that product.
     """
-    productgroup = models.ForeignKey(ProductGroup, verbose_name=_('product group'))
+    productgroup = models.ForeignKey(ProductGroup, verbose_name=_('product group'), on_delete=models.SET_NULL, null=True)
     organization = models.ForeignKey(Organization, related_name='products', verbose_name=_('organization'))
     stockproduct = models.ForeignKey(StockProduct, verbose_name=_('stock product'), blank=True, null=True)
     position = models.IntegerField(verbose_name=_('position'))
