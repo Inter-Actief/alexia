@@ -4,7 +4,8 @@ This project is released under the following license, except for the
 included libraries as mentioned in LIBRARIES.md and otherwise noted.
 
 ```
-Copyright (c) 2011-2015, I.C.T.S.V. Inter-Actief and individual contributors.
+Copyright (c) 2011-2016, I.C.T.S.V. Inter-Actief, S.V. Arago and individual
+contributors.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -17,8 +18,8 @@ modification, are permitted provided that the following conditions are met:
   this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
 
-* Neither the name of I.C.T.S.V. Inter-Actief nor the names of its
-  contributors may be used to endorse or promote products derived from
+* Neither the name of I.C.T.S.V. Inter-Actief, nor S.V. Arago nor the names
+  of its contributors may be used to endorse or promote products derived from
   this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
