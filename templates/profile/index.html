@@ -103,14 +103,16 @@
                             <thead>
                                 <tr>
                                     <th>{% trans 'Organization' %}</th>
-                                    <th>{% trans 'Share' %}</th>
+                                    <th>{% trans 'Food' %}</th>
+                                    <th>{% trans 'Drinks' %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for share in shares %}
                                 <tr>
                                     <td>{{ share.organization }}</td>
-                                    <td>{{ share.percentage }}%</td>
+                                    <td>{{ share.food }}%</td>
+                                    <td>{{ share.drinks }}%</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
