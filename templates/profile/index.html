@@ -20,6 +20,7 @@
         <table class="table table-bordered">
             <tr class="tr-muted"><th>{% trans 'Stats' %}</th></tr>
             <tr><td class="text-right"><strong class="pull-left">{% trans 'Transactions' %}</strong> {{ order_count }}</td></tr>
+            <tr><td class="text-right"><strong class="pull-left">{% trans 'Events attended' %}</strong> {{ event_count }}</td></tr>
             {% if user.profile.is_tender %}<tr><td class="text-right"><strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}</td></tr>{% endif %}
         </table>
     </div>
@@ -32,29 +33,25 @@
             <div class="tab-pane active" id="billing">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6">
-                        <h4>{% trans 'Transactions' %}</h4>
+                        <h4>{% trans 'Events' %}</h4>
                         <p>
-                            {% trans 'These are your last 5 payments.' %}
-                            <a href="{% url 'apps.profile.views.payments' %}">{% trans 'See all' %}...</a>
+                            {% trans 'These are the last 5 events you attended.' %}
+                            <a href="{% url 'apps.profile.views.expenditures' %}">{% trans 'See all' %}...</a>
                         </p>
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>{% trans 'Event' %}</th>
-                                    <th>{% trans 'Time' %}</th>
-                                    <th>{% trans 'Amount' %}</th>
+                                    <th>{% trans 'Spent' %}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for o in orders %}
+                            {% for e in events %}
                                 <tr>
-                                    <td>{{ o.event }}</td>
-                                    <td>{{ o.placed_at|date:"H:i" }}</td>
-                                    <td>&euro; {{ o.amount|floatformat:2 }}</td>
-                                </tr>            
-                            {% empty %}
-                                <tr>
-                                    <td colspan="3">{% trans 'There are no transactions.' %}</td>
+                                    <td>{{ e.name }}</td>
+                                    <td>&euro; {{ e.spent|floatformat:2 }}</td>
+                                    <td><a href="{% url 'apps.profile.views.expenditures_event' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

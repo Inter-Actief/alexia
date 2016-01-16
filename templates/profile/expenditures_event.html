@@ -6,7 +6,7 @@
 {% block content %}
 <div class="page-header">
     <h1>
-        {% trans 'My payments' %}
+        {% blocktrans %}My payments at {{ event }}{% endblocktrans %}
     </h1>
 </div>
 <div class="table-responsive">
@@ -14,7 +14,6 @@
         <thead>
             <tr>
                 <th>{% trans 'Timestamp' %}</th>
-                <th>{% trans 'Event' %}</th>
                 <th>{% trans 'Amount' %}</th>
                 <th>{% trans 'Handled by' %}</th>
                 <th></th>
@@ -24,7 +23,6 @@
         {% for o in orders %}
             <tr>
                 <td>{{ o.placed_at|date:"l d F H:i" }}</td>
-                <td>{{ o.event }}</td>
                 <td>&euro; {{ o.amount|floatformat:2 }}</td>
                 <td>{{ o.added_by.get_full_name }}</td>
                 <td><a href="{% url 'apps.billing.views.payment_show' o.pk %}" class="btn btn-xs btn-default">Details</a></td>

@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 
 from apps.billing.models import Order
 from apps.organization.models import AuthenticationData
+from apps.scheduling.models import Event
 from utils.auth.decorators import tender_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from .forms import ProfileForm, IvaForm
@@ -17,10 +18,13 @@ from .forms import ProfileForm, IvaForm
 
 @login_required
 def index(request):
-    order_list = Order.objects.select_related('event').filter(
-        authorization__in=request.user.authorizations.all())
-    order_count = len(order_list)
-    orders = order_list.order_by('-placed_at')[:5]
+    event_list = Event.objects.filter(orders__authorization__in=request.user.authorizations.all()) \
+                              .annotate(spent=Sum('orders__amount'))
+    event_count = event_list.count()
+    events = event_list.order_by('-ends_at')[:5]
+
+    order_count = Order.objects.select_related('event').filter(
+        authorization__in=request.user.authorizations.all()).count()
     
     shares = []
     for authorization in request.user.authorizations.all():
@@ -101,10 +105,30 @@ def view_iva(request):
 
 
 @login_required
-def payments(request):
+def expenditures(request):
+    event_list = Event.objects.filter(orders__authorization__in=request.user.authorizations.all()) \
+                              .annotate(spent=Sum('orders__amount')) \
+                              .order_by('-ends_at')
+    paginator = Paginator(event_list, 25)
+
+    page = request.GET.get('page')
+    try:
+        events = paginator.page(page)
+    except PageNotAnInteger:
+        events = paginator.page(1)
+    except EmptyPage:
+        events = paginator.page(paginator.num_pages)
+
+    return render(request, 'profile/expenditures.html', locals())
+
+
+@login_required
+def expenditures_event(request, pk):
+    event = Event.objects.get(pk=pk)
+
     order_list = Order.objects.filter(
-        authorization__in=request.user.authorizations.all()) \
-        .order_by('-placed_at')
+        authorization__in=request.user.authorizations.all(),
+        event=pk).order_by('-placed_at')
     paginator = Paginator(order_list, 25)
 
     page = request.GET.get('page')
@@ -115,4 +139,4 @@ def payments(request):
     except EmptyPage:
         orders = paginator.page(paginator.num_pages)
 
-    return render(request, 'profile/payments.html', locals())
+    return render(request, 'profile/expenditures_event.html', locals())
