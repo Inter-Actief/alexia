@@ -29,6 +29,7 @@ State = {
     PAYING: 1,
     ERROR: 2,
     CHECK: 3,
+    MESSAGE: 4,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -78,6 +79,14 @@ State = {
 
                 $('#error-screen').show();
                 break;
+            case this.MESSAGE:
+                console.log('Changing to MESSAGE...');
+                this.current = this.MESSAGE;
+                this._hideAllScreens();
+
+                $('#current-message').html(argument);
+                $('#message-screen').show();
+                break;
             default:
                 console.log('Error: no known state');
                 break;
@@ -91,6 +100,7 @@ State = {
         $('#rfid-screen').hide();
         $('#cashier-screen').hide();
         $('#error-screen').hide();
+        $('#message-screen').hide();
     }
 };
 
@@ -113,7 +123,7 @@ Scanner = {
         socket.onmessage = function (event) {
             var rfid = JSON.parse(event.data);
             scanner.action(rfid);
-        }
+        };
 
     },
     action: function (rfid) {
@@ -142,7 +152,7 @@ Display = {
         $('#display').html(text);
     },
     flash: function () {
-        $('#display').effect('shake').effect('highlight', {color: '#fcc'})
+        $('#display').effect('shake').effect('highlight', {color: '#fcc'});
     }
 };
 
@@ -153,6 +163,7 @@ Receipt = {
     index: 0,
     receipt: [],
     counterInterval: null,
+    payData: null,
     add: function (product, quantity) {
         if (State.current !== State.SALES) {
             console.log('Error: not on SALES screen');
@@ -251,42 +262,38 @@ Receipt = {
         } else if (userData.error) {
             State.toggleTo(State.ERROR, 'Error authenticating: ' + userData.error.message);
         } else {
-            /*
-             juliana_order_save(
-             event_id,
-             user_id,
-             [{'product': product_id,
-             'amount': amount,
-             'price': totalprice}]
-             );
-             */
             console.log('Userdata received correctly. Proceeding to countdown.');
 
-            var data = {
+            Receipt.payData = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
                 purchases: Receipt.getReceipt(),
                 rfid_data: rfid
             };
 
-            var rpcRequest = {
-                jsonrpc: '2.0',
-                method: 'juliana.order.save',
-                params: data,
-                id: 1
-            };
-
-            var countdown = 4;
+            var countdown = Settings.countdown - 1;
             $('#payment-countdown').text(countdown + 1);
             Receipt.counterInterval = setInterval(function () {
                 $('#payment-countdown').text(countdown);
                 if (countdown === 0) {
-                    clearInterval(Receipt.counterInterval);
-                    Receipt.confirmPay(rpcRequest);
+                    Receipt.payNow();
                 }
                 countdown--;
             }, 1000);
         }
+    },
+    payNow: function () {
+        console.log('Processing payment now.');
+        var rpcRequest = {
+            jsonrpc: '2.0',
+            method: 'juliana.order.save',
+            params: Receipt.payData,
+            id: 1
+        };
+
+        clearInterval(Receipt.counterInterval);
+        Receipt.confirmPay(rpcRequest);
+
     },
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
@@ -296,6 +303,12 @@ Receipt = {
                 State.toggleTo(State.SALES);
             }
         });
+    },
+    cash: function () {
+        console.log('Paying cash');
+        var sum = Receipt.updateTotalAmount();
+        var amount = Math.ceil(sum / 10) * 10;
+        State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
     }
 };
 
@@ -378,10 +391,7 @@ User = {
             id: 1
         };
         IAjax.request(rpcRequest, function (data) {
-            State._hideAllScreens();
-            $('#payment-receipt').html(user.first_name + " heeft op deze borrel al &euro;" + (data.result / 100).toFixed(2) + " verbruikt.");
-            $('#countdownbox').hide();
-            $('#rfid-screen').show();
+            State.toggleTo(State.MESSAGE, user.first_name + " heeft op deze borrel al &euro;" + (data.result / 100).toFixed(2) + " verbruikt.");
         });
     }
 };
@@ -416,10 +426,13 @@ $(function () {
 
     State.toggleTo(State.SALES);
 
-    $('#welcome').modal();
-
     $('.btn-keypad').click(function () {
         Input.stroke($(this).html());
+    });
+
+    $(document).keydown(function (event) {
+        if(event.which >= 48 && event.which <= 57) // 48 is the keycode for 0, 57 for 9
+            Input.stroke((event.which - 48).toString());
     });
 
     $('.command').click(function () {
@@ -442,14 +455,15 @@ $(function () {
                 Display.set('Scan een kaart');
                 break;
             case 'cash':
-                var sum = Receipt.updateTotalAmount();
-                var amount = Math.ceil(sum / 10) * 10;
-                State._hideAllScreens();
-                $('#payment-receipt').html('Dat wordt dan &euro;' + (amount/100).toFixed(2));
-                $('#countdownbox').hide();
-                $('#rfid-screen').show();
+                Receipt.cash();
                 break;
             case 'cancelPayment':
+                State.toggleTo(State.SALES);
+                break;
+            case 'payNow':
+                Receipt.payNow();
+                break;
+            case 'ok':
                 State.toggleTo(State.SALES);
                 break;
             default:
