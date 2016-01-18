@@ -123,7 +123,7 @@ Scanner = {
         socket.onmessage = function (event) {
             var rfid = JSON.parse(event.data);
             scanner.action(rfid);
-        }
+        };
 
     },
     action: function (rfid) {
@@ -152,7 +152,7 @@ Display = {
         $('#display').html(text);
     },
     flash: function () {
-        $('#display').effect('shake').effect('highlight', {color: '#fcc'})
+        $('#display').effect('shake').effect('highlight', {color: '#fcc'});
     }
 };
 
@@ -430,9 +430,10 @@ $(function () {
         Input.stroke($(this).html());
     });
 
-    $(document).keypress(function (event) {
-        if(event.key >= '0' && event.key <= '9')
-            Input.stroke(event.key);
+    $(document).keydown(function (event) {
+        console.log(event.which);
+        if(event.which >= 48 && event.which <= 57) // 48 is the keycode for 0, 57 for 9
+            Input.stroke((event.which - 48).toString());
     });
 
     $('.command').click(function () {
