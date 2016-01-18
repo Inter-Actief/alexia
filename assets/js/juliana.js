@@ -431,7 +431,6 @@ $(function () {
     });
 
     $(document).keydown(function (event) {
-        console.log(event.which);
         if(event.which >= 48 && event.which <= 57) // 48 is the keycode for 0, 57 for 9
             Input.stroke((event.which - 48).toString());
     });
