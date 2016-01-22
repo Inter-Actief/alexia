@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name='description', blank=True)),
                 ('starts_at', models.DateTimeField(verbose_name='starts at')),
                 ('ends_at', models.DateTimeField(verbose_name='ends at')),
-                ('is_closed', models.BooleanField(default=False, verbose_name='enrolment closed')),
+                ('is_closed', models.BooleanField(default=False, verbose_name='tender enrollment closed')),
                 ('kegs', models.IntegerField(verbose_name='number of kegs')),
                 ('option', models.BooleanField(default=False, verbose_name='option')),
                 ('tender_comments', models.TextField(verbose_name='Tender comments', blank=True)),
