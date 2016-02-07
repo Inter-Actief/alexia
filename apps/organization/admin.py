@@ -24,7 +24,7 @@ class ProfileInline(admin.StackedInline):
     model = Profile
     max_num = 1
     can_delete = False
-    fields = ('is_bhv', 'is_iva')
+    fields = ('is_bhv', 'is_iva', 'is_external_entity')
 
 
 class UserAdmin(UserAdmin):

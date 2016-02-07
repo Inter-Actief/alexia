@@ -78,5 +78,6 @@ def format_user(user):
         'radius_username': user_name,
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'authentication_data': auth_data
+        'authentication_data': auth_data,
+        'is_external_entity': user.profile.is_external_entity
     }

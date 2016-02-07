@@ -68,6 +68,7 @@ class Profile(models.Model):
                                              verbose_name=_('current organization'))
     ical_id = models.CharField(_('iCal identifier'), max_length=32,
                                null=True)
+    is_external_entity = models.BooleanField(_('is external entity'), default=False)
 
     class Meta:
         ordering = ['user']
