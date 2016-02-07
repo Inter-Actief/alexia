@@ -56,6 +56,17 @@ def order_show(request, pk):
         .values('product', 'product__name') \
         .annotate(amount=Sum('amount'), price=Sum('price'))
 
+    external = Purchase.objects.filter(order__event=event,
+                                       order__authorization__user__profile__is_external_entity=True) \
+        .values('order__authorization__user',
+                'order__authorization__user__first_name',
+                'order__authorization__user__last_name') \
+        .annotate(price=Sum('price'))
+    external = [{
+        'price': e['price'],
+        'name': (e['order__authorization__user__first_name'] + ' ' + e['order__authorization__user__last_name']).strip()
+    } for e in external]
+
     orders = event.orders.select_related('authorization__user') \
         .order_by('-placed_at')
     order_count = len(orders)  # efficientie: len() ipv count()

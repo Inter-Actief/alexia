@@ -65,6 +65,33 @@
         </div>
     </div>
 </div>
+
+{% if e %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>{% trans 'Sales to external entities' %}</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Entity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for e in external %}
+                        <tr>
+                            <td>{{ e.name }}</td>
+                            <td>&euro; {{ e.price }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 <div class="row">
     <div class="col-xs-12">
         <h3>{% trans 'Orders' %}</h3>
