@@ -67,6 +67,14 @@ def order_show(request, pk):
         'name': (e['order__authorization__user__first_name'] + ' ' + e['order__authorization__user__last_name']).strip()
     } for e in external]
 
+    external_revenue = sum([x['price'] for x in external])
+
+    internal_revenue = Purchase.objects.filter(order__event=event,
+                                                 order__authorization__user__profile__is_external_entity=False) \
+        .aggregate(price=Sum('price'))['price']
+    if internal_revenue is None:
+        internal_revenue = 0
+
     orders = event.orders.select_related('authorization__user') \
         .order_by('-placed_at')
     order_count = len(orders)  # efficientie: len() ipv count()

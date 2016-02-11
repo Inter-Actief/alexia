@@ -33,8 +33,16 @@
                 <td>{{ order_count }}</td>
             </tr>
             <tr>
-                <th>{% trans 'Revenue' %}</th>
+                <th>{% trans 'Total revenue' %}</th>
                 <td>&euro; {{ order_sum|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Of which internal' %}</th>
+                <td>&euro; {{ internal_revenue|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Of which external' %}</th>
+                <td>&euro; {{ external_revenue|floatformat:2 }}</td>
             </tr>
         </table>
     </div>

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-22 14:40+0100\n"
+"POT-Creation-Date: 2016-02-07 16:35+0100\n"
 "PO-Revision-Date: 2015-09-21 21:14+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -183,6 +183,9 @@ msgstr "huidige organisatie"
 
 msgid "iCal identifier"
 msgstr "iCal identificatie"
+
+msgid "is external entity"
+msgstr "is externe partij"
 
 msgid "profile"
 msgstr "profiel"
@@ -890,11 +893,23 @@ msgstr "Organisator"
 msgid "# Transactions"
 msgstr "# Transacties"
 
+msgid "Total revenue"
+msgstr "Totale omzet"
+
+msgid "Of which internal"
+msgstr "Waarvan intern"
+
+msgid "Of which external"
+msgstr "Waarvan extern"
+
 msgid "Sales"
 msgstr "Verkopen"
 
 msgid "Product"
 msgstr "Product"
+
+msgid "Sales to external entities"
+msgstr "Verkopen aan externe partijen"
 
 msgid "ID"
 msgstr "ID"
