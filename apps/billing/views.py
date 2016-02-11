@@ -69,9 +69,9 @@ def order_show(request, pk):
 
     external_revenue = sum([x['price'] for x in external])
 
-    internal_revenue = Purchase.objects.filter(order__event=event,
-                                                 order__authorization__user__profile__is_external_entity=False) \
-        .aggregate(price=Sum('price'))['price']
+    internal_revenue = Purchase.objects.filter(order__event=event) \
+                               .exclude(order__authorization__user__profile__is_external_entity=True) \
+                               .aggregate(price=Sum('price'))['price']
     if internal_revenue is None:
         internal_revenue = 0
 
