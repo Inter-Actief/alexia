@@ -29,6 +29,7 @@ class ProfileInline(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (AuthenticationDataInline, ProfileInline, MembershipInline, AuthorizationInline, RfidCardInline)
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'profile__is_external_entity')
 
 
 class AuthenticationDataAdmin(admin.ModelAdmin):
