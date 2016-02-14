@@ -1,6 +1,6 @@
 from jsonrpc.site import JSONRPCSite
 
-from apps.organization.models import AuthenticationData
+from apps.organization.models import AuthenticationData, Profile
 from utils.auth.backends import RADIUS_BACKEND_NAME
 
 api_v1_site = JSONRPCSite()
@@ -73,11 +73,16 @@ def format_user(user):
         'username': u.username,
     } for u in user.authenticationdata_set.all()]
 
+    try:
+       external_entity = user.profile.is_external_entity
+    except Profile.DoesNotExist:
+       external_entity = False
+
     return {
         'id': user.id,
         'radius_username': user_name,
         'first_name': user.first_name,
         'last_name': user.last_name,
         'authentication_data': auth_data,
-        'is_external_entity': user.profile.is_external_entity if user.profile is not None else False
+        'is_external_entity': external_entity
     }
