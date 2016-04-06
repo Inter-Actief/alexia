@@ -1,6 +1,7 @@
 from django.conf import settings
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url, get_object_or_404
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -41,6 +42,11 @@ def login(request):
     redirect_field_name = REDIRECT_FIELD_NAME
 
     return render(request, 'general/login.html', locals())
+
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect(settings.LOGIN_URL)
 
 
 @login_required

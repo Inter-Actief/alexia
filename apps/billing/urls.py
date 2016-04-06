@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from . import views
 
 from apps.billing.views import PriceGroupListView, PriceGroupCreateView, PriceGroupDetailView, PriceGroupUpdateView, \
     ProductGroupListView, ProductGroupCreateView, ProductGroupDetailView, ProductGroupUpdateView, ProductRedirectView, \
@@ -6,14 +7,12 @@ from apps.billing.views import PriceGroupListView, PriceGroupCreateView, PriceGr
     TemporaryProductCreateView, TemporaryProductDetailView, TemporaryProductUpdateView, SellingPriceMatrixView, \
     SellingPriceCreateView, SellingPriceUpdateView, SellingPriceDeleteView
 
-urlpatterns = patterns(
-    'apps.billing.views',
-
-    url(r'^order/$', 'order_list'),
-    url(r'^order/(?P<pk>\d+)/$', 'order_show'),
-    url(r'^stats/(?P<year>\d+)/$', 'stats_year'),
-    url(r'^stats/(?P<year>\d+)/(?P<month>\d+)/$', 'stats_month'),
-    url(r'^payment/(?P<pk>\d+)/$', 'payment_show'),
+urlpatterns = [
+    url(r'^order/$', views.order_list),
+    url(r'^order/(?P<pk>\d+)/$', views.order_show),
+    url(r'^stats/(?P<year>\d+)/$', views.stats_year),
+    url(r'^stats/(?P<year>\d+)/(?P<month>\d+)/$', views.stats_month),
+    url(r'^payment/(?P<pk>\d+)/$', views.payment_show),
 
     url(r'^pricegroup/$', PriceGroupListView.as_view(), name='pricegroup_list'),
     url(r'^pricegroup/create/$', PriceGroupCreateView.as_view(), name='pricegroup_create'),
@@ -49,4 +48,4 @@ urlpatterns = patterns(
         name='sellingprice_create'),
     url(r'^sellingprice/(?P<pk>\d+)/update/$', SellingPriceUpdateView.as_view(), name='sellingprice_update'),
     url(r'^sellingprice/(?P<pk>\d+)/delete/$', SellingPriceDeleteView.as_view(), name='sellingprice_delete'),
-)
+]
