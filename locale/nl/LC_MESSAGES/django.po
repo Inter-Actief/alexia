@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 12:05+0100\n"
+"POT-Creation-Date: 2016-04-06 13:53+0200\n"
 "PO-Revision-Date: 2015-09-21 21:14+0200\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -109,7 +109,7 @@ msgid "amount"
 msgstr "aantal"
 
 msgid "rfid card"
-msgstr ""
+msgstr "RFID-kaart"
 
 msgid "order"
 msgstr "transactie"
@@ -158,6 +158,15 @@ msgstr "locatie"
 
 msgid "locations"
 msgstr "locaties"
+
+msgid "Authentication backend"
+msgstr "Backend voor authenticatie"
+
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgid "Additional data"
+msgstr "Aanvullende gegevens"
 
 msgid "has IVA-certificate"
 msgstr "heeft IVA-certificaat"
@@ -256,6 +265,9 @@ msgstr "Filter"
 
 msgid "Enrollment open"
 msgstr "Inschrijving geopend"
+
+msgid "Enrollment closed"
+msgstr "Inschrijving gesloten"
 
 msgid "Weekly reminder"
 msgstr "Wekelijkse herinnering"
@@ -570,9 +582,6 @@ msgstr "Uitloggen"
 
 msgid "Login"
 msgstr "Login"
-
-msgid "Username"
-msgstr "Gebruikersnaam"
 
 msgid "Password"
 msgstr "Wachtwoord"
@@ -1053,11 +1062,17 @@ msgstr "Activiteit toevoegen"
 msgid "yyyy-mm-dd"
 msgstr "dd-mm-yyyy"
 
+msgid "Description"
+msgstr "Omschrijving"
+
 msgid "Start"
 msgstr "Begin"
 
 msgid "End"
 msgstr "Einde"
+
+msgid "There are no tender comments."
+msgstr "Er is geen specifieke tappersinstructie."
 
 msgid "Temporary products"
 msgstr "Tijdelijke producten"
@@ -1084,6 +1099,9 @@ msgstr "Onderwerp"
 
 msgid "Is active"
 msgstr "Is actief"
+
+msgid "Send at"
+msgstr "Verzenden om"
 
 msgid "Template"
 msgstr "Sjabloon"
@@ -1112,11 +1130,14 @@ msgstr "Laden..."
 msgid "Kegs"
 msgstr "Fusten"
 
+msgid "Has tender comments"
+msgstr "Heeft tappersinstructie"
+
 msgid "Risky activity"
 msgstr "Risicoactiviteit"
 
-msgid "Kassa"
-msgstr "Point of sale"
+msgid "Point of sale"
+msgstr "Kassa"
 
 msgid "AJAX-request required"
 msgstr "AJAX-request verplicht"

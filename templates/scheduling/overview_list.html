@@ -96,7 +96,7 @@
                     {% endif %}
                     {% endif %}
                     {% if is_tender and e.can_be_opened and e in events_tending %}
-                    <a class="btn btn-primary" href="{% url 'apps.juliana.views.juliana' e.pk %}">{% trans 'Kassa' %}</a>
+                    <a class="btn btn-primary" href="{% url 'apps.juliana.views.juliana' e.pk %}">{% trans 'Point of sale' %}</a>
                     {% endif %}
                     </div>
                 </td>
