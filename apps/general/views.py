@@ -14,7 +14,7 @@ from .forms import RegisterForm
 
 @csrf_protect
 def login(request):
-    redirect_to = request.REQUEST.get(REDIRECT_FIELD_NAME, '')
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, ''))
 
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
