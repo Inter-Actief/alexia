@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+import datetime
 import json
 
 from django.http import HttpResponse
@@ -30,8 +30,8 @@ def calendar_fetch(request):
         return redirect(calendar)
 
     tz = timezone.get_current_timezone()
-    from_time = datetime.fromtimestamp(float(request.GET.get('start')))
-    till_time = datetime.fromtimestamp(float(request.GET.get('end')))
+    from_time = datetime.datetime.fromtimestamp(float(request.GET.get('start')))
+    till_time = datetime.datetime.fromtimestamp(float(request.GET.get('end')))
     data = []
 
     for event in Event.objects.filter(ends_at__gte=from_time,
@@ -66,11 +66,3 @@ def calendar_fetch(request):
         })
 
     return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-def ios(request):
-    events = Event.objects.select_related().filter(starts_at__gte=timezone.now,
-                                                   starts_at__lte=timezone.now() + timedelta(days=14)).order_by(
-        'starts_at')
-    events = events.distinct()
-    return render(request, 'scheduling/overview_ios.html', locals())
