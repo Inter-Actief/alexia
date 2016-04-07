@@ -13,6 +13,9 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = '/' # DEPRECATED
 LOGIN_URL = '/login/' # DEPRECATED
 
+# Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 # Debugging
 DEBUG = False
 
