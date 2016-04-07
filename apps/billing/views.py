@@ -125,7 +125,8 @@ class ProductGroupDetailView(ManagerRequiredMixin, OrganizationFilterMixin, Deta
     model = ProductGroup
 
 
-class ProductGroupCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization):
+class ProductGroupCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
+                             CreateViewForOrganization):
     model = ProductGroup
     fields = ['name']
 

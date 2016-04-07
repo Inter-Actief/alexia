@@ -10,7 +10,7 @@ Wietse Smid.
 Author: Jelte Zeilstra
 """
 
-import datetime
+from datetime import timedelta
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
@@ -37,7 +37,7 @@ class Command(BaseCommand):
             # Load template and settings
             try:
                 mailtemplate = MailTemplate.objects.get(organization=organization, name="reminder", is_active=True)
-                starts_before = now + datetime.timedelta(minutes=mailtemplate.send_at) if mailtemplate.send_at else None
+                starts_before = now + timedelta(minutes=mailtemplate.send_at) if mailtemplate.send_at else None
             except MailTemplate.DoesNotExist:
                 raise CommandError('MailTemplate "reminder" does not exist for %s' % organization)
 

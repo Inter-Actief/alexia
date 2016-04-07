@@ -23,8 +23,9 @@ def index(request):
 
     shares = []
     for authorization in request.user.authorizations.all():
-        my_order_sum  = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
-        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization).aggregate(total=Sum('amount'))
+        my_order_sum = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
+        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization) \
+                             .aggregate(total=Sum('amount'))
         if not my_order_sum['total'] or not all_order_sum['total']:
             percentage = 0
         else:

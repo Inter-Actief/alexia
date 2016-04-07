@@ -15,15 +15,15 @@ from apps.stock.models import StockProduct
 
 class PriceGroup(models.Model):
     """A price group is a group of prices belonging to product groups.
-    
+
     organization     -- The organization to which the group belongs
     name             -- The name of the group
     productgroups    -- The product groups for which a price has been set
-    
+
     We also know:
-    
+
     events        -- Events associated with this price group.
-    
+
     """
 
     organization = models.ForeignKey(Organization, related_name='pricegroups', verbose_name=_('organization'))
@@ -43,15 +43,15 @@ class PriceGroup(models.Model):
 
 
 class ProductGroup(models.Model):
-    """A product group is a group to which permanent products belong. All 
-    organizations specify their own product groups and link their products to 
+    """A product group is a group to which permanent products belong. All
+    organizations specify their own product groups and link their products to
     them.
-    
+
     organization     -- The organization to which the group belongs
     name             -- The name of the group
-    
+
     And:
-    
+
     pricegroups    -- The price groups for which this product group has a price
     """
 
@@ -73,7 +73,7 @@ class SellingPrice(models.Model):
     """The intermediary class between price groups and product groups. This is
     what it is all about: this is the price of a product group within a specific
     price group.
-    
+
     pricegroup   -- The price group belonging to this price.
     productgroup -- The product group belonging to this price.
     price        -- The price of the price and product groups.
@@ -96,10 +96,10 @@ class SellingPrice(models.Model):
 
 class Product(models.Model):
     """A product that can be sold on an event.
-    
+
     name  -- The name of the product.
-    
-    
+
+
     purchases    -- The purchases placed for this product
     """
 
@@ -149,7 +149,7 @@ class Product(models.Model):
 
 class PermanentProduct(Product):
     """A product that is permanently present  for an organization.
-    
+
     productgroup -- The product group to which this product belongs.
     organization -- The organization to which this product belongs.
     stockproduct -- If - and only if - the permanent product maps directly to a
@@ -185,7 +185,7 @@ class PermanentProduct(Product):
 
 class TemporaryProduct(Product):
     """A product that only exists for one event.
-    
+
     event   -- The event this product belongs to.
     price   -- The price of this product.
     """
@@ -207,7 +207,7 @@ class TemporaryProduct(Product):
 
 class RfidCard(models.Model):
     """A representation of an RFID card, which belongs to some profile.
-    
+
     identifier    -- Unique identifier of the RFID card
     is_active     -- Boolean indicating whether this card has been activated.
     registered_at -- Date and time at which the card was registered.
@@ -231,7 +231,7 @@ class RfidCard(models.Model):
 class Authorization(models.Model):
     """An authorization to place orders at a specific organization. The
     authorization is only valid between the start and end date.
-    
+
     user         -- The user that is authorized
     organization -- The organization at which the authorization is signed
     start_date   -- The start date (and time) of the authorization.
@@ -249,7 +249,7 @@ class Authorization(models.Model):
     @classmethod
     def get_for_user_event(cls, user, event):
         """Get authorization if given user and event, if any.
-        
+
         Returns Authorization object or None."""
 
         authorizations = cls.objects.filter(Q(end_date__isnull=True) | Q(end_date__gte=timezone.now()), user=user,
@@ -277,7 +277,7 @@ class Authorization(models.Model):
 
 class Order(models.Model):
     """A order is a set of purchases at a specific event.
-    
+
     event        -- The event at which the order was placed.
     placed_at    -- The date (and time) at which the order was placed
     purchases    -- The purchases placed in this order
@@ -317,7 +317,7 @@ class Order(models.Model):
 
 class Purchase(models.Model):
     """An order item, or a purchase of a specific product.
-    
+
     order   -- The order at which the purchase was placed.
     product -- The product at which the purchase was placed.
     amount  -- The amount of the product purchased

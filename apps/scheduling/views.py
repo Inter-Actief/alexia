@@ -145,7 +145,7 @@ def event_show(request, pk):
 def event_add(request):
     if not request.organization:
         return render(request, 'general_error.html', {'error_msg':
-            _('Creating an event requires an primary organization.')})
+                      _('Creating an event requires an primary organization.')})
 
     if request.method == 'POST':
         form = EventForm(request, request.POST)
@@ -404,7 +404,8 @@ class AvailabilityDetailView(ManagerRequiredMixin, OrganizationFilterMixin, Deta
     model = Availability
 
 
-class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization):
+class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
+                             CreateViewForOrganization):
     model = Availability
     fields = ['name', 'nature']
 
