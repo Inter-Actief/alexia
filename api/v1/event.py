@@ -3,9 +3,9 @@ from datetime import timedelta, datetime
 from django.forms.models import model_to_dict
 from jsonrpc import jsonrpc_method
 
-from .common import api_v1_site
 from apps.organization.models import Location
 from apps.scheduling.models import Event, StandardReservation
+from .common import api_v1_site
 
 
 @jsonrpc_method('event.adjecents(String, String, String, String, Number, Array) -> Array', site=api_v1_site,

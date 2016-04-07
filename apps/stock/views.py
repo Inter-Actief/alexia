@@ -1,13 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-from django.shortcuts import render_to_response, RequestContext
-
-from alexia.stock.models import StockProductAmount, StockProduct, \
-    StockCount
 from alexia.stock.forms import StockCountForm, StockCountAmountForm, StockProductForm
 from alexia.stock.models import Event
+from alexia.stock.models import StockProductAmount, StockProduct, \
+    StockCount
 from alexia.tools.decorators import manager_required
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render_to_response, RequestContext
+from django.utils import timezone
 
 
 @manager_required

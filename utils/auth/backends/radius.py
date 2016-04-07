@@ -1,11 +1,10 @@
+import pyrad.packet
 from django.conf import settings
 from django.contrib.auth.models import User
-
-from utils.auth.backends import get_or_create_user
-
-import pyrad.packet
 from pyrad.client import Client
 from pyrad.dictionary import Dictionary
+
+from utils.auth.backends import get_or_create_user
 
 
 class RadiusBackend(object):

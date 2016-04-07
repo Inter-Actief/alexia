@@ -1,7 +1,6 @@
-from django.utils.translation import ugettext as _
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.utils.translation import ugettext as _
 
 
 def default_crispy_helper(submit_text=None):

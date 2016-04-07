@@ -1,5 +1,5 @@
-from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 from apps.organization.models import Certificate
 from utils.forms import default_crispy_helper

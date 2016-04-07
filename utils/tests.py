@@ -1,14 +1,14 @@
 from __future__ import unicode_literals
 
-import json
 import datetime
+import json
 
 from django.contrib.auth.models import User
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
+from django.test import Client
 from django.test import testcases
 from django.utils import six, timezone
-from django.test import Client
 
 from apps.billing.models import Authorization, PriceGroup, PermanentProduct, ProductGroup, TemporaryProduct, \
     Order, Purchase

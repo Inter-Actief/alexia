@@ -6,8 +6,8 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from utils import log
-from utils.auth.decorators import manager_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
+from utils.auth.decorators import manager_required
 from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm
 from .models import Membership, Profile, AuthenticationData
 

@@ -9,8 +9,8 @@ from django.shortcuts import render, redirect
 
 from apps.billing.models import Order
 from apps.organization.models import AuthenticationData
-from utils.auth.decorators import tender_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
+from utils.auth.decorators import tender_required
 from .forms import ProfileForm, IvaForm
 
 

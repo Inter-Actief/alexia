@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
-from apps.billing.models import Order
 
-from .common import format_order
+from apps.billing.models import Order
 from utils.tests import APITestCase
+from .common import format_order
 
 
 class BillingTest(APITestCase):

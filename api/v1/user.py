@@ -1,12 +1,12 @@
+from django.contrib.auth.models import User
 from django.db import transaction
 from jsonrpc import jsonrpc_method
-from django.contrib.auth.models import User
 
-from .common import api_v1_site, format_user
-from .exceptions import NotFoundError, InvalidParametersError
 from apps.organization.models import Profile, AuthenticationData
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
+from .common import api_v1_site, format_user
+from .exceptions import NotFoundError, InvalidParametersError
 
 
 @jsonrpc_method('user.add(radius_username=String, first_name=String, last_name=String, email=String) -> Object',

@@ -1,13 +1,13 @@
-from django.db import transaction
-from jsonrpc import jsonrpc_method
 from django.contrib.auth.models import User
+from django.db import transaction
 from django.utils import timezone
+from jsonrpc import jsonrpc_method
 
-from .common import api_v1_site, format_authorization
-from .exceptions import NotFoundError, InvalidParametersError
 from apps.billing.models import Authorization
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
+from .common import api_v1_site, format_authorization
+from .exceptions import NotFoundError, InvalidParametersError
 
 
 @jsonrpc_method('authorization.list(radius_username=String) -> Array',

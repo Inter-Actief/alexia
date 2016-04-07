@@ -2,8 +2,8 @@ import datetime
 import json
 
 from django.http import HttpResponse
-from django.utils import timezone
 from django.shortcuts import redirect, render
+from django.utils import timezone
 
 from apps.organization.models import Location
 from utils.auth.decorators import tender_required

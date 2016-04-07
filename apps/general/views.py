@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render, resolve_url, get_object_or_404
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render, resolve_url, get_object_or_404
 from django.utils.http import is_safe_url
 from django.views.decorators.csrf import csrf_protect
 

@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from . import views, perspectives
 
 from apps.scheduling.views import MailTemplateListView, MailTemplateDetailView, MailTemplateUpdateView, \
     AvailabilityListView, AvailabilityCreateView, AvailabilityDetailView, AvailabilityUpdateView
+from . import views, perspectives
 
 urlpatterns = [
     # Others
@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^bartender/$', perspectives.bartender, name='bartender-schedule'),
     url(r'^calendar/$', perspectives.calendar, name='calendar-schedule'),
     url(r'^calendar/fetch$', perspectives.calendar_fetch, name='fetch-calendar-schedule'),
-    url(r'^ios/$', perspectives.ios, name='ios-schedule'),
     url(r'^configuration/edit_standardreservations/$',
         views.edit_standardreservations, name='standard-reservations'),
 

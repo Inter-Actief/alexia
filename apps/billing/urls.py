@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, url
-from . import views
+from django.conf.urls import url
 
 from apps.billing.views import PriceGroupListView, PriceGroupCreateView, PriceGroupDetailView, PriceGroupUpdateView, \
     ProductGroupListView, ProductGroupCreateView, ProductGroupDetailView, ProductGroupUpdateView, ProductRedirectView, \
     PermanentProductListView, PermanentProductCreateView, PermanentProductDetailView, PermanentProductUpdateView, \
     TemporaryProductCreateView, TemporaryProductDetailView, TemporaryProductUpdateView, SellingPriceMatrixView, \
     SellingPriceCreateView, SellingPriceUpdateView, SellingPriceDeleteView
+from . import views
 
 urlpatterns = [
     url(r'^order/$', views.order_list, name='orders'),

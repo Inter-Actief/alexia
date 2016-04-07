@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from .common import format_authorization
 from utils.tests import APITestCase
+from .common import format_authorization
 
 
 class AuthorizationTest(APITestCase):

@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied, SuspiciousOperation
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.query import Prefetch
 from django.forms.models import modelformset_factory, ModelForm
@@ -18,15 +18,15 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 
 from apps.organization.forms import BartenderAvailabilityForm
+from apps.organization.models import Membership, \
+    Profile
 from apps.scheduling.forms import EventForm, EditEventForm, StandardReservationForm, FilterEventForm
 from apps.scheduling.models import Event, BartenderAvailability, \
     Availability, MailTemplate, StandardReservation
-from apps.organization.models import Membership, \
-    Profile
 from utils import log
-from utils.calendar import generate_ical, IcalResponse
 from utils.auth.decorators import planner_required
 from utils.auth.mixins import ManagerRequiredMixin
+from utils.calendar import generate_ical, IcalResponse
 from utils.mixins import OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization
 
 

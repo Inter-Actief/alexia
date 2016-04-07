@@ -12,10 +12,10 @@ from apps.billing.forms import PermanentProductForm, SellingPriceForm
 from apps.billing.models import PriceGroup, ProductGroup, Product, PermanentProduct, TemporaryProduct, SellingPrice
 from apps.scheduling.models import Event
 from utils.auth.decorators import manager_required
-from .models import Order, Purchase
 from utils.auth.mixins import ManagerRequiredMixin
 from utils.mixins import OrganizationFilterMixin, EventOrganizerFilterMixin, CreateViewForOrganization, \
     OrganizationFormMixin, FixedValueCreateView, CrispyFormMixin
+from .models import Order, Purchase
 
 
 @login_required

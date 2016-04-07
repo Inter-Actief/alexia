@@ -3,8 +3,8 @@ from json import dumps
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
-from jsonrpc.site import jsonrpc_site
 from jsonrpc import mochikit
+from jsonrpc.site import jsonrpc_site
 
 
 class APIBrowserView(TemplateView):

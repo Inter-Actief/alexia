@@ -1,14 +1,14 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 from django.utils import timezone
 from django.utils.translation import ugettext as _
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
 
-from apps.scheduling.models import Event, StandardReservation, MailTemplate
 from apps.organization.models import Organization, Location
+from apps.scheduling.models import Event, StandardReservation, MailTemplate
 from utils.mail import mail
 
 

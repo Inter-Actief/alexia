@@ -3,8 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from apps.scheduling.models import Event
 from apps.organization.models import Organization
+from apps.scheduling.models import Event
 
 
 class EventConsumption(models.Model):

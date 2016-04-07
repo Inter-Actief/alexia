@@ -1,11 +1,10 @@
-from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
 from apps.general import views as general_views
-from apps.scheduling import views as scheduling_views
 from apps.juliana.views import juliana
+from apps.scheduling import views as scheduling_views
 
 admin.autodiscover()
 

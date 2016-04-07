@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
+
 import datetime
 
 from django.utils import timezone
 
-from .common import format_authorization, format_order
 from apps.billing.models import Authorization, PriceGroup, PermanentProduct, ProductGroup, TemporaryProduct, \
     Order, Purchase
 from apps.scheduling.models import Event
 from utils.tests import TestCase
+from .common import format_authorization, format_order
 
 
 class CommonTest(TestCase):
