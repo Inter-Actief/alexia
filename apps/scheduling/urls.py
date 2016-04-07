@@ -6,21 +6,21 @@ from apps.scheduling.views import MailTemplateListView, MailTemplateDetailView, 
 
 urlpatterns = [
     # Others
-    url(r'^$', views.overview),
-    url(r'^bartender/$', perspectives.bartender),
-    url(r'calendar/$', perspectives.calendar),
-    url(r'calendar/fetch$', perspectives.calendar_fetch),
-    url(r'ios/$', perspectives.ios),
+    url(r'^$', views.overview, name='schedule'),
+    url(r'^bartender/$', perspectives.bartender, name='bartender-schedule'),
+    url(r'^calendar/$', perspectives.calendar, name='calendar-schedule'),
+    url(r'^calendar/fetch$', perspectives.calendar_fetch, name='fetch-calendar-schedule'),
+    url(r'^ios/$', perspectives.ios, name='ios-schedule'),
     url(r'^configuration/edit_standardreservations/$',
-        views.edit_standardreservations),
+        views.edit_standardreservations, name='standard-reservations'),
 
     # Events
-    url(r'^event/add/$', views.event_add),
-    url(r'^event/(?P<pk>\d+)/$', views.event_show),
-    url(r'^event/(?P<pk>\d+)/edit/$', views.event_edit),
+    url(r'^event/add/$', views.event_add, name='new-event'),
+    url(r'^event/(?P<pk>\d+)/$', views.event_show, name='event'),
+    url(r'^event/(?P<pk>\d+)/edit/$', views.event_edit, name='edit-event'),
     url(r'^event/(?P<pk>\d+)/edit/bartender_availability/(?P<user_pk>\d+)/$',
-        views.event_edit_bartender_availability),
-    url(r'^event/(?P<pk>\d+)/delete/$', views.event_delete),
+        views.event_edit_bartender_availability, name='edit-event-bartender-availability'),
+    url(r'^event/(?P<pk>\d+)/delete/$', views.event_delete, name='delete-event'),
 
     # Mail templates
     url(r'^mailtemplate/$', MailTemplateListView.as_view(), name='mailtemplate_list'),

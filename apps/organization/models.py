@@ -66,7 +66,7 @@ class Profile(models.Model):
                                        verbose_name=_('certificate'))
     current_organization = models.ForeignKey('Organization', null=True,
                                              verbose_name=_('current organization'))
-    ical_id = models.CharField(_('iCal identifier'), max_length=32,
+    ical_id = models.CharField(_('iCal identifier'), max_length=36,
                                null=True)
 
     class Meta:
@@ -83,9 +83,6 @@ class Profile(models.Model):
             event__ends_at__gte=timezone.now(),
             availability__nature=Availability.ASSIGNED) \
             .order_by('event__starts_at')[0].event
-
-    def ical_url(self):
-        return reverse('ical', args=[self.ical_id])
 
     def is_foundation_manager(self):
         return self.user.groups.filter(name='Foundation managers').exists()

@@ -8,11 +8,11 @@ from apps.billing.views import PriceGroupListView, PriceGroupCreateView, PriceGr
     SellingPriceCreateView, SellingPriceUpdateView, SellingPriceDeleteView
 
 urlpatterns = [
-    url(r'^order/$', views.order_list),
-    url(r'^order/(?P<pk>\d+)/$', views.order_show),
-    url(r'^stats/(?P<year>\d+)/$', views.stats_year),
-    url(r'^stats/(?P<year>\d+)/(?P<month>\d+)/$', views.stats_month),
-    url(r'^payment/(?P<pk>\d+)/$', views.payment_show),
+    url(r'^order/$', views.order_list, name='orders'),
+    url(r'^order/(?P<pk>\d+)/$', views.order_show, name='event-orders'),
+    url(r'^stats/(?P<year>\d+)/$', views.stats_year, name='year-orders'),
+    url(r'^stats/(?P<year>\d+)/(?P<month>\d+)/$', views.stats_month, name='month-orders'),
+    url(r'^payment/(?P<pk>\d+)/$', views.payment_show, name='order'),
 
     url(r'^pricegroup/$', PriceGroupListView.as_view(), name='pricegroup_list'),
     url(r'^pricegroup/create/$', PriceGroupCreateView.as_view(), name='pricegroup_create'),

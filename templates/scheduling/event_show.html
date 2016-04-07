@@ -12,7 +12,7 @@
         <h3>
             Gegevens
             {% if is_planner %}
-            <a href="{% url 'apps.scheduling.views.event_edit' event.pk %}" class="btn btn-default btn-xs pull-right">
+            <a href="{% url 'edit-event' event.pk %}" class="btn btn-default btn-xs pull-right">
                 <span class="glyphicon glyphicon-pencil"></span> {% trans 'Modify' %}
             </a>
             {% endif %}
@@ -120,7 +120,7 @@
                 <tr>
                     <td>{{ a.user.get_full_name }}</td>
                     <td>
-                        <a href="{% url 'apps.scheduling.views.event_edit_bartender_availability' pk=event.pk user_pk=a.user.pk %}">
+                        <a href="{% url 'edit-event-bartender-availability' pk=event.pk user_pk=a.user.pk %}">
                             <span class="label label-{{ a.availability.css_class|default:'default' }}">{{ a.availability|default:_("Unknown") }}</span>
                         </a>
                     </td>

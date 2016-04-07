@@ -20,7 +20,7 @@
         <tbody>
         {% for month in months %}
             <tr>
-                <td><a href="{% url 'apps.billing.views.stats_month' year month.month %}">{{ month.month|month_name }}</a></td>
+                <td><a href="{% url 'month-orders' year month.month %}">{{ month.month|month_name }}</a></td>
                 <td>&euro; {{ month.revenue|floatformat:2|default:"&mdash;" }}</td>
             </tr>
         {% endfor %}

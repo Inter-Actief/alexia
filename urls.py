@@ -3,7 +3,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from apps.general import views as general
+from apps.general import views as general_views
 from apps.scheduling import views as scheduling_views
 from apps.juliana.views import juliana
 
@@ -15,23 +15,23 @@ urlpatterns = [
 
     # Apps
     url(r'^billing/', include('apps.billing.urls')),
-    url(r'^juliana/(?P<pk>\d+)/$', juliana),
+    url(r'^juliana/(?P<pk>\d+)/$', juliana, name='juliana'),
     url(r'^organization/', include('apps.organization.urls')),
     url(r'^profile/', include('apps.profile.urls')),
     url(r'^scheduling/', include('apps.scheduling.urls')),
     url(r'^ical$', scheduling_views.ical),
-    url(r'^ical/(?P<ical_id>\w+)$', scheduling_views.personal_ical, name='ical'),
+    url(r'^ical/(?P<ical_id>[^/]+)$', scheduling_views.personal_ical, name='ical'),
 
     url(r'^api/', include('api.urls')),
 
-    # "Static" general
-    url(r'^about/$', general.about),
-    url(r'^help/$', general.help_view),
-    url(r'^login/$', general.login, name='login'),
-    url(r'^logout/$', general.logout, name='logout'),
-    url(r'^register/$', general.register),
+    # "Static" general_views
+    url(r'^about/$', general_views.about, name='about'),
+    url(r'^help/$', general_views.help, name='help'),
+    url(r'^login/$', general_views.login, name='login'),
+    url(r'^logout/$', general_views.logout, name='logout'),
+    url(r'^register/$', general_views.register, name='register'),
     url(r'^change_current_organization/(?P<organization>[-\w]+)/$',
-        general.change_current_organization),
+        general_views.change_current_organization, name='change-current-organization'),
 
     # Django Admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

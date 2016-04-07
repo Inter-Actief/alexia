@@ -22,7 +22,7 @@
         {% for membership in memberships %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td><a href="{% url 'apps.organization.views.membership_show' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
+            <td><a href="{% url 'membership' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
             <td>
                 {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
                 {% if membership.is_planner %}<span class="label label-default">{% trans 'Planner' %}</span>{% endif %}

@@ -39,16 +39,16 @@
     Beschikbaarheid aangeven
 </h2>
 <p>
-    Als je een tapper bent voor een vereniging, kun je je beschikbaarheid aangeven onder de knop <a href="{% url 'apps.scheduling.views.overview' %}">Planning</a>. Op deze pagina kun je alle ingeplande borrels zien. Bij de borrels waar jouw vereniging deelneemt, kun je met het keuzemenu rechts aangeven of je die borrel wilt tappen.
+    Als je een tapper bent voor een vereniging, kun je je beschikbaarheid aangeven onder de knop <a href="{% url 'schedule' %}">Planning</a>. Op deze pagina kun je alle ingeplande borrels zien. Bij de borrels waar jouw vereniging deelneemt, kun je met het keuzemenu rechts aangeven of je die borrel wilt tappen.
 </p>
 <p>
-    <em>Kan je je beschikbaarheid niet wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'apps.profile.views.index' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als tapper bent geregistreerd bij je vereniging. Verder kan het zijn dat het aangeven van de beschikbaarheid is uitgeschakeld voor een borrel.
+    <em>Kan je je beschikbaarheid niet wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als tapper bent geregistreerd bij je vereniging. Verder kan het zijn dat het aangeven van de beschikbaarheid is uitgeschakeld voor een borrel.
 </p>
 <h2 id="plannen">
     Borrels plannen
 </h2>
 <p>
-    Met de knop <a href="{% url 'apps.scheduling.views.event_add' %}">Nieuwe activiteit</a> op de pagina <a href="{% url 'apps.scheduling.views.overview' %}">Planning</a> kun je als Planner nieuwe borrels inplannen. Met het potloodje <a class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a> kun je borrels wijzigen en met het prullenbakje <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> kun je geplande borrels verwijderen.
+    Met de knop <a href="{% url 'new-event' %}">Nieuwe activiteit</a> op de pagina <a href="{% url 'schedule' %}">Planning</a> kun je als Planner nieuwe borrels inplannen. Met het potloodje <a class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a> kun je borrels wijzigen en met het prullenbakje <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> kun je geplande borrels verwijderen.
 </p>
 <dl>
     <dt>
@@ -107,13 +107,13 @@
     </dd>
 </dl>
 <p>
-    <em>Kan je geen borrels plannen of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'apps.profile.views.index' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als planner bent geregistreerd bij je vereniging.
+    <em>Kan je geen borrels plannen of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als planner bent geregistreerd bij je vereniging.
 </p>
 <h2 id="tappersbeheren">
     Tappers beheren
 </h2>
 <p>
-    Op de pagina <a href="{% url 'apps.organization.views.membership_list' %}">Gebruikers</a> kunnen Managers van de vereniging de tappers, planners en managers van de vereniging bekijken, toevogen, bewerken of verwijderen.
+    Op de pagina <a href="{% url 'memberships' %}">Gebruikers</a> kunnen Managers van de vereniging de tappers, planners en managers van de vereniging bekijken, toevogen, bewerken of verwijderen.
 </p>
 <dl>
     <dt>
@@ -145,7 +145,7 @@
     Als een persoon voor de eerste keer wordt toegevoegd aan het systeem, moet je ook zijn voornaam, achternaam en e-mailadres invullen.
 </p>
 <p>
-    <em>Kan je geen tappes inzien of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'apps.profile.views.index' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als manager bent geregistreerd bij je vereniging.
+    <em>Kan je geen tappes inzien of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als manager bent geregistreerd bij je vereniging.
 </p>
 <h2 id="bugs">
     Fouten of suggesties?

@@ -31,6 +31,9 @@ LANGUAGES = [
     ('nl', _('Dutch')),
     ('en', _('English')),
 ]
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 TIME_ZONE = 'Europe/Amsterdam'
 USE_I18N = True
 USE_L10N = True

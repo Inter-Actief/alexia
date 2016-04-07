@@ -34,9 +34,9 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'apps.scheduling.views.overview' %}">{% trans 'List' %}</a></li>
-                        <li><a href="{% url 'apps.scheduling.perspectives.calendar' %}">{% trans 'Calendar' %}</a></li>
-                        {% if request.user.profile.is_tender %}<li><a href="{% url 'apps.scheduling.perspectives.bartender' %}">{% trans 'Personal schedule' %}</a></li>{% endif %}
+                        <li><a href="{% url 'schedule' %}">{% trans 'List' %}</a></li>
+                        <li><a href="{% url 'calendar-schedule' %}">{% trans 'Calendar' %}</a></li>
+                        {% if request.user.profile.is_tender %}<li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>{% endif %}
                         {% if current_organization and request.user.profile.is_manager %}
                             <li class="divider"></li>
                             <li><a href="{% url 'availability_list' %}">{% trans 'Availabilities' %}</a></li>
@@ -46,7 +46,7 @@
                 </li>
                 {% if current_organization and request.user.profile.is_manager %}
                     <li class="{% active_menu 'apps.organization.views' 'active' %}">
-                        <a href="{% url 'apps.organization.views.membership_list' %}">
+                        <a href="{% url 'memberships' %}">
                             {% trans 'Users' %}
                         </a>
                     </li>
@@ -61,7 +61,7 @@
                             <li><a href="{% url 'pricegroup_list' %}">{% trans 'Price groups' %}</a></li>
                             <li><a href="{% url 'sellingprice_matrix' %}">{% trans 'Price matrix' %}</a></li>
                             <li class="divider"></li>
-                            <li><a href="{% url 'apps.billing.views.order_list' %}">{% trans 'Orders' %}</a></li>
+                            <li><a href="{% url 'orders' %}">{% trans 'Orders' %}</a></li>
                         </ul>
                     </li>
                 {% endif %}
@@ -79,7 +79,7 @@
                     {% endif %}
                 {% endfor %}
                 <li class="{% active_menu 'apps.general.views.help_view' 'active' %}">
-                    <a href="{% url 'apps.general.views.help_view' %}">
+                    <a href="{% url 'help' %}">
                         {% trans 'Help' %}
                     </a>
                 </li>
@@ -99,7 +99,7 @@
                         <ul class="dropdown-menu">
                             {% for organization in organizations %}
                                 <li class="{% if current_organization == organization %}active{% endif %}">
-                                    <a href="{% url 'apps.general.views.change_current_organization' organization.slug %}?next={{ request.path }}">{{ organization }}</a>
+                                    <a href="{% url 'change-current-organization' organization.slug %}?next={{ request.path }}">{{ organization }}</a>
                                 </li>
                             {% empty %}
                                 <li>
@@ -121,7 +121,7 @@
 
                         <ul class="dropdown-menu">
                             <li class="">
-                                <a href="{% url 'apps.profile.views.index' %}">{% trans 'My profile' %}</a>
+                                <a href="{% url 'profile' %}">{% trans 'My profile' %}</a>
                             </li>
                             <li class="divider"></li>
                             <li>

@@ -1,6 +1,5 @@
-import hashlib
 import mimetypes
-import random
+import uuid
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -21,7 +20,7 @@ def index(request):
         authorization__in=request.user.authorizations.all())
     order_count = len(order_list)
     orders = order_list.order_by('-placed_at')[:5]
-    
+
     shares = []
     for authorization in request.user.authorizations.all():
         my_order_sum  = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
@@ -43,9 +42,7 @@ def index(request):
 @login_required
 @tender_required
 def ical_gen(request):
-    seed = random.randint(1, 10000)
-    request.user.profile.ical_id = hashlib.md5("%s%s" % (request.user.username,
-                                                         seed)).hexdigest()
+    request.user.profile.ical_id = uuid.uuid4()
     request.user.profile.save()
     return redirect(index)
 

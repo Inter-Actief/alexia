@@ -27,7 +27,7 @@
                 <td>{{ o.event }}</td>
                 <td>&euro; {{ o.amount|floatformat:2 }}</td>
                 <td>{{ o.added_by.get_full_name }}</td>
-                <td><a href="{% url 'apps.billing.views.payment_show' o.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                <td><a href="{% url 'order' o.pk %}" class="btn btn-xs btn-default">Details</a></td>
             </tr>
         {% empty %}
             <tr>

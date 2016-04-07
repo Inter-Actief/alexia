@@ -7,7 +7,7 @@
 <script>
 $(document).ready(function() {
     $('#calendar').fullCalendar({
-        events:  "{% url 'apps.scheduling.perspectives.calendar_fetch' %}",
+        events:  "{% url 'fetch-calendar-schedule' %}",
         allDayDefault: false,
         firstDay: 1,
         weekNumbers: true,
@@ -74,7 +74,7 @@ $(document).ready(function() {
     <h1>
         {% trans 'Planning' %}
         <small id="loading" style="display: none">{% trans 'Loading...' %}</small>
-        {% if is_planner %}<a href="{% url 'apps.scheduling.views.event_add' %}" class="btn btn-primary pull-right">{% trans 'Add event' %}</a>{% endif %}
+        {% if is_planner %}<a href="{% url 'new-event' %}" class="btn btn-primary pull-right">{% trans 'Add event' %}</a>{% endif %}
     </h1>
 </div>
 <div id="calendar"></div>

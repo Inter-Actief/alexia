@@ -68,7 +68,7 @@ def change_current_organization(request, organization):
     request.session['organization_pk'] = org.pk
     request.user.profile.current_organization = org
     request.user.profile.save()
-    return redirect(request.REQUEST.get(REDIRECT_FIELD_NAME, ''))
+    return redirect(request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, '')))
 
 
 def about(request):
@@ -89,5 +89,5 @@ def about(request):
     return render(request, 'general/about.html', locals())
 
 
-def help_view(request):
+def help(request):
     return render(request, 'general/help.html')

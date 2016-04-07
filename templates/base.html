@@ -36,7 +36,7 @@
         <footer>
             <div class="container">
                 <div class="row text-center">
-                    {% url 'apps.general.views.about' as about_url %}
+                    {% url 'about' as about_url %}
                     {% blocktrans  with about_url=about_url %}
                     <a href="{{ about_url }}">Event management system Alexia</a>
                     &mdash;

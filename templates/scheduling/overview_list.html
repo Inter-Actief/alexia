@@ -45,7 +45,7 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a style="{% if e.organizer.color %}color: #{{ e.organizer.color }};{% endif %}" href="{% url 'apps.scheduling.views.event_show' e.pk %}">
+                    <a style="{% if e.organizer.color %}color: #{{ e.organizer.color }};{% endif %}" href="{% url 'event' e.pk %}">
                         {{ e.name }}
                     </a>
                     {% if e.tender_comments and e in events_tending %}
@@ -91,12 +91,12 @@
                     <div class="btn-group btn-group-sm">
                     {% if is_planner %}
                     {% if e.organizer == request.organization %}
-                    <a class="btn btn-default" href="{% url 'apps.scheduling.views.event_edit' e.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a class="btn btn-danger" href="{% url 'apps.scheduling.views.event_delete' e.pk %}"><i class="glyphicon glyphicon-trash"></i></a>
+                    <a class="btn btn-default" href="{% url 'edit-event' e.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="glyphicon glyphicon-trash"></i></a>
                     {% endif %}
                     {% endif %}
                     {% if is_tender and e.can_be_opened and e in events_tending %}
-                    <a class="btn btn-primary" href="{% url 'apps.juliana.views.juliana' e.pk %}">{% trans 'Point of sale' %}</a>
+                    <a class="btn btn-primary" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
                     {% endif %}
                     </div>
                 </td>

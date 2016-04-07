@@ -23,7 +23,7 @@
         {% for event in events %}
             <tr>
                 <td>{{ event.starts_at|date:"l d F" }}</td>
-                <td><a href="{% url 'apps.billing.views.order_show' event.pk %}">{{ event.name }}</a></td>
+                <td><a href="{% url 'event-orders' event.pk %}">{{ event.name }}</a></td>
                 <td>&euro; {{ event.revenue|floatformat:2|default:"&mdash;" }}</td>
                 <td>{{ event.pricegroup }}</td>
             </tr>
