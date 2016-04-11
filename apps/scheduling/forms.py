@@ -20,6 +20,8 @@ class EventForm(forms.ModelForm):
     location = forms.ModelMultipleChoiceField(
         Location.objects.all(), widget=widgets.CheckboxSelectMultiple,
         label=_("Location"))
+    starts_at = forms.SplitDateTimeField()
+    ends_at = forms.SplitDateTimeField()
 
     def __init__(self, request=None, *args, **kwargs):
         """Overrides the default init to select initial values based on the
@@ -112,10 +114,6 @@ class EventForm(forms.ModelForm):
         fields = ('participants', 'name', 'description', 'starts_at',
                   'ends_at', 'is_closed', 'option', 'is_risky', 'location',
                   'kegs', 'pricegroup', 'tender_comments')
-        widgets = {
-            'starts_at': widgets.SplitDateTimeWidget,
-            'ends_at': widgets.SplitDateTimeWidget,
-        }
 
     # Uni-form
     helper = FormHelper()

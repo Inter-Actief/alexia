@@ -3,7 +3,6 @@ from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url, get_object_or_404
 from django.utils.http import is_safe_url
 from django.views.decorators.csrf import csrf_protect
@@ -13,17 +12,28 @@ from apps.scheduling.models import Event, BartenderAvailability, Availability
 from .forms import RegisterForm
 
 
+def _get_login_redirect_url(request, redirect_to):
+    # Ensure the user-originating redirection URL is safe.
+    if not is_safe_url(url=redirect_to, host=request.get_host()):
+        return resolve_url(settings.LOGIN_REDIRECT_URL)
+    return redirect_to
+
+
 @csrf_protect
 def login(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    if request.method == 'POST':
+    if request.user.is_authenticated():
+        redirect_to = _get_login_redirect_url(request, redirect_to)
+        if redirect_to == request.path:
+            raise ValueError(
+                "Redirection loop for authenticated user detected. Check that "
+                "your LOGIN_REDIRECT_URL doesn't point to a login page."
+            )
+        return redirect(redirect_to)
+    elif request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            # Worden we wel naar een veilige pagina gestuurd?
-            if not is_safe_url(url=redirect_to, host=request.get_host()):
-                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
-
             user = form.get_user()
             auth_login(request, user)
 
@@ -35,7 +45,7 @@ def login(request):
                 # User information is not complete, redirect to register page.
                 return redirect(register)
 
-            return redirect(redirect_to)
+            return redirect(_get_login_redirect_url(request, redirect_to))
     else:
         form = AuthenticationForm(request)
 
@@ -46,7 +56,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return HttpResponseRedirect(settings.LOGIN_URL)
+    return redirect(settings.LOGIN_URL)
 
 
 @login_required
@@ -55,7 +65,7 @@ def register(request):
         form = RegisterForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('apps.scheduling.views.overview')
+            return redirect('schedule')
     else:
         form = RegisterForm(instance=request.user)
 

@@ -7,7 +7,7 @@ from django.http import HttpResponseBadRequest
 
 def ajax_required(f):
     """AJAX required decorator.
-    
+
     Source: http://djangosnippets.org/snippets/771/
     """
 

@@ -25,8 +25,8 @@ class CommonTest(TestCase):
         start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
 
         # Create authorization
-        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], account='NL13TEST0123456789',
-                             start_date=start_date)
+        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'],
+                             account='NL13TEST0123456789', start_date=start_date)
 
         auth_json = {
             'id': auth.id,
@@ -73,8 +73,8 @@ class CommonTest(TestCase):
         end_date = timezone.make_aware(datetime.datetime(2015, 4, 16, 2, 56, 33), timezone.utc)
 
         # Create authorization
-        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], account='NL13TEST0123456789',
-                             start_date=start_date, end_date=end_date)
+        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'],
+                             account='NL13TEST0123456789', start_date=start_date, end_date=end_date)
 
         auth_json = {
             'id': auth.id,
@@ -109,7 +109,8 @@ class CommonTest(TestCase):
         product2 = TemporaryProduct(event=event, price=2.33)
         product2.save()
 
-        authorization = Authorization(user=self.data['user1'], organization=self.data['organization1'], start_date=starts_at)
+        authorization = Authorization(user=self.data['user1'], organization=self.data['organization1'],
+                                      start_date=starts_at)
         authorization.save()
 
         order = Order(event=event, authorization=authorization, placed_at=placed_at, added_by=self.data['user1'])

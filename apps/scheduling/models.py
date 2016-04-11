@@ -349,17 +349,21 @@ class Event(models.Model):
                 availability__nature=Availability.ASSIGNED)
         return [x.user for x in self.bartender_availabilities_assigned]
 
-    def can_be_opened(self):
-        now = timezone.now()
+    def can_be_opened(self, user=None):
+        if user and user.is_superuser:
+            return True
 
-        return (self.starts_at - timedelta(hours=5)) <= now <= \
+        return (self.starts_at - timedelta(hours=5)) <= timezone.now() <= \
                (self.ends_at + timedelta(hours=24))
 
-    def is_tender(self, person):
+    def is_tender(self, user):
         """
         Returns if the given person is a tender for this event.
         """
-        return person in self.get_assigned_bartenders()
+        if user.is_superuser:
+            return True
+
+        return user in self.get_assigned_bartenders()
 
     def meets_iva_requirement(self):
         # Result could be cached by earlier call or prefetch

@@ -159,10 +159,11 @@ def authorization_end(request, radius_username, authorization_id):
     """
 
     try:
-        authorization = Authorization.objects.select_for_update().get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                                                      user__authenticationdata__username=radius_username,
-                                                                      organization=request.organization,
-                                                                      pk=authorization_id)
+        authorization = Authorization.objects.select_for_update() \
+                                     .get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                          user__authenticationdata__username=radius_username,
+                                          organization=request.organization,
+                                          pk=authorization_id)
     except Authorization.DoesNotExist:
         raise NotFoundError
 

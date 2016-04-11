@@ -9,9 +9,9 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'utils.auth.backends.radius.RadiusBackend',
 ]
-#AUTH_USER_MODEL = 'auth.User'
-LOGIN_REDIRECT_URL = '/' # DEPRECATED
-LOGIN_URL = '/login/' # DEPRECATED
+# AUTH_USER_MODEL = 'auth.User'
+LOGIN_REDIRECT_URL = '/'  # DEPRECATED
+LOGIN_URL = '/login/'  # DEPRECATED
 
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -51,6 +51,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware'
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'utils.middleware.ProfileRequirementMiddleware',
     'utils.middleware.PrimaryOrganizationMiddleware',
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
+    'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
 
@@ -122,7 +124,7 @@ TEMPLATES = [
 ]
 
 # Testing
-#TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+# TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # URLs
 ROOT_URLCONF = 'urls'

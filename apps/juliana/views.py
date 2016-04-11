@@ -1,23 +1,13 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from apps.scheduling.models import Event
 from utils.auth.decorators import tender_required
 
 
-@login_required
-@tender_required
-def juliana(request, pk):
-    event = get_object_or_404(Event, pk=pk)
-
-    # Permission checks
-    if not request.user.is_superuser and not event.is_tender(request.user):
-        return render(request, "403.html", {'reason': _('You are not a tender for this event')}, status=403)
-    if not request.user.is_superuser and not event.can_be_opened():
-        return render(request, "403.html", {'reason': _('This event is not open')}, status=403)
-
+def _get_product_list(event):
     products = []
 
     for sellingprice in event.pricegroup.sellingprice_set.all():
@@ -31,7 +21,7 @@ def juliana(request, pk):
                 'position': product.position,
             })
 
-    products.sort(cmp=lambda x, y: cmp(x['position'], y['position']))
+    products.sort(key=lambda x: x['position'])
 
     for product in event.temporaryproducts.all():
         products.append({
@@ -42,11 +32,22 @@ def juliana(request, pk):
             'price': int(product.price * 100),
         })
 
-    # settings
-    debug = settings.DEBUG
-    countdown = settings.JULIANA_COUNTDOWN
+    return products
 
-    # Detect if connection is made via the Juliana Android app
+
+@login_required
+@tender_required
+def juliana(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+
+    if not event.is_tender(request.user):
+        return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
+    if not event.can_be_opened(request.user):
+        return render(request, '403.html', {'reason': _('This event is not open')}, status=403)
+
+    products = _get_product_list(event)
+    debug = settings.DEBUG
+    countdown = settings.JULIANA_COUNTDOWN if hasattr(settings, 'JULIANA_COUNTDOWN') else 5
     androidapp = request.META.get('HTTP_X_REQUESTED_WITH') == 'net.inter_actief.juliananfc'
 
     return render(request, 'juliana/index.html', locals())

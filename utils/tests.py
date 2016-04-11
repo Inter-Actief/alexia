@@ -45,7 +45,6 @@ class TransactionTestCase(SimpleTestCase, testcases.TransactionTestCase):
 
 
 class TestCase(TransactionTestCase, testcases.TestCase):
-    
     def setUp(self):
         super(TestCase, self).setUp()
         self.data = dict()
@@ -76,7 +75,8 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['user1'].profile = Profile()
         data['user1'].profile.save()
 
-        data['authenticationdata1'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username1, user=data['user1'])
+        data['authenticationdata1'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username1,
+                                                         user=data['user1'])
         data['authenticationdata1'].save()
 
         data['user2'] = User(username=username2, first_name='Test2', last_name='Client', email='test2@example.com')
@@ -86,7 +86,8 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['user2'].profile = Profile()
         data['user2'].profile.save()
 
-        data['authenticationdata2'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username2, user=data['user2'])
+        data['authenticationdata2'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username2,
+                                                         user=data['user2'])
         data['authenticationdata2'].save()
 
         # Organization

@@ -1,8 +1,3 @@
-"""Script voor het genereren van dummy-orders voor tests.
-
-Auteur: Jelte Zeilstra
-"""
-
 import random
 
 from django.conf import settings

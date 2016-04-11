@@ -34,5 +34,6 @@ class AuthorizationTest(APITestCase):
         self.send_and_compare_request_error('authorization.list', ['invalidusername'],
                                             error_code=-32602,
                                             error_name='InvalidParametersError',
-                                            error_message='InvalidParametersError: User with provided radius_username does not exits',
+                                            error_message='InvalidParametersError: User with provided ' +
+                                                          'radius_username does not exits',
                                             )
