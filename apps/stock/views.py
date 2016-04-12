@@ -1,4 +1,4 @@
-from alexia.stock.forms import StockCountForm, StockCountAmountForm, StockProductForm
+from alexia.stock.forms import StockCountForm, StockCountAmountForm, StockProductForm, EventConsumptionForm
 from alexia.stock.models import Event
 from alexia.stock.models import StockProductAmount, StockProduct, \
     StockCount
@@ -40,8 +40,8 @@ def edit_stockcount(request, stockcount_id=None):
             for scaform in scaforms:
                 if scaform.is_valid():
                     prod = StockProduct.objects.get(pk=scaform.cleaned_data['product_id'])
-                    sca = StockProductAmount.objects.get_or_create(stockcount=stockcount, product=prod,
-                                                                   amount=scaform.cleaned_data['amount'])
+                    StockProductAmount.objects.get_or_create(stockcount=stockcount, product=prod,
+                                                             amount=scaform.cleaned_data['amount'])
 
             return render(request, 'closepopup.html', {})
 

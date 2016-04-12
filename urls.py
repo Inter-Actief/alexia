@@ -6,8 +6,6 @@ from apps.general import views as general_views
 from apps.juliana.views import juliana
 from apps.scheduling import views as scheduling_views
 
-admin.autodiscover()
-
 urlpatterns = [
     # Root
     url(r'^$', scheduling_views.overview),
@@ -40,6 +38,5 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
     # Robots
-    url(r'^robots\.txt$',
-        TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]

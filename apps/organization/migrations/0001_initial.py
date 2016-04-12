@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='Certificate',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('file', models.FileField(upload_to=apps.organization.models.get_certificate_path, verbose_name='certificate')),
+                ('file', models.FileField(upload_to=apps.organization.models._get_certificate_path, verbose_name='certificate')),
                 ('uploaded_at', models.DateField(auto_now_add=True, verbose_name='uploaded at')),
                 ('approved_at', models.DateField(null=True, verbose_name='approved at')),
                 ('approved_by', models.ForeignKey(related_name='approved_certificates', verbose_name='approved by', to=settings.AUTH_USER_MODEL, null=True)),

@@ -1,88 +1,96 @@
+from __future__ import unicode_literals
+
 import os
-from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
-from apps.scheduling.models import Event, Availability, BartenderAvailability
+from apps.scheduling.models import Availability, BartenderAvailability
 from .managers import PublicOrganizationManager
+from utils.validators import validate_color
 
 
+@python_2_unicode_compatible
 class Location(models.Model):
-    name = models.CharField(verbose_name=_('name'), max_length=32)
-    is_public = models.BooleanField(verbose_name=_('is public'), default=False)
-    prevent_conflicting_events = models.BooleanField(
-        verbose_name=_('prevent conflicting events'), default=True)
-    color = models.CharField(verbose_name=_('Color'), blank=True, max_length=6,
-                             validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
-                                                        message=_('Enter a valid hexadecimal color'))])
+    name = models.CharField(_('name'), max_length=32)
+    is_public = models.BooleanField(_('is public'), default=False)
+    prevent_conflicting_events = models.BooleanField(_('prevent conflicting events'), default=True)
+    color = models.CharField(_('color'), blank=True, max_length=6, validators=[validate_color])
 
     class Meta:
         ordering = ['name']
         verbose_name = _('location')
         verbose_name_plural = _('locations')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
-    def upcoming_event(self, threshold=timedelta(hours=5)):
-        # Is er nu een event?
-        try:
-            result = self.events.get(starts_at__lte=datetime.now(),
-                                     ends_at__gte=datetime.now())
-        except Event.DoesNotExist:
-            result = None
 
-        if result is None:
-            result = self.events.filter(
-                starts_at__gt=datetime.now(),
-                starts_at__lte=datetime.now() + threshold)[:1].get()
-
-        return result
-
-
+@python_2_unicode_compatible
 class AuthenticationData(models.Model):
-    user = models.ForeignKey(User, verbose_name=_('user'))
-    backend = models.CharField(_('Authentication backend'), max_length=50)
-    username = models.CharField(_('Username'), max_length=50)
-    additional_data = models.TextField(_('Additional data'), null=True)
+    user = models.ForeignKey(
+        User,
+        models.CASCADE,
+        verbose_name=_('user'),
+    )
+    backend = models.CharField(_('authentication backend'), max_length=50)
+    username = models.CharField(_('username'), max_length=50)
+    additional_data = models.TextField(_('additional data'), null=True)
 
     class Meta:
         unique_together = (('backend', 'username'), ('user', 'backend'))
 
+    def __str__(self):
+        return "%s | %s" % (
+            self.username,
+            self.backend.split('.')[-1],
+        )
 
+
+@python_2_unicode_compatible
 class Profile(models.Model):
-    user = models.OneToOneField(User, unique=True, verbose_name=_('user'))
+    user = models.OneToOneField(
+        User,
+        unique=True,
+        verbose_name=_('user'),
+    )
     is_iva = models.BooleanField(_('has IVA-certificate'), default=False)
     is_bhv = models.BooleanField(_('has BHV-certificate'), default=False)
-    certificate = models.OneToOneField('Certificate', null=True,
-                                       verbose_name=_('certificate'))
-    current_organization = models.ForeignKey('Organization', null=True,
-                                             verbose_name=_('current organization'))
-    ical_id = models.CharField(_('iCal identifier'), max_length=36,
-                               null=True)
+    certificate = models.OneToOneField(
+        'Certificate',
+        models.CASCADE,
+        null=True,
+        verbose_name=_('certificate'),
+    )
+    current_organization = models.ForeignKey(
+        'Organization',
+        models.CASCADE,
+        null=True,
+        verbose_name=_('current organization'),
+    )
+    ical_id = models.CharField(_('iCal identifier'), max_length=36, null=True)
 
     class Meta:
         ordering = ['user']
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
 
-    def __unicode__(self):
-        return unicode(self.user)
+    def __str__(self):
+        return self.user
 
     def next_tending(self):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__gte=timezone.now(),
-            availability__nature=Availability.ASSIGNED) \
-            .order_by('event__starts_at')[0].event
+            availability__nature=Availability.ASSIGNED,
+        ).order_by('event__starts_at')[0].event
 
     def is_foundation_manager(self):
         return self.user.groups.filter(name='Foundation managers').exists()
@@ -91,22 +99,19 @@ class Profile(models.Model):
         if not organization:
             return self.user.membership_set.filter(is_manager=True).exists()
         else:
-            return self.user.membership_set.filter(organization=organization,
-                                                   is_manager=True).exists()
+            return self.user.membership_set.filter(organization=organization, is_manager=True).exists()
 
     def is_planner(self, organization=None):
         if not organization:
             return self.user.membership_set.filter(is_planner=True).exists()
         else:
-            return self.user.membership_set.filter(organization=organization,
-                                                   is_planner=True).exists()
+            return self.user.membership_set.filter(organization=organization, is_planner=True).exists()
 
     def is_tender(self, organization=None):
         if not organization:
             return self.user.membership_set.filter(is_tender=True).exists()
         else:
-            return self.user.membership_set.filter(organization=organization,
-                                                   is_tender=True).exists()
+            return self.user.membership_set.filter(organization=organization, is_tender=True).exists()
 
     def is_membership_or_higher(self, organization=None):
         return self.is_membership(organization) or self.is_planner_or_higher(organization)
@@ -150,19 +155,22 @@ class Profile(models.Model):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
-            availability__nature=Availability.ASSIGNED).count()
+            availability__nature=Availability.ASSIGNED,
+        ).count()
 
 
+@python_2_unicode_compatible
 class Organization(models.Model):
     name = models.CharField(_('name'), max_length=32, unique=True)
     slug = models.SlugField(_('slug'), editable=False, unique=True)
     is_public = models.BooleanField(_('is public'), default=False)
-    color = models.CharField(verbose_name=_('Color'), blank=True, max_length=6,
-                             validators=[RegexValidator(regex=r'^[0-9a-zA-Z]{6}$',
-                                                        message=_('Enter a valid hexadecimal color'))])
+    color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     members = models.ManyToManyField(
-        User, through='Membership', verbose_name=_('users'))
+        User,
+        through='Membership',
+        verbose_name=_('users'),
+    )
 
     objects = models.Manager()
     public_objects = PublicOrganizationManager()
@@ -172,18 +180,26 @@ class Organization(models.Model):
         verbose_name = _('organization')
         verbose_name_plural = _('organizations')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def save(self, force_insert=False, **kwargs):
-        self.slug = slugify(self.__unicode__())
+        self.slug = slugify(self.__str__())
         super(Organization, self).save()
 
 
+@python_2_unicode_compatible
 class Membership(models.Model):
-    user = models.ForeignKey(User, verbose_name=_('user'))
+    user = models.ForeignKey(
+        User,
+        models.CASCADE,
+        verbose_name=_('user'),
+    )
     organization = models.ForeignKey(
-        Organization, verbose_name=_('organization'))
+        Organization,
+        models.CASCADE,
+        verbose_name=_('organization')
+    )
     comments = models.TextField(_('comments'), blank=True)
     is_tender = models.BooleanField(_('may tend on events'), default=False)
     is_planner = models.BooleanField(_('may create and modify events'), default=False)
@@ -195,24 +211,23 @@ class Membership(models.Model):
         verbose_name = _('membership')
         verbose_name_plural = _('memberships')
 
-    def __unicode__(self):
+    def __str__(self):
         return _('%(user)s of %(organization)s') % {
             'user': self.user.get_full_name(),
             'organization': self.organization}
 
     def get_absolute_url(self):
-        return reverse('apps.organization.views.membership_show',
-                       args=[self.pk])
+        return reverse('membership', args=[self.pk])
 
     def tended(self):
         return BartenderAvailability.objects.filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
-            availability__nature=Availability.ASSIGNED). \
-            order_by('-event__starts_at')
+            availability__nature=Availability.ASSIGNED
+        ).order_by('-event__starts_at')
 
 
-def get_certificate_path(instance, filename):
+def _get_certificate_path(instance, filename):
     path = "certificates"
     ext = os.path.splitext(filename)[1]
     filename = "user" + instance._id
@@ -220,16 +235,19 @@ def get_certificate_path(instance, filename):
 
 
 class Certificate(models.Model):
-    file = models.FileField(_('certificate'), upload_to=get_certificate_path)
-    uploaded_at = models.DateField(auto_now_add=True,
-                                   verbose_name=_('uploaded at'))
-    approved_by = models.ForeignKey(User, related_name='approved_certificates',
-                                    null=True, verbose_name=_('approved by'))
+    file = models.FileField(_('certificate'), upload_to=_get_certificate_path)
+    uploaded_at = models.DateField(auto_now_add=True, verbose_name=_('uploaded at'))
+    approved_by = models.ForeignKey(
+        User,
+        models.CASCADE,
+        related_name='approved_certificates',
+        null=True,
+        verbose_name=_('approved by'),
+    )
     approved_at = models.DateField(_('approved at'), null=True)
 
     def get_absolute_url(self):
-        return reverse('apps.organization.views.membership_iva',
-                       args=[self.pk])
+        return reverse('iva-membership', args=[self.pk])
 
     def approve(self, approver):
         self.approved_by = approver

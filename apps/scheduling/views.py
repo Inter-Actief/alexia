@@ -8,8 +8,7 @@ from django.db.models import Q
 from django.db.models.query import Prefetch
 from django.forms.models import modelformset_factory, ModelForm
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, \
-    redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
@@ -18,11 +17,9 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 
 from apps.organization.forms import BartenderAvailabilityForm
-from apps.organization.models import Membership, \
-    Profile
+from apps.organization.models import Membership, Profile
 from apps.scheduling.forms import EventForm, EditEventForm, StandardReservationForm, FilterEventForm
-from apps.scheduling.models import Event, BartenderAvailability, \
-    Availability, MailTemplate, StandardReservation
+from apps.scheduling.models import Event, BartenderAvailability, Availability, MailTemplate, StandardReservation
 from utils import log
 from utils.auth.decorators import planner_required
 from utils.auth.mixins import ManagerRequiredMixin

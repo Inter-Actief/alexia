@@ -44,10 +44,8 @@ class StandardReservationManager(models.Manager):
         # The end day is before the start day. This means that we got through
         # sunday, and we just split up the result.
         elif end_day < start_day:
-            monday0am = (end - timedelta(days=(end_day - 1))).replace(
-                hour=0, minute=0, second=0, microsecond=0)
-            return (self.occuring_at(start, monday0am - timedelta(seconds=1)) |
-                    self.occuring_at(monday0am, end))
+            monday0am = (end - timedelta(days=(end_day - 1))).replace(hour=0, minute=0, second=0, microsecond=0)
+            return (self.occuring_at(start, monday0am - timedelta(seconds=1)) | self.occuring_at(monday0am, end))
 
         # No special case, we just have to
         else:

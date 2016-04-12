@@ -16,8 +16,7 @@ from .forms import ProfileForm, IvaForm
 
 @login_required
 def index(request):
-    order_list = Order.objects.select_related('event').filter(
-        authorization__in=request.user.authorizations.all())
+    order_list = Order.objects.select_related('event').filter(authorization__in=request.user.authorizations.all())
     order_count = len(order_list)
     orders = order_list.order_by('-placed_at')[:5]
 
@@ -100,9 +99,7 @@ def view_iva(request):
 
 @login_required
 def payments(request):
-    order_list = Order.objects.filter(
-        authorization__in=request.user.authorizations.all()) \
-        .order_by('-placed_at')
+    order_list = Order.objects.filter(authorization__in=request.user.authorizations.all()).order_by('-placed_at')
     paginator = Paginator(order_list, 25)
 
     page = request.GET.get('page')

@@ -1,10 +1,9 @@
 from apps.organization.models import Organization
 
 
-def primary_organization(request):
+def organization(request):
     """Provides the primary organization to the template."""
-
     return {
-        'current_organization': lambda: request.organization,
-        'organizations': lambda: Organization.public_objects.all()
+        'current_organization': request.organization,
+        'organizations': Organization.public_objects.all()
     }

@@ -15,16 +15,15 @@ from .models import Membership, Profile, AuthenticationData
 @login_required
 @manager_required
 def membership_list(request):
-    memberships = request.organization.membership_set.select_related(
-        'user').order_by('user__first_name')
+    memberships = request.organization.membership_set.select_related('user').order_by('user__first_name')
     return render(request, 'membership/list.html', locals())
 
 
 @login_required
 @manager_required
 def iva_list(request):
-    memberships = request.organization.membership_set.filter(is_tender=True) \
-        .select_related('user').order_by('user__first_name')
+    memberships = request.organization.membership_set \
+        .filter(is_tender=True).select_related('user').order_by('user__first_name')
     return render(request, 'membership/iva_list.html', locals())
 
 
@@ -36,15 +35,13 @@ def membership_add(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             try:
-                authentication_data = AuthenticationData.objects.get(
-                    username=username, backend=RADIUS_BACKEND_NAME)
+                authentication_data = AuthenticationData.objects.get(username=username, backend=RADIUS_BACKEND_NAME)
             except AuthenticationData.DoesNotExist:
                 return redirect(membership_create_user, username=username)
 
             user = authentication_data.user
-            membership, membership_created = Membership.objects.get_or_create(
-                user=user, organization=request.organization)
-            if membership_created:
+            membership, is_new = Membership.objects.get_or_create(user=user, organization=request.organization)
+            if is_new:
                 log.membership_created(request.user, membership)
             return redirect(membership_edit, pk=membership.pk)
     else:
@@ -77,9 +74,8 @@ def membership_create_user(request, username):
             profile = Profile(user=user)
             profile.save()
 
-            membership, membership_created = Membership.objects.get_or_create(
-                user=user, organization=request.organization)
-            if membership_created:
+            membership, is_new = Membership.objects.get_or_create(user=user, organization=request.organization)
+            if is_new:
                 log.membership_created(request.user, membership)
             return redirect(membership_edit, pk=membership.pk)
     else:

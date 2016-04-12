@@ -1,13 +1,13 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+
 from django.utils.translation import ugettext as _
 
 
-def default_crispy_helper(submit_text=None):
+def _default_crispy_helper(submit_text=None):
     """
     Generete a Crispy FormHelper with default Bootstrap 3 attributes.
     """
-
     if not submit_text:
         submit_text = _('Save')
 
@@ -17,3 +17,12 @@ def default_crispy_helper(submit_text=None):
     helper.field_class = 'col-md-10 col-lg-8'
     helper.add_input(Submit('submit', submit_text))
     return helper
+
+
+# legacy
+def default_crispy_helper(submit_text=None):
+    return _default_crispy_helper(submit_text)
+
+
+class BootstrapFormMixin:
+    helper = _default_crispy_helper()

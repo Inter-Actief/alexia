@@ -55,7 +55,7 @@ def order_show(request, pk):
         .annotate(amount=Sum('amount'), price=Sum('price'))
 
     orders = event.orders.select_related('authorization__user') \
-        .order_by('-placed_at')
+                  .order_by('-placed_at')
     order_count = len(orders)  # efficientie: len() ipv count()
     order_sum = orders.aggregate(Sum('amount'))['amount__sum']
 
@@ -83,9 +83,9 @@ def payment_show(request, pk):
 @manager_required
 def stats_year(request, year):
     months = Event.objects.extra({'month': "month(starts_at)"}) \
-        .filter(organizer=request.organization, starts_at__year=year) \
-        .values('month').annotate(revenue=Sum('orders__amount')) \
-        .order_by('month')
+                  .filter(organizer=request.organization, starts_at__year=year) \
+                  .values('month').annotate(revenue=Sum('orders__amount')) \
+                  .order_by('month')
     return render(request, "order/stats_year.html", locals())
 
 
@@ -93,9 +93,11 @@ def stats_year(request, year):
 @manager_required
 def stats_month(request, year, month):
     month = int(month)
-    events = Event.objects.filter(organizer=request.organization,
-                                  starts_at__year=year, starts_at__month=month) \
-        .annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+    events = Event.objects.filter(
+        organizer=request.organization,
+        starts_at__year=year,
+        starts_at__month=month,
+    ).annotate(revenue=Sum('orders__amount')).order_by('starts_at')
     return render(request, "order/stats_month.html", locals())
 
 

@@ -1,6 +1,6 @@
 import icalendar
 
-from django.http import HttpResponse
+from django import http
 
 
 def generate_ical(events, name='Alexia', tender=False):
@@ -47,7 +47,7 @@ def generate_ical(events, name='Alexia', tender=False):
     return cal.to_ical()
 
 
-class IcalResponse(HttpResponse):
+class IcalResponse(http.HttpResponse):
     def __init__(self, content=b'', *args, **kwargs):
         kwargs['content_type'] = 'text/calendar; charset=utf-8'
         super(IcalResponse, self).__init__(content, *args, **kwargs)
