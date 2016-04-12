@@ -9,7 +9,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'utils.auth.backends.radius.RadiusBackend',
 ]
-# AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/'  # DEPRECATED
 LOGIN_URL = '/login/'  # DEPRECATED
 

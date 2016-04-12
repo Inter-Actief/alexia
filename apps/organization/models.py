@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import os
 
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_delete
@@ -36,7 +36,7 @@ class Location(models.Model):
 @python_2_unicode_compatible
 class AuthenticationData(models.Model):
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         models.CASCADE,
         verbose_name=_('user'),
     )
@@ -57,7 +57,7 @@ class AuthenticationData(models.Model):
 @python_2_unicode_compatible
 class Profile(models.Model):
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         unique=True,
         verbose_name=_('user'),
     )
@@ -167,7 +167,7 @@ class Organization(models.Model):
     color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     members = models.ManyToManyField(
-        User,
+        settings.AUTH_USER_MODEL,
         through='Membership',
         verbose_name=_('users'),
     )
@@ -191,7 +191,7 @@ class Organization(models.Model):
 @python_2_unicode_compatible
 class Membership(models.Model):
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         models.CASCADE,
         verbose_name=_('user'),
     )
@@ -238,7 +238,7 @@ class Certificate(models.Model):
     file = models.FileField(_('certificate'), upload_to=_get_certificate_path)
     uploaded_at = models.DateField(auto_now_add=True, verbose_name=_('uploaded at'))
     approved_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         models.CASCADE,
         related_name='approved_certificates',
         null=True,

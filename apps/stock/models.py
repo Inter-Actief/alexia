@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -121,7 +121,7 @@ class StockCount(models.Model):
     products     -- The products counted in this stock count.
     """
     organization = models.ForeignKey(Organization, related_name='stockcounts', verbose_name=_('organization'))
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     date = models.DateTimeField(_('date'), default=timezone.now)
     is_completed = models.BooleanField(_('is completed'), default=False)
     comments = models.TextField(_('comments'), blank=True)

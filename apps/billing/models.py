@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from decimal import Decimal
 
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
@@ -198,7 +198,7 @@ class RfidCard(models.Model):
     identifier = models.CharField(_('identifier'), unique=True, max_length=50)
     is_active = models.BooleanField(_('is active'), default=False)
     registered_at = models.DateTimeField(_('registered at'), default=timezone.now)
-    user = models.ForeignKey(User, models.CASCADE, related_name='rfids', verbose_name=_('user'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='rfids', verbose_name=_('user'))
     managed_by = models.ManyToManyField(Organization)
 
     class Meta:
@@ -211,7 +211,12 @@ class RfidCard(models.Model):
 
 @python_2_unicode_compatible
 class Authorization(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, related_name='authorizations', verbose_name=_('user'))
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        related_name='authorizations',
+        verbose_name=_('user'),
+    )
     organization = models.ForeignKey(
         Organization,
         models.CASCADE,
@@ -261,7 +266,12 @@ class Order(models.Model):
     )
     placed_at = models.DateTimeField(_('placed at'), default=timezone.now)
     synchronized = models.BooleanField(_('synchronized'), default=False)
-    added_by = models.ForeignKey(User, models.PROTECT, verbose_name=_('added by'), related_name='+')
+    added_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.PROTECT,
+        verbose_name=_('added by'),
+        related_name='+',
+    )
     amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2)
     rfidcard = models.ForeignKey(RfidCard, models.PROTECT, verbose_name=_('rfid card'), blank=True, null=True)
 

@@ -2,7 +2,6 @@ import math
 from datetime import datetime, time, timedelta
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
@@ -135,7 +134,7 @@ class Event(models.Model):
     location = models.ManyToManyField('organization.Location', related_name='events', verbose_name=_("location"))
     is_closed = models.BooleanField(verbose_name=_("enrolment closed"), default=False)
     bartenders = models.ManyToManyField(
-        User,
+        settings.AUTH_USER_MODEL,
         through='BartenderAvailability',
         blank=True,
         verbose_name=_("bartenders"),
@@ -425,7 +424,11 @@ class Availability(models.Model):
 
 
 class BartenderAvailability(models.Model):
-    user = models.ForeignKey(User, verbose_name=_("bartender"), related_name='bartender_availability_set')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("bartender"),
+        related_name='bartender_availability_set',
+    )
     event = models.ForeignKey(Event, verbose_name=_("event"), related_name='bartender_availabilities')
     availability = models.ForeignKey(Availability, verbose_name=_("availability"))
 
