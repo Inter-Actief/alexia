@@ -50,15 +50,9 @@ class LocationAdmin(admin.ModelAdmin):
     inlines = (StandardReservationInline,)
 
 
-class CertificateAdmin(admin.ModelAdmin):
-    list_display = ('profile', 'uploaded_at', 'approved_at')
-    search_fields = ('profile__user__first_name', 'profile__user__last_name', 'profile__user__username',)
-
-
 admin.site.unregister(User)
 
 admin.site.register(User, UserAdmin)
 admin.site.register(AuthenticationData, AuthenticationDataAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Location, LocationAdmin)
-admin.site.register(Certificate, CertificateAdmin)

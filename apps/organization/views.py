@@ -142,7 +142,7 @@ def membership_iva(request, pk):
     if membership.organization != request.organization:
         raise PermissionDenied
 
-    iva_file = membership.user.profile.certificate.file
+    iva_file = membership.user.certificate.file
     content_type, encoding = mimetypes.guess_type(iva_file.url)
     content_type = content_type or 'application/octet-stream'
     return HttpResponse(iva_file, content_type=content_type)
@@ -152,7 +152,7 @@ def membership_iva(request, pk):
 @manager_required
 def iva_approve(request, pk):
     membership = get_object_or_404(Membership, pk=pk)
-    certificate = membership.user.profile.certificate
+    certificate = membership.user.certificate
 
     if membership.organization != request.organization:
         raise PermissionDenied
@@ -166,7 +166,7 @@ def iva_approve(request, pk):
 @manager_required
 def iva_decline(request, pk):
     membership = get_object_or_404(Membership, pk=pk)
-    certificate = membership.user.profile.certificate
+    certificate = membership.user.certificate
 
     if membership.organization != request.organization:
         raise PermissionDenied

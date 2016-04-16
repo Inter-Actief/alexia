@@ -164,11 +164,11 @@
                         </h4>
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>
-                            <dd>{{ user.profile.certificate.uploaded_at|default:"&mdash;" }}</dd>
+                            <dd>{{ user.certificate.uploaded_at|default:"&mdash;" }}</dd>
 
-                            {% if user.profile.certificate %}
+                            {% if user.certificate %}
                             <dt>{% trans 'Approved' %}</dt>
-                            <dd>{{ user.profile.certificate.approved_at|default:"&mdash;" }}</dd>
+                            <dd>{{ user.certificate.approved_at|default:"&mdash;" }}</dd>
 
                             <dt>{% trans 'Certificate' %}</dt>
                             <dd><a href="{% url 'view-iva-profile' %}" target="_blank">{% trans 'view' %}</a></dd>

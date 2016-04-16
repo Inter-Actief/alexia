@@ -62,8 +62,7 @@ def edit(request):
 
 @login_required
 def iva(request):
-    profile = request.user.profile
-    certificate = profile.certificate
+    certificate = request.user.certificate
 
     if request.method == 'POST':
         form = IvaForm(request.POST, request.FILES)
@@ -73,11 +72,11 @@ def iva(request):
                 certificate.delete()
             # Save the new
             certificate = form.save(commit=False)
-            certificate._id = str(profile.user.pk)
+            certificate._id = str(request.user.pk)
             certificate.save()
             # Attach to profile
-            profile.certificate = certificate
-            profile.save()
+            request.user.certificate = certificate
+            request.user.save()
 
             return redirect(index)
     else:
@@ -88,10 +87,10 @@ def iva(request):
 
 @login_required
 def view_iva(request):
-    if not request.user.profile.certificate:
+    if not request.user.certificate:
         raise Http404
 
-    iva_file = request.user.profile.certificate.file
+    iva_file = request.user.certificate.file
     content_type, encoding = mimetypes.guess_type(iva_file.url)
     content_type = content_type or 'application/octet-stream'
     return HttpResponse(iva_file, content_type=content_type)

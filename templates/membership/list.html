@@ -46,10 +46,10 @@
                     {% if membership.user.profile.is_iva %}
                     <a href="#" title="{% trans 'Manual approved' %}"><i class="icon-alexia-ok"></i></a>
                     {% else %}
-                    <a href="{% url 'iva-membership' membership.pk %}" title="{% trans 'Approved by' %} {{ membership.user.profile.certificate.approved_by.get_full_name }} ({{ membership.user.profile.certificate.approved_at }})"><i class="icon-alexia-ok"></i><i class="icon-alexia-pdf"></i></a>
+                    <a href="{% url 'iva-membership' membership.pk %}" title="{% trans 'Approved by' %} {{ membership.user.certificate.approved_by.get_full_name }} ({{ membership.user.certificate.approved_at }})"><i class="icon-alexia-ok"></i><i class="icon-alexia-pdf"></i></a>
                     {% endif %}
                     {% else %}
-                    {% if membership.user.profile.certificate %}
+                    {% if membership.user.certificate %}
                     <i class="icon-alexia-attention"></i>
                     <a href="{% url 'iva-membership' membership.pk %}"><i class="icon-alexia-pdf"></i></a>
                     <a href="{% url 'approve-iva-membership' membership.pk %}" title="{% trans 'Approve' %}"><i class="icon-alexia-ok"></i></a>

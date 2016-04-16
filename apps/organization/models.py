@@ -63,15 +63,9 @@ class Profile(models.Model):
     )
     is_iva = models.BooleanField(_('has IVA-certificate'), default=False)
     is_bhv = models.BooleanField(_('has BHV-certificate'), default=False)
-    certificate = models.OneToOneField(
-        'Certificate',
-        models.CASCADE,
-        null=True,
-        verbose_name=_('certificate'),
-    )
     current_organization = models.ForeignKey(
         'Organization',
-        models.CASCADE,
+        models.SET_NULL,
         null=True,
         verbose_name=_('current organization'),
     )
@@ -145,7 +139,7 @@ class Profile(models.Model):
 
     def has_iva(self):
         try:
-            approval_date = self.certificate.approved_at
+            approval_date = self.user.certificate.approved_at
         except AttributeError:
             approval_date = None
 
@@ -245,6 +239,11 @@ class Certificate(models.Model):
         verbose_name=_('approved by'),
     )
     approved_at = models.DateField(_('approved at'), null=True)
+    owner = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        verbose_name=_('certificate'),
+    )
 
     def get_absolute_url(self):
         return reverse('iva-membership', args=[self.pk])
@@ -257,9 +256,6 @@ class Certificate(models.Model):
     approve.alters_data = True
 
     def decline(self):
-        profile = self.profile
-        profile.certificate = None
-        profile.save()
         self.delete()
 
     decline.alters_data = True
