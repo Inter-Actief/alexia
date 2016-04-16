@@ -13,8 +13,10 @@ from apps.billing.models import PriceGroup, ProductGroup, Product, PermanentProd
 from apps.scheduling.models import Event
 from utils.auth.decorators import manager_required
 from utils.auth.mixins import ManagerRequiredMixin
-from utils.mixins import OrganizationFilterMixin, EventOrganizerFilterMixin, CreateViewForOrganization, \
-    OrganizationFormMixin, FixedValueCreateView, CrispyFormMixin
+from utils.mixins import (
+    OrganizationFilterMixin, EventOrganizerFilterMixin, CreateViewForOrganization, OrganizationFormMixin,
+    FixedValueCreateView, CrispyFormMixin,
+)
 from .models import Order, Purchase
 
 
@@ -36,8 +38,8 @@ def order_list(request):
         events = paginator.page(paginator.num_pages)
 
     stats_years = Event.objects.extra({'year': "year(starts_at)"}) \
-                       .filter(organizer=request.organization).values('year') \
-                       .annotate(revenue=Sum('orders__amount')).order_by('-year')[:3]
+        .filter(organizer=request.organization).values('year') \
+        .annotate(revenue=Sum('orders__amount')).order_by('-year')[:3]
 
     return render(request, "order/list.html", locals())
 
@@ -54,8 +56,7 @@ def order_show(request, pk):
         .values('product', 'product__name') \
         .annotate(amount=Sum('amount'), price=Sum('price'))
 
-    orders = event.orders.select_related('authorization__user') \
-                  .order_by('-placed_at')
+    orders = event.orders.select_related('authorization__user').order_by('-placed_at')
     order_count = len(orders)  # efficientie: len() ipv count()
     order_sum = orders.aggregate(Sum('amount'))['amount__sum']
 
@@ -83,9 +84,9 @@ def payment_show(request, pk):
 @manager_required
 def stats_year(request, year):
     months = Event.objects.extra({'month': "month(starts_at)"}) \
-                  .filter(organizer=request.organization, starts_at__year=year) \
-                  .values('month').annotate(revenue=Sum('orders__amount')) \
-                  .order_by('month')
+        .filter(organizer=request.organization, starts_at__year=year) \
+        .values('month').annotate(revenue=Sum('orders__amount')) \
+        .order_by('month')
     return render(request, "order/stats_year.html", locals())
 
 
@@ -98,6 +99,7 @@ def stats_month(request, year, month):
         starts_at__year=year,
         starts_at__month=month,
     ).annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+
     return render(request, "order/stats_month.html", locals())
 
 

@@ -9,20 +9,20 @@ from django.utils.translation import ugettext as _
 
 from apps.organization.models import Organization, Location
 from apps.scheduling.models import Event, StandardReservation, MailTemplate
-from utils.forms import BootstrapFormMixin
+from utils.forms import AlexiaModelForm
 from utils.mail import mail
 
 
-class EventForm(BootstrapFormMixin, forms.ModelForm):
+class EventForm(AlexiaModelForm):
     participants = forms.ModelMultipleChoiceField(
         Organization.public_objects.all(),
         widget=widgets.CheckboxSelectMultiple,
-        label=_("Participants"),
+        label=_('Participants'),
     )
     location = forms.ModelMultipleChoiceField(
         Location.objects.all(),
         widget=widgets.CheckboxSelectMultiple,
-        label=_("Location"),
+        label=_('Location'),
     )
     starts_at = forms.SplitDateTimeField()
     ends_at = forms.SplitDateTimeField()
@@ -33,25 +33,15 @@ class EventForm(BootstrapFormMixin, forms.ModelForm):
                   'location', 'kegs', 'pricegroup', 'tender_comments']
 
     def __init__(self, request=None, *args, **kwargs):
-        """Overrides the default init to select initial values based on the
-        primary organization, and select the right queryset for the pricegroup.
-        The queryset will be updated to the form via AJAX.
-        """
-
         super(EventForm, self).__init__(*args, **kwargs)
 
         if request:
             primary_organization = request.organization
             self.fields['participants'].initial = [primary_organization]
-            # self.fields['pricegroup'].queryset =
-            # PriceGroup.objects.filter(organization=primary_organization)
             self.fields['pricegroup'].choices = self.organize_pricegroups([primary_organization.pk])
 
         if 'instance' in kwargs and kwargs['instance'].organizer:
             try:
-                # self.fields['pricegroup'].queryset =
-                # PriceGroup.objects.filter(
-                # organization=kwargs['data']['organizer'])
                 self.fields['pricegroup'].choices = self.organize_pricegroups([kwargs['instance'].organizer.pk])
             except:
                 pass
@@ -61,12 +51,10 @@ class EventForm(BootstrapFormMixin, forms.ModelForm):
 
         result = []
         for organization in organizations:
-            # Get all the pricegroups
             pricegroups = []
             for pricegroup in organization.pricegroups.all():
                 pricegroups.append([pricegroup.pk, pricegroup.name])
 
-            # Append them
             result.append([organization.name, pricegroups])
 
         return result
@@ -131,14 +119,13 @@ class FilterEventForm(forms.Form):
         queryset=Location.objects.all(),
         initial=Location.objects.all(),
         widget=widgets.CheckboxSelectMultiple,
-        label=_("Locations"),
+        label=_('Locations'),
         required=False,
     )
-    organizer = forms.ModelChoiceField(required=False, queryset=Organization.objects, label=_("Organization"))
-    from_time = forms.DateTimeField(label=_("From time"), initial=timezone.now, widget=widgets.SplitDateTimeWidget)
-    till_time = forms.DateTimeField(label=_("Till time"), widget=widgets.SplitDateTimeWidget, required=False)
+    organizer = forms.ModelChoiceField(required=False, queryset=Organization.objects, label=_('Organization'))
+    from_time = forms.DateTimeField(label=_('From time'), initial=timezone.now, widget=widgets.SplitDateTimeWidget)
+    till_time = forms.DateTimeField(label=_('Till time'), widget=widgets.SplitDateTimeWidget, required=False)
 
-    # Uni-form
     helper = FormHelper()
     helper.form_class = 'form-horizontal'
     helper.form_method = 'GET'

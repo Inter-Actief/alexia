@@ -1,13 +1,11 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
+from django.forms import Form, ModelForm
 from django.utils.translation import ugettext as _
 
 
 def _default_crispy_helper(submit_text=None):
-    """
-    Generete a Crispy FormHelper with default Bootstrap 3 attributes.
-    """
     if not submit_text:
         submit_text = _('Save')
 
@@ -26,3 +24,11 @@ def default_crispy_helper(submit_text=None):
 
 class BootstrapFormMixin:
     helper = _default_crispy_helper()
+
+
+class AlexiaForm(BootstrapFormMixin, Form):
+    pass
+
+
+class AlexiaModelForm(BootstrapFormMixin, ModelForm):
+    pass

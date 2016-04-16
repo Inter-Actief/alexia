@@ -1,15 +1,3 @@
-"""
-Command to send weekly reminder mails.
-
-This tool sends reminder mails to all tenders with a list of events with
-missing availability for the tender.
-
-Based on the reminder script of the previous Event management system by
-Wietse Smid.
-
-Author: Jelte Zeilstra
-"""
-
 from datetime import timedelta
 
 from django.conf import settings

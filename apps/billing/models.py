@@ -74,11 +74,7 @@ class SellingPrice(models.Model):
         unique_together = ('pricegroup', 'productgroup')
 
     def __str__(self):
-        return _('{pricegroup}: {productgroup} for {price}').format(
-            pricegroup=self.pricegroup,
-            productgroup=self.productgroup,
-            price=self.price,
-        )
+        return '%s: %s %s %s' % (self.pricegroup, self.productgroup, _('for'), self.price)
 
     def get_absolute_url(self):
         return self.pricegroup.get_absolute_url()
@@ -110,24 +106,16 @@ class Product(models.Model):
 
     @property
     def is_permanent(self):
-        """Indicates whether this is a PermanentProduct"""
         return hasattr(self, 'permanentproduct')
 
     @property
     def is_temporary(self):
-        """Indicates whether this is a TemporaryProduct"""
         return hasattr(self, 'temporaryproduct')
 
     def get_price(self, event):
-        """Gets the price for a given event."""
         return self.as_leaf_class().get_price(event)
 
     def as_leaf_class(self):
-        """
-        Return the leaf class object of this object.
-        :return: This object as PermanentProduct or TemporaryProduct
-        :rtype: PermanentProduct|TemporaryProduct
-        """
         if self.is_permanent:
             return self.permanentproduct
         elif self.is_temporary:
@@ -232,16 +220,16 @@ class Authorization(models.Model):
         verbose_name_plural = _('authorizations')
 
     def __str__(self):
-        return "%s at %s" % (self.user, self.organization)
+        return '%s %s %s' % (self.user, _('at'), self.organization)
 
     @classmethod
     def get_for_user_event(cls, user, event):
-        """Get authorization if given user and event, if any.
-
-        Returns Authorization object or None."""
-
-        authorizations = cls.objects.filter(Q(end_date__isnull=True) | Q(end_date__gte=timezone.now()), user=user,
-                                            organization=event.organizer, start_date__lte=timezone.now())
+        authorizations = cls.objects.filter(
+            Q(end_date__isnull=True) | Q(end_date__gte=timezone.now()),
+            user=user,
+            organization=event.organizer,
+            start_date__lte=timezone.now(),
+        )
 
         if authorizations:
             return authorizations[0]
@@ -249,7 +237,6 @@ class Authorization(models.Model):
             return None
 
     def is_valid(self):
-        """Returns whether this authorization is currently valid."""
         if not self.end_date:
             return self.start_date <= timezone.now()
         else:
@@ -284,12 +271,9 @@ class Order(models.Model):
         super(Order, self).save(*args, **kwargs)
 
     def is_collected(self):
-        """Returns whether the order has been collected."""
         return bool(self.collected_at)
 
     def get_price(self):
-        """Get the total amount of this order."""
-
         amount = Decimal('0.0')
         for purchase in self.purchases.all():
             amount += purchase.price

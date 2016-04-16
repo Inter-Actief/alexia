@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^membership/$', views.membership_list, name='memberships'),
     url(r'^membership/iva/$', views.iva_list, name='iva-memberships'),
     url(r'^membership/add/$', views.membership_add, name='new-membership'),
-    url(r'^membership/add/(?P<username>[ms][0-9]{7})/$', views.membership_create_user),
+    url(r'^membership/add/(?P<username>[ms][0-9]{7})/$', views.membership_create_user, name='add-membership'),
     url(r'^membership/(?P<pk>\d+)/show/$', views.membership_show, name='membership'),
     url(r'^membership/(?P<pk>\d+)/edit/$', views.membership_edit, name='edit-membership'),
     url(r'^membership/(?P<pk>\d+)/delete/$', views.membership_delete, name='delete-membership'),

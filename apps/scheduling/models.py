@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import math
 from datetime import datetime, time, timedelta
 
@@ -16,17 +18,6 @@ from .tools import notify_tenders
 
 @python_2_unicode_compatible
 class MailTemplate(models.Model):
-    """A mailtemplate which can be send at different occasions
-
-    organization    -- The organization to which this template relates.
-    name            -- The name of this template.
-    subject         -- The subject of the mail to be send.
-    template        -- The body of the mail to be send.
-    is_active       -- Toggle the sending of this mail.
-    send_at         -- How far before the event must the mail be send
-                       (in minutes)?
-    """
-
     NAME_CHOICES = (
         ('enrollopen', _('Enrollment open')),
         ('enrollclosed', _('Enrollment closed')),
@@ -47,7 +38,7 @@ class MailTemplate(models.Model):
         verbose_name_plural = _('mail templates')
 
     def __str__(self):
-        return "%s, %s" % (self.organization, self.get_name_display())
+        return '%s, %s' % (self.organization, self.get_name_display())
 
     def get_absolute_url(self):
         return reverse('mailtemplate_detail', args=[self.name])
@@ -57,24 +48,6 @@ class MailTemplate(models.Model):
 
 
 class StandardReservation(models.Model):
-    """A reservation for a specific location by a organization at a given day
-    and time range.
-
-    organization    -- The organization that holds this standard reservation.
-    start_day       -- The day at which the reservation range starts. 1
-                       represents Monday and 7 represents Sunday.
-    start_time      -- The time at which the reservation starts. Defaults to
-                       00:00:00.
-    end_day         -- The last day of the reservation. Similar to start_day.
-    end_time        -- The time at which the reservation ends (including).
-                       Defaults to 23:59:59
-    location        -- The location on which this reservation is applicable.
-
-    Note that start_day <= end_day and that start_time <= end_time if start_day
-    == end_day. In other words, the start moment must be before the end moment.
-    Furthermore, reservations can't span from Sunday to Monday.
-    """
-
     MONDAY = 1
     TUESDAY = 2
     WEDNESDAY = 3

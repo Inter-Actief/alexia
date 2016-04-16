@@ -11,3 +11,14 @@ color_validator = RegexValidator(
 
 def validate_color(value):
     return color_validator(value)
+
+
+radius_username_validator = RegexValidator(
+    r'^[ms][0-9]{7}$',
+    _('Enter a valid RADIUS username'),
+    'invalid',
+)
+
+
+def validate_radius_usernam(value):
+    return radius_username_validator(value)

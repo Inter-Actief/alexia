@@ -1,17 +1,16 @@
-from django import forms
 from django.contrib.auth.models import User
 
 from apps.organization.models import Certificate
-from utils.forms import BootstrapFormMixin
+from utils.forms import AlexiaModelForm
 
 
-class ProfileForm(BootstrapFormMixin, forms.ModelForm):
+class ProfileForm(AlexiaModelForm):
     class Meta:
         model = User
         fields = ['email']
 
 
-class IvaForm(BootstrapFormMixin, forms.ModelForm):
+class IvaForm(AlexiaModelForm):
     class Meta:
         model = Certificate
         fields = ['file']

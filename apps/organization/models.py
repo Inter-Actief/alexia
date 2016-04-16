@@ -13,7 +13,6 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 from apps.scheduling.models import Availability, BartenderAvailability
-from .managers import PublicOrganizationManager
 from utils.validators import validate_color
 
 
@@ -151,6 +150,13 @@ class Profile(models.Model):
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
         ).count()
+
+
+class PublicOrganizationManager(models.Manager):
+    use_for_related_fields = True
+
+    def get_queryset(self):
+        return super(PublicOrganizationManager, self).get_queryset().exclude(is_public=False)
 
 
 @python_2_unicode_compatible
