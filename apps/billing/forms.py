@@ -6,7 +6,7 @@ from apps.billing.models import PermanentProduct, PriceGroup, ProductGroup, Sell
 class PermanentProductForm(forms.ModelForm):
     class Meta:
         model = PermanentProduct
-        fields = ['name', 'productgroup', 'stockproduct', 'position', 'text_color', 'background_color']
+        fields = ['name', 'productgroup', 'position', 'text_color', 'background_color']
 
     def __init__(self, organization, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)

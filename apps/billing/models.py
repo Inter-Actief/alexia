@@ -12,7 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from apps.organization.models import Organization
 from apps.scheduling.models import Event
-from apps.stock.models import StockProduct
 from utils.validators import validate_color
 
 
@@ -132,7 +131,6 @@ class PermanentProduct(Product):
         related_name='products',
         verbose_name=_('organization'),
     )
-    stockproduct = models.ForeignKey(StockProduct, verbose_name=_('stock product'), blank=True, null=True)
     position = models.IntegerField(_('position'))
 
     class Meta:
@@ -252,7 +250,13 @@ class Order(models.Model):
         verbose_name=_('authorization'),
     )
     placed_at = models.DateTimeField(_('placed at'), default=timezone.now)
-    synchronized = models.BooleanField(_('synchronized'), default=False)
+    synchronized = models.BooleanField(
+        _('synchronized'),
+        default=False,
+        help_text=_(
+            'Designates whether this transaction is imported by the organization.'
+        ),
+    )
     added_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         models.PROTECT,
@@ -278,7 +282,6 @@ class Order(models.Model):
         for purchase in self.purchases.all():
             amount += purchase.price
         return amount
-
     get_price.short_description = _('price')
 
 

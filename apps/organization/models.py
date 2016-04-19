@@ -32,7 +32,6 @@ class Location(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class AuthenticationData(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -46,12 +45,6 @@ class AuthenticationData(models.Model):
     class Meta:
         unique_together = (('backend', 'username'), ('user', 'backend'))
 
-    def __str__(self):
-        return "%s | %s" % (
-            self.username,
-            self.backend.split('.')[-1],
-        )
-
 
 @python_2_unicode_compatible
 class Profile(models.Model):
@@ -60,8 +53,20 @@ class Profile(models.Model):
         unique=True,
         verbose_name=_('user'),
     )
-    is_iva = models.BooleanField(_('has IVA-certificate'), default=False)
-    is_bhv = models.BooleanField(_('has BHV-certificate'), default=False)
+    is_iva = models.BooleanField(
+        _('has IVA-certificate'),
+        default=False,
+        help_text=_(
+            'Override for an user to indicate IVA rights without uploading a certificate.'
+        ),
+    )
+    is_bhv = models.BooleanField(
+        _('has BHV-certificate'),
+        default=False,
+        help_text=_(
+            'Designates that this user has a valid, non-expired BHV (Emergency Response Officer) certificate.'
+        ),
+    )
     current_organization = models.ForeignKey(
         'Organization',
         models.SET_NULL,
@@ -76,7 +81,7 @@ class Profile(models.Model):
         verbose_name_plural = _('profiles')
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
     def next_tending(self):
         return BartenderAvailability.objects.filter(
@@ -234,6 +239,7 @@ def _get_certificate_path(instance, filename):
     return os.path.join(path, filename + ext)
 
 
+@python_2_unicode_compatible
 class Certificate(models.Model):
     file = models.FileField(_('certificate'), upload_to=_get_certificate_path)
     uploaded_at = models.DateField(auto_now_add=True, verbose_name=_('uploaded at'))
@@ -251,8 +257,11 @@ class Certificate(models.Model):
         verbose_name=_('certificate'),
     )
 
-    def get_absolute_url(self):
-        return reverse('iva-membership', args=[self.pk])
+    def __str__(self):
+        return '%s %s' % (
+            _('IVA certificate of'),
+            self.owner.get_full_name(),
+        )
 
     def approve(self, approver):
         self.approved_by = approver

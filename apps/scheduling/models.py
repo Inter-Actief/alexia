@@ -47,6 +47,7 @@ class MailTemplate(models.Model):
         return self.name == 'reminder'
 
 
+@python_2_unicode_compatible
 class StandardReservation(models.Model):
     MONDAY = 1
     TUESDAY = 2
@@ -79,6 +80,14 @@ class StandardReservation(models.Model):
         verbose_name = _('standard reservation')
         verbose_name_plural = _('standard reservations')
 
+    def __str__(self):
+        return '[%s] %s %s %s' % (
+            self.organization,
+            self.location,
+            _('on'),
+            self.get_start_day_display(),
+        )
+
     def clean(self):
         """Check whether the range start is before the range end."""
         from django.core.exceptions import ValidationError
@@ -105,7 +114,13 @@ class Event(models.Model):
     starts_at = models.DateTimeField(_("starts at"), db_index=True)
     ends_at = models.DateTimeField(_("ends at"), db_index=True)
     location = models.ManyToManyField('organization.Location', related_name='events', verbose_name=_("location"))
-    is_closed = models.BooleanField(verbose_name=_("enrolment closed"), default=False)
+    is_closed = models.BooleanField(
+        verbose_name=_("enrolment closed"),
+        default=False,
+        help_text=_(
+            'Designates if tenders can sign up for this event.'
+        ),
+    )
     bartenders = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='BartenderAvailability',
@@ -114,9 +129,21 @@ class Event(models.Model):
     )
     pricegroup = models.ForeignKey('billing.PriceGroup', related_name='events', verbose_name=_("pricegroup"))
     kegs = models.IntegerField(verbose_name=_("number of kegs"))
-    option = models.BooleanField(verbose_name=_("option"), default=False)
+    option = models.BooleanField(
+        verbose_name=_("option"),
+        default=False,
+        help_text=_(
+            'Designates that this event is not definitive yet.'
+        ),
+    )
     tender_comments = models.TextField(_("tender comments"), blank=True)
-    is_risky = models.BooleanField(verbose_name=_("risky"), default=False)
+    is_risky = models.BooleanField(
+        verbose_name=_("risky"),
+        default=False,
+        help_text=_(
+            'Designates that this event should be marked as risky.'
+        ),
+    )
 
     objects = EventManager()
 

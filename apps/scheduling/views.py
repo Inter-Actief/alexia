@@ -10,7 +10,7 @@ from django.forms.models import modelformset_factory, ModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import UpdateView
@@ -34,20 +34,21 @@ from utils.mixins import OrganizationFilterMixin, CrispyFormMixin, CreateViewFor
 
 def overview(request):
     # De lijst waarop we nog gaan filteren
-    events = Event.objects.select_related().prefetch_related(
-        'participants', 'location').order_by('starts_at')
-    events = events.prefetch_related(Prefetch('bartender_availabilities',
-                                              queryset=BartenderAvailability.objects.filter(
-                                                  availability__nature=Availability.ASSIGNED),
-                                              to_attr='bartender_availabilities_assigned'),
-                                     'bartender_availabilities_assigned__user',
-                                     Prefetch('bartender_availabilities',
-                                              queryset=BartenderAvailability.objects.filter(
-                                                  Q(availability__nature=Availability.ASSIGNED),
-                                                  Q(user__profile__is_iva=True) |
-                                                  Q(user__profile__certificate__approved_at__isnull=False)),
-                                              to_attr='bartender_availabilities_iva'),
-                                     )
+    events = Event.objects.select_related().prefetch_related('participants', 'location').order_by('starts_at')
+    events = events.prefetch_related(
+        Prefetch('bartender_availabilities',
+            queryset=BartenderAvailability.objects.filter(availability__nature=Availability.ASSIGNED),
+            to_attr='bartender_availabilities_assigned',
+        ),
+        'bartender_availabilities_assigned__user',
+        Prefetch('bartender_availabilities',
+            queryset=BartenderAvailability.objects.filter(
+                Q(availability__nature=Availability.ASSIGNED),
+                Q(user__profile__is_iva=True) | Q(user__certificate__approved_at__isnull=False),
+            ),
+            to_attr='bartender_availabilities_iva',
+        ),
+     )
 
     # Default from_time is now.
     from_time = timezone.now()
@@ -80,9 +81,10 @@ def overview(request):
     events = events.distinct()
 
     if request.user.is_authenticated():
-        events_tending = events.filter(bartender_availabilities__availability__nature=Availability.ASSIGNED,
-                                       bartender_availabilities__user=request.user) \
-            .select_related(None).prefetch_related(None).order_by()
+        events_tending = events.filter(
+            bartender_availabilities__availability__nature=Availability.ASSIGNED,
+            bartender_availabilities__user=request.user,
+        ).select_related(None).prefetch_related(None).order_by()
 
     # Beschikbaarheden in een lijstje stoppen
     if not request.user.is_authenticated() or not request.organization:
@@ -121,8 +123,9 @@ def event_show(request, pk):
 
     if is_planner:
         tenders = Membership.objects.select_related('user').filter(
-            organization__in=event.participants.all(), is_tender=True). \
-            order_by("user__first_name")
+            organization__in=event.participants.all(),
+            is_tender=True,
+        ).order_by("user__first_name")
         bas = collections.defaultdict(list)
 
         for ba in BartenderAvailability.objects.select_related().filter(event=event):
@@ -141,8 +144,9 @@ def event_show(request, pk):
 @planner_required
 def event_add(request):
     if not request.organization:
-        return render(request, 'general_error.html', {'error_msg':
-                      _('Creating an event requires an primary organization.')})
+        return render(request, 'general_error.html', {
+            'error_msg': _('Creating an event requires an primary organization.')
+        })
 
     if request.method == 'POST':
         form = EventForm(request, request.POST)
