@@ -1,6 +1,8 @@
 from django import forms
 
-from apps.billing.models import PermanentProduct, PriceGroup, ProductGroup, SellingPrice
+from apps.billing.models import (
+    PermanentProduct, PriceGroup, ProductGroup, SellingPrice,
+)
 
 
 class PermanentProductForm(forms.ModelForm):

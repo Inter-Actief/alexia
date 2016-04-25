@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 
 from apps.billing.admin import AuthorizationInline, RfidCardInline
 from apps.scheduling.admin import AvailabilityInline
-from .models import AuthenticationData, Certificate, Location, Membership, Organization, Profile
+
+from .models import (
+    AuthenticationData, Certificate, Location, Membership, Organization,
+    Profile,
+)
 
 admin.site.unregister(User)
 

@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.query import Prefetch
-from django.forms.models import modelformset_factory, ModelForm
+from django.forms.models import ModelForm, modelformset_factory
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views.generic.base import TemplateView
@@ -18,13 +18,20 @@ from django.views.generic.list import ListView
 
 from apps.organization.forms import BartenderAvailabilityForm
 from apps.organization.models import Membership, Profile
-from apps.scheduling.forms import EventForm, EditEventForm, StandardReservationForm, FilterEventForm
-from apps.scheduling.models import Event, BartenderAvailability, Availability, MailTemplate, StandardReservation
+from apps.scheduling.forms import (
+    EditEventForm, EventForm, FilterEventForm, StandardReservationForm,
+)
+from apps.scheduling.models import (
+    Availability, BartenderAvailability, Event, MailTemplate,
+    StandardReservation,
+)
 from utils import log
 from utils.auth.decorators import planner_required
 from utils.auth.mixins import ManagerRequiredMixin
-from utils.calendar import generate_ical, IcalResponse
-from utils.mixins import OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization
+from utils.calendar import IcalResponse, generate_ical
+from utils.mixins import (
+    CreateViewForOrganization, CrispyFormMixin, OrganizationFilterMixin,
+)
 
 
 # =========================================================================

@@ -8,8 +8,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from utils import log
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
-from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm
-from .models import Membership, Profile, AuthenticationData
+
+from .forms import CreateUserForm, MembershipAddForm, MembershipEditForm
+from .models import AuthenticationData, Membership, Profile
 
 
 @login_required

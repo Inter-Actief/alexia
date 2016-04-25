@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from apps.billing.admin import TemporaryProductInline
+
 from .models import Availability, Event, MailTemplate, StandardReservation
 
 

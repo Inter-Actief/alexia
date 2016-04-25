@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from .models import (
-    Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase, RfidCard, SellingPrice,
-    TemporaryProduct
+    Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
+    RfidCard, SellingPrice, TemporaryProduct,
 )
 
 

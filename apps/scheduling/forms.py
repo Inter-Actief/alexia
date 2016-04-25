@@ -7,8 +7,8 @@ from django.forms import widgets
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
-from apps.organization.models import Organization, Location
-from apps.scheduling.models import Event, StandardReservation, MailTemplate
+from apps.organization.models import Location, Organization
+from apps.scheduling.models import Event, MailTemplate, StandardReservation
 from utils.forms import AlexiaModelForm
 from utils.mail import mail
 

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from apps.organization.models import Membership
-from apps.scheduling.models import BartenderAvailability, Availability
+from apps.scheduling.models import Availability, BartenderAvailability
 from utils.forms import AlexiaForm, AlexiaModelForm
 from utils.validators import validate_radius_usernam
 

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from . import views, perspectives
+from . import perspectives, views
 
 urlpatterns = [
     # Others

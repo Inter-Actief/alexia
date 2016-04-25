@@ -1,5 +1,4 @@
 import icalendar
-
 from django import http
 
 

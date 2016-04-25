@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
 from django.utils import timezone
 
-from apps.billing.models import PermanentProduct, Order, Purchase
+from apps.billing.models import Order, PermanentProduct, Purchase
 from apps.scheduling.models import Event
 
 

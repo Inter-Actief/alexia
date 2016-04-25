@@ -1,11 +1,15 @@
-from alexia.stock.forms import StockCountForm, StockCountAmountForm, StockProductForm, EventConsumptionForm
-from alexia.stock.models import Event
-from alexia.stock.models import StockProductAmount, StockProduct, \
-    StockCount
+from alexia.stock.forms import (
+    EventConsumptionForm, StockCountAmountForm, StockCountForm,
+    StockProductForm,
+)
+from alexia.stock.models import (
+    Event, StockCount, StockProduct, StockProductAmount,
+)
 from alexia.tools.decorators import manager_required
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import render_to_response, RequestContext
+from django.shortcuts import (
+    RequestContext, get_object_or_404, render, render_to_response,
+)
 from django.utils import timezone
 
 

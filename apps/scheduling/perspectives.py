@@ -7,7 +7,8 @@ from django.utils import timezone
 
 from apps.organization.models import Location
 from utils.auth.decorators import tender_required
-from .models import Event, Availability
+
+from .models import Availability, Event
 
 
 @tender_required

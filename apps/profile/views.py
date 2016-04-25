@@ -2,16 +2,17 @@ import mimetypes
 import uuid
 
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Sum
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, redirect
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect, render
 
 from apps.billing.models import Order
 from apps.organization.models import AuthenticationData
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import tender_required
-from .forms import ProfileForm, IvaForm
+
+from .forms import IvaForm, ProfileForm
 
 
 @login_required

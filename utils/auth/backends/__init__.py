@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from apps.organization.models import Profile, AuthenticationData
+from apps.organization.models import AuthenticationData, Profile
 
 RADIUS_BACKEND_NAME = "utils.auth.backends.radius.RadiusBackend"
 

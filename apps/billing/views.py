@@ -1,22 +1,26 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from apps.billing.forms import PermanentProductForm, SellingPriceForm
-from apps.billing.models import PriceGroup, ProductGroup, Product, PermanentProduct, TemporaryProduct, SellingPrice
+from apps.billing.models import (
+    PermanentProduct, PriceGroup, Product, ProductGroup, SellingPrice,
+    TemporaryProduct,
+)
 from apps.scheduling.models import Event
 from utils.auth.decorators import manager_required
 from utils.auth.mixins import ManagerRequiredMixin
 from utils.mixins import (
-    OrganizationFilterMixin, EventOrganizerFilterMixin, CreateViewForOrganization, OrganizationFormMixin,
-    FixedValueCreateView, CrispyFormMixin,
+    CreateViewForOrganization, CrispyFormMixin, EventOrganizerFilterMixin,
+    FixedValueCreateView, OrganizationFilterMixin, OrganizationFormMixin,
 )
+
 from .models import Order, Purchase
 
 
