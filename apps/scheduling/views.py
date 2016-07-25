@@ -135,7 +135,10 @@ def event_show(request, pk):
         for t in tenders:
             ba = bas[t.user]
             a = ba[0].availability if ba else None
-            availabilities.append(dict({'user': t.user, 'availability': a}))
+            availabilities.append(dict({'user': t.user,
+                                        'availability': a,
+                                        'membership_id': t.pk,
+                                        'last_tended': t.tended()[0] if len(t.tended()) > 0 else None}))
 
     return render(request, 'scheduling/event_show.html', locals())
 
