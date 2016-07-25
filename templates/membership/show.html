@@ -1,5 +1,10 @@
 {% extends 'base_app.html' %}
 {% load i18n %}
+{% load as_json %}
+
+{% block extrajs %}
+    <script src="{{ STATIC_URL }}js/Chart.min.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
 
 {% block title %}{{ membership }}{% endblock %}
 
@@ -17,6 +22,39 @@
             <dt>{% trans 'Email address' %}</dt>
             <dd>{{ membership.user.email|default:"&mdash;" }}</dd>
         </dl>
+        <div id="user-stats">
+            <h3>{% trans 'Times tended last year' %}</h3>
+            <canvas id="user-stats-chart" width="400" height="200"></canvas>
+            <script>
+            var ctx = document.getElementById("user-stats-chart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ graph_headers|as_json }},
+                    datasets: [{
+                        label: 'Times tended',
+                        data: {{ graph_content|as_json }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fixedStepSize: true
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+            </script>
+        </div>
     </div>
     <div class="col-xs-12 col-md-6 col-md-pull-6 col-lg-7 col-lg-pull-5">
         <h3>{% trans 'Last tended events' %}</h3>
