@@ -128,20 +128,26 @@ def event_show(request, pk):
     if is_planner:
         tenders = Membership.objects.select_related('user').filter(
             organization__in=event.participants.all(), is_tender=True). \
-            order_by("user__first_name")
+            order_by("is_active", "user__first_name")
         bas = collections.defaultdict(list)
 
         for ba in BartenderAvailability.objects.select_related().filter(event=event):
             bas[ba.user].append(ba)
 
-        availabilities = []
+        active_availabilities = []
+        inactive_availabilities = []
         for t in tenders:
             ba = bas[t.user]
             a = ba[0].availability if ba else None
-            availabilities.append(dict({'user': t.user,
-                                        'availability': a,
-                                        'membership_id': t.pk,
-                                        'last_tended': t.tended()[0] if len(t.tended()) > 0 else None}))
+            t_info = {'user': t.user,
+                      'availability': a,
+                      'membership_id': t.pk,
+                      'last_tended': t.tended()[0] if len(t.tended()) > 0 else None
+                      }
+            if t.is_active:
+                active_availabilities.append(t_info)
+            else:
+                inactive_availabilities.append(t_info)
 
     return render(request, 'scheduling/event_show.html', locals())
 
