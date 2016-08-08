@@ -24,10 +24,10 @@ $(document).ready(function() {
             else     $('#loading').hide();
         },
         eventRender: function(event, element) {
-            html  = "<b>Locatie:</b> " + event.location;
-            html += "<br><b>Organisatie:</b> " + event.organizers;
-            html += "<br><b>Tappers:</b> " + event.tenders;
-            if(event.canEdit) { html += "<br><a href=\"" + event.editUrl  + "\">bewerken</a>"; }
+            html  = "<b>{% trans 'Location' %}:</b> " + event.location;
+            html += "<br><b>{% trans 'Organization' %}:</b> " + event.organizers;
+            html += "<br><b>{% trans 'Bartenders' %}:</b> " + event.tenders;
+            if(event.canEdit) { html += "<br><a href=\"" + event.editUrl  + "\">{% trans 'edit' %}</a>"; }
 
             element.qtip({
                 style: { classes: 'qtip-bootstrap' },
@@ -54,15 +54,21 @@ $(document).ready(function() {
             week: "d MMM yyyy{ '&#8212;' d MMM yyyy}"
         },
         buttonText: {
-            today: 'vandaag',
-            month: 'maand',
-            week: 'week'
+            today: '{% trans 'today' %}',
+            month: '{% trans 'month' %}',
+            week: '{% trans 'week' %}'
         },
-        monthNames: ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
-        monthNamesShort: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'],
-        dayNames: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
-        dayNamesShort: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
-        weekNumberTitle: 'Week ',
+        monthNames: ['{% trans 'January' %}', '{% trans 'February'%}', '{% trans 'March' %}', '{% trans 'April' %}',
+            '{% trans 'May' %}', '{% trans 'June' %}', '{% trans 'July' %}', '{% trans 'August' %}',
+            '{% trans 'September' %}', '{% trans 'October' %}', '{% trans 'November' %}', '{% trans 'December' %}'],
+        monthNamesShort: ['{% trans 'Jan.' %}', '{% trans 'Feb.' %}', '{% trans 'Mar.' %}', '{% trans 'Apr.' %}',
+            '{% trans 'May' %}', '{% trans 'Jun.' %}', '{% trans 'Jul.' %}', '{% trans 'Aug.' %}', '{% trans 'Sep.' %}',
+            '{% trans 'Oct.' %}', '{% trans 'Nov.' %}', '{% trans 'Dec.' %}'],
+        dayNames: ['{% trans 'Sunday' %}', '{% trans 'Monday' %}', '{% trans 'Tuesday' %}', '{% trans 'Wednesday' %}',
+            '{% trans 'Thursday' %}', '{% trans 'Friday' %}', '{% trans 'Saturday' %}'],
+        dayNamesShort: ['{% trans 'Sun' %}', '{% trans 'Mon' %}', '{% trans 'Tue' %}', '{% trans 'Wed' %}',
+            '{% trans 'Thu' %}', '{% trans 'Fri' %}', '{% trans 'Sat' %}'],
+        weekNumberTitle: '{% trans 'Week' %} ',
         axisFormat: 'H:mm',
     });
 });
