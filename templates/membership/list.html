@@ -57,6 +57,7 @@
                     {% else %}
                     {% if membership.is_tender %}
                     <i class="icon-alexia-notok"></i>
+                    <a href="{% url 'apps.organization.views.iva_upload' membership.pk %}" title="{%  trans 'Upload' %}"><i class="icon-alexia-upload"></i></a>
                     {% else %}
                     &mdash;
                     {% endif %}

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
-from apps.organization.models import Membership
+from apps.organization.models import Membership, Certificate
 from apps.scheduling.models import BartenderAvailability, Availability
 from utils.forms import default_crispy_helper
 
@@ -61,5 +61,13 @@ class CreateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+
+    helper = default_crispy_helper()
+
+
+class UploadIvaForm(forms.ModelForm):
+    class Meta:
+        model = Certificate
+        fields = ('file',)
 
     helper = default_crispy_helper()

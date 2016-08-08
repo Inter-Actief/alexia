@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^membership/(?P<pk>\d+)/delete/$', 'membership_delete'),
 
     url(r'^membership/(?P<pk>\d+)/iva/$', 'membership_iva'),
+    url(r'^membership/(?P<pk>\d+)/iva_upload/$', 'iva_upload'),
     url(r'^membership/(?P<pk>\d+)/iva_approve/$', 'iva_approve'),
     url(r'^membership/(?P<pk>\d+)/iva_decline/$', 'iva_decline'),
 )

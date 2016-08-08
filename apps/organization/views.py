@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from utils import log
 from utils.auth.decorators import manager_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
-from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm
+from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm, UploadIvaForm
 from .models import Membership, Profile, AuthenticationData
 
 
@@ -150,6 +150,31 @@ def membership_iva(request, pk):
     content_type, encoding = mimetypes.guess_type(iva_file.url)
     content_type = content_type or 'application/octet-stream'
     return HttpResponse(iva_file, content_type=content_type)
+
+
+@login_required
+@manager_required
+def iva_upload(request, pk):
+    membership = get_object_or_404(Membership, pk=pk)
+    if membership.organization != request.organization:
+        raise PermissionDenied
+
+    certificate = membership.user.profile.certificate
+    if request.method == 'POST':
+        form = UploadIvaForm(request.POST, request.FILES, instance=certificate)
+        if form.is_valid():
+            if certificate:
+                certificate.delete()
+            certificate = form.save(commit=False)
+            certificate._id = str(membership.user.pk)
+            certificate.save()
+            membership.user.profile.certificate = certificate
+            membership.user.profile.save()
+            return redirect(membership_list)
+    else:
+        form = UploadIvaForm(instance=certificate)
+
+    return render(request, 'membership/iva_upload.html', locals())
 
 
 @login_required
