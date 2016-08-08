@@ -144,7 +144,7 @@ class Event(models.Model):
     location = models.ManyToManyField(
         'organization.Location', related_name='events',
         verbose_name=_("location"))
-    is_closed = models.BooleanField(verbose_name=_("enrolment closed"),
+    is_closed = models.BooleanField(verbose_name=_("tender enrollment closed"),
                                     default=False)
     """bartenders can no longer enrol"""
     bartenders = models.ManyToManyField(

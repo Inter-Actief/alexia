@@ -87,9 +87,6 @@ class Profile(models.Model):
     def ical_url(self):
         return reverse('ical', args=[self.ical_id])
 
-    def is_foundation_manager(self):
-        return self.user.groups.filter(name='Foundation managers').exists()
-
     def is_manager(self, organization=None):
         if not organization:
             return self.user.membership_set.filter(is_manager=True).exists()
@@ -118,7 +115,7 @@ class Profile(models.Model):
         return self.is_planner() or self.is_organization_manager_or_higher(organization)
 
     def is_organization_manager_or_higher(self, organization=None):
-        return self.is_manager(organization) or self.is_foundation_manager()
+        return self.is_manager(organization)
 
     def can_add_memberships(self, organization=None):
         return self.is_manager_or_higher(organization)
