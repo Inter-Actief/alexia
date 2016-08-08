@@ -32,7 +32,7 @@
                 data: {
                     labels: {{ graph_headers|as_json }},
                     datasets: [{
-                        label: 'Times tended',
+                        label: '{% trans 'Times tended' %}',
                         data: {{ graph_content|as_json }},
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
