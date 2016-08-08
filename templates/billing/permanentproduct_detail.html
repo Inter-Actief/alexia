@@ -27,6 +27,10 @@
                 <th>{% trans 'Stock product' %}</th>
                 <td>{{ object.stockproduct|default_if_none:"&mdash;" }}</td>
             </tr>
+            <tr>
+                <th>{% trans 'Food' %}</th>
+                <td>{{ object.is_food|yesno }}</td>
+            </tr>
         </table>
         <p>
             <a class="btn btn-default" href="{% url 'permanentproduct_update' object.pk %}">

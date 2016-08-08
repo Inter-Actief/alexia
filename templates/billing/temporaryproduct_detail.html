@@ -23,6 +23,10 @@
                 <th>{% trans 'Price' %}</th>
                 <td>&euro; {{ object.price }}</td>
             </tr>
+            <tr>
+                <th>{% trans 'Food' %}</th>
+                <td>{{ object.is_food|yesno }}</td>
+            </tr>
         </table>
         <p>
             <a class="btn btn-default" href="{% url 'temporaryproduct_update' object.pk %}">

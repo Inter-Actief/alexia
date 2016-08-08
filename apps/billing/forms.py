@@ -16,7 +16,7 @@ class PermanentProductForm(ModelForm):
 
     class Meta:
         model = PermanentProduct
-        fields = ['name', 'productgroup', 'stockproduct', 'position', 'text_color', 'background_color']
+        fields = ['name', 'productgroup', 'stockproduct', 'position', 'text_color', 'background_color', 'is_food']
 
 
 class SellingPriceForm(ModelForm):

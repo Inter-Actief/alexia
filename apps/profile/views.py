@@ -1,3 +1,5 @@
+from __future__ import division
+
 import hashlib
 import mimetypes
 import random
@@ -8,7 +10,7 @@ from django.db.models import Sum
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
-from apps.billing.models import Order
+from apps.billing.models import Order, Purchase
 from apps.organization.models import AuthenticationData
 from utils.auth.decorators import tender_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
@@ -21,16 +23,22 @@ def index(request):
         authorization__in=request.user.authorizations.all())
     order_count = len(order_list)
     orders = order_list.order_by('-placed_at')[:5]
-    
+
     shares = []
     for authorization in request.user.authorizations.all():
-        my_order_sum  = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
-        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization).aggregate(total=Sum('amount'))
-        if not my_order_sum['total'] or not all_order_sum['total']:
-            percentage = 0
-        else:
-            percentage = (my_order_sum['total'] / all_order_sum['total']) * 100
-        shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
+        all_purchases = Purchase.objects.filter(order__authorization__organization=authorization.organization)
+        my_purchases = Purchase.objects.filter(order__authorization=authorization)
+
+        all_food = all_purchases.filter(product__is_food=True).aggregate(total=Sum('price'))
+        all_drinks = all_purchases.filter(product__is_food=False).aggregate(total=Sum('price'))
+        my_food = my_purchases.filter(product__is_food=True).aggregate(total=Sum('price'))
+        my_drinks = my_purchases.filter(product__is_food=False).aggregate(total=Sum('price'))
+
+        food_fraction = (my_food['total'] / all_food['total']) if my_food['total'] and all_food['total'] else 0
+        drinks_fraction = (my_drinks['total'] / all_drinks['total']) if my_drinks['total'] and all_drinks['total'] else 0
+        shares.append({'organization': authorization.organization,
+                       'food': round(food_fraction * 100, 2),
+                       'drinks': round(drinks_fraction * 100, 2)})
 
     try:
         radius_username = request.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
