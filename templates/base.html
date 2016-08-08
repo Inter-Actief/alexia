@@ -18,6 +18,7 @@
         <script src="{{ STATIC_URL }}js/fullcalendar.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="{{ STATIC_URL }}js/jquery.qtip.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="{{ STATIC_URL }}js/application.js" type="text/javascript" charset="utf-8"></script>
+        {% block extrajs %}{% endblock %}
         {% endcompress %}
         {% compress css %}
         <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-3.3.5.min.css" type="text/css" charset="utf-8">
