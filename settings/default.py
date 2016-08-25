@@ -164,28 +164,3 @@ RADIUS_DICT = os.path.join(ROOT_DIR, 'utils/auth/radius.dict')
 
 # Countdown in Juliana
 JULIANA_COUNTDOWN = 5
-
-#
-#   Load local_settings.py
-#
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
-
-#
-#   Debug toolbar
-#
-
-if DEBUG:
-    # Enable debug toolbar if DEBUG is enabled.
-
-    def show_toolbar(request):
-        return True
-
-    INSTALLED_APPS += ('debug_toolbar',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': 'settings.show_toolbar'
-    }
