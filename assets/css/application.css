@@ -114,6 +114,10 @@ body {
   background-image: url('/static/img/icon/alexia-attention.png');
 }
 
+.icon-alexia-upload {
+  background-image: url('/static/img/icon/alexia-upload.png');
+}
+
 @media print {
   a[href]:after {
     content: none;

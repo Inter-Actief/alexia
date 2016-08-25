@@ -29,6 +29,7 @@ State = {
     PAYING: 1,
     ERROR: 2,
     CHECK: 3,
+    MESSAGE: 4,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -54,7 +55,7 @@ State = {
                 this.current = this.PAYING;
                 this._hideAllScreens();
 
-                var receipt = Receipt.getReceipt();
+                var receipt = Receipt.receipt;
                 var receiptHTML = '';
                 var total = 0;
                 for (var i = 0; i < receipt.length; i++) {
@@ -78,6 +79,14 @@ State = {
 
                 $('#error-screen').show();
                 break;
+            case this.MESSAGE:
+                console.log('Changing to MESSAGE...');
+                this.current = this.MESSAGE;
+                this._hideAllScreens();
+
+                $('#current-message').html(argument);
+                $('#message-screen').show();
+                break;
             default:
                 console.log('Error: no known state');
                 break;
@@ -91,6 +100,7 @@ State = {
         $('#rfid-screen').hide();
         $('#cashier-screen').hide();
         $('#error-screen').hide();
+        $('#message-screen').hide();
     }
 };
 
@@ -113,13 +123,13 @@ Scanner = {
         socket.onmessage = function (event) {
             var rfid = JSON.parse(event.data);
             scanner.action(rfid);
-        }
+        };
 
     },
     action: function (rfid) {
         console.log('CurrentState: ' + State.current);
         if (State.current === State.SALES) {
-            if (Receipt.getReceipt().length > 0) {
+            if (Receipt.receipt.length > 0) {
                 Receipt.pay(rfid);
             } else {
                 console.log('Info: receipt empty');
@@ -142,7 +152,7 @@ Display = {
         $('#display').html(text);
     },
     flash: function () {
-        $('#display').effect('shake').effect('highlight', {color: '#fcc'})
+        $('#display').effect('shake').effect('highlight', {color: '#fcc'});
     }
 };
 
@@ -150,9 +160,9 @@ Display = {
  * RECEIPT - left panel
  */
 Receipt = {
-    index: 0,
     receipt: [],
     counterInterval: null,
+    payData: null,
     add: function (product, quantity) {
         if (State.current !== State.SALES) {
             console.log('Error: not on SALES screen');
@@ -160,33 +170,51 @@ Receipt = {
             return;
         }
 
-        //add product to receipt (visually)
-        var desc = $('.tab-sale a[data-product="' + product + '"]').text();
-        if (quantity !== 1) desc += ' &times; ' + quantity;
-
-        var price = ((quantity * Settings.products[product].price) / 100).toFixed(2);
-
-        $('#receipt-table').append('<tr data-pid="' + this.index + '"><td width="70%"><a onclick="Receipt.remove($(this).data(\'pid\'));" class="btn btn-danger command" href="#" data-pid="' + this.index + '">X</a><span>' + desc + '</span></td><td>€' + price + '</td></tr>');
-
-        //add product to actual receipt
-        this.receipt[this.index] = {
-            'product': product,
-            'amount': quantity,
-            'price': quantity * Settings.products[product].price
-        };
-        this.index++;
+        //Try to update the quantity of an old receipt entry
+        var foundProduct = false;
+        for (var i in this.receipt) {
+            if (this.receipt[i].product==product) {
+                this.receipt[i].amount += quantity;
+                this.receipt[i].price += quantity * Settings.products[product].price;
+                foundProduct = true;
+            }
+        }
+        if (!foundProduct) {
+            //add product to actual receipt
+            this.receipt.push({
+                'product': product,
+                'amount': quantity,
+                'price': quantity * Settings.products[product].price
+            });
+        }
 
         this.updateTotalAmount();
+        this.updateReceipt(product);
 
         Display.set('OK');
     },
-    remove: function (index) {
-        //remove product from receipt (visually)
-        $('#receipt-table').find('tr[data-pid="' + index + '"]').remove();
+    updateReceipt: function(flash) {
+        $('#receipt-table').empty();
+        for (var i in this.receipt) {
+            if (this.receipt[i]===undefined) continue;
 
+            var product = this.receipt[i].product;
+            var quantity = this.receipt[i].amount;
+            var desc = $('.tab-sale a[data-product="' + product + '"]').text();
+            if (quantity !== 1) desc += ' &times; ' + quantity;
+
+            var price = ((quantity * Settings.products[product].price) / 100).toFixed(2);
+
+            var doFlash = (flash!==undefined && flash==product)?' class="flash"':'';
+
+            $('#receipt-table').append('<tr' + doFlash + ' data-pid="' + i + '"><td width="70%"><a onclick="Receipt.remove($(this).data(\'pid\'));" class="btn btn-danger command" href="#" data-pid="' + i + '">X</a><span>' + desc + '</span></td><td>€' + price + '</td></tr>');
+        }
+    },
+    remove: function (index) {
         //remove product from actual receipt
-        this.receipt[index] = undefined;
+        this.receipt.splice(index, 1);
         this.updateTotalAmount();
+        this.updateReceipt();
     },
     updateTotalAmount: function () {
         // generate total
@@ -207,32 +235,7 @@ Receipt = {
     clear: function () {
         $('#receipt-table').empty();
         this.receipt = [];
-        this.index = 0;
         this.updateTotalAmount();
-    },
-    getReceipt: function () {
-        //Filter empty entries from the receipt
-        var receipt = this.receipt.filter(Boolean);
-
-        var cleanReceipt = [];
-        var foundProducts = [];
-        for (var i = 0; i < receipt.length; i++) {
-            if ($.inArray(receipt[i].product, foundProducts) !== -1) {
-                //add to existing product in receipt
-                for (var j = 0; j < cleanReceipt.length; j++) {
-                    if (cleanReceipt[j].product === receipt[i].product) {
-                        cleanReceipt[j].amount += receipt[i].amount;
-                        cleanReceipt[j].price += receipt[i].price;
-                    }
-                }
-            } else {
-                //First time this product get's added
-                //add product to foundProducts and cleanReceipt
-                foundProducts.push(receipt[i].product);
-                cleanReceipt.push($.extend({}, receipt[i]));
-            }
-        }
-        return cleanReceipt;
     },
     pay: function (rfid) {
         State.toggleTo(State.PAYING);
@@ -251,42 +254,38 @@ Receipt = {
         } else if (userData.error) {
             State.toggleTo(State.ERROR, 'Error authenticating: ' + userData.error.message);
         } else {
-            /*
-             juliana_order_save(
-             event_id,
-             user_id,
-             [{'product': product_id,
-             'amount': amount,
-             'price': totalprice}]
-             );
-             */
             console.log('Userdata received correctly. Proceeding to countdown.');
 
-            var data = {
+            Receipt.payData = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
-                purchases: Receipt.getReceipt(),
+                purchases: Receipt.receipt,
                 rfid_data: rfid
             };
 
-            var rpcRequest = {
-                jsonrpc: '2.0',
-                method: 'juliana.order.save',
-                params: data,
-                id: 1
-            };
-
-            var countdown = 4;
+            var countdown = Settings.countdown - 1;
             $('#payment-countdown').text(countdown + 1);
             Receipt.counterInterval = setInterval(function () {
                 $('#payment-countdown').text(countdown);
                 if (countdown === 0) {
-                    clearInterval(Receipt.counterInterval);
-                    Receipt.confirmPay(rpcRequest);
+                    Receipt.payNow();
                 }
                 countdown--;
             }, 1000);
         }
+    },
+    payNow: function () {
+        console.log('Processing payment now.');
+        var rpcRequest = {
+            jsonrpc: '2.0',
+            method: 'juliana.order.save',
+            params: Receipt.payData,
+            id: 1
+        };
+
+        clearInterval(Receipt.counterInterval);
+        Receipt.confirmPay(rpcRequest);
+
     },
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
@@ -296,6 +295,12 @@ Receipt = {
                 State.toggleTo(State.SALES);
             }
         });
+    },
+    cash: function () {
+        console.log('Paying cash');
+        var sum = Receipt.updateTotalAmount();
+        var amount = Math.ceil(sum / 10) * 10;
+        State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
     }
 };
 
@@ -378,10 +383,7 @@ User = {
             id: 1
         };
         IAjax.request(rpcRequest, function (data) {
-            State._hideAllScreens();
-            $('#payment-receipt').html(user.first_name + " heeft op deze borrel al &euro;" + (data.result / 100).toFixed(2) + " verbruikt.");
-            $('#countdownbox').hide();
-            $('#rfid-screen').show();
+            State.toggleTo(State.MESSAGE, user.first_name + " heeft op deze borrel al &euro;" + (data.result / 100).toFixed(2) + " verbruikt.");
         });
     }
 };
@@ -416,10 +418,13 @@ $(function () {
 
     State.toggleTo(State.SALES);
 
-    $('#welcome').modal();
-
     $('.btn-keypad').click(function () {
         Input.stroke($(this).html());
+    });
+
+    $(document).keydown(function (event) {
+        if(event.which >= 48 && event.which <= 57) // 48 is the keycode for 0, 57 for 9
+            Input.stroke((event.which - 48).toString());
     });
 
     $('.command').click(function () {
@@ -442,14 +447,15 @@ $(function () {
                 Display.set('Scan een kaart');
                 break;
             case 'cash':
-                var sum = Receipt.updateTotalAmount();
-                var amount = Math.ceil(sum / 10) * 10;
-                State._hideAllScreens();
-                $('#payment-receipt').html('Dat wordt dan &euro;' + (amount/100).toFixed(2));
-                $('#countdownbox').hide();
-                $('#rfid-screen').show();
+                Receipt.cash();
                 break;
             case 'cancelPayment':
+                State.toggleTo(State.SALES);
+                break;
+            case 'payNow':
+                Receipt.payNow();
+                break;
+            case 'ok':
                 State.toggleTo(State.SALES);
                 break;
             default:

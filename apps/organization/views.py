@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from utils import log
 from utils.auth.decorators import manager_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
-from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm
+from .forms import MembershipAddForm, MembershipEditForm, CreateUserForm, UploadIvaForm
 from .models import Membership, Profile, AuthenticationData
 
 
@@ -99,6 +99,33 @@ def membership_show(request, pk):
     last_10_tended = membership.tended().order_by('-event__starts_at')[:10]
     is_planner = request.user.is_superuser or request.user.profile.is_planner(request.organization)
 
+    from datetime import date
+    from dateutil.relativedelta import relativedelta
+    # Dates of all tended drinks in the last year.
+    _last_year = (date.today()-relativedelta(years=1, day=1))
+    _tended_dates = membership.tended().filter(event__starts_at__gte=_last_year).values_list('event__starts_at')
+
+    # Change from list of 1-tuples to just a list of elements
+    _tended_dates = [i[0] for i in _tended_dates]
+
+    # Group by month
+    _graph_data = {}
+    for d in _tended_dates:
+        if d.strftime("%Y-%m") in _graph_data.keys():
+            _graph_data[d.strftime("%Y-%m")] += 1
+        else:
+            _graph_data[d.strftime("%Y-%m")] = 1
+
+    # Fill in 0 for the missing months
+    _date = date.today()
+    while _last_year <= _date:
+        if _date.strftime("%Y-%m") not in _graph_data.keys():
+            _graph_data[_date.strftime("%Y-%m")] = 0
+        _date -= relativedelta(months=1)
+
+    graph_headers = sorted(_graph_data.keys())
+    graph_content = [_graph_data[k] for k in graph_headers]
+
     return render(request, 'membership/show.html', locals())
 
 
@@ -150,6 +177,31 @@ def membership_iva(request, pk):
     content_type, encoding = mimetypes.guess_type(iva_file.url)
     content_type = content_type or 'application/octet-stream'
     return HttpResponse(iva_file, content_type=content_type)
+
+
+@login_required
+@manager_required
+def iva_upload(request, pk):
+    membership = get_object_or_404(Membership, pk=pk)
+    if membership.organization != request.organization:
+        raise PermissionDenied
+
+    certificate = membership.user.profile.certificate
+    if request.method == 'POST':
+        form = UploadIvaForm(request.POST, request.FILES, instance=certificate)
+        if form.is_valid():
+            if certificate:
+                certificate.delete()
+            certificate = form.save(commit=False)
+            certificate._id = str(membership.user.pk)
+            certificate.save()
+            membership.user.profile.certificate = certificate
+            membership.user.profile.save()
+            return redirect(membership_list)
+    else:
+        form = UploadIvaForm(instance=certificate)
+
+    return render(request, 'membership/iva_upload.html', locals())
 
 
 @login_required

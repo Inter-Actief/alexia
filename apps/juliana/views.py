@@ -42,7 +42,9 @@ def juliana(request, pk):
             'price': int(product.price * 100),
         })
 
+    # settings
     debug = settings.DEBUG
+    countdown = settings.JULIANA_COUNTDOWN
 
     # Detect if connection is made via the Juliana Android app
     androidapp = request.META.get('HTTP_X_REQUESTED_WITH') == 'net.inter_actief.juliananfc'

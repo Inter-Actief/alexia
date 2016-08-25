@@ -8,5 +8,6 @@ urlpatterns = patterns(
     url(r'^edit/$', 'edit'),
     url(r'^iva/$', 'iva'),
     url(r'^view_iva/$', 'view_iva'),
-    url(r'^payments/$', 'payments'),
+    url(r'^expenditures/$', 'expenditures'),
+    url(r'^expenditures/(?P<pk>\d+)/$', 'expenditures_event')
 )

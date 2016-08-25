@@ -1,3 +1,8 @@
+@keyframes flash-receipt {
+    from { background: #5BC0DE; }
+    to { background: transparent; }
+}
+
 body {
   padding-top: 20px!important;
 }
@@ -76,18 +81,24 @@ body {
 }
 
 #receipt {
-	height: 804px;
+	height: 744px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	border-bottom-left-radius:0;
 	border-bottom-right-radius:0;
-	padding:10px;
-    padding-top:0;
-    padding-bottom:80px;
+	border-bottom: 0;
+	padding: 0 0;
+	margin-bottom: 0;
 }
 
 #receipt-table, #log-table {
 	width: 100%;
+}
+
+#receipt-table tr.flash td {
+    animation-name: flash-receipt;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
 }
 
 #receipt-table td {
@@ -95,11 +106,13 @@ body {
 	font-size:16px;
     border-bottom:1px solid #CCC;
     padding-top:10px;
+    padding-left:10px;
     position:relative;
 }
 
 #receipt-table td:last-child {
     text-align:right;
+    padding-right:10px;
 }
 
 #receipt-table a {
@@ -119,10 +132,9 @@ body {
 }
 
 #receipt-total {
-	position:absolute;
-	bottom:0;
 	border-top-left-radius:0;
 	border-top-right-radius:0;
+	width: 100%;
 }
 
 #receipt-total span, #receipt-total input {
@@ -133,7 +145,6 @@ body {
 }
 
 #receipt-total input {
-    width:calc(100% - 29px);
     text-align:right;
 }
 
@@ -177,4 +188,9 @@ body {
 
 #current-error {
     font-size:20px;
+}
+
+/* Mesage screen */
+#message-screen {
+	padding-top: 130px;
 }

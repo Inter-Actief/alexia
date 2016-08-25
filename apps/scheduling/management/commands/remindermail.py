@@ -29,7 +29,7 @@ class Command(BaseCommand):
         organizations = Organization.objects.filter(mailtemplate__name='reminder', mailtemplate__is_active=True)
 
         for organization in organizations:
-            memberships = organization.membership_set.filter(is_tender=True)
+            memberships = organization.membership_set.filter(is_tender=True, is_active=True)
 
             now = timezone.now()
             events = organization.participates.filter(starts_at__gte=now, is_closed=False).order_by('starts_at', )
