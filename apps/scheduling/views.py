@@ -311,6 +311,7 @@ def personal_ical(request, ical_id):
     profile = get_object_or_404(Profile, ical_id=ical_id)
     bas = profile.user.bartender_availability_set.filter(
         availability__nature=Availability.ASSIGNED,
+        event__deleted=False,
         event__starts_at__gte=timezone.now() - timedelta(100)
     ). order_by('event__starts_at')
     events = []

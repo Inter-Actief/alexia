@@ -13,6 +13,7 @@ from .models import Event, Availability
 @tender_required
 def bartender(request):
     events = Event.objects.filter(ends_at__gte=timezone.now(),
+                                  deleted=False,
                                   bartender_availabilities__availability__nature=Availability.ASSIGNED,
                                   bartender_availabilities__user=request.user).order_by('starts_at')
 
