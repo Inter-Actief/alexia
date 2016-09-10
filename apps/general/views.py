@@ -6,12 +6,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.utils.http import is_safe_url
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 
 from apps.organization.models import Organization, Location, Membership
 from apps.scheduling.models import Event, BartenderAvailability, Availability
 from .forms import RegisterForm
 
 
+@sensitive_post_parameters('password')
 @csrf_protect
 def login(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, ''))
