@@ -47,6 +47,7 @@ coverage.xml
 *.log
 settings/local.py
 settings/local_code.py
+media
 
 # Sphinx documentation
 docs/_build/
