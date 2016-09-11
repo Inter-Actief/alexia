@@ -1,13 +1,13 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns(
-    'apps.profile.views',
+from . import views
 
-    url(r'^$', 'index'),
-    url(r'^ical_gen/$', 'ical_gen'),
-    url(r'^edit/$', 'edit'),
-    url(r'^iva/$', 'iva'),
-    url(r'^view_iva/$', 'view_iva'),
-    url(r'^expenditures/$', 'expenditures'),
-    url(r'^expenditures/(?P<pk>\d+)/$', 'expenditures_event')
-)
+urlpatterns = [
+    url(r'^$', views.index, name='profile'),
+    url(r'^ical_gen/$', views.ical_gen, name='ical-gen-profile'),
+    url(r'^edit/$', views.edit, name='edit-profile'),
+    url(r'^iva/$', views.iva, name='iva-profile'),
+    url(r'^view_iva/$', views.view_iva, name='view-iva-profile'),
+    url(r'^expenditures/$', views.expenditures, name='expenditures-profile'),
+    url(r'^expenditures/(?P<pk>\d+)/$', views.expenditures_event, name='event-expenditures-profile')
+]

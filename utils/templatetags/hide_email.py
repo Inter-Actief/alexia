@@ -5,6 +5,7 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+
 """
 Bron: http://djangosnippets.org/snippets/1349/
 
@@ -22,10 +23,10 @@ javascript and an email and name that are encoded randomly using a
 hex digit or a decimal digit for each character.
 
 Example of how a protected email is rendered:
- 
+
 <noscript>(Javascript must be enabled to reveal e-mail address)</noscript>
 <script type="text/javascript">// <![CDATA[
-    document.write('<a href="'+'m'+'a'+'i'+'l'+'t'+'o'+':&#106;&#x6f;&#x68;&#x6e;&#x40;&#101;&#120;&#97;&#109;&#x70;&#108;&#x65;&#46;&#x63;&#111;&#109;">&#74;&#111;&#104;&#110;&#x20;&#83;&#x6d;&#x69;&#x74;&#104;</a>')
+    document.write('<a href="'+'m'+'a'+'i'+'l'+'t'+'o'+':&#106;&#x6f;(...)&#109;">&#74;(...)&#104;</a>')
 // ]]></script>
 """
 
@@ -55,10 +56,10 @@ def HideEmail(email, name=None):
     mailto_link = u'<a href="\'+\'m\'+\'a\'+\'i\'+\'l\'+\'t\'+\'o\'+\':%s">%s</a>' % (
         encode_string(email), encode_string(name))
 
-    return (u"\n<noscript>(%s)</noscript>" % (_("Javascript must be enabled to reveal email address"))
-            + ('<script type="text/javascript">// <![CDATA[' + "\n"
-               + "\tdocument.write('%s')\n"
-               + "\t// ]]></script>\n") % mailto_link
+    return (u"\n<noscript>(%s)</noscript>" % (_("Javascript must be enabled to reveal email address")) +
+            ('<script type="text/javascript">// <![CDATA[' + "\n" +
+             "\tdocument.write('%s')\n" +
+             "\t// ]]></script>\n") % mailto_link
             )
 
 
@@ -84,8 +85,9 @@ def do_hide_email(parser, token):
 
     except:
         raise template.TemplateSyntaxError(
-            "'%r' tag requires at least an email address or an email address and a person's name ({% hide_email user@example.com %} or {% hide_email \"user@example.com\" \"John Smith\" %})" % \
-            token.contents.split()[0])
+            "'%r' tag requires at least an email address or an email address and a person's name ({% hide_email " +
+            "user@example.com %} or {% hide_email \"user@example.com\" \"John Smith\" %})" % token.contents.split()[0]
+        )
 
     return HideEmailNode(format_string[1], format_string[2])
 

@@ -1,13 +1,13 @@
-from django.db import transaction
-from jsonrpc import jsonrpc_method
 from django.contrib.auth.models import User
+from django.db import transaction
 from django.utils import timezone
+from jsonrpc import jsonrpc_method
 
-from .common import api_v1_site, format_authorization
-from .exceptions import NotFoundError, InvalidParametersError
 from apps.billing.models import Authorization
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
+from .common import api_v1_site, format_authorization
+from .exceptions import NotFoundError, InvalidParametersError
 
 
 @jsonrpc_method('authorization.list(radius_username=String) -> Array',
@@ -159,10 +159,11 @@ def authorization_end(request, radius_username, authorization_id):
     """
 
     try:
-        authorization = Authorization.objects.select_for_update().get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                                                      user__authenticationdata__username=radius_username,
-                                                                      organization=request.organization,
-                                                                      pk=authorization_id)
+        authorization = Authorization.objects.select_for_update() \
+                                     .get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                          user__authenticationdata__username=radius_username,
+                                          organization=request.organization,
+                                          pk=authorization_id)
     except Authorization.DoesNotExist:
         raise NotFoundError
 

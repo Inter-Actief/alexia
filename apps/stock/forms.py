@@ -1,9 +1,10 @@
+from alexia.bootstrap.forms import BootstrapModelForm
+from alexia.stock.models import (
+    EventConsumption, StockCount, StockProduct, StockProductAmount,
+)
 from django import forms
 from django.forms import widgets
 from django.utils.translation import ugettext_lazy as _
-
-from alexia.stock.models import StockCount, StockProductAmount, EventConsumption, StockProduct
-from alexia.bootstrap.forms import BootstrapModelForm
 
 
 class StockCountForm(BootstrapModelForm):

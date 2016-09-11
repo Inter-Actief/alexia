@@ -1,48 +1,44 @@
+from __future__ import unicode_literals
+
 import math
 from datetime import datetime, time, timedelta
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from .managers import EventManager, StandardReservationManager
 from .tools import notify_tenders
 
 
+@python_2_unicode_compatible
 class MailTemplate(models.Model):
-    """A mailtemplate which can be send at different occasions
-
-    organization    -- The organization to which this template relates.
-    name            -- The name of this template.
-    subject         -- The subject of the mail to be send.
-    template        -- The body of the mail to be send.
-    is_active       -- Toggle the sending of this mail.
-    send_at         -- How far before the event must the mail be send
-                       (in minutes)?
-    """
-
     NAME_CHOICES = (
         ('enrollopen', _('Enrollment open')),
         ('enrollclosed', _('Enrollment closed')),
         ('reminder', _('Weekly reminder')),
     )
 
-    organization = models.ForeignKey('organization.Organization',
-                                     verbose_name=_('organization'))
-    name = models.CharField(verbose_name=_('name'), max_length=32, choices=NAME_CHOICES)
-    subject = models.CharField(verbose_name=_('subject'), max_length=255)
-    template = models.TextField(verbose_name=_('template'))
-    is_active = models.BooleanField(verbose_name=_('is active'), default=False)
-    send_at = models.PositiveIntegerField(verbose_name=_('send at'),
-                                          blank=True, null=True)
+    organization = models.ForeignKey('organization.Organization', models.CASCADE, verbose_name=_('organization'))
+    name = models.CharField(_('name'), max_length=32, choices=NAME_CHOICES)
+    subject = models.CharField(_('subject'), max_length=255)
+    template = models.TextField(_('template'))
+    is_active = models.BooleanField(_('is active'), default=False)
+    send_at = models.PositiveIntegerField(_('send at'), blank=True, null=True)
 
-    def __unicode__(self):
-        return "%s, %s" % (self.organization, self.get_name_display())
+    class Meta:
+        ordering = ['organization', 'name']
+        unique_together = ('organization', 'name')
+        verbose_name = _('mail template')
+        verbose_name_plural = _('mail templates')
+
+    def __str__(self):
+        return '%s, %s' % (self.organization, self.get_name_display())
 
     def get_absolute_url(self):
         return reverse('mailtemplate_detail', args=[self.name])
@@ -50,32 +46,9 @@ class MailTemplate(models.Model):
     def has_send_at(self):
         return self.name == 'reminder'
 
-    class Meta:
-        ordering = ('organization', 'name',)
-        unique_together = (('organization', 'name',),)
-        verbose_name = _('mail template')
-        verbose_name_plural = _('mail templates')
 
-
+@python_2_unicode_compatible
 class StandardReservation(models.Model):
-    """A reservation for a specific location by a organization at a given day
-    and time range.
-
-    organization    -- The organization that holds this standard reservation.
-    start_day       -- The day at which the reservation range starts. 1
-                       represents Monday and 7 represents Sunday.
-    start_time      -- The time at which the reservation starts. Defaults to
-                       00:00:00.
-    end_day         -- The last day of the reservation. Similar to start_day.
-    end_time        -- The time at which the reservation ends (including).
-                       Defaults to 23:59:59
-    location        -- The location on which this reservation is applicable.
-
-    Note that start_day <= end_day and that start_time <= end_time if start_day
-    == end_day. In other words, the start moment must be before the end moment.
-    Furthermore, reservations can't span from Sunday to Monday.
-    """
-
     MONDAY = 1
     TUESDAY = 2
     WEDNESDAY = 3
@@ -94,20 +67,26 @@ class StandardReservation(models.Model):
         (SUNDAY, _('Sunday')),
     )
 
-    organization = models.ForeignKey(
-        'organization.Organization', verbose_name=_('organization'))
-    start_day = models.SmallIntegerField(verbose_name=_('start day'),
-                                         choices=DAYS)
-    start_time = models.TimeField(verbose_name=_('start time'),
-                                  default=time(16, 0, 0))
-    end_day = models.PositiveSmallIntegerField(verbose_name=_('end day'),
-                                               choices=DAYS)
-    end_time = models.TimeField(verbose_name=_('end time'),
-                                default=time(23, 59, 59))
-    location = models.ForeignKey(
-        'organization.Location', verbose_name=_('location'))
+    organization = models.ForeignKey('organization.Organization', models.CASCADE, verbose_name=_('organization'))
+    start_day = models.SmallIntegerField(verbose_name=_('start day'), choices=DAYS)
+    start_time = models.TimeField(verbose_name=_('start time'), default=time(16, 0, 0))
+    end_day = models.PositiveSmallIntegerField(verbose_name=_('end day'), choices=DAYS)
+    end_time = models.TimeField(verbose_name=_('end time'), default=time(23, 59, 59))
+    location = models.ForeignKey('organization.Location', models.CASCADE, verbose_name=_('location'))
 
     objects = StandardReservationManager()
+
+    class Meta:
+        verbose_name = _('standard reservation')
+        verbose_name_plural = _('standard reservations')
+
+    def __str__(self):
+        return '[%s] %s %s %s' % (
+            self.organization,
+            self.location,
+            _('on'),
+            self.get_start_day_display(),
+        )
 
     def clean(self):
         """Check whether the range start is before the range end."""
@@ -121,48 +100,60 @@ class StandardReservation(models.Model):
             raise ValidationError(
                 _('The start time can not be after the end time.'))
 
-    class Meta:
-        verbose_name = _('standard reservation')
-        verbose_name_plural = _('standard reservations')
 
-
+@python_2_unicode_compatible
 class Event(models.Model):
+    organizer = models.ForeignKey('organization.Organization', related_name='events', verbose_name=_("organizer"))
+    participants = models.ManyToManyField(
+        'organization.Organization',
+        related_name='participates',
+        verbose_name=_("participants"),
+    )
+    name = models.CharField(_("name"), max_length=128)
+    description = models.TextField(_("description"), blank=True)
+    starts_at = models.DateTimeField(_("starts at"), db_index=True)
+    ends_at = models.DateTimeField(_("ends at"), db_index=True)
+    location = models.ManyToManyField('organization.Location', related_name='events', verbose_name=_("location"))
+    is_closed = models.BooleanField(
+        verbose_name=_("tender enrollment closed"),
+        default=False,
+        help_text=_(
+            'Designates if tenders can sign up for this event.'
+        ),
+    )
+    bartenders = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='BartenderAvailability',
+        blank=True,
+        verbose_name=_("bartenders"),
+    )
+    pricegroup = models.ForeignKey('billing.PriceGroup', related_name='events', verbose_name=_("pricegroup"))
+    kegs = models.IntegerField(verbose_name=_("number of kegs"))
+    option = models.BooleanField(
+        verbose_name=_("option"),
+        default=False,
+        help_text=_(
+            'Designates that this event is not definitive yet.'
+        ),
+    )
+    tender_comments = models.TextField(_("tender comments"), blank=True)
+    is_risky = models.BooleanField(
+        verbose_name=_("risky"),
+        default=False,
+        help_text=_(
+            'Designates that this event should be marked as risky.'
+        ),
+    )
+
     objects = EventManager()
 
-    organizer = models.ForeignKey(
-        'organization.Organization', related_name='events',
-        verbose_name=_("organizer"))
-    """primary organizing organzation"""
-    participants = models.ManyToManyField(
-        'organization.Organization', related_name='participates',
-        verbose_name=_("participants"))
-    """participating organizations"""
-    name = models.CharField(verbose_name=_("name"), max_length=128)
-    description = models.TextField(verbose_name=_("description"), blank=True)
-    starts_at = models.DateTimeField(verbose_name=_("starts at"), db_index=True)
-    ends_at = models.DateTimeField(verbose_name=_("ends at"), db_index=True)
-    location = models.ManyToManyField(
-        'organization.Location', related_name='events',
-        verbose_name=_("location"))
-    is_closed = models.BooleanField(verbose_name=_("tender enrollment closed"),
-                                    default=False)
-    """bartenders can no longer enrol"""
-    bartenders = models.ManyToManyField(
-        User, through='BartenderAvailability', blank=True,
-        verbose_name=_("bartenders"))
-    """bartenders who registered there availability"""
-    pricegroup = models.ForeignKey(
-        'billing.PriceGroup', related_name='events',
-        verbose_name=_("pricegroup"))
-    """prices for sales"""
-    kegs = models.IntegerField(verbose_name=_("number of kegs"))
-    """expected number of kegs needed"""
-    option = models.BooleanField(verbose_name=_("option"), default=False)
-    """whether this reservation is definitive or not"""
-    tender_comments = models.TextField(_("Tender comments"), blank=True)
-    """instructions for the bartenders"""
-    is_risky = models.BooleanField(verbose_name=_("risky"), default=False)
-    """whether this event is risky or not"""
+    class Meta:
+        ordering = ['-starts_at']
+        verbose_name = _("event")
+        verbose_name_plural = _("events")
+
+    def __str__(self):
+        return self.name
 
     def get_absolute_url(self):
         return reverse('apps.scheduling.views.event_show', args=[self.pk])
@@ -349,17 +340,21 @@ class Event(models.Model):
                 availability__nature=Availability.ASSIGNED)
         return [x.user for x in self.bartender_availabilities_assigned]
 
-    def can_be_opened(self):
-        now = timezone.now()
+    def can_be_opened(self, user=None):
+        if user and user.is_superuser:
+            return True
 
-        return (self.starts_at - timedelta(hours=5)) <= now <= \
+        return (self.starts_at - timedelta(hours=5)) <= timezone.now() <= \
                (self.ends_at + timedelta(hours=24))
 
-    def is_tender(self, person):
+    def is_tender(self, user):
         """
         Returns if the given person is a tender for this event.
         """
-        return person in self.get_assigned_bartenders()
+        if user.is_superuser:
+            return True
+
+        return user in self.get_assigned_bartenders()
 
     def meets_iva_requirement(self):
         # Result could be cached by earlier call or prefetch
@@ -373,18 +368,11 @@ class Event(models.Model):
     def needs_iva(self):
         return self.kegs > 0
 
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ('-starts_at',)
-        verbose_name = _("event")
-        verbose_name_plural = _("events")
-
 
 pre_save.connect(notify_tenders, Event)
 
 
+@python_2_unicode_compatible
 class Availability(models.Model):
     ASSIGNED = 'A'
     YES = 'Y'
@@ -393,11 +381,24 @@ class Availability(models.Model):
     NATURES = ((ASSIGNED, _("Assigned")), (YES, _("Yes")), (MAYBE, _("Maybe")), (NO, _("No")))
 
     organization = models.ForeignKey(
-        'organization.Organization', related_name='availabilities',
-        verbose_name=_("organization"))
+        'organization.Organization',
+        related_name='availabilities',
+        verbose_name=_("organization"),
+    )
     name = models.CharField(_("name"), max_length=32)
-    nature = models.CharField(
-        _("nature"), max_length=1, choices=NATURES)
+    nature = models.CharField(_("nature"), max_length=1, choices=NATURES)
+
+    class Meta:
+        ordering = ['organization', 'name']
+        unique_together = ('organization', 'name')
+        verbose_name = _("availability type")
+        verbose_name_plural = _("availability types")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('availability_detail', args=[self.pk])
 
     def is_assigned(self):
         return self.nature == Availability.ASSIGNED
@@ -421,28 +422,15 @@ class Availability(models.Model):
         if self.is_no():
             return 'danger'
 
-    def get_absolute_url(self):
-        return reverse('availability_detail', args=[self.pk])
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ('organization', 'name',)
-        unique_together = (('organization', 'name',),)
-        verbose_name = _("availability type")
-        verbose_name_plural = _("availability types")
-
 
 class BartenderAvailability(models.Model):
     user = models.ForeignKey(
-        User, verbose_name=_("bartender"),
-        related_name='bartender_availability_set')
-    event = models.ForeignKey(
-        Event, verbose_name=_("event"),
-        related_name='bartender_availabilities')
-    availability = models.ForeignKey(
-        Availability, verbose_name=_("availability"))
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("bartender"),
+        related_name='bartender_availability_set',
+    )
+    event = models.ForeignKey(Event, verbose_name=_("event"), related_name='bartender_availabilities')
+    availability = models.ForeignKey(Availability, verbose_name=_("availability"))
 
     class Meta:
         verbose_name = _("bartender availability")

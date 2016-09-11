@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+
 import datetime
 
 from django.test.testcases import SimpleTestCase
@@ -6,10 +7,10 @@ from django.utils import timezone
 from jsonrpc.exceptions import InvalidParamsError
 
 from apps.billing.models import RfidCard
+from utils.tests import TestCase, APITestCase
 from .common import format_authorization
 from .exceptions import ForbiddenError
 from .juliana import _get_validate_event, rfid_to_identifier
-from utils.tests import TestCase, APITestCase
 
 
 class JulianaRfidToIdentifierTest(SimpleTestCase):

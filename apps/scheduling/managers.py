@@ -22,11 +22,11 @@ class EventManager(models.Manager):
         return self.get_queryset() \
             .filter(
             # start < start_date < end
-            (Q(starts_at__gt=start) & Q(starts_at__lt=end))
+            (Q(starts_at__gt=start) & Q(starts_at__lt=end)) |
             # start < end_date < end
-            | (Q(ends_at__gt=start) & Q(ends_at__lte=end))
+            (Q(ends_at__gt=start) & Q(ends_at__lte=end)) |
             # start <= start_date & end_date => end
-            | (Q(starts_at__lte=start) & Q(ends_at__gte=end)))
+            (Q(starts_at__lte=start) & Q(ends_at__gte=end)))
 
 
 class StandardReservationManager(models.Manager):
@@ -44,25 +44,23 @@ class StandardReservationManager(models.Manager):
         # The end day is before the start day. This means that we got through
         # sunday, and we just split up the result.
         elif end_day < start_day:
-            monday0am = (end - timedelta(days=(end_day - 1))).replace(
-                hour=0, minute=0, second=0, microsecond=0)
-            return (self.occuring_at(start, monday0am - timedelta(seconds=1)) |
-                    self.occuring_at(monday0am, end))
+            monday0am = (end - timedelta(days=(end_day - 1))).replace(hour=0, minute=0, second=0, microsecond=0)
+            return (self.occuring_at(start, monday0am - timedelta(seconds=1)) | self.occuring_at(monday0am, end))
 
         # No special case, we just have to
         else:
             return self.get_queryset() \
                 .filter(
-                ((Q(start_day=start_day) & Q(start_time__gt=start_time)
-                  | Q(start_day__gt=start_day))  # db.start > ob.start
-                 & (Q(start_day=end_day) & Q(start_time__lt=end_time)
-                    | Q(start_day__lt=end_day)))  # db.start < ob.end
-                | ((Q(end_day=start_day) & Q(end_time__gt=start_time)
-                    | Q(end_day__gt=start_day))  # db.end > ob.start
-                   & (Q(end_day=end_day) & Q(end_time__lt=end_time)
-                      | Q(end_day__lt=end_day)))  # db.end < ob.end
-                | ((Q(start_day=start_day) & Q(start_time__lt=start_time)
-                    | Q(start_day__lt=start_day))  # db.start < ob.start
-                   & (Q(end_day=end_day) & Q(end_time__gt=end_time)
-                      | Q(end_day__gt=end_day)))  # db.end > ob.end
+                ((Q(start_day=start_day) & Q(start_time__gt=start_time) |
+                  Q(start_day__gt=start_day)) &  # db.start > ob.start
+                    (Q(start_day=end_day) & Q(start_time__lt=end_time) |
+                     Q(start_day__lt=end_day))) |  # db.start < ob.end
+                ((Q(end_day=start_day) & Q(end_time__gt=start_time) |
+                  Q(end_day__gt=start_day)) &  # db.end > ob.start
+                    (Q(end_day=end_day) & Q(end_time__lt=end_time) |
+                     Q(end_day__lt=end_day))) |  # db.end < ob.end
+                ((Q(start_day=start_day) & Q(start_time__lt=start_time) |
+                  Q(start_day__lt=start_day)) &  # db.start < ob.start
+                    (Q(end_day=end_day) & Q(end_time__gt=end_time) |
+                     Q(end_day__gt=end_day)))  # db.end > ob.end
             )

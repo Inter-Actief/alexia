@@ -3,14 +3,6 @@ from django.template import Context, Template
 
 
 def mail(fromaddr, addressees, subject, mailbody, replyto=None, extraattrs=None):
-    """
-    Mail to people.
-    The following extraattrs are needed for correct mailing.
-    For the reservation mail: event.
-    For the enroll mail: event.
-    For the reminder mail: event.
-    For the fustdiff mail: event.
-    """
     if extraattrs is None:
         extraattrs = {}
 

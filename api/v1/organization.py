@@ -1,8 +1,8 @@
 from jsonrpc import jsonrpc_method
 
+from apps.organization.models import Organization
 from .common import api_v1_site
 from .exceptions import NotFoundError
-from apps.organization.models import Organization
 
 
 @jsonrpc_method('organization.current.get() -> String', site=api_v1_site, safe=True, authenticated=True)

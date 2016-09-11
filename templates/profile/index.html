@@ -13,7 +13,7 @@
             <dl class="dl-vertical">
                 <dt>{% trans 'RADIUS username' %}</dt>
                 <dd>{{ radius_username|default:"&mdash;" }}</dd>
-                <dt>{% trans 'Email address' %} <a href="{% url 'apps.profile.views.edit' %}">({% trans 'edit' %})</a></dt>
+                <dt>{% trans 'Email address' %} <a href="{% url 'edit-profile' %}">({% trans 'edit' %})</a></dt>
                 <dd>{{ user.email }}</dd>
             </dl>
         </div>
@@ -36,7 +36,7 @@
                         <h4>{% trans 'Events' %}</h4>
                         <p>
                             {% trans 'These are the last 5 events you attended.' %}
-                            <a href="{% url 'apps.profile.views.expenditures' %}">{% trans 'See all' %}...</a>
+                            <a href="{% url 'expenditures-profile' %}">{% trans 'See all' %}...</a>
                         </p>
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>{{ e.name }}</td>
                                     <td>&euro; {{ e.spent|floatformat:2 }}</td>
-                                    <td><a href="{% url 'apps.profile.views.expenditures_event' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                                    <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -151,24 +151,24 @@
                     <div class="col-xs-12 col-lg-6">
                         <h4>{% trans 'iCal bartender agenda' %}</h4>
                         {% if user.profile.ical_id %}
-                        <a href="{{ user.profile.ical_url }}">{% trans 'This is the location of your personal bartender iCal.' %}</a>
+                        <a href="{% url 'ical' user.profile.ical_id %}">{% trans 'This is the location of your personal bartender iCal.' %}</a>
                         {% endif %}
-                        <a href="{% url 'apps.profile.views.ical_gen' %}" class="btn btn-xs btn-default">{% trans 'Generate new' %}</a>
+                        <a href="{% url 'ical-gen-profile' %}" class="btn btn-xs btn-default">{% trans 'Generate new' %}</a>
                         <hr>
                         <h4>
                             {% trans 'IVA certificate' %}
-                            <a href="{% url 'apps.profile.views.iva' %}" class="btn btn-primary pull-right">{% trans 'Manage certificate' %}</a>
+                            <a href="{% url 'iva-profile' %}" class="btn btn-primary pull-right">{% trans 'Manage certificate' %}</a>
                         </h4>
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>
-                            <dd>{{ user.profile.certificate.uploaded_at|default:"&mdash;" }}</dd>
+                            <dd>{{ user.certificate.uploaded_at|default:"&mdash;" }}</dd>
 
-                            {% if user.profile.certificate %}
+                            {% if user.certificate %}
                             <dt>{% trans 'Approved' %}</dt>
-                            <dd>{{ user.profile.certificate.approved_at|default:"&mdash;" }}</dd>
+                            <dd>{{ user.certificate.approved_at|default:"&mdash;" }}</dd>
 
                             <dt>{% trans 'Certificate' %}</dt>
-                            <dd><a href="{% url 'apps.profile.views.view_iva' %}" target="_blank">{% trans 'view' %}</a></dd>
+                            <dd><a href="{% url 'view-iva-profile' %}" target="_blank">{% trans 'view' %}</a></dd>
                             {% endif %}
                         </dl>
                     </div>

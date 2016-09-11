@@ -6,9 +6,9 @@ from django.db.models import Sum
 from jsonrpc import jsonrpc_method
 from jsonrpc.exceptions import InvalidParamsError, OtherError
 
-from .common import api_v1_site, format_authorization
-from apps.scheduling.models import Event
 from apps.billing.models import Order, Purchase, RfidCard, Authorization, Product
+from apps.scheduling.models import Event
+from .common import api_v1_site, format_authorization
 from .exceptions import ForbiddenError
 
 

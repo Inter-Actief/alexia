@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 # Load default settings
 # noinspection PyUnresolvedReferences
-from .default import *
+from .default import *  # noqa
 
 # Database
 DATABASES = {

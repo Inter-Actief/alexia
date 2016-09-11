@@ -1,22 +1,28 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import connection
 from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from apps.billing.forms import PermanentProductForm, SellingPriceForm
-from apps.billing.models import PriceGroup, ProductGroup, Product, PermanentProduct, TemporaryProduct, SellingPrice
+from apps.billing.models import (
+    PermanentProduct, PriceGroup, Product, ProductGroup, SellingPrice,
+    TemporaryProduct,
+)
 from apps.scheduling.models import Event
 from utils.auth.decorators import manager_required
-from .models import Order, Purchase
 from utils.auth.mixins import ManagerRequiredMixin
-from utils.mixins import OrganizationFilterMixin, EventOrganizerFilterMixin, CreateViewForOrganization, \
-    OrganizationFormMixin, FixedValueCreateView, CrispyFormMixin
+from utils.mixins import (
+    CreateViewForOrganization, CrispyFormMixin, EventOrganizerFilterMixin,
+    FixedValueCreateView, OrganizationFilterMixin, OrganizationFormMixin,
+)
+
+from .models import Order, Purchase
 
 
 @login_required
@@ -56,8 +62,7 @@ def order_show(request, pk):
         .values('product', 'product__name') \
         .annotate(amount=Sum('amount'), price=Sum('price'))
 
-    orders = event.orders.select_related('authorization__user') \
-        .order_by('-placed_at')
+    orders = event.orders.select_related('authorization__user').order_by('-placed_at')
     order_count = len(orders)  # efficientie: len() ipv count()
     order_sum = orders.aggregate(Sum('amount'))['amount__sum']
 
@@ -95,9 +100,12 @@ def stats_year(request, year):
 @manager_required
 def stats_month(request, year, month):
     month = int(month)
-    events = Event.objects.filter(organizer=request.organization,
-                                  starts_at__year=year, starts_at__month=month) \
-        .annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+    events = Event.objects.filter(
+        organizer=request.organization,
+        starts_at__year=year,
+        starts_at__month=month,
+    ).annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+
     return render(request, "order/stats_month.html", locals())
 
 
@@ -127,7 +135,8 @@ class ProductGroupDetailView(ManagerRequiredMixin, OrganizationFilterMixin, Deta
     model = ProductGroup
 
 
-class ProductGroupCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, CreateViewForOrganization):
+class ProductGroupCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
+                             CreateViewForOrganization):
     model = ProductGroup
     fields = ['name']
 

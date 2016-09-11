@@ -1,12 +1,13 @@
 from functools import wraps
 
+from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest
 
 
 def ajax_required(f):
     """AJAX required decorator.
-    
+
     Source: http://djangosnippets.org/snippets/771/
     """
 

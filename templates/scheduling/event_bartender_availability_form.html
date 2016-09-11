@@ -12,7 +12,7 @@
         <div class="form-group">
             <label class="control-label col-lg-2">{% trans 'Event' %}</label>
             <div class="controls col-lg-8">
-                <p class="input-static"><a href="{% url 'apps.scheduling.views.event_show' event.pk %}">{{ event }}</a></p>
+                <p class="input-static"><a href="{% url 'event' event.pk %}">{{ event }}</a></p>
             </div>
         </div>
 

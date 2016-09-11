@@ -82,7 +82,7 @@
                 <tbody>
                 {% for o in orders %}
                     <tr{% if o.amount < 0 %} class="tr-muted"{% endif %}>
-                        <td><a href="{% url 'apps.billing.views.payment_show' o.pk %}">{{ o.pk }}</a></td>
+                        <td><a href="{% url 'order' o.pk %}">{{ o.pk }}</a></td>
                         <td>{{ o.authorization.user.get_full_name }}</td>
                         <td>&euro; {{ o.amount|floatformat:2 }}</td>
                         <td>{{ o.placed_at }}</td>

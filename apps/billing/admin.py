@@ -1,20 +1,28 @@
-# -*- coding: utf-8 -*-
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
-from .models import PriceGroup, ProductGroup, SellingPrice, Product, \
-    PermanentProduct, TemporaryProduct, Authorization, Order, Purchase, RfidCard
+from .models import (
+    Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
+    RfidCard, SellingPrice, TemporaryProduct,
+)
 
 
 class AuthorizationInline(admin.TabularInline):
     model = Authorization
-    extra = 1
+    extra = 0
+    exclude = ['account']
 
 
 class RfidCardInline(admin.TabularInline):
     model = RfidCard
-    extra = 1
-    raw_id_fields = ('user',)
+    extra = 0
     readonly_fields = ('registered_at',)
+    raw_id_fields = ('managed_by',)
+
+
+class PurchaseInline(admin.TabularInline):
+    model = Purchase
+    can_delete = False
 
 
 class SellingPriceInline(admin.TabularInline):
@@ -22,107 +30,92 @@ class SellingPriceInline(admin.TabularInline):
     extra = 1
 
 
-class PriceGroupInline(admin.TabularInline):
-    model = PriceGroup
-    extra = 1
-
-
-class ProductGroupInline(admin.TabularInline):
-    model = ProductGroup
-    extra = 1
-
-
 class TemporaryProductInline(admin.TabularInline):
     model = TemporaryProduct
-    extra = 1
 
 
-class PurchaseInline(admin.TabularInline):
-    model = Purchase
-    extra = 1
-    raw_id_fields = ('order', 'product')
-    fields = ('order', 'product', 'amount', 'price')
-    createonly_fields = ('order', 'product', 'amount', 'price')
-    can_delete = False
-
-    def get_readonly_fields(self, request, obj=None):
-        # Allow editing some fields only at creation time
-        if obj and obj.pk:
-            return self.readonly_fields + self.createonly_fields
-        else:
-            return self.readonly_fields
-
-    def has_delete_permission(self, request, obj=None):
-        # Orders should not be modified
-        return False
+def _user_full_name(obj):
+    return obj.user.get_full_name()
+_user_full_name.short_description = _('Owner')
 
 
-class PriceGroupAdmin(admin.ModelAdmin):
-    inlines = (SellingPriceInline,)
-    list_display = ('name', 'organization',)
-    list_filter = ('organization',)
-
-
-class ProductGroupAdmin(admin.ModelAdmin):
-    inlines = (SellingPriceInline,)
-    list_display = ('name', 'organization',)
-    list_filter = ('organization',)
-
-
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_permanent', 'is_temporary',)
-    search_fields = ('name',)
-
-    def has_add_permission(self, request):
-        # Direct creation of products is forbidden
-        return False
-
-
+@admin.register(PermanentProduct)
 class PermanentProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'productgroup', 'stockproduct', 'position',)
-    list_filter = ('organization', 'productgroup', 'stockproduct',)
+    list_display = ('name', 'organization', 'productgroup', 'position')
+    list_filter = ('organization',)
     list_editable = ('position',)
 
 
-class RfidCardAdmin(admin.ModelAdmin):
-    list_display = ('identifier', 'user', 'is_active',)
-    list_filter = ('is_active', 'managed_by',)
-    raw_id_fields = ('user',)
-    readonly_fields = ('registered_at',)
-    search_fields = ('identifier', 'user__first_name', 'user__last_name', 'user__username',)
-
-
-class AuthorizationAdmin(admin.ModelAdmin):
-    list_display = ('user', 'organization', 'start_date', 'end_date')
+@admin.register(PriceGroup)
+class PriceGroupAdmin(admin.ModelAdmin):
+    inlines = [
+        SellingPriceInline,
+    ]
+    list_display = ('name', 'organization',)
     list_filter = ('organization',)
+    search_fields = ('name',)
+
+
+@admin.register(ProductGroup)
+class ProductGroupAdmin(admin.ModelAdmin):
+    inlines = [
+        SellingPriceInline,
+    ]
+    list_display = ('name', 'organization',)
+    list_filter = ('organization',)
+    search_fields = ('name',)
+
+
+@admin.register(RfidCard)
+class RfidCardAdmin(admin.ModelAdmin):
+    list_display = ('identifier', 'user', _user_full_name, 'is_active')
+    list_filter = ('is_active', 'managed_by')
+    readonly_fields = ['registered_at']
+    search_fields = ('identifier', 'user__first_name', 'user__last_name', 'user__username')
+    fields = ['identifier', 'user', 'managed_by', 'is_active', 'registered_at']
     raw_id_fields = ('user',)
+
+
+@admin.register(Authorization)
+class AuthorizationAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {
+            'fields': ('user', 'organization', ('start_date', 'end_date'), 'account'),
+        }),
+    )
+    list_display = ('user', _user_full_name, 'organization', 'start_date', 'end_date')
+    list_filter = ('organization', 'start_date', 'end_date')
     search_fields = ('user__first_name', 'user__last_name', 'user__username', 'account')
+    raw_id_fields = ('user',)
 
 
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     inlines = (PurchaseInline,)
+    add_fields = ['event', 'authorization', 'added_by', 'placed_at', 'rfidcard']
+    fields = ['event', 'authorization', 'placed_at', 'rfidcard', 'added_by']
     date_hierarchy = 'placed_at'
-    createonly_fields = ('event', 'authorization', 'placed_at',)
-    list_display = ('event', 'placed_at', 'get_price')
-    list_filter = ('authorization__organization',)
-    raw_id_fields = ('event', 'authorization')
+    createonly_fields = ('event', 'authorization', 'placed_at')
+    readonly_fields = ('placed_at',)
+    list_display = ('event', 'user_full_name', 'placed_at', 'get_price')
+    list_filter = ('authorization__organization', 'placed_at')
+    raw_id_fields = ('added_by', 'authorization', 'event', 'rfidcard')
+    search_fields = ('authorization__user__first_name', 'authorization__user__last_name',
+                     'authorization__user__username')
+
+    def user_full_name(self, obj):
+        return obj.authorization.user.get_full_name()
+    user_full_name.short_description = _('Debtor')
+
+    def get_fields(self, request, obj=None):
+        if not obj:
+            return self.add_fields
+        return super(OrderAdmin, self).get_fields(request, obj)
 
     def get_readonly_fields(self, request, obj=None):
-        # Allow editing some fields only at creation time
         if obj and obj.pk:
             return self.readonly_fields + self.createonly_fields
-        else:
-            return self.readonly_fields
+        return super(OrderAdmin, self).get_readonly_fields(request, obj)
 
     def has_delete_permission(self, request, obj=None):
-        # Orders should not be modified
         return False
-
-
-admin.site.register(PriceGroup, PriceGroupAdmin)
-admin.site.register(ProductGroup, ProductGroupAdmin)
-admin.site.register(Product, ProductAdmin)
-admin.site.register(PermanentProduct, PermanentProductAdmin)
-admin.site.register(RfidCard, RfidCardAdmin)
-admin.site.register(Authorization, AuthorizationAdmin)
-admin.site.register(Order, OrderAdmin)

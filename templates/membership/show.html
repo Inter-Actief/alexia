@@ -69,7 +69,7 @@
                     <td>{{ ba.event.starts_at }}</td>
                     <td>
                         {% if is_planner %}
-                        <a href="{% url 'apps.scheduling.views.event_show' ba.event.pk %}">{{ ba.event.name }}</a>
+                        <a href="{% url 'event' ba.event.pk %}">{{ ba.event.name }}</a>
                         {% else %}
                         {{ ba.event.name }}
                         {% endif %}

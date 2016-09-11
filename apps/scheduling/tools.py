@@ -20,8 +20,7 @@ def notify_tenders(sender, instance, **kwargs):
 
     if mail_template:
         try:
-            mt = MailTemplate.objects.get(organization=instance.organizer,
-                                          name=mail_template)
+            mt = MailTemplate.objects.get(organization=instance.organizer, name=mail_template)
             if mt.is_active:
                 members = instance.organizer.membership_set.filter(is_tender=True, is_active=True).exclude(user__email="")
                 addressees = [m.user for m in members]

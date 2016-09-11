@@ -1,11 +1,11 @@
 from __future__ import absolute_import
 
 # Load default settings
-from .default import *
+from .default import *  # noqa
 
 # Load local settings
 try:
-    from .local import *
+    from .local import *  # noqa
 except ImportError:
     pass
 
@@ -17,7 +17,6 @@ if DEBUG:
         return True
 
     INSTALLED_APPS += ('debug_toolbar',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': 'settings.show_toolbar'
     }

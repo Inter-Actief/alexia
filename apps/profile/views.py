@@ -1,19 +1,19 @@
-import hashlib
 import mimetypes
-import random
+import uuid
 
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Sum
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, redirect
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect, render
 
 from apps.billing.models import Order
 from apps.organization.models import AuthenticationData
 from apps.scheduling.models import Event
-from utils.auth.decorators import tender_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
-from .forms import ProfileForm, IvaForm
+from utils.auth.decorators import tender_required
+
+from .forms import IvaForm, ProfileForm
 
 
 @login_required
@@ -28,12 +28,15 @@ def index(request):
     
     shares = []
     for authorization in request.user.authorizations.all():
-        my_order_sum  = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
-        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization).aggregate(total=Sum('amount'))
+        my_order_sum = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
+        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization) \
+            .aggregate(total=Sum('amount'))
+
         if not my_order_sum['total'] or not all_order_sum['total']:
             percentage = 0
         else:
             percentage = (my_order_sum['total'] / all_order_sum['total']) * 100
+
         shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
 
     try:
@@ -47,9 +50,7 @@ def index(request):
 @login_required
 @tender_required
 def ical_gen(request):
-    seed = random.randint(1, 10000)
-    request.user.profile.ical_id = hashlib.md5("%s%s" % (request.user.username,
-                                                         seed)).hexdigest()
+    request.user.profile.ical_id = uuid.uuid4()
     request.user.profile.save()
     return redirect(index)
 
@@ -69,8 +70,7 @@ def edit(request):
 
 @login_required
 def iva(request):
-    profile = request.user.profile
-    certificate = profile.certificate
+    certificate = request.user.certificate
 
     if request.method == 'POST':
         form = IvaForm(request.POST, request.FILES)
@@ -80,11 +80,11 @@ def iva(request):
                 certificate.delete()
             # Save the new
             certificate = form.save(commit=False)
-            certificate._id = str(profile.user.pk)
+            certificate._id = str(request.user.pk)
             certificate.save()
             # Attach to profile
-            profile.certificate = certificate
-            profile.save()
+            request.user.certificate = certificate
+            request.user.save()
 
             return redirect(index)
     else:
@@ -95,10 +95,10 @@ def iva(request):
 
 @login_required
 def view_iva(request):
-    if not request.user.profile.certificate:
+    if not request.user.certificate:
         raise Http404
 
-    iva_file = request.user.profile.certificate.file
+    iva_file = request.user.certificate.file
     content_type, encoding = mimetypes.guess_type(iva_file.url)
     content_type = content_type or 'application/octet-stream'
     return HttpResponse(iva_file, content_type=content_type)

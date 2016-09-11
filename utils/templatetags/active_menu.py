@@ -6,7 +6,7 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def active_menu(context, expression, css_class='active'):
+def active_menu(context, expression, css_class=' active'):
     import re
 
     # Skip if no context

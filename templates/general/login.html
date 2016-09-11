@@ -3,7 +3,7 @@
 
 {% block title %}{% trans 'Login' %}{% endblock %}
 
-{% block body %} 
+{% block body %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
@@ -17,7 +17,7 @@
                     {{ form|crispy }}
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">{% trans 'Log in' %}</button>
-                        <a href="{% url 'apps.general.views.help_view' %}" style="margin-left: 2em;">{% trans 'Help' %}</a>
+                        <a href="{% url 'help' %}" style="margin-left: 2em;">{% trans 'Help' %}</a>
                     </div>
                 </form>
             </div>

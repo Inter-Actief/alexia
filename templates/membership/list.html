@@ -9,10 +9,10 @@
         {% blocktrans with organization=request.organization.name %}Users of {{ organization }}{% endblocktrans %}
     </h1>
     <div class="text-right">
-        <a href="{% url 'apps.organization.views.membership_add' %}" class="btn btn-primary">
+        <a href="{% url 'new-membership' %}" class="btn btn-primary">
             <span class="glyphicon glyphicon-plus"></span> {% trans 'Add user' %}
         </a>
-        <a href="{% url 'apps.organization.views.iva_list' %}" target="_blank" class="btn btn-default">
+        <a href="{% url 'iva-memberships' %}" target="_blank" class="btn btn-default">
             <span class="glyphicon glyphicon-print"></span> {% trans 'Print IVA list' %}
         </a>
     </div>
@@ -36,7 +36,7 @@
             {% for membership in memberships %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td><a href="{% url 'apps.organization.views.membership_show' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
+                <td><a href="{% url 'membership' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
                 <td>
                     {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
                     {% if membership.is_planner %}<span class="label label-default">{% trans 'Planner' %}</span>{% endif %}
@@ -54,18 +54,18 @@
                     {% if membership.user.profile.is_iva %}
                     <a href="#" title="{% trans 'Manual approved' %}"><i class="icon-alexia-ok"></i></a>
                     {% else %}
-                    <a href="{% url 'apps.organization.views.membership_iva' membership.pk %}" title="{% trans 'Approved by' %} {{ membership.user.profile.certificate.approved_by.get_full_name }} ({{ membership.user.profile.certificate.approved_at }})"><i class="icon-alexia-ok"></i><i class="icon-alexia-pdf"></i></a>
+                    <a href="{% url 'iva-membership' membership.pk %}" title="{% trans 'Approved by' %} {{ membership.user.certificate.approved_by.get_full_name }} ({{ membership.user.certificate.approved_at }})"><i class="icon-alexia-ok"></i><i class="icon-alexia-pdf"></i></a>
                     {% endif %}
                     {% else %}
-                    {% if membership.user.profile.certificate %}
+                    {% if membership.user.certificate %}
                     <i class="icon-alexia-attention"></i>
-                    <a href="{% url 'apps.organization.views.membership_iva' membership.pk %}"><i class="icon-alexia-pdf"></i></a>
-                    <a href="{% url 'apps.organization.views.iva_approve' membership.pk %}" title="{% trans 'Approve' %}"><i class="icon-alexia-ok"></i></a>
-                    <a href="{% url 'apps.organization.views.iva_decline' membership.pk %}" title="{% trans 'Decline' %}"><i class="icon-alexia-notok"></i></a>
+                    <a href="{% url 'iva-membership' membership.pk %}"><i class="icon-alexia-pdf"></i></a>
+                    <a href="{% url 'approve-iva-membership' membership.pk %}" title="{% trans 'Approve' %}"><i class="icon-alexia-ok"></i></a>
+                    <a href="{% url 'decline-iva-membership' membership.pk %}" title="{% trans 'Decline' %}"><i class="icon-alexia-notok"></i></a>
                     {% else %}
                     {% if membership.is_tender %}
                     <i class="icon-alexia-notok"></i>
-                    <a href="{% url 'apps.organization.views.iva_upload' membership.pk %}" title="{%  trans 'Upload' %}"><i class="icon-alexia-upload"></i></a>
+                    <a href="{% url 'upload-iva-membership' membership.pk %}" title="{%  trans 'Upload' %}"><i class="icon-alexia-upload"></i></a>
                     {% else %}
                     &mdash;
                     {% endif %}
@@ -78,11 +78,11 @@
                 {% endwith %}
                 <td>{{ membership.user.last_login }}</td>
                 <td>
-                    <a class="btn btn-xs btn-default" href="{% url 'apps.organization.views.membership_edit' membership.pk %}">
+                    <a class="btn btn-xs btn-default" href="{% url 'edit-membership' membership.pk %}">
                         <span class="glyphicon glyphicon-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
-                    <a class="btn btn-xs btn-danger" href="{% url 'apps.organization.views.membership_delete' membership.pk %}">
+                    <a class="btn btn-xs btn-danger" href="{% url 'delete-membership' membership.pk %}">
                         <span class="glyphicon glyphicon-trash"></span>
                         {% trans 'Delete' %}
                     </a>

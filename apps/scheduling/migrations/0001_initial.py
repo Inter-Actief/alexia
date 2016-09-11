@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 import datetime
 
-from django.db import models, migrations
 from django.conf import settings
+from django.db import models, migrations
 
 
 class Migration(migrations.Migration):

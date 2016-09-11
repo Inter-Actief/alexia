@@ -25,7 +25,7 @@
                 <td>{{ e.starts_at|date:"l d F" }}</td>
                 <td>{{ e.name }}</td>
                 <td>&euro; {{ e.spent|floatformat:2 }}</td>
-                <td><a href="{% url 'apps.profile.views.expenditures_event' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
             </tr>
         {% empty %}
             <tr>

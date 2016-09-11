@@ -1,4 +1,5 @@
-from django.db import migrations, models
+from django.db import migrations
+
 from utils.auth.backends import RADIUS_BACKEND_NAME
 
 

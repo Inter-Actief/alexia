@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
 from jsonrpc import jsonrpc_method
 
-from .api_utils import user_list
-from .common import api_v1_site
 from apps.organization.forms import BartenderAvailabilityForm
-from apps.organization.models import Membership, Profile
+from apps.organization.models import Membership
 from apps.scheduling.models import Event
 from utils.auth.backends import RADIUS_BACKEND_NAME
+from .api_utils import user_list
+from .common import api_v1_site
 
 
 @jsonrpc_method('bartender.list() -> Array', site=api_v1_site, authenticated=True)

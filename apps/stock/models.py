@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from apps.scheduling.models import Event
 from apps.organization.models import Organization
+from apps.scheduling.models import Event
 
 
 class EventConsumption(models.Model):
@@ -12,19 +12,19 @@ class EventConsumption(models.Model):
     but it is possible that - for some reason - different consumption groups are
     assigned to an event. This can happen in the case of an event at multiple
     locations, or for the administration of free consumptions.
-    
+
     In the previous 'paper-full' system, this was named a 'consumption form'.
-    
+
     event      -- The event this group belongs to
     comments   -- Comments on this group. This might be something to denote why
                   this form was opened, or what happend during the event.
     opened_at  -- The date and time at which this group was opened
     closed_at  -- The date and time at which this group was completed, i.e. when
-                  no consumptions can be made anymore. Omitted if the group is 
+                  no consumptions can be made anymore. Omitted if the group is
                   still open.
-    
+
     And, we can also access:
-    
+
     consumptions    -- The consumptions within this consumption group.
     """
     name = models.CharField(_('name'), max_length=32, blank=False)
@@ -49,11 +49,11 @@ class EventConsumption(models.Model):
 class StockProduct(models.Model):
     """A product that can be in stock. This can be bottles or barrels or the
     like, but no glasses of something from that bottle.
-    
+
     name    -- The name of this product
-    
+
     Access to:
-    
+
     consumptions  -- The related consumptions of this product.
     stockcounts   -- The related stock counts of this product.
     """
@@ -87,15 +87,15 @@ class Consumption(models.Model):
     """A single consumption of a stock product within a consumption group. We
     can save the consumption of 'one' stock product, or the start and end weight
     of a barrel of beer. We can also administer at which tap we have connected
-    the barrel. 
-    
+    the barrel.
+
     product      -- The product from which was consumed
     group        -- The group at which this consumption was administered.
     used_at      -- The date and time at which this consumption was administered
     tap          -- The - optional - tap at which this consumption took place
     start_weight -- The beginning weight of the consumption product
     end_weight   -- The final weight of the consumption product
-    
+
     If the weights aren't present, one 'unit' is assumed.
     """
     product = models.ForeignKey(StockProduct, related_name='consumptions', verbose_name=_('product'))
@@ -111,8 +111,8 @@ class Consumption(models.Model):
 
 
 class StockCount(models.Model):
-    """Representation of a count of the current stock. 
-    
+    """Representation of a count of the current stock.
+
     organization -- The responsible organization of this stock count.
     user         -- The user who did the this stock count.
     date         -- The date (and time) of the stock count.
@@ -121,7 +121,7 @@ class StockCount(models.Model):
     products     -- The products counted in this stock count.
     """
     organization = models.ForeignKey(Organization, related_name='stockcounts', verbose_name=_('organization'))
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     date = models.DateTimeField(_('date'), default=timezone.now)
     is_completed = models.BooleanField(_('is completed'), default=False)
     comments = models.TextField(_('comments'), blank=True)
@@ -138,7 +138,7 @@ class StockCount(models.Model):
 class StockProductAmount(models.Model):
     """The intermediary class between a stock count and a stock product,
     allowing the save of the amount in stock.
-    
+
     stockcount     -- The stock count in which the amount was determined
     product        -- The product to which the amount applies
     amount         -- The amount counted in the stock count

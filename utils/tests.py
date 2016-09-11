@@ -1,19 +1,22 @@
 from __future__ import unicode_literals
 
-import json
 import datetime
+import json
 
 from django.contrib.auth.models import User
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
-from django.test import testcases
+from django.test import Client, testcases
 from django.utils import six, timezone
-from django.test import Client
 
-from apps.billing.models import Authorization, PriceGroup, PermanentProduct, ProductGroup, TemporaryProduct, \
-    Order, Purchase
-from apps.organization.models import Profile, Organization, Location, AuthenticationData
-from apps.scheduling.models import Event, Availability
+from apps.billing.models import (
+    Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
+    TemporaryProduct,
+)
+from apps.organization.models import (
+    AuthenticationData, Location, Organization, Profile,
+)
+from apps.scheduling.models import Availability, Event
 from utils.auth.backends import RADIUS_BACKEND_NAME
 
 
@@ -45,7 +48,6 @@ class TransactionTestCase(SimpleTestCase, testcases.TransactionTestCase):
 
 
 class TestCase(TransactionTestCase, testcases.TestCase):
-    
     def setUp(self):
         super(TestCase, self).setUp()
         self.data = dict()
@@ -76,7 +78,8 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['user1'].profile = Profile()
         data['user1'].profile.save()
 
-        data['authenticationdata1'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username1, user=data['user1'])
+        data['authenticationdata1'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username1,
+                                                         user=data['user1'])
         data['authenticationdata1'].save()
 
         data['user2'] = User(username=username2, first_name='Test2', last_name='Client', email='test2@example.com')
@@ -86,7 +89,8 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['user2'].profile = Profile()
         data['user2'].profile.save()
 
-        data['authenticationdata2'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username2, user=data['user2'])
+        data['authenticationdata2'] = AuthenticationData(backend=RADIUS_BACKEND_NAME, username=username2,
+                                                         user=data['user2'])
         data['authenticationdata2'].save()
 
         # Organization

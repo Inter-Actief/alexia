@@ -1,13 +1,16 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-from django.shortcuts import render_to_response, RequestContext
-
-from alexia.stock.models import StockProductAmount, StockProduct, \
-    StockCount
-from alexia.stock.forms import StockCountForm, StockCountAmountForm, StockProductForm
-from alexia.stock.models import Event
+from alexia.stock.forms import (
+    EventConsumptionForm, StockCountAmountForm, StockCountForm,
+    StockProductForm,
+)
+from alexia.stock.models import (
+    Event, StockCount, StockProduct, StockProductAmount,
+)
 from alexia.tools.decorators import manager_required
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import (
+    RequestContext, get_object_or_404, render, render_to_response,
+)
+from django.utils import timezone
 
 
 @manager_required
@@ -41,8 +44,8 @@ def edit_stockcount(request, stockcount_id=None):
             for scaform in scaforms:
                 if scaform.is_valid():
                     prod = StockProduct.objects.get(pk=scaform.cleaned_data['product_id'])
-                    sca = StockProductAmount.objects.get_or_create(stockcount=stockcount, product=prod,
-                                                                   amount=scaform.cleaned_data['amount'])
+                    StockProductAmount.objects.get_or_create(stockcount=stockcount, product=prod,
+                                                             amount=scaform.cleaned_data['amount'])
 
             return render(request, 'closepopup.html', {})
 
