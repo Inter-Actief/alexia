@@ -6,10 +6,6 @@ matrix:
     - python: 2.7
     - python: 3.4
     - python: 3.5
-# Python 3 are allowed to fail because it is not supported at this moment
-  allow_failures:
-    - python: 3.4
-    - python: 3.5
 # command to the requirements
 install:
   - pip install -r config/requirements.txt
