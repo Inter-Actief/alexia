@@ -123,8 +123,8 @@ class FilterEventForm(forms.Form):
         required=False,
     )
     organizer = forms.ModelChoiceField(required=False, queryset=Organization.objects, label=_('Organization'))
-    from_time = forms.DateTimeField(label=_('From time'), initial=timezone.now, widget=widgets.SplitDateTimeWidget)
-    till_time = forms.DateTimeField(label=_('Till time'), widget=widgets.SplitDateTimeWidget, required=False)
+    from_time = forms.SplitDateTimeField(label=_('From time'), initial=timezone.now)
+    till_time = forms.SplitDateTimeField(label=_('Till time'), required=False)
 
     helper = FormHelper()
     helper.form_class = 'form-horizontal'
