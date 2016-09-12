@@ -84,7 +84,7 @@ INSTALLED_APPS = [
 ]
 
 # Security
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
 
 # Sessions
 
