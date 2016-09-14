@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render, resolve_url
 from django.utils.http import is_safe_url
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 
 from apps.organization.models import Location, Membership, Organization
 from apps.scheduling.models import Availability, BartenderAvailability, Event
@@ -22,6 +23,7 @@ def _get_login_redirect_url(request, redirect_to):
     return redirect_to
 
 
+@sensitive_post_parameters('password')
 @csrf_protect
 def login(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME, request.GET.get(REDIRECT_FIELD_NAME, ''))
