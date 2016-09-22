@@ -24,8 +24,8 @@ class EventForm(AlexiaModelForm):
         widget=widgets.CheckboxSelectMultiple,
         label=_('Location'),
     )
-    starts_at = forms.SplitDateTimeField()
-    ends_at = forms.SplitDateTimeField()
+    starts_at = forms.SplitDateTimeField(label=_('Starts at'))
+    ends_at = forms.SplitDateTimeField(label=_('Ends at'))
 
     class Meta:
         model = Event

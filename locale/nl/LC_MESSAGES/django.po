@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-08 21:00+0200\n"
+"POT-Creation-Date: 2016-09-22 16:31+0200\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "Owner"
+msgstr "Eigenaar"
+
+msgid "Debtor"
+msgstr "Debiteur"
 
 msgid "organization"
 msgstr "organisatie"
@@ -37,9 +43,8 @@ msgstr "productgroep"
 msgid "price"
 msgstr "prijs"
 
-#, python-brace-format
-msgid "{pricegroup}: {productgroup} for {price}"
-msgstr "{pricegroup}: {productgroup} voor {price}"
+msgid "for"
+msgstr "voor"
 
 msgid "Text color"
 msgstr "Tekstkleur"
@@ -47,17 +52,11 @@ msgstr "Tekstkleur"
 msgid "Text color for Juliana"
 msgstr "Tekstkleur voor Juliana"
 
-msgid "Enter a valid hexadecimal color"
-msgstr "Voer een geldige hexadecimale kleur in"
-
 msgid "Background color"
 msgstr "Achtergrondkleur"
 
 msgid "Background color for Juliana"
 msgstr "Achtergrondkleur voor Juliana"
-
-msgid "stock product"
-msgstr "voorraadproduct"
 
 msgid "position"
 msgstr "positie"
@@ -98,11 +97,17 @@ msgstr "autorisatie"
 msgid "authorizations"
 msgstr "autorisaties"
 
+msgid "at"
+msgstr "om"
+
 msgid "placed at"
 msgstr "geplaatst op"
 
 msgid "synchronized"
 msgstr "gesynchroniseerd"
+
+msgid "Designates whether this transaction is imported by the organization."
+msgstr "Geeft aan of deze transactie al is gesynchroniseerd."
 
 msgid "added by"
 msgstr "toegevoegd door"
@@ -143,17 +148,14 @@ msgstr "RADIUS-gebruikersnaam"
 msgid "Student or employee account"
 msgstr "Student- of medewerkers-gebruikersnaam"
 
-msgid "Enter a valid RADIUS username"
-msgstr "Voer een geldige RADIUS-gebruikersnaam in"
-
 msgid "is public"
 msgstr "is openbaar"
 
 msgid "prevent conflicting events"
 msgstr "voorkom conflicterende activiteiten"
 
-msgid "Color"
-msgstr "Kleur"
+msgid "color"
+msgstr "kleur"
 
 msgid "location"
 msgstr "locatie"
@@ -161,23 +163,30 @@ msgstr "locatie"
 msgid "locations"
 msgstr "locaties"
 
-msgid "Authentication backend"
-msgstr "Authenticatiesysteem"
+msgid "authentication backend"
+msgstr "authenticatiesysteem"
 
-msgid "Username"
-msgstr "Gebruikersnaam"
+msgid "username"
+msgstr "gebruikersnaam"
 
-msgid "Additional data"
-msgstr "Aanvullende gegevens"
+msgid "additional data"
+msgstr "aanvullende gegevens"
 
 msgid "has IVA-certificate"
 msgstr "heeft IVA-certificaat"
 
+msgid ""
+"Override for an user to indicate IVA rights without uploading a certificate."
+msgstr ""
+"Override voor een gebruiker om IVA-rechten te hebben zonder certificaat."
+
 msgid "has BHV-certificate"
 msgstr "heeft BHV-diploma"
 
-msgid "certificate"
-msgstr "certificaat"
+msgid ""
+"Designates that this user has a valid, non-expired BHV (Emergency Response "
+"Officer) certificate."
+msgstr ""
 
 msgid "current organization"
 msgstr "huidige organisatie"
@@ -215,6 +224,9 @@ msgstr "mag borrels aanmaken en wijzigen"
 msgid "may create and modify users"
 msgstr "mag gebruikers aanmaken en wijzigen"
 
+msgid "is currently active"
+msgstr "is actief"
+
 msgid "membership"
 msgstr "lidmaatschap"
 
@@ -225,6 +237,9 @@ msgstr "lidmaatschappen"
 msgid "%(user)s of %(organization)s"
 msgstr "%(user)s van %(organization)s"
 
+msgid "certificate"
+msgstr "certificaat"
+
 msgid "uploaded at"
 msgstr "geüpload op"
 
@@ -234,11 +249,26 @@ msgstr "goedgekeurd door"
 msgid "approved at"
 msgstr "goedgekeurd op"
 
+msgid "IVA certificate of"
+msgstr "IVA certificaat van"
+
+msgid "Flags"
+msgstr ""
+
+msgid "Comments"
+msgstr "Commentaar"
+
 msgid "Participants"
 msgstr "Deelnemers"
 
 msgid "Location"
 msgstr "Locatie"
+
+msgid "Starts at"
+msgstr "Begin"
+
+msgid "Ends at"
+msgstr "Einde"
 
 msgid "The start time is earlier than the end time!"
 msgstr "De begintijd kan niet na de eindtijd zijn."
@@ -246,9 +276,6 @@ msgstr "De begintijd kan niet na de eindtijd zijn."
 #, python-format
 msgid "There is an event in %(location)s already!"
 msgstr "Er is al een activiteit in %(location)s!"
-
-msgid "Save"
-msgstr "Opslaan"
 
 msgid "Locations"
 msgstr "Ruimtes"
@@ -322,17 +349,20 @@ msgstr "einddag"
 msgid "end time"
 msgstr "eindtijd"
 
-msgid "The start day can not be after the end day."
-msgstr "De begindag kan niet na de einddag zijn."
-
-msgid "The start time can not be after the end time."
-msgstr "De begintijd kan niet na de eindtijd zijn."
-
 msgid "standard reservation"
 msgstr "standaardreservering"
 
 msgid "standard reservations"
 msgstr "standaardreserveringen"
+
+msgid "on"
+msgstr "op"
+
+msgid "The start day can not be after the end day."
+msgstr "De begindag kan niet na de einddag zijn."
+
+msgid "The start time can not be after the end time."
+msgstr "De begintijd kan niet na de eindtijd zijn."
 
 msgid "organizer"
 msgstr "organisator"
@@ -352,6 +382,9 @@ msgstr "einde"
 msgid "tender enrollment closed"
 msgstr "tappersinschrijving gesloten"
 
+msgid "Designates if tenders can sign up for this event."
+msgstr "Geeft aan of tappers zich kunnen inschrijven voor deze activiteit."
+
 msgid "bartenders"
 msgstr "tappers"
 
@@ -364,11 +397,17 @@ msgstr "aantal fusten"
 msgid "option"
 msgstr "optie"
 
-msgid "Tender comments"
-msgstr "Tappersinstructie"
+msgid "Designates that this event is not definitive yet."
+msgstr "Geeft aan dat deze activiteit nog niet definitief is."
+
+msgid "tender comments"
+msgstr "tappersinstructie"
 
 msgid "risky"
 msgstr "risicoactiviteit"
+
+msgid "Designates that this event should be marked as risky."
+msgstr "Geeft aan of dit een risicoactiviteit betreft."
 
 msgid "events"
 msgstr "activiteiten"
@@ -428,6 +467,9 @@ msgstr "activiteitconsumpties"
 msgid "ideal amount"
 msgstr "ideale hoeveelheid"
 
+msgid "stock product"
+msgstr "voorraadproduct"
+
 msgid "stock products"
 msgstr "voorraadproducten"
 
@@ -473,6 +515,12 @@ msgstr "voorraadproducthoeveelheid"
 msgid "stock product amounts"
 msgstr "voorraadproducthoeveelheden"
 
+msgid "Dutch"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
 msgid "Access denied"
 msgstr "Geen toegang"
 
@@ -491,46 +539,17 @@ msgstr "Het opgevraagde bestand is niet gevonden."
 msgid "Home"
 msgstr "Home"
 
-#, python-format
-msgid ""
-"\n"
-"                    <a href=\"%(about_url)s\">Event management system "
-"Alexia</a>\n"
-"                    &mdash;\n"
-"                    &copy; 2011-2016 of\n"
-"                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
-"Inter-Actief</a>,\n"
-"                    <a href=\"https://www.arago.utwente.nl/\">S.V. Arago</"
-"a>, and\n"
-"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-"master/CONTRIBUTORS.md\">\n"
-"                        individual contributors\n"
-"                    </a>\n"
-"                    &mdash;\n"
-"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-"master/LICENSE.md\">\n"
-"                        BSD 3-clause License\n"
-"                    </a>\n"
-"                    "
-msgstr ""
-"\n"
-"                    <a href=\"%(about_url)s\">Borrelbeheersysteem Alexia</"
-"a>                     &mdash;\n"
-"                    &copy; 2011-2016 of\n"
-"                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
-"Inter-Actief</a>, \n"
-"                    <a href=\"https://www.arago.utwente.nl/\">S.V. Arago</a> "
-"en\n"
-"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-"master/CONTRIBUTORS.md\">\n"
-"                        individuele bijdragers\n"
-"                    </a>\n"
-"                    &mdash;\n"
-"                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-"master/LICENSE.md\">\n"
-"                        BSD 3-clauselicentie\n"
-"                    </a>\n"
-"                    "
+msgid "Event management system Alexia"
+msgstr "Borrelbeheersysteem Alexia"
+
+msgid "and"
+msgstr "en"
+
+msgid "individual contributors"
+msgstr "individuele bijdragers"
+
+msgid "Toggle navigation"
+msgstr "Schakel navigatie in/uit"
 
 msgid "Planning"
 msgstr "Planning"
@@ -588,6 +607,9 @@ msgstr "Uitloggen"
 
 msgid "Login"
 msgstr "Login"
+
+msgid "Username"
+msgstr "Gebruikersnaam"
 
 msgid "Password"
 msgstr "Wachtwoord"
@@ -739,9 +761,6 @@ msgstr ""
 "            mensen hebben daaraan bijgedragen:\n"
 "            "
 
-msgid "and"
-msgstr "en"
-
 msgid ""
 "\n"
 "            After the design project development of Alexia was continued by\n"
@@ -771,6 +790,9 @@ msgid ""
 msgstr ""
 "Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te "
 "mogen."
+
+msgid "Save"
+msgstr "Opslaan"
 
 msgid "Error"
 msgstr "Fout"
@@ -827,8 +849,25 @@ msgstr "Manager"
 msgid "There are no users"
 msgstr "Er zijn geen gebruikers"
 
+msgid "Upload IVA certificate"
+msgstr "IVA certificaat uploaden"
+
+msgid ""
+"<strong>Caution!</strong> This user has an approved IVA certificate. "
+"Uploading a new one will make the current one invalid!"
+msgstr ""
+"<strong>Pas op!</strong> Deze gebruiker heeft al een IVA-ceritficaat dat "
+"goedgekeurd is. Als je een nieuwe upload wordt de oude automatisch "
+"verwijderd!"
+
+msgid "User"
+msgstr "Gebruiker"
+
 msgid "Print IVA list"
 msgstr "IVA-lijst uitdraaien"
+
+msgid "Active"
+msgstr "Actief"
 
 msgid "Tended"
 msgstr "Getapt"
@@ -851,11 +890,20 @@ msgstr "Goedkeuren"
 msgid "Decline"
 msgstr "Afkeuren"
 
+msgid "Upload"
+msgstr "Uploaden"
+
 msgid "User details"
 msgstr "Gebruikersgegevens"
 
 msgid "Email address"
 msgstr "E-mailadres"
+
+msgid "Times tended last year"
+msgstr "Getapt afgelopen jaar"
+
+msgid "Times tended"
+msgstr "Aantal keer getapt"
 
 msgid "Last tended events"
 msgstr "Laatst getapte activiteiten"
@@ -900,9 +948,6 @@ msgstr "Product"
 msgid "ID"
 msgstr "ID"
 
-msgid "Debtor"
-msgstr "Debiteur"
-
 msgid "Amount"
 msgstr "Bedrag"
 
@@ -933,20 +978,42 @@ msgstr "Lege transactie!"
 msgid "Modify profile"
 msgstr "Bewerk profiel"
 
+msgid "My expenditures"
+msgstr "Mijn uitgaven"
+
+msgid "Amount spent"
+msgstr "Uitgegeven"
+
+msgid "There are no expenditures!"
+msgstr "Er zijn geen betalingen!"
+
+msgid "My payments"
+msgstr "Mijn uitgaven"
+
+#, python-format
+msgid "My payments at %(event)s"
+msgstr "Mijn uitgaven op %(event)s"
+
+msgid "There are no payments!"
+msgstr "Er zijn geen betalingen!"
+
 msgid "edit"
 msgstr "wijzigen"
 
-msgid "These are your last 5 payments."
-msgstr "Dit zijn jouw vijf laatste transacties."
+msgid "Events attended"
+msgstr "Activiteiten bijgewoond"
+
+msgid "Events"
+msgstr "Activiteiten"
+
+msgid "These are the last 5 events you attended."
+msgstr "Dit zijn de laatste 5 bijgewoonde activiteiten."
 
 msgid "See all"
 msgstr "Bekijk alles"
 
-msgid "Time"
-msgstr "Tijd"
-
-msgid "There are no transactions."
-msgstr "Er zijn geen transacties."
+msgid "Spent"
+msgstr "Uitgegeven"
 
 msgid "This is an overview of RFID cards linked to your account."
 msgstr ""
@@ -954,9 +1021,6 @@ msgstr ""
 
 msgid "ID number"
 msgstr "Identificatienr."
-
-msgid "Active"
-msgstr "Actief"
 
 msgid "Sinds"
 msgstr "Sinds"
@@ -1023,12 +1087,6 @@ msgstr ""
 "<strong>Pas op!</strong> Je hebt al een IVA-ceritficaat dat goedgekeurd is. "
 "Als je een nieuwe upload wordt de oude automatisch verwijderd!"
 
-msgid "My payments"
-msgstr "Mijn betalingen"
-
-msgid "There are no payments!"
-msgstr "Er zijn geen betalingen!"
-
 msgid "Nature"
 msgstr "Soort"
 
@@ -1077,6 +1135,9 @@ msgstr "Begin"
 msgid "End"
 msgstr "Einde"
 
+msgid "Tender comments"
+msgstr "Tappersinstructie"
+
 msgid "There are no tender comments."
 msgstr "Er is geen tappersinstructie."
 
@@ -1094,8 +1155,8 @@ msgstr "Geen tijdelijke producten gedefinieerd."
 msgid "Bartenders"
 msgstr "Tappers"
 
-msgid "Unknown"
-msgstr "Onbekend"
+msgid "Inactive bartenders"
+msgstr "Inactieve tappers"
 
 msgid "Mail template"
 msgstr "Mailsjabloon"
@@ -1123,16 +1184,15 @@ msgstr "Mailsjablonen van %(organization)s"
 msgid "Filters"
 msgstr "Filters"
 
+msgid "Time"
+msgstr "Tijd"
+
 msgid "Instructions"
 msgstr "Tappersinstructie"
 
 #, python-format
 msgid "No events have been planned from %(s)s until %(e)s."
 msgstr "Er zijn geen activiteiten gepland van %(s)s tot %(e)s."
-
-#, python-format
-msgid "No events have been planned after %(s)s."
-msgstr "Er zijn geen activiteiten gepland na %(s)s."
 
 msgid "today"
 msgstr "vandaag"
@@ -1251,6 +1311,16 @@ msgstr "Risicoactiviteit"
 msgid "Point of sale"
 msgstr "Kassa"
 
+#, python-format
+msgid "No events have been planned after %(s)s."
+msgstr "Er zijn geen activiteiten gepland na %(s)s."
+
+msgid "Never"
+msgstr ""
+
+msgid "Unknown"
+msgstr "Onbekend"
+
 msgid "AJAX-request required"
 msgstr "AJAX-request verplicht"
 
@@ -1263,9 +1333,60 @@ msgstr "Je bent geen plannerbij de geselecteerde organisatie!"
 msgid "You are not a manager of the selected organization."
 msgstr "Je bent geen managerbij de geselecteerde organisatie!"
 
-msgid "You are not a foundation manager."
-msgstr "Je bent geen stichtingsmananger."
-
 msgid "Javascript must be enabled to reveal email address"
 msgstr "Javascript moet zijn ingeschakeld om dit e-mailadres te bekijken."
 
+msgid "Enter a valid hexadecimal color"
+msgstr "Voer een geldige hexadecimale kleur in"
+
+msgid "Enter a valid RADIUS username"
+msgstr "Voer een geldige RADIUS-gebruikersnaam in"
+
+#~ msgid "{pricegroup}: {productgroup} for {price}"
+#~ msgstr "{pricegroup}: {productgroup} voor {price}"
+
+#~ msgid ""
+#~ "\n"
+#~ "                    <a href=\"%(about_url)s\">Event management system "
+#~ "Alexia</a>\n"
+#~ "                    &mdash;\n"
+#~ "                    &copy; 2011-2016 of\n"
+#~ "                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
+#~ "Inter-Actief</a>,\n"
+#~ "                    <a href=\"https://www.arago.utwente.nl/\">S.V. Arago</"
+#~ "a>, and\n"
+#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+#~ "master/CONTRIBUTORS.md\">\n"
+#~ "                        individual contributors\n"
+#~ "                    </a>\n"
+#~ "                    &mdash;\n"
+#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+#~ "master/LICENSE.md\">\n"
+#~ "                        BSD 3-clause License\n"
+#~ "                    </a>\n"
+#~ "                    "
+#~ msgstr ""
+#~ "\n"
+#~ "                    <a href=\"%(about_url)s\">Borrelbeheersysteem Alexia</"
+#~ "a>                     &mdash;\n"
+#~ "                    &copy; 2011-2016 of\n"
+#~ "                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
+#~ "Inter-Actief</a>, \n"
+#~ "                    <a href=\"https://www.arago.utwente.nl/\">S.V. Arago</"
+#~ "a> en\n"
+#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+#~ "master/CONTRIBUTORS.md\">\n"
+#~ "                        individuele bijdragers\n"
+#~ "                    </a>\n"
+#~ "                    &mdash;\n"
+#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
+#~ "master/LICENSE.md\">\n"
+#~ "                        BSD 3-clauselicentie\n"
+#~ "                    </a>\n"
+#~ "                    "
+
+#~ msgid "There are no transactions."
+#~ msgstr "Er zijn geen transacties."
+
+#~ msgid "You are not a foundation manager."
+#~ msgstr "Je bent geen stichtingsmananger."
