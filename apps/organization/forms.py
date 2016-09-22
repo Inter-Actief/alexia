@@ -59,7 +59,7 @@ class CreateUserForm(AlexiaModelForm):
         fields = ['first_name', 'last_name', 'email']
 
 
-class UploadIvaForm(forms.ModelForm):
+class UploadIvaForm(AlexiaModelForm):
     class Meta:
         model = Certificate
         fields = ('file',)

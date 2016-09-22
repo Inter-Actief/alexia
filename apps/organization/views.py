@@ -183,17 +183,15 @@ def iva_upload(request, pk):
     if membership.organization != request.organization:
         raise PermissionDenied
 
-    certificate = membership.user.profile.certificate
+    certificate = getattr(membership.user, 'certificate', None)
     if request.method == 'POST':
         form = UploadIvaForm(request.POST, request.FILES, instance=certificate)
         if form.is_valid():
             if certificate:
                 certificate.delete()
             certificate = form.save(commit=False)
-            certificate._id = str(membership.user.pk)
+            certificate.owner_id = membership.user.pk
             certificate.save()
-            membership.user.profile.certificate = certificate
-            membership.user.profile.save()
             return redirect(membership_list)
     else:
         form = UploadIvaForm(instance=certificate)
