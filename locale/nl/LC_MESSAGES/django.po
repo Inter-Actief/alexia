@@ -187,6 +187,7 @@ msgid ""
 "Designates that this user has a valid, non-expired BHV (Emergency Response "
 "Officer) certificate."
 msgstr ""
+"Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
 
 msgid "current organization"
 msgstr "huidige organisatie"
@@ -253,7 +254,7 @@ msgid "IVA certificate of"
 msgstr "IVA certificaat van"
 
 msgid "Flags"
-msgstr ""
+msgstr "Indicatoren"
 
 msgid "Comments"
 msgstr "Commentaar"
@@ -516,10 +517,10 @@ msgid "stock product amounts"
 msgstr "voorraadproducthoeveelheden"
 
 msgid "Dutch"
-msgstr ""
+msgstr "Nederlands"
 
 msgid "English"
-msgstr ""
+msgstr "Engels"
 
 msgid "Access denied"
 msgstr "Geen toegang"
@@ -1316,7 +1317,7 @@ msgid "No events have been planned after %(s)s."
 msgstr "Er zijn geen activiteiten gepland na %(s)s."
 
 msgid "Never"
-msgstr ""
+msgstr "Nooit"
 
 msgid "Unknown"
 msgstr "Onbekend"
