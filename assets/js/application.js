@@ -33,4 +33,11 @@ $(function () {
         showMeridian: false
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('#ical-copy').click(function() {
+        $('#ical-url').select();
+        document.execCommand('copy');
+    });
+
 });

@@ -149,15 +149,24 @@
                         </table>
                     </div>
                     <div class="col-xs-12 col-lg-6">
-                        <h4>{% trans 'iCal bartender agenda' %}</h4>
+                        <h4>
+                            {% trans 'iCal bartender agenda' %}
+                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-xs btn-primary pull-right">{% trans 'Generate new' %}</a>
+                        </h4>
                         {% if user.profile.ical_id %}
-                        <a href="{% url 'ical' user.profile.ical_id %}">{% trans 'This is the location of your personal bartender iCal.' %}</a>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="https://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
+                                    <span class="glyphicon glyphicon-copy"></span>
+                                </button>
+                            </span>
+                        </div>
                         {% endif %}
-                        <a href="{% url 'ical-gen-profile' %}" class="btn btn-xs btn-default">{% trans 'Generate new' %}</a>
                         <hr>
                         <h4>
                             {% trans 'IVA certificate' %}
-                            <a href="{% url 'iva-profile' %}" class="btn btn-primary pull-right">{% trans 'Manage certificate' %}</a>
+                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-xs pull-right">{% trans 'Manage certificate' %}</a>
                         </h4>
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>

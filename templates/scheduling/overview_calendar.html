@@ -80,7 +80,12 @@ $(document).ready(function() {
     <h1>
         {% trans 'Planning' %}
         <small id="loading" style="display: none">{% trans 'Loading...' %}</small>
-        {% if is_planner %}<a href="{% url 'new-event' %}" class="btn btn-primary pull-right">{% trans 'Add event' %}</a>{% endif %}
+        {% if is_planner %}
+        <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            {% trans 'Add event' %}
+        </a>
+        {% endif %}
     </h1>
 </div>
 <div id="calendar"></div>

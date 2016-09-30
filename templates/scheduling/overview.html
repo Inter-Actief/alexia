@@ -10,7 +10,10 @@
     </h1>
     {% if is_planner %}
     <div class="text-right">
-        <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">{% trans 'Add event' %}</a>
+        <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            {% trans 'Add event' %}
+        </a>
     </div>
     {% endif %}
 </div>

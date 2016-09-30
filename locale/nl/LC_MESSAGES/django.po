@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-22 16:31+0200\n"
+"POT-Creation-Date: 2016-09-30 15:28+0200\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -1054,11 +1054,11 @@ msgstr "Je bent nergens voor geautoriseerd"
 msgid "iCal bartender agenda"
 msgstr "iCal tappersrooster"
 
-msgid "This is the location of your personal bartender iCal."
-msgstr "Dit is de locatie van jouw persoonlijk tappers-iCal."
-
 msgid "Generate new"
 msgstr "Genereer nieuwe"
+
+msgid "Copy to clipboard"
+msgstr "Kopieer naar klembord"
 
 msgid "IVA certificate"
 msgstr "IVA certificaat"
@@ -1342,6 +1342,9 @@ msgstr "Voer een geldige hexadecimale kleur in"
 
 msgid "Enter a valid RADIUS username"
 msgstr "Voer een geldige RADIUS-gebruikersnaam in"
+
+#~ msgid "This is the location of your personal bartender iCal."
+#~ msgstr "Dit is de locatie van jouw persoonlijk tappers-iCal."
 
 #~ msgid "{pricegroup}: {productgroup} for {price}"
 #~ msgstr "{pricegroup}: {productgroup} voor {price}"
