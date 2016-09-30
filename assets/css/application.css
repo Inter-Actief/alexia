@@ -61,6 +61,12 @@ body {
   background-color: #fdfd96;
 }
 
+.table tbody > tr > td.overflow-protect {
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .table-events {
   font-size: 13px;
 }
