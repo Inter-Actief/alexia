@@ -9,7 +9,7 @@ from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from apps.billing.forms import PermanentProductForm, SellingPriceForm
+from apps.billing.forms import FilterEventForm, PermanentProductForm, SellingPriceForm
 from apps.billing.models import (
     PermanentProduct, PriceGroup, Product, ProductGroup, SellingPrice,
     TemporaryProduct,
@@ -67,6 +67,34 @@ def order_show(request, pk):
     order_sum = orders.aggregate(Sum('amount'))['amount__sum']
 
     return render(request, "order/show.html", locals())
+
+
+@login_required
+@manager_required
+def order_export(request):
+    if request.method == 'POST':
+        form = FilterEventForm(request.POST)
+        if form.is_valid():
+            event_list = Event.objects \
+                .filter(
+                    organizer=request.organization,
+                    starts_at__gte=form.cleaned_data['from_time'],
+                    starts_at__lte=form.cleaned_data['till_time'],
+                )
+            events = event_list \
+                .annotate(order_count=Count('orders'), revenue=Sum('orders__amount')) \
+                .filter(order_count__gt=0, ) \
+                .order_by('starts_at')
+            summary = event_list \
+                .extra({'month': 'MONTH(starts_at)'}) \
+                .values('month') \
+                .annotate(revenue=Sum('orders__amount')) \
+                .order_by('month')
+            return render(request, 'order/export_result.html', locals())
+    else:
+        form = FilterEventForm()
+
+    return render(request, 'order/export_form.html', locals())
 
 
 @login_required

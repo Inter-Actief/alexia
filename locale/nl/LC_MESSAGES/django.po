@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 15:28+0200\n"
+"POT-Creation-Date: 2016-10-03 14:22+0200\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -21,6 +21,15 @@ msgstr "Eigenaar"
 
 msgid "Debtor"
 msgstr "Debiteur"
+
+msgid "Export"
+msgstr "Exporteren"
+
+msgid "From time"
+msgstr "Begintijd"
+
+msgid "Till time"
+msgstr "Eindtijd"
 
 msgid "organization"
 msgstr "organisatie"
@@ -283,12 +292,6 @@ msgstr "Ruimtes"
 
 msgid "Organization"
 msgstr "Organisatie"
-
-msgid "From time"
-msgstr "Begintijd"
-
-msgid "Till time"
-msgstr "Eindtijd"
 
 msgid "Filter"
 msgstr "Filter"
@@ -912,15 +915,27 @@ msgstr "Laatst getapte activiteiten"
 msgid "Date"
 msgstr "Datum"
 
+msgid "Export transactions of"
+msgstr "Transacties exporteren van"
+
 #, python-format
 msgid "Transactions of %(organization)s"
 msgstr "Transacties van %(organization)s"
 
-msgid "Year"
-msgstr "Jaar"
+msgid "Summary"
+msgstr ""
+
+msgid "Month"
+msgstr "Maand"
 
 msgid "Revenue"
 msgstr "Omzet"
+
+msgid "Specification"
+msgstr "Specificatie"
+
+msgid "Year"
+msgstr "Jaar"
 
 msgid "Transactions"
 msgstr "Transacties"
@@ -957,9 +972,6 @@ msgstr "Tijdstempel"
 
 msgid "Synchronized"
 msgstr "Gesynchroniseerd"
-
-msgid "Month"
-msgstr "Maand"
 
 msgid "Payment"
 msgstr "Betaling"

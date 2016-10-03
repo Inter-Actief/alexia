@@ -136,6 +136,14 @@ body {
   #feedback {
     display: none;
   }
+
+  body {
+    padding: 0;
+  }
+
+  footer {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
