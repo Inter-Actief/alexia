@@ -70,7 +70,7 @@ def edit(request):
 
 @login_required
 def iva(request):
-    certificate = request.user.certificate
+    certificate = getattr(request.user, 'certificate', None)
 
     if request.method == 'POST':
         form = IvaForm(request.POST, request.FILES)
