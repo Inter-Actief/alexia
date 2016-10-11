@@ -2,7 +2,7 @@ Django>=1.9,<1.10
 django-compressor==1.6
 django-crispy-forms>=1.5.2,<1.6
 django-debug-toolbar>=1.5,<1.6
-git+git://github.com/Inter-Actief/django-json-rpc.git#egg=django_json_rpc
+django-json-rpc>=0.7.2
 mysqlclient>=1.3.7,<1.4
 eventlog==0.11.0
 icalendar==3.9.1
