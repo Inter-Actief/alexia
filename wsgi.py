@@ -1,5 +1,5 @@
 """
-WSGI config for django19skel project.
+WSGI config for Alexia project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

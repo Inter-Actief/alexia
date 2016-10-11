@@ -24,6 +24,9 @@ DEFAULT_FROM_EMAIL = 'Alexia <alexia@localhost>'
 EMAIL_SUBJECT_PREFIX = '[Alexia] '
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+# Juliana
+JULIANA_COUNTDOWN = 5
+
 # File uploads
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -110,11 +113,11 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
-                'django.core.context_processors.debug',
-                'django.core.context_processors.i18n',
-                'django.core.context_processors.media',
-                'django.core.context_processors.static',
-                'django.core.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
                 'utils.context_processors.organization',
             ],

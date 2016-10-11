@@ -3,6 +3,7 @@ import uuid
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
@@ -25,6 +26,8 @@ def index(request):
 
     order_count = Order.objects.select_related('event').filter(
         authorization__in=request.user.authorizations.all()).count()
+
+    ical_absolute_url = request.build_absolute_uri(reverse('ical', args=[request.user.profile.ical_id]))
     
     shares = []
     for authorization in request.user.authorizations.all():
