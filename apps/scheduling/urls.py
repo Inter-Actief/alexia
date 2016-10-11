@@ -8,6 +8,7 @@ urlpatterns = patterns(
 
     # Others
     url(r'^$', 'views.overview'),
+    url(r'^matrix/$', 'perspectives.matrix'),
     url(r'^bartender/$', 'perspectives.bartender'),
     url(r'calendar/$', 'perspectives.calendar'),
     url(r'calendar/fetch$', 'perspectives.calendar_fetch'),

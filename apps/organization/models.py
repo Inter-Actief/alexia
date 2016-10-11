@@ -206,7 +206,7 @@ class Membership(models.Model):
                        args=[self.pk])
 
     def tended(self):
-        return BartenderAvailability.objects.filter(
+        return BartenderAvailability.objects.select_related('event').filter(
             user=self.user,
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED). \
