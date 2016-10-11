@@ -11,7 +11,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
 from apps.billing.models import Order, Purchase
-from apps.organization.models import AuthenticationData
+from apps.organization.models import AuthenticationData, Organization
 from utils.auth.decorators import tender_required
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from .forms import ProfileForm, IvaForm
@@ -25,18 +25,22 @@ def index(request):
     orders = order_list.order_by('-placed_at')[:5]
 
     shares = []
-    for authorization in request.user.authorizations.all():
-        all_purchases = Purchase.objects.filter(order__authorization__organization=authorization.organization)
-        my_purchases = Purchase.objects.filter(order__authorization=authorization)
+    for organization in Organization.objects.all():
+        all_purchases = Purchase.objects.filter(order__authorization__organization=organization)
+        my_purchases = Purchase.objects.filter(order__authorization__organization=organization,
+                                               order__authorization__user=request.user)
 
         all_food = all_purchases.filter(product__is_food=True).aggregate(total=Sum('price'))
         all_drinks = all_purchases.filter(product__is_food=False).aggregate(total=Sum('price'))
         my_food = my_purchases.filter(product__is_food=True).aggregate(total=Sum('price'))
         my_drinks = my_purchases.filter(product__is_food=False).aggregate(total=Sum('price'))
 
+        if my_food['total'] is None and my_drinks['total'] is None:
+            continue
+
         food_fraction = (my_food['total'] / all_food['total']) if my_food['total'] and all_food['total'] else 0
         drinks_fraction = (my_drinks['total'] / all_drinks['total']) if my_drinks['total'] and all_drinks['total'] else 0
-        shares.append({'organization': authorization.organization,
+        shares.append({'organization': organization,
                        'food': round(food_fraction * 100, 2),
                        'drinks': round(drinks_fraction * 100, 2)})
 
