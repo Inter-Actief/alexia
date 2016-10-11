@@ -156,7 +156,7 @@ class Event(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('apps.scheduling.views.event_show', args=[self.pk])
+        return reverse('event', args=[self.pk])
 
     def must_ducts_be_flushed(self, location=None):
         """Returns true if this is the last drink of the week or there hasn't

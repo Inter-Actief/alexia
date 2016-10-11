@@ -155,7 +155,7 @@
                         </h4>
                         {% if user.profile.ical_id %}
                         <div class="input-group">
-                            <input type="text" class="form-control" value="https://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
+                            <input type="text" class="form-control" value="{{ ical_absolute_url }}" id="ical-url">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
                                     <span class="glyphicon glyphicon-copy"></span>
