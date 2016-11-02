@@ -82,6 +82,7 @@ class SellingPrice(models.Model):
 @python_2_unicode_compatible
 class Product(models.Model):
     name = models.CharField(_('name'), max_length=32)
+    shortcut = models.CharField(_('shortcut'), max_length=1, null=False, blank=True)
     text_color = models.CharField(
         verbose_name=_('Text color'),
         blank=True,

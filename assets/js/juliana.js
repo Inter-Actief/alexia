@@ -432,8 +432,14 @@ $(function () {
     });
 
     $(document).keydown(function (event) {
-        if(event.which >= 48 && event.which <= 57) // 48 is the keycode for 0, 57 for 9
+        console.log(event.which);
+
+        if(event.which >= 48 && event.which <= 57) { // 48 is the keycode for 0, 57 for 9
             Input.stroke((event.which - 48).toString());
+        } else if(Settings.shortcuts[String.fromCharCode(event.which)] !== undefined) {
+            Sales.add(Settings.shortcuts[String.fromCharCode(event.which)].id, Input.read());
+            Input.reset();
+        }
     });
 
     $('.command').click(function () {

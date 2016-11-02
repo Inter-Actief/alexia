@@ -56,6 +56,10 @@
                     <span {% if object.text_color %}style="color: #{{ object.text_color }};"{% endif %}>{{ object.name }}</span>
                 </td>
             </tr>
+            <tr>
+                <th>{% trans 'Shortcut' %}</th>
+                <td>{{ object.shortcut }}</td>
+            </tr>
         </table>
     </div>
 </div>
