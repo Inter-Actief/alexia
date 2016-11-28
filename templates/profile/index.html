@@ -65,7 +65,6 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{% trans 'ID number' %}</th>
-                                    <th>{% trans 'Active' %}</th>
                                     <th>{% trans 'Sinds' %}</th>
                                 </tr>
                             </thead>
@@ -74,13 +73,6 @@
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ rfid_card.identifier }}</td>
-                                    <td>
-                                    {% if rfid_card.is_active %}
-                                        {% trans 'Yes' %}
-                                    {% else %}
-                                        {% trans 'No' %}
-                                    {% endif %}
-                                    </td>
                                     <td>{{ rfid_card.registered_at|default:"&mdash;" }}</td>
                                 </tr>
                                 {% empty %}
