@@ -130,15 +130,23 @@ def rfid_add(request, radius_username, identifier):
         raise InvalidParametersError('User with provided radius_username does not exits')
 
     try:
-        rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
+        rfidcard = RfidCard.objects_all.select_for_update().get(user=user, identifier=identifier)
     except RfidCard.DoesNotExist:
+        # Check if the RFID card is currently in use by someone else
         if RfidCard.objects.select_for_update().filter(identifier=identifier).exists():
             raise InvalidParametersError('RFID card with provided identifier already registered by someone else')
+
+        # Check if the RFID card has been used by someone but is deleted and has transactions associated with it
+        if RfidCard.objects_all.select_for_update().filter(identifier=identifier).exists():
+            raise InvalidParametersError('RFID card does not exist anymore, but has transactions linked to it')
 
         rfidcard = RfidCard(user=user, identifier=identifier, is_active=True)
         rfidcard.save()
 
     if request.organization not in rfidcard.managed_by.all().select_for_update():
+        # If the RFID card was deleted, undelete it
+        if rfidcard.is_deleted:
+            rfidcard.is_deleted = False
         rfidcard.managed_by.add(request.organization)
         rfidcard.save()
         return format_rfidcard(rfidcard)

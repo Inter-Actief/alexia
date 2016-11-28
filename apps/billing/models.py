@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import ProtectedError
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
@@ -179,6 +180,11 @@ class TemporaryProduct(Product):
         return self.temporaryproduct.price
 
 
+class NonDeletedRfidCardManager(models.Manager):
+    def get_queryset(self):
+        return super(NonDeletedRfidCardManager, self).get_queryset().filter(is_deleted=False)
+
+
 @python_2_unicode_compatible
 class RfidCard(models.Model):
     identifier = models.CharField(_('identifier'), unique=True, max_length=50)
@@ -186,6 +192,11 @@ class RfidCard(models.Model):
     registered_at = models.DateTimeField(_('registered at'), default=timezone.now)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='rfids', verbose_name=_('user'))
     managed_by = models.ManyToManyField(Organization)
+    is_deleted = models.BooleanField(_('is deleted'), default=False)
+
+    # Switch the normal manager with the NonDeletedRfidCardManager, and add a separate manager to get all rfid cards.
+    objects = NonDeletedRfidCardManager()
+    objects_all = models.Manager()
 
     class Meta:
         verbose_name = _('RFID card')
@@ -193,6 +204,15 @@ class RfidCard(models.Model):
 
     def __str__(self):
         return self.identifier
+
+    def delete(self, using=None, keep_parents=False):
+        # Try to delete the RFID card
+        try:
+            super(RfidCard, self).delete(using=using, keep_parents=keep_parents)
+        except ProtectedError:
+            # Card already has transactions, mark it as deleted but keep the card for reference purposes.
+            self.is_deleted = True
+            self.save()
 
 
 @python_2_unicode_compatible
