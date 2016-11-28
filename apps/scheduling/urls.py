@@ -5,6 +5,7 @@ from . import perspectives, views
 urlpatterns = [
     # Others
     url(r'^$', views.overview, name='schedule'),
+    url(r'^matrix/$', perspectives.matrix, name='matrix'),
     url(r'^bartender/$', perspectives.bartender, name='bartender-schedule'),
     url(r'^calendar/$', perspectives.calendar, name='calendar-schedule'),
     url(r'^calendar/fetch$', perspectives.calendar_fetch, name='fetch-calendar-schedule'),
