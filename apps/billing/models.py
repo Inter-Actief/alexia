@@ -188,7 +188,6 @@ class NonDeletedRfidCardManager(models.Manager):
 @python_2_unicode_compatible
 class RfidCard(models.Model):
     identifier = models.CharField(_('identifier'), unique=True, max_length=50)
-    is_active = models.BooleanField(_('is active'), default=False)
     registered_at = models.DateTimeField(_('registered at'), default=timezone.now)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='rfids', verbose_name=_('user'))
     managed_by = models.ManyToManyField(Organization)

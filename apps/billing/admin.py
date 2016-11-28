@@ -68,11 +68,11 @@ class ProductGroupAdmin(admin.ModelAdmin):
 
 @admin.register(RfidCard)
 class RfidCardAdmin(admin.ModelAdmin):
-    list_display = ('identifier', 'user', _user_full_name, 'is_active')
-    list_filter = ('is_active', 'managed_by')
+    list_display = ('identifier', 'user', _user_full_name, 'is_deleted')
+    list_filter = ('is_deleted', 'managed_by')
     readonly_fields = ['registered_at']
     search_fields = ('identifier', 'user__first_name', 'user__last_name', 'user__username')
-    fields = ['identifier', 'user', 'managed_by', 'is_active', 'registered_at']
+    fields = ['identifier', 'user', 'managed_by', 'is_deleted', 'registered_at']
     raw_id_fields = ('user',)
 
 
