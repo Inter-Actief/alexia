@@ -86,6 +86,7 @@ class Profile(models.Model):
     def next_tending(self):
         return BartenderAvailability.objects.filter(
             user=self.user,
+            event__is_deleted=False,
             event__ends_at__gte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
         ).order_by('event__starts_at')[0].event
@@ -149,6 +150,7 @@ class Profile(models.Model):
     def tended_count(self):
         return BartenderAvailability.objects.filter(
             user=self.user,
+            event__is_deleted=False,
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
         ).count()
@@ -225,6 +227,7 @@ class Membership(models.Model):
     def tended(self):
         return BartenderAvailability.objects.filter(
             user=self.user,
+            event__is_deleted=False,
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED
         ).order_by('-event__starts_at')
