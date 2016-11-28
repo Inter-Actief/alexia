@@ -140,7 +140,7 @@ def rfid_add(request, radius_username, identifier):
         if RfidCard.objects_all.select_for_update().filter(identifier=identifier).exists():
             raise InvalidParametersError('RFID card does not exist anymore, but has transactions linked to it')
 
-        rfidcard = RfidCard(user=user, identifier=identifier, is_active=True)
+        rfidcard = RfidCard(user=user, identifier=identifier)
         rfidcard.save()
 
     if request.organization not in rfidcard.managed_by.all().select_for_update():
