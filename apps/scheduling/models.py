@@ -144,6 +144,7 @@ class Event(models.Model):
             'Designates that this event should be marked as risky.'
         ),
     )
+    is_deleted = models.BooleanField(verbose_name=_("is deleted"), default=False)
 
     objects = EventManager()
 

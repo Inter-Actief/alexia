@@ -249,7 +249,8 @@ def event_delete(request, pk):
         raise PermissionDenied
 
     if request.method == 'POST':
-        event.delete()
+        event.is_deleted = True
+        event.save()
         log.event_deleted(request.user, event)
         return redirect(overview)
     else:
