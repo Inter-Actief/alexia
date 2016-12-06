@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        <h1>
+            {% trans 'Digital consumption form' %}
+            <small>{{ event }}</small>
+        </h1>
+    </div>
+    {% include 'consumption/partials/weight_consumption.html' %}
+    {% include 'consumption/partials/unit_consumption.html' %}
+    <div class="well">
+
+    </div>
+    <div class="well text-right">
+        <button class="btn btn-lg btn-default">{% trans 'Save' %}</button>
+        <button class="btn btn-lg btn-primary" disabled="disabled">{% trans 'Complete form' %}</button>
+    </div>
+</div>
+{% endblock body %}

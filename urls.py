@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
+from apps.consumption.views import dcf
 from apps.general import views as general_views
 from apps.juliana.views import juliana
 from apps.scheduling import views as scheduling_views
@@ -10,9 +11,12 @@ urlpatterns = [
     # Root
     url(r'^$', scheduling_views.overview),
 
+    # Short urls to 'subsystems'
+    url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),
+    url(r'^juliana/(?P<pk>\d+)/$', juliana, name='juliana'),
+
     # Apps
     url(r'^billing/', include('apps.billing.urls')),
-    url(r'^juliana/(?P<pk>\d+)/$', juliana, name='juliana'),
     url(r'^organization/', include('apps.organization.urls')),
     url(r'^profile/', include('apps.profile.urls')),
     url(r'^scheduling/', include('apps.scheduling.urls')),

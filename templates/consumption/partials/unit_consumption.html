@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="well">
+    <div class="row">
+        <div class="col-xs-2 text-center">
+            <img src="{{ STATIC_URL }}img/bottle.svg">
+            <h3>{% trans 'By units' %}</h3>
+        </div>
+        <div class="col-xs-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Product' %}</th>
+                        <th>{% trans 'Units consumed' %}</th>
+                        <th>{% trans 'Delete' %}</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

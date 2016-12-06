@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="well">
+    <div class="row">
+        <div class="col-xs-2 text-center">
+            <img src="{{ STATIC_URL }}img/tap.svg">
+            <h3>{% trans 'By weight' %}</h3>
+        </div>
+        <div class="col-xs-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Product' %}</th>
+                        <th>{% trans 'Initial weight' %}</th>
+                        <th>{% trans 'Kegs changed' %}</th>
+                        <th>{% trans 'Final weight' %}</th>
+                        <th>{% trans 'Flowmeter start' %}</th>
+                        <th>{% trans 'Flowmeter end' %}</th>
+                        <th>{% trans 'Delete' %}</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
