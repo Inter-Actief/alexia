@@ -43,6 +43,17 @@ def dcf(request, pk):
     return render(request, 'consumption/dcf.html', locals())
 
 
+def complete_dcf(request, pk):
+    # Get event and verify rights
+    event = get_object_or_404(Event, pk=pk)
+
+    if not event.is_tender(request.user):
+        return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
+
+    cf = get_object_or_404(ConsumptionForm, pk=event.consumptionform.pk)
+
+    return render(request, 'consumption/dcf_check.html', locals())
+
 class ConsumptionProductListView(FoundationManagerRequiredMixin, ListView):
     model = ConsumptionProduct
 
