@@ -67,6 +67,13 @@ class Profile(models.Model):
             'Designates that this user has a valid, non-expired BHV (Emergency Response Officer) certificate.'
         ),
     )
+    is_foundation_manager = models.BooleanField(
+        _('is foundation manager'),
+        default=False,
+        help_text=_(
+            'Designates that this user is manager of the purchasing foundation.'
+        ),
+    )
     current_organization = models.ForeignKey(
         'Organization',
         models.SET_NULL,

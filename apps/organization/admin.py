@@ -16,7 +16,7 @@ admin.site.unregister(User)
 
 class ProfileInline(admin.StackedInline):
     model = Profile
-    fields = ['is_iva', 'is_bhv']
+    fields = ['is_iva', 'is_bhv', 'is_foundation_manager']
 
 
 class AuthenticationDataInline(admin.StackedInline):
