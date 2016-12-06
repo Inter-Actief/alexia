@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
@@ -8,14 +8,37 @@ from apps.scheduling.models import Event
 from utils.auth.mixins import FoundationManagerRequiredMixin
 from utils.mixins import CrispyFormMixin
 
-from .models import ConsumptionProduct, WeightConsumptionProduct
+from .forms import ConsumptionFormForm, WeightEntryFormSet, UnitEntryFormSet
+from .models import ConsumptionProduct, WeightConsumptionProduct, ConsumptionForm
 
 
 def dcf(request, pk):
+    # Get event and verify rights
     event = get_object_or_404(Event, pk=pk)
 
     if not event.is_tender(request.user):
         return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
+
+    # Get consumption form or create one
+    if hasattr(event, 'consumptionform'):
+        cf = event.consumptionform
+    else:
+        cf = ConsumptionForm(event=event)
+
+    # Post or show form?
+    if request.method == 'POST':
+        form = ConsumptionFormForm(request.POST, instance=cf)
+        weight_form = WeightEntryFormSet(request.POST, instance=cf)
+        unit_form = UnitEntryFormSet(request.POST, instance=cf)
+        if form.is_valid() and weight_form.is_valid() and unit_form.is_valid():
+            form.save()
+            weight_form.save()
+            unit_form.save()
+            return redirect('dcf', event.pk)
+    else:
+        form = ConsumptionFormForm(instance=cf)
+        weight_form = WeightEntryFormSet(instance=cf)
+        unit_form = UnitEntryFormSet(instance=cf)
 
     return render(request, 'consumption/dcf.html', locals())
 
