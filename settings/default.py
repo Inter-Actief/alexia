@@ -74,6 +74,7 @@ INSTALLED_APPS = [
 
     'api',
     'apps.billing',
+    'apps.consumption',
     'apps.general',
     'apps.juliana',
     'apps.organization',

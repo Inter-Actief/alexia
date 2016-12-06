@@ -44,25 +44,39 @@
                     </ul>
                 </li>
                 {% if current_organization and request.user.profile.is_manager %}
-                    <li class="{% active_menu 'apps.organization.views' 'active' %}">
-                        <a href="{% url 'memberships' %}">
-                            {% trans 'Users' %}
-                        </a>
-                    </li>
-                    <li class="dropdown {% active_menu 'apps.billing.views' 'active' %}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {% trans 'Billing' %}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{% url 'productgroup_list' %}">{% trans 'Product groups' %}</a></li>
-                            <li><a href="{% url 'permanentproduct_list' %}">{% trans 'Products' %}</a></li>
-                            <li><a href="{% url 'pricegroup_list' %}">{% trans 'Price groups' %}</a></li>
-                            <li><a href="{% url 'sellingprice_matrix' %}">{% trans 'Price matrix' %}</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{% url 'orders' %}">{% trans 'Orders' %}</a></li>
-                        </ul>
-                    </li>
+                <li class="{% active_menu 'apps.organization.views' 'active' %}">
+                    <a href="{% url 'memberships' %}">
+                        {% trans 'Users' %}
+                    </a>
+                </li>
+                <li class="dropdown {% active_menu 'apps.billing.views' 'active' %}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {% trans 'Billing' %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'productgroup_list' %}">{% trans 'Product groups' %}</a></li>
+                        <li><a href="{% url 'permanentproduct_list' %}">{% trans 'Products' %}</a></li>
+                        <li><a href="{% url 'pricegroup_list' %}">{% trans 'Price groups' %}</a></li>
+                        <li><a href="{% url 'sellingprice_matrix' %}">{% trans 'Price matrix' %}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'orders' %}">{% trans 'Orders' %}</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% if current_organization and user.profile.is_manager or user.profile.is_foundation_manager %}
+                <li class="dropdown {% active_menu 'apps.consumption.views' 'active' %}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {% trans 'Consumption' %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if user.is_superuser or user.profile.is_foundation_manager %}
+                        <li><a href="{% url 'consumptionproduct_list' %}">{% trans 'Consumption products' %}</a></li>
+                        {% endif %}
+                        <li><a href="#">{% trans 'Consumption forms' %}</a></li>
+                    </ul>
+                </li>
                 {% endif %}
             </ul>
 

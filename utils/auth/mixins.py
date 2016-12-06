@@ -84,3 +84,15 @@ class ManagerRequiredMixin(PassesTestMixin):
         return request.user.is_authenticated() and (
             request.user.is_superuser or (
                 request.organization and request.user.profile.is_manager(request.organization)))
+
+
+class FoundationManagerRequiredMixin(PassesTestMixin):
+    """
+    Mixin to require the current user to be a foundation manager.
+    """
+    needs_login = True
+    reason = _('You are not a foundation manager.')
+
+    def test_requirement(self, request):
+        return request.user.is_authenticated() and (
+            request.user.is_superuser or request.user.profile.is_foundation_manager)

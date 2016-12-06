@@ -17,6 +17,7 @@ urlpatterns = [
 
     # Apps
     url(r'^billing/', include('apps.billing.urls')),
+    url(r'^consumption/', include('apps.consumption.urls')),
     url(r'^organization/', include('apps.organization.urls')),
     url(r'^profile/', include('apps.profile.urls')),
     url(r'^scheduling/', include('apps.scheduling.urls')),
