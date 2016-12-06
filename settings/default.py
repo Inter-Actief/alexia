@@ -79,7 +79,6 @@ INSTALLED_APPS = [
     'apps.organization',
     'apps.profile',
     'apps.scheduling',
-    'apps.stock',
     'utils',
 ]
 
