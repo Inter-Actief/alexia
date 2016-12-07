@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-03 14:22+0200\n"
+"POT-Creation-Date: 2016-12-07 19:34+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -142,6 +142,104 @@ msgstr "aankoop"
 msgid "purchases"
 msgstr "aankopen"
 
+msgid "Comments..."
+msgstr "Commentaar..."
+
+msgid "Flowmeter positions are required for this product."
+msgstr "Flowmeterstanden zijn verplicht voor dit product."
+
+msgid "Flowmeter start position is bigger than end."
+msgstr "Flowmeter beginstand is hoger dan eindstand."
+
+msgid "I declare that I have cleaned the rooms"
+msgstr "Ik verklaar dat de ruimtes schoongemaakt zijn."
+
+msgid ""
+"After each event the rooms have to cleaned according to the cleaning "
+"checklist."
+msgstr ""
+"Na elk evenement moeten de ruimtes schoongemaakt worden aan de hand "
+"van de schoonmaakchecklist."
+
+msgid "I declare that this form has been filled in truthfully"
+msgstr "Ik verklaar dat dit formulier naar waarheid is ingevuld"
+
+msgid ""
+"I am sure that the values above are filled in correct and has been verified."
+msgstr ""
+"Ik weet zeker dat bovenstaande gegevens gecheckt zijn en kloppen."
+
+msgid "consumption product"
+msgstr "voorraadproduct"
+
+msgid "consumption products"
+msgstr "voorraadproducten"
+
+msgid "full weight"
+msgstr "gewicht vol"
+
+msgid "empty weight"
+msgstr "gewicht leeg"
+
+msgid "has flowmeter"
+msgstr "Geeft flowmeter"
+
+msgid ""
+"Designates wheter apart from weight, this product also uses a flowmeter."
+msgstr ""
+"Geeft aan dat naast gewicht, dit product ook flowmeters gebruikt."
+
+msgid "consumption product by weight"
+msgstr "voorraadproduct op gewicht"
+
+msgid "consumption products by weight"
+msgstr "voorraadproducten op gewicht"
+
+msgid "completed by"
+msgstr "afgerond door"
+
+msgid "completed at"
+msgstr "afgerond op"
+
+msgid "comments"
+msgstr "commentaar"
+
+msgid "consumption form"
+msgstr "verbruiksformulier"
+
+msgid "consumption forms"
+msgstr "verbruiksformulieren"
+
+msgid "consumption_form"
+msgstr "verbruiksformulier"
+
+msgid "starting weight"
+msgstr "begingewicht"
+
+msgid "end weight"
+msgstr "eindgewicht"
+
+msgid "kegs changed"
+msgstr "fusten verwisseld"
+
+msgid "flowmeter start"
+msgstr "beginstand flowmeter"
+
+msgid "flowmeter end"
+msgstr "eindstand flowmeter"
+
+msgid "weight entry"
+msgstr "invoer op gewicht"
+
+msgid "weight entries"
+msgstr "invoer op gewicht"
+
+msgid "unit entry"
+msgstr "invoer op eenheid"
+
+msgid "unit entries"
+msgstr "invoer op eenheid"
+
 msgid "You are not a tender for this event"
 msgstr "Je bent geen tapper bij deze borrel!"
 
@@ -198,6 +296,12 @@ msgid ""
 msgstr ""
 "Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
 
+msgid "is foundation manager"
+msgstr "is stichtingsmananger"
+
+msgid "Designates that this user is manager of the purchasing foundation."
+msgstr "Geeft aan dat deze gebruiker manager is van de inkoopstichting."
+
 msgid "current organization"
 msgstr "huidige organisatie"
 
@@ -221,9 +325,6 @@ msgstr "gebruikers"
 
 msgid "organizations"
 msgstr "organisatie"
-
-msgid "comments"
-msgstr "commentaar"
 
 msgid "may tend on events"
 msgstr "mag op borrels tappen"
@@ -452,73 +553,6 @@ msgstr "tapperbeschikbaarheden"
 msgid "Creating an event requires an primary organization."
 msgstr "Een primaire organisatie is nodig voor het aanmaken van evenementen."
 
-#, python-format
-msgid "Event consumption #%s"
-msgstr "Activiteitsconsumptie #%s"
-
-msgid "opened at"
-msgstr "geopend op"
-
-msgid "closed at"
-msgstr "gesloten op"
-
-msgid "event consumption"
-msgstr "activiteitsconsumptie"
-
-msgid "event consumptions"
-msgstr "activiteitconsumpties"
-
-msgid "ideal amount"
-msgstr "ideale hoeveelheid"
-
-msgid "stock product"
-msgstr "voorraadproduct"
-
-msgid "stock products"
-msgstr "voorraadproducten"
-
-msgid "consumption group"
-msgstr "consumptiegroep"
-
-msgid "used at"
-msgstr "gebruikt op"
-
-msgid "tap"
-msgstr "tap"
-
-msgid "start weight"
-msgstr "begingewicht"
-
-msgid "end weight"
-msgstr "eindgewicht"
-
-msgid "consumption"
-msgstr "consumptie"
-
-msgid "consumptions"
-msgstr "consumpties"
-
-msgid "date"
-msgstr "datum"
-
-msgid "is completed"
-msgstr "is voltooid"
-
-msgid "products"
-msgstr "producten"
-
-msgid "stock count"
-msgstr "voorraadtelling"
-
-msgid "stock counts"
-msgstr "voorraadtellingen"
-
-msgid "stock product amount"
-msgstr "voorraadproducthoeveelheid"
-
-msgid "stock product amounts"
-msgstr "voorraadproducthoeveelheden"
-
 msgid "Dutch"
 msgstr "Nederlands"
 
@@ -594,6 +628,15 @@ msgstr "Prijsmatrix"
 msgid "Orders"
 msgstr "Transacties"
 
+msgid "Consumption"
+msgstr "Verbruik"
+
+msgid "Consumption products"
+msgstr "Voorraadproducten"
+
+msgid "Consumption forms"
+msgstr "Verbruiksformulieren"
+
 msgid "Help"
 msgstr "Help"
 
@@ -629,9 +672,6 @@ msgstr "Naam"
 
 msgid "Product group"
 msgstr "Productgroep"
-
-msgid "Stock product"
-msgstr "Voorraadproduct"
 
 msgid "Modify"
 msgstr "Wijzigen"
@@ -742,6 +782,96 @@ msgstr "Bewerk tijdelijk product %(object)s"
 msgid "New temporary product"
 msgstr "Nieuw tijdelijk product"
 
+msgid "Edit consumption product"
+msgstr "Wijzig voorraadproduct"
+
+msgid "New consumption product"
+msgstr "Nieuw voorraadproduct"
+
+msgid "Add (KG)"
+msgstr "Nieuw (KG)"
+
+msgid "Add (CE)"
+msgstr "Nieuw (CE)"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "No consumption products defined."
+msgstr "Geen voorraadproducten gedefinieerd."
+
+msgid "Consumption form"
+msgstr "Verbruiksformulier"
+
+msgid "Digital consumption form"
+msgstr "Digitaal verbruiksformulier"
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "Complete form"
+msgstr "Formulier afronden"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Organizer"
+msgstr "Organisator"
+
+msgid "Begin weight"
+msgstr "Begingewicht"
+
+msgid "End weight"
+msgstr "Eindgewicht"
+
+msgid "Kegs changed"
+msgstr "Fusten verwisseld"
+
+msgid "Flowmeter"
+msgstr "Flowmeter"
+
+msgid "Sign form as"
+msgstr "Formulier ondertekenen als"
+
+msgid "Revise"
+msgstr "Wijzigen"
+
+msgid "Finished!"
+msgstr "Voltooid!"
+
+msgid "The form has been signed and submitted."
+msgstr "Het formulier is ondertekend en ingezonden."
+
+msgid "Tenders, thank you!"
+msgstr "Tappers, bedankt!"
+
+msgid "Back"
+msgstr "Terug"
+
+msgid "By units"
+msgstr "Op eenheden"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Units consumed"
+msgstr "Eenheden verbruikt"
+
+msgid "By weight"
+msgstr "Op gewicht"
+
+msgid "Initial weight"
+msgstr "Begingewicht"
+
+msgid "Final weight"
+msgstr "Eindgewicht"
+
+msgid "Flowmeter start"
+msgstr "Flowmeter begin"
+
+msgid "Flowmeter end"
+msgstr "Flowmeter eind"
+
 msgid "About"
 msgstr "Over"
 
@@ -794,9 +924,6 @@ msgid ""
 msgstr ""
 "Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te "
 "mogen."
-
-msgid "Save"
-msgstr "Opslaan"
 
 msgid "Error"
 msgstr "Fout"
@@ -912,9 +1039,6 @@ msgstr "Aantal keer getapt"
 msgid "Last tended events"
 msgstr "Laatst getapte activiteiten"
 
-msgid "Date"
-msgstr "Datum"
-
 msgid "Export transactions of"
 msgstr "Transacties exporteren van"
 
@@ -923,7 +1047,7 @@ msgid "Transactions of %(organization)s"
 msgstr "Transacties van %(organization)s"
 
 msgid "Summary"
-msgstr ""
+msgstr "Samenvatting"
 
 msgid "Month"
 msgstr "Maand"
@@ -949,17 +1073,11 @@ msgstr "Pagina"
 msgid "of"
 msgstr "van de"
 
-msgid "Organizer"
-msgstr "Organisator"
-
 msgid "# Transactions"
 msgstr "# Transacties"
 
 msgid "Sales"
 msgstr "Verkopen"
-
-msgid "Product"
-msgstr "Product"
 
 msgid "ID"
 msgstr "ID"
@@ -1324,6 +1442,9 @@ msgstr "Risicoactiviteit"
 msgid "Point of sale"
 msgstr "Kassa"
 
+msgid "DCF"
+msgstr "DVF"
+
 #, python-format
 msgid "No events have been planned after %(s)s."
 msgstr "Er zijn geen activiteiten gepland na %(s)s."
@@ -1346,6 +1467,9 @@ msgstr "Je bent geen plannerbij de geselecteerde organisatie!"
 msgid "You are not a manager of the selected organization."
 msgstr "Je bent geen managerbij de geselecteerde organisatie!"
 
+msgid "You are not a foundation manager."
+msgstr "Je bent geen stichtingsmananger."
+
 msgid "Javascript must be enabled to reveal email address"
 msgstr "Javascript moet zijn ingeschakeld om dit e-mailadres te bekijken."
 
@@ -1354,6 +1478,51 @@ msgstr "Voer een geldige hexadecimale kleur in"
 
 msgid "Enter a valid RADIUS username"
 msgstr "Voer een geldige RADIUS-gebruikersnaam in"
+
+#~ msgid "Event consumption #%s"
+#~ msgstr "Activiteitsconsumptie #%s"
+
+#~ msgid "closed at"
+#~ msgstr "gesloten op"
+
+#~ msgid "event consumptions"
+#~ msgstr "activiteitconsumpties"
+
+#~ msgid "ideal amount"
+#~ msgstr "ideale hoeveelheid"
+
+#~ msgid "stock product"
+#~ msgstr "voorraadproduct"
+
+#~ msgid "stock products"
+#~ msgstr "voorraadproducten"
+
+#~ msgid "used at"
+#~ msgstr "gebruikt op"
+
+#~ msgid "tap"
+#~ msgstr "tap"
+
+#~ msgid "date"
+#~ msgstr "datum"
+
+#~ msgid "products"
+#~ msgstr "producten"
+
+#~ msgid "stock count"
+#~ msgstr "voorraadtelling"
+
+#~ msgid "stock counts"
+#~ msgstr "voorraadtellingen"
+
+#~ msgid "stock product amount"
+#~ msgstr "voorraadproducthoeveelheid"
+
+#~ msgid "stock product amounts"
+#~ msgstr "voorraadproducthoeveelheden"
+
+#~ msgid "Stock product"
+#~ msgstr "Voorraadproduct"
 
 #~ msgid "This is the location of your personal bartender iCal."
 #~ msgstr "Dit is de locatie van jouw persoonlijk tappers-iCal."
@@ -1403,6 +1572,3 @@ msgstr "Voer een geldige RADIUS-gebruikersnaam in"
 
 #~ msgid "There are no transactions."
 #~ msgstr "Er zijn geen transacties."
-
-#~ msgid "You are not a foundation manager."
-#~ msgstr "Je bent geen stichtingsmananger."
