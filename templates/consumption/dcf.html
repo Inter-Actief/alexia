@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n crispy_forms_field compress %}
 
+{% block title %}{% trans 'Consumption form' %}{% endblock %}
+
 {% block head %}
 {% compress js %}
 <script src="{{ STATIC_URL }}js/dcf.js"></script>
@@ -8,12 +10,11 @@
 {% endblock %}
 
 {% block body %}
-{% for field, errors in form.errors.items %}
-<p><b>{{ field }}</b></p>
-{% for error in errors %}
-<p>{{ error }}</p>
+
+{% for form in weight_form %}
+{{ form.non_field_errors }}
 {% endfor %}
-{% endfor %}
+
 <form method="post">
     {% csrf_token %}
     <div class="container">

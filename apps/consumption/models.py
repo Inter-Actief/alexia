@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from apps.scheduling.models import Event
-from utils.models import InheritanceCastModel
 
 
 @python_2_unicode_compatible
@@ -54,7 +55,7 @@ class ConsumptionForm(models.Model):
         null=True,
         verbose_name=_('completed by'),
     )
-    completed_at = models.DateTimeField(_('completed at '), null=True)
+    completed_at = models.DateTimeField(_('completed at'), null=True)
     comments = models.TextField(_('comments'), blank=True)
 
     class Meta:
@@ -85,12 +86,25 @@ class WeightEntry(Entry):
     start_weight = models.DecimalField(_('starting weight'), max_digits=4, decimal_places=1)
     end_weight = models.DecimalField(_('end weight'), max_digits=4, decimal_places=1, blank=True, null=True)
     kegs_changed = models.PositiveSmallIntegerField(_('kegs changed'), default=0)
-    flow_start= models.DecimalField(_('flowmeter start'), max_digits=6, decimal_places=1)
+    flow_start= models.DecimalField(_('flowmeter start'), max_digits=6, decimal_places=1, blank=True, null=True)
     flow_end= models.DecimalField(_('flowmeter end'), max_digits=6, decimal_places=1, blank=True, null=True)
 
     class Meta:
         verbose_name = _('weight entry')
         verbose_name_plural = _('weight entries')
+
+    def total(self):
+        # No kegs changed?
+        if self.kegs_changed == 0:
+            return self.start_weight - self.end_weight
+
+        # First and last keg
+        total = self.start_weight - self.product.empty_weight
+        total += self.product.full_weight - self.end_weight
+        # Everything inbetween are whole kegs
+        total += (self.kegs_changed - 1) * (self.product.full_weight - self.product.empty_weight)
+
+        return total
 
 
 class UnitEntry(Entry):
@@ -99,7 +113,7 @@ class UnitEntry(Entry):
         models.PROTECT,
         verbose_name=_('product'),
     )
-    amount = models.PositiveSmallIntegerField(_('amount'))
+    amount = models.PositiveSmallIntegerField(_('amount'), validators=[MinValueValidator(1)])
 
     class Meta:
         verbose_name = _('unit entry')

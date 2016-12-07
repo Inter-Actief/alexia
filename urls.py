@@ -9,7 +9,7 @@ from apps.scheduling import views as scheduling_views
 
 urlpatterns = [
     # Root
-    url(r'^$', scheduling_views.overview),
+    url(r'^$', scheduling_views.overview, name='root'),
 
     # Short urls to 'subsystems'
     url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),

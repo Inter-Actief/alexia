@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Consumption form' %}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        <h1>
+            {% trans 'Digital consumption form' %}
+            <small>{{ event }}</small>
+        </h1>
+    </div>
+    <div class="well text-center">
+        <h2>
+            {% trans 'Finished!' %}
+            <br>
+            <small>{% trans 'The form has been signed and submitted.' %}</small>
+        </h2>
+        <img src="{{ STATIC_URL }}img/smiley.png">
+        <h3>{% trans 'Tenders, thank you!' %}</h3>
+        <a href="{% url 'root' %}" class="btn btn-primary">{% trans 'Back' %}</a>
+    </div>
+</div>
+{% endblock body %}
