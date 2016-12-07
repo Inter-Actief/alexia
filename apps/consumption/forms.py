@@ -1,13 +1,12 @@
 from __future__ import unicode_literals
 
 from crispy_forms.helper import FormHelper
-
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.translation import ugettext as _
 
-from .models import ConsumptionProduct, ConsumptionForm, WeightEntry, UnitEntry
+from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
 
 
 class ConsumptionFormForm(forms.ModelForm):
@@ -17,6 +16,7 @@ class ConsumptionFormForm(forms.ModelForm):
         widgets = {
             'comments': forms.Textarea(attrs={'placeholder': _('Comments...'), 'rows': '4'}),
         }
+
 
 class WeightEntryForm(forms.ModelForm):
     class Meta:

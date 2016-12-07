@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import ugettext as _
@@ -9,8 +10,13 @@ from apps.scheduling.models import Event
 from utils.auth.mixins import FoundationManagerRequiredMixin
 from utils.mixins import CrispyFormMixin
 
-from .forms import ConsumptionFormForm, WeightEntryFormSet, UnitEntryFormSet, ConsumptionFormConfirmationForm
-from .models import ConsumptionProduct, WeightConsumptionProduct, ConsumptionForm
+from .forms import (
+    ConsumptionFormConfirmationForm, ConsumptionFormForm, UnitEntryFormSet,
+    WeightEntryFormSet,
+)
+from .models import (
+    ConsumptionForm, ConsumptionProduct, WeightConsumptionProduct,
+)
 
 
 def dcf(request, pk):
@@ -21,10 +27,7 @@ def dcf(request, pk):
         return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
 
     # Get consumption form or create one
-    if hasattr(event, 'consumptionform'):
-        cf = event.consumptionform
-    else:
-        cf = ConsumptionForm(event=event)
+    cf = event.consumptionform if hasattr(event, 'consumptionform') else ConsumptionForm(event=event)
 
     # Post or show form?
     if request.method == 'POST':
@@ -51,7 +54,10 @@ def complete_dcf(request, pk):
     if not event.is_tender(request.user):
         return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
 
-    cf = get_object_or_404(ConsumptionForm, pk=event.consumptionform.pk)
+    if not hasattr(event, 'consumptionform'):
+        raise Http404
+
+    cf = event.consumptionform
 
     if request.method == 'POST':
         form = ConsumptionFormConfirmationForm(request.POST)
@@ -64,6 +70,7 @@ def complete_dcf(request, pk):
         form = ConsumptionFormConfirmationForm()
 
     return render(request, 'consumption/dcf_check.html', locals())
+
 
 class ConsumptionProductListView(FoundationManagerRequiredMixin, ListView):
     model = ConsumptionProduct

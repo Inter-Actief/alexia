@@ -28,7 +28,7 @@
                 </tr>
             </table>
         </div>
-        {% if cf.unitentry_set.count %}
+        {% if cf.unitentry_set.all|length %}
         <div class="well">
             <table class="table table-bordered">
                 <tbody>
@@ -42,7 +42,7 @@
             </table>
         </div>
         {% endif %}
-        {% if cf.weightentry_set.count %}
+        {% if cf.weightentry_set.all|length %}
         <div class="well">
             <table class="table">
                 <thead>

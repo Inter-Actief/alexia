@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -65,6 +64,9 @@ class ConsumptionForm(models.Model):
     def __str__(self):
         return self.event.name
 
+    def is_completed(self):
+        return bool(self.completed_by or self.completed_at)
+
 
 class Entry(models.Model):
     consumption_form = models.ForeignKey(
@@ -86,8 +88,8 @@ class WeightEntry(Entry):
     start_weight = models.DecimalField(_('starting weight'), max_digits=4, decimal_places=1)
     end_weight = models.DecimalField(_('end weight'), max_digits=4, decimal_places=1, blank=True, null=True)
     kegs_changed = models.PositiveSmallIntegerField(_('kegs changed'), default=0)
-    flow_start= models.DecimalField(_('flowmeter start'), max_digits=6, decimal_places=1, blank=True, null=True)
-    flow_end= models.DecimalField(_('flowmeter end'), max_digits=6, decimal_places=1, blank=True, null=True)
+    flow_start = models.DecimalField(_('flowmeter start'), max_digits=6, decimal_places=1, blank=True, null=True)
+    flow_end = models.DecimalField(_('flowmeter end'), max_digits=6, decimal_places=1, blank=True, null=True)
 
     class Meta:
         verbose_name = _('weight entry')
