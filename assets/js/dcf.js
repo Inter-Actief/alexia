@@ -3,6 +3,6 @@ $(function() {
 
     $('form').bind('change keyup', function() {
         var disable = (orig != $(this).serialize());
-        $('#complete').prop('disabled', disable);
+        $('#complete').toggleClass('disabled', disable);
     });
 });

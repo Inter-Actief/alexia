@@ -13,7 +13,7 @@ urlpatterns = [
 
     # Short urls to 'subsystems'
     url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),
-    url(r'^dcf/(?P<pk>\d+)/check/$', complete_dcf, name='dcf-post'),
+    url(r'^dcf/(?P<pk>\d+)/check/$', complete_dcf, name='dcf-complete'),
     url(r'^juliana/(?P<pk>\d+)/$', juliana, name='juliana'),
 
     # Apps

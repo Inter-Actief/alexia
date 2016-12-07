@@ -97,6 +97,7 @@
                     {% endif %}
                     {% if is_tender and e.can_be_opened and e in events_tending %}
                     <a class="btn btn-primary" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
+                    <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
                     {% endif %}
                     </div>
                 </td>

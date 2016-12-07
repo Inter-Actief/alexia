@@ -32,7 +32,7 @@
         </div>
         <div class="well text-right">
             <button class="btn btn-lg btn-default">{% trans 'Save' %}</button>
-            <button class="btn btn-lg btn-primary" id="complete">{% trans 'Complete form' %}</button>
+            <a href="{% url 'dcf-complete' event.pk %}" class="btn btn-lg btn-primary" id="complete">{% trans 'Complete form' %}</a>
         </div>
     </div>
 </form>
