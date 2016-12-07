@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 19:34+0100\n"
+"POT-Creation-Date: 2016-12-07 20:15+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -152,22 +152,21 @@ msgid "Flowmeter start position is bigger than end."
 msgstr "Flowmeter beginstand is hoger dan eindstand."
 
 msgid "I declare that I have cleaned the rooms"
-msgstr "Ik verklaar dat de ruimtes schoongemaakt zijn."
+msgstr "Ik verklaar dat de ruimtes schoongemaakt zijn"
 
 msgid ""
 "After each event the rooms have to cleaned according to the cleaning "
 "checklist."
 msgstr ""
-"Na elk evenement moeten de ruimtes schoongemaakt worden aan de hand "
-"van de schoonmaakchecklist."
+"Na elk evenement moeten de ruimtes schoongemaakt worden aan de hand van de "
+"schoonmaakchecklist."
 
 msgid "I declare that this form has been filled in truthfully"
 msgstr "Ik verklaar dat dit formulier naar waarheid is ingevuld"
 
 msgid ""
 "I am sure that the values above are filled in correct and has been verified."
-msgstr ""
-"Ik weet zeker dat bovenstaande gegevens gecheckt zijn en kloppen."
+msgstr "Ik weet zeker dat bovenstaande gegevens gecheckt zijn en kloppen."
 
 msgid "consumption product"
 msgstr "voorraadproduct"
@@ -186,8 +185,7 @@ msgstr "Geeft flowmeter"
 
 msgid ""
 "Designates wheter apart from weight, this product also uses a flowmeter."
-msgstr ""
-"Geeft aan dat naast gewicht, dit product ook flowmeters gebruikt."
+msgstr "Geeft aan dat naast gewicht, dit product ook flowmeters gebruikt."
 
 msgid "consumption product by weight"
 msgstr "voorraadproduct op gewicht"
@@ -239,6 +237,12 @@ msgstr "invoer op eenheid"
 
 msgid "unit entries"
 msgstr "invoer op eenheid"
+
+msgid "You are not a tender for this event."
+msgstr "Je bent geen tapper bij deze borrel."
+
+msgid "This consumption form has been completed."
+msgstr "Dit verbruiksformulier is al afgerond."
 
 msgid "You are not a tender for this event"
 msgstr "Je bent geen tapper bij deze borrel!"
@@ -782,6 +786,42 @@ msgstr "Bewerk tijdelijk product %(object)s"
 msgid "New temporary product"
 msgstr "Nieuw tijdelijk product"
 
+msgid "Details"
+msgstr "Details"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Organizer"
+msgstr "Organisator"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Completed"
+msgstr "Afgerond"
+
+msgid "Pending"
+msgstr "In behandeling"
+
+msgid "Signed off by"
+msgstr "Ondertekend door"
+
+msgid "Begin weight"
+msgstr "Begingewicht"
+
+msgid "End weight"
+msgstr "Eindgewicht"
+
+msgid "Kegs changed"
+msgstr "Fusten verwisseld"
+
+msgid "Flowmeter"
+msgstr "Flowmeter"
+
+msgid "Print"
+msgstr "Print"
+
 msgid "Edit consumption product"
 msgstr "Wijzig voorraadproduct"
 
@@ -811,24 +851,6 @@ msgstr "Opslaan"
 
 msgid "Complete form"
 msgstr "Formulier afronden"
-
-msgid "Date"
-msgstr "Datum"
-
-msgid "Organizer"
-msgstr "Organisator"
-
-msgid "Begin weight"
-msgstr "Begingewicht"
-
-msgid "End weight"
-msgstr "Eindgewicht"
-
-msgid "Kegs changed"
-msgstr "Fusten verwisseld"
-
-msgid "Flowmeter"
-msgstr "Flowmeter"
 
 msgid "Sign form as"
 msgstr "Formulier ondertekenen als"
@@ -1093,9 +1115,6 @@ msgstr "Gesynchroniseerd"
 
 msgid "Payment"
 msgstr "Betaling"
-
-msgid "Details"
-msgstr "Details"
 
 msgid "Handled by"
 msgstr "Afgehandeld door"
