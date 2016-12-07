@@ -88,12 +88,6 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='permanentproduct',
-            name='stockproduct',
-            field=models.ForeignKey(verbose_name='stock product', blank=True, to='stock.StockProduct', null=True),
-            preserve_default=True,
-        ),
-        migrations.AddField(
             model_name='order',
             name='added_by',
             field=models.ForeignKey(related_name='+', verbose_name='added by', to=settings.AUTH_USER_MODEL),

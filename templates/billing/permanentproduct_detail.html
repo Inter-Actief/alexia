@@ -23,10 +23,6 @@
                 <th>{% trans 'Product group' %}</th>
                 <td><a href="{{ object.productgroup.get_absolute_url }}">{{ object.productgroup }}</a></td>
             </tr>
-            <tr>
-                <th>{% trans 'Stock product' %}</th>
-                <td>{{ object.stockproduct|default_if_none:"&mdash;" }}</td>
-            </tr>
         </table>
         <p>
             <a class="btn btn-default" href="{% url 'permanentproduct_update' object.pk %}">
