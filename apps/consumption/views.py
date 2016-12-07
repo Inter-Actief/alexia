@@ -1,8 +1,10 @@
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import ugettext as _
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 
@@ -24,10 +26,13 @@ def dcf(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
     if not event.is_tender(request.user):
-        return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
+        return render(request, '403.html', {'reason': _('You are not a tender for this event.')}, status=403)
 
     # Get consumption form or create one
     cf = event.consumptionform if hasattr(event, 'consumptionform') else ConsumptionForm(event=event)
+
+    if cf.is_completed():
+        return render(request, '403.html', {'reason': _('This consumption form has been completed.')}, status=403)
 
     # Post or show form?
     if request.method == 'POST':
@@ -98,3 +103,10 @@ class ConsumptionProductUpdateView(FoundationManagerRequiredMixin, CrispyFormMix
 class WeightConsumptionProductUpdateView(ConsumptionProductUpdateView):
     model = WeightConsumptionProduct
     fields = ['name', 'full_weight', 'empty_weight', 'has_flowmeter']
+
+class ConsumptionFormListView(FoundationManagerRequiredMixin, ListView):
+    model = ConsumptionForm
+    paginate_by = 30
+
+class ConsumptionFormDetailView(FoundationManagerRequiredMixin, DetailView):
+    model = ConsumptionForm

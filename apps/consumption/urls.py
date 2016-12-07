@@ -11,4 +11,7 @@ urlpatterns = [
         name='consumptionproduct_update'),
     url(r'^products/(?P<pk>\d+)/edit/weight/$', views.WeightConsumptionProductUpdateView.as_view(),
         name='weightconsumptionproduct_update'),
+
+    url(r'^forms/$', views.ConsumptionFormListView.as_view(), name='consumptionform_list'),
+    url(r'^forms/(?P<pk>\d+)/$', views.ConsumptionFormDetailView.as_view(), name='consumptionform_detail'),
 ]

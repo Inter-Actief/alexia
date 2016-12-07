@@ -1,0 +1,64 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Consumption forms' %}{% endblock %}
+
+{% block content %}
+<div class="page-header clearfix">
+    <h1 class="pull-left">
+         {% trans 'Consumption forms' %}
+    </h1>
+    <div class="text-right">
+        <a class="btn btn-default" href="#">
+            <span class="glyphicon glyphicon-print"></span>
+            {% trans 'Export' %}
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans 'Date' %}</th>
+                <th>{% trans 'Organization' %}</th>
+                <th>{% trans 'Event' %}</th>
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.event.starts_at|date:"l j F" }}</td>
+                <td>{{ object.event.organizer }}</td>
+                <td>
+                    <a href="{% url 'consumptionform_detail' object.pk %}">
+                        {{ object.event }}
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-default" href="{% if object.is_weighted %}{% url 'weightconsumptionproduct_update' object.pk %}{% else %}{% url 'consumptionproduct_update' object.pk %}{% endif %}">
+                        <span class="glyphicon glyphicon-print"></span>
+                        {% trans 'Print' %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

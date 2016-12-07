@@ -74,7 +74,7 @@
                         {% if user.is_superuser or user.profile.is_foundation_manager %}
                         <li><a href="{% url 'consumptionproduct_list' %}">{% trans 'Consumption products' %}</a></li>
                         {% endif %}
-                        <li><a href="#">{% trans 'Consumption forms' %}</a></li>
+                        <li><a href="{% url 'consumptionform_list' %}">{% trans 'Consumption forms' %}</a></li>
                     </ul>
                 </li>
                 {% endif %}

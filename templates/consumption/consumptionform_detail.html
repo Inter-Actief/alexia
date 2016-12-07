@@ -1,0 +1,93 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{{ object.event }} {% trans 'consumption form' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>{{ object.event }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>{% trans 'Details' %}</h3>
+            <table class="table table-bordered">
+                <tr>
+                    <th class="col-xs-3">{% trans 'Date' %}</th>
+                    <td class="col-xs-9">{{ object.event.starts_at|date:"l j F" }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Location' %}</th>
+                    <td>{{ object.event.location.all|join:', ' }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Organizer' %}</th>
+                    <td>{{ object.event.organizer }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Status' %}</th>
+                    <td>
+                        {% if object.is_completed %}
+                        {% trans 'Completed' %}
+                        {% else %}
+                        {% trans 'Pending' %}
+                        {% endif %}
+                    </td>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            {% if object.is_completed %}
+            <h3>{% trans 'Signed off by' %}</h3>
+            <p>
+                {{ object.completed_by.get_full_name }}
+                {% trans 'on' %}
+                {{ object.completed_at|date:"l j F Y" }}
+                {% trans 'at' %}
+                {{ object.completed_at|date:"H:i"}}
+            </p>
+            {% endif %}
+            {% if object.comments %}
+            <h3>{% trans 'Comments' %}</h3>
+            <p>{{ object.comments}}</p>
+            {% endif %}
+        </div>
+    </div>
+    <h2>Verbruik</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-xs-3"></th>
+                <th class="col-xs-2">{% trans 'Begin weight' %}</th>
+                <th class="col-xs-2">{% trans 'End weight' %}</th>
+                <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
+                <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
+                <th class="col-xs-2">{% trans 'Consumption' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in object.weightentry_set.all %}
+            <tr>
+                <td>{{ entry.product }}</td>
+                <td>{{ entry.start_weight }} kg</td>
+                <td>{{ entry.end_weight }} kg</td>
+                <td>{{ entry.kegs_changed }}</td>
+                <td>
+                    {% if entry.product.has_flowmeter %}
+                    {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end }} &#8467;
+                    {% endif %}
+                </td>
+                <td>{{ entry.total }}</td>
+            </tr>
+        {% endfor %}
+        {% for entry in object.unitentry_set.all %}
+            <tr>
+                <td>{{ entry.product }}</td>
+                <td colspan="4"></td>
+                <td>{{ entry.amount }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div></div>
+</div>
+{% endblock %}
