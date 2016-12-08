@@ -128,7 +128,7 @@ class Event(models.Model):
         verbose_name=_("bartenders"),
     )
     pricegroup = models.ForeignKey('billing.PriceGroup', related_name='events', verbose_name=_("pricegroup"))
-    kegs = models.IntegerField(verbose_name=_("number of kegs"))
+    kegs = models.PositiveSmallIntegerField(verbose_name=_("number of kegs"))
     option = models.BooleanField(
         verbose_name=_("option"),
         default=False,
