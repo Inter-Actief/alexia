@@ -50,3 +50,14 @@ def manager_required(f):
         return f(request, *args, **kwargs)
 
     return wrap
+
+
+def foundation_manager_required(f):
+    @wraps(f)
+    def wrap(request, *args, **kwargs):
+        if not request.user.is_authenticated() or not request.user.is_superuser and (
+                not request.user.profile.is_foundation_manager):
+            raise PermissionDenied
+        return f(request, *args, **kwargs)
+
+    return wrap
