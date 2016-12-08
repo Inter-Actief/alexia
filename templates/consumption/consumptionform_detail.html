@@ -48,7 +48,7 @@
             {% endif %}
             {% if object.comments %}
             <h3>{% trans 'Comments' %}</h3>
-            <p>{{ object.comments}}</p>
+            {{ object.comments|linebreaks }}
             {% endif %}
         </div>
     </div>

@@ -4,9 +4,12 @@ from crispy_forms.helper import FormHelper
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
+from django.utils.dates import MONTHS
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
+from utils.forms import _default_crispy_helper
 
 
 class ConsumptionFormForm(forms.ModelForm):
@@ -69,3 +72,11 @@ class ConsumptionFormConfirmationForm(forms.Form):
 
     helper = FormHelper()
     helper.form_tag = False
+
+
+class ExportConsumptionFormsForm(forms.Form):
+    now = timezone.now()
+    month = forms.TypedChoiceField(choices=MONTHS.items(), coerce=int, initial=now.month - 1)
+    year = forms.IntegerField(initial=now.year)
+
+    helper = _default_crispy_helper(_('Export'))

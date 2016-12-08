@@ -1,4 +1,8 @@
-from django.core.exceptions import PermissionDenied
+import calendar
+import datetime
+
+from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
+
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -13,8 +17,8 @@ from utils.auth.mixins import FoundationManagerRequiredMixin
 from utils.mixins import CrispyFormMixin
 
 from .forms import (
-    ConsumptionFormConfirmationForm, ConsumptionFormForm, UnitEntryFormSet,
-    WeightEntryFormSet,
+    ConsumptionFormConfirmationForm, ConsumptionFormForm, ExportConsumptionFormsForm,
+    UnitEntryFormSet, WeightEntryFormSet,
 )
 from .models import (
     ConsumptionForm, ConsumptionProduct, WeightConsumptionProduct,
@@ -104,9 +108,53 @@ class WeightConsumptionProductUpdateView(ConsumptionProductUpdateView):
     model = WeightConsumptionProduct
     fields = ['name', 'full_weight', 'empty_weight', 'has_flowmeter']
 
+
 class ConsumptionFormListView(FoundationManagerRequiredMixin, ListView):
     model = ConsumptionForm
     paginate_by = 30
 
+
 class ConsumptionFormDetailView(FoundationManagerRequiredMixin, DetailView):
     model = ConsumptionForm
+
+
+class ConsumptionFormPDFView(FoundationManagerRequiredMixin, PDFTemplateView):
+    template_name = 'consumption/dcf_pdf.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = get_object_or_404(ConsumptionForm, pk=kwargs['pk'])
+        return super(ConsumptionFormPDFView, self).get(request, *args, **kwargs)
+
+    def get_filename(self):
+        return 'Verbruiksformulier %s.pdf' % self.object.event
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context['object'] = self.object
+        context.update(kwargs)
+        return super(ConsumptionFormPDFView, self).get_context_data(**context)
+
+
+def consumptionform_export(request):
+    if request.method == 'POST':
+        form = ExportConsumptionFormsForm(request.POST)
+        if form.is_valid():
+            # Create date range
+            month = form.cleaned_data['month']
+            year = form.cleaned_data['year']
+            last_day = calendar.monthrange(year, month)[1]
+            from_time = datetime.datetime(year, month, 1)
+            till_time = datetime.datetime(year, month, last_day, 23, 59, 59)
+            # Export pdf
+            objects = ConsumptionForm.objects.filter(
+                completed_at__isnull=False,
+                event__starts_at__gte=from_time,
+                event__starts_at__lte=till_time,
+            )
+            filename = 'Verbruiksformulieren %s %d.pdf' % (from_time.strftime('%B'), year)
+            return PDFTemplateResponse(request, 'consumption/dcf_pdf_multi.html',
+                                       context={'objects': objects}, filename=filename)
+    else:
+        form = ExportConsumptionFormsForm()
+
+    return render(request, 'consumption/dcf_export.html', locals())

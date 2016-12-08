@@ -1,0 +1,71 @@
+<div class="page">
+    {% if not object.is_completed %}
+    <p class="alert">
+        Formulier is nog niet afgerond.
+    </p>
+    {% endif %}
+    <h1>Verbruiksformulier</h1>
+    <table>
+        <tr>
+            <th style="width: 15%">Vereniging:</td>
+            <td style="width: 35%">{{ object.event.organizer }}</td>
+            <th style="width: 15%">Ruimte:</td>
+            <td style="width: 35%">{{ object.event.location.all|join:", " }}</td>
+        </tr>
+        <tr>
+            <th>Datum:</td>
+            <td colspan="3">{{ object.event.starts_at|date:"l j F Y" }}</td>
+        </tr>
+        <tr>
+            <th>Naam borrel:</td>
+            <td colspan="3">{{ object.event }}</td>
+        </tr>
+    </table>
+    <h2>Verbruik</h2>
+    {% if object.unitentry_set.all|length > 0 %}
+    <table>
+    {% for entry in object.unitentry_set.all %}
+        <tr>
+            <th style="width: 30%">{{ entry.product }}</th>
+            <td stlye="width: 70%">{{ entry.amount }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <p>&nbsp;</p>
+    {% endif %}
+    <table>
+        <tr>
+            <th style="width: 30%">Fustbier</th>
+            <td style="width: 11.6667%">Begin</td>
+            <td style="width: 11.6667%">Einde</td>
+            <td style="width: 11.6667%"># Fust vervangen</td>
+            <td style="width: 11.6667%">Flow start</td>
+            <td style="width: 11.6667%">Flow eind</td>
+            <th style="width: 11.6667%">Totaal</th>
+        </tr>
+    {% for entry in object.weightentry_set.all %}
+        <tr>
+            <th>{{ entry.product }}</th>
+            <td>{{ entry.start_weight }}</td>
+            <td>{{ entry.end_weight }}</td>
+            <td>{{ entry.kegs_changed|default:"&mdash;" }}</td>
+            <td>{{ entry.flow_start|default:"&mdash;" }}</td>
+            <td>{{ entry.flow_end|default:"&mdash;" }}</td>
+            <th>{{ entry.total }}</th>
+        </tr>
+    {% endfor %}
+    </table>
+    <h2>Opmerkingen</h2>
+    <div class="comments">
+        {% if object.comments %}
+        {{ object.comments|linebreaks }}
+        {% else %}
+        <p style="color: #aaa; font-style: italic">Geen opmerkingen</p>
+        {% endif %}
+    </div>
+    {% if object.is_completed %}
+    <p>&nbsp;</p>
+    <hr>
+    <p style="text-align: center">Ondertekend door {{ object.completed_by.get_full_name }} op {{ object.completed_at|date:"l j F Y" }} om {{ object.completed_at|date:"H:i"}}.</p>
+    {% endif %}
+</div>

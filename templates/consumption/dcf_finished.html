@@ -19,7 +19,9 @@
         </h2>
         <img src="{{ STATIC_URL }}img/smiley.png">
         <h3>{% trans 'Tenders, thank you!' %}</h3>
-        <a href="{% url 'root' %}" class="btn btn-primary">{% trans 'Back' %}</a>
     </div>
+    <p class="text-center">
+        <a href="{% url 'root' %}" class="btn btn-primary">{% trans 'Back' %}</a>
+    </p>
 </div>
 {% endblock body %}
