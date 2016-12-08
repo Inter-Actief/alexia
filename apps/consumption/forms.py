@@ -4,12 +4,13 @@ from crispy_forms.helper import FormHelper
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
-from django.utils.dates import MONTHS
 from django.utils import timezone
+from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
 
-from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
 from utils.forms import _default_crispy_helper
+
+from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
 
 
 class ConsumptionFormForm(forms.ModelForm):

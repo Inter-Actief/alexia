@@ -1,8 +1,6 @@
 import calendar
 import datetime
 
-from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
-
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -11,14 +9,15 @@ from django.utils.translation import ugettext as _
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
+from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
 
 from apps.scheduling.models import Event
 from utils.auth.mixins import FoundationManagerRequiredMixin
 from utils.mixins import CrispyFormMixin
 
 from .forms import (
-    ConsumptionFormConfirmationForm, ConsumptionFormForm, ExportConsumptionFormsForm,
-    UnitEntryFormSet, WeightEntryFormSet,
+    ConsumptionFormConfirmationForm, ConsumptionFormForm,
+    ExportConsumptionFormsForm, UnitEntryFormSet, WeightEntryFormSet,
 )
 from .models import (
     ConsumptionForm, ConsumptionProduct, WeightConsumptionProduct,

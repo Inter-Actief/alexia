@@ -79,6 +79,7 @@ class Entry(models.Model):
         abstract = True
 
 
+@python_2_unicode_compatible
 class WeightEntry(Entry):
     product = models.ForeignKey(
         WeightConsumptionProduct,
@@ -95,6 +96,9 @@ class WeightEntry(Entry):
         verbose_name = _('weight entry')
         verbose_name_plural = _('weight entries')
 
+    def __str__(self):
+        return str(self.product)
+
     def total(self):
         # No kegs changed?
         if self.kegs_changed == 0:
@@ -109,6 +113,7 @@ class WeightEntry(Entry):
         return total
 
 
+@python_2_unicode_compatible
 class UnitEntry(Entry):
     product = models.ForeignKey(
         ConsumptionProduct,
@@ -120,3 +125,6 @@ class UnitEntry(Entry):
     class Meta:
         verbose_name = _('unit entry')
         verbose_name_plural = _('unit entries')
+
+    def __str__(self):
+        return str(self.product)
