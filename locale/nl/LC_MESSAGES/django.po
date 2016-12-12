@@ -149,7 +149,7 @@ msgid "Begin weight is higher than product max weight."
 msgstr "Begingewicht is hoger dan het maximale gewicht."
 
 msgid "End weight is lower than product min weight."
-msgstr "Eindgewicht is alger dan het minimumgewicht."
+msgstr "Eindgewicht is lager dan het minimumgewicht."
 
 msgid "Flowmeter positions are required for this product."
 msgstr "Flowmeterstanden zijn verplicht voor dit product."
