@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 20:15+0100\n"
+"POT-Creation-Date: 2016-12-12 10:32+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -145,6 +145,12 @@ msgstr "aankopen"
 msgid "Comments..."
 msgstr "Commentaar..."
 
+msgid "Begin weight is higher than product max weight."
+msgstr "Begingewicht is hoger dan het maximale gewicht."
+
+msgid "End weight is lower than product min weight."
+msgstr "Eindgewicht is alger dan het minimumgewicht."
+
 msgid "Flowmeter positions are required for this product."
 msgstr "Flowmeterstanden zijn verplicht voor dit product."
 
@@ -207,6 +213,18 @@ msgstr "verbruiksformulier"
 
 msgid "consumption forms"
 msgstr "verbruiksformulieren"
+
+#, python-format
+msgid "%(product)s has no end weight."
+msgstr "%(product)s heeft geen eindgewicht."
+
+#, python-format
+msgid "%(product)s has no flowmeter end."
+msgstr "%(product)s heeft geen eindstand flowmeter."
+
+#, python-format
+msgid "%(product)s weight and flowmeter differences are doubtful."
+msgstr "%(product)s verschil tussen gewicht en flowmeter is dubieus."
 
 msgid "consumption_form"
 msgstr "verbruiksformulier"
@@ -819,8 +837,23 @@ msgstr "Fusten verwisseld"
 msgid "Flowmeter"
 msgstr "Flowmeter"
 
-msgid "Print"
-msgstr "Print"
+msgid "Has comments"
+msgstr "Heeft commentaar"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "previous"
+msgstr "vorige"
+
+msgid "Page"
+msgstr "Pagina"
+
+msgid "of"
+msgstr "van de"
+
+msgid "next"
+msgstr "volgende"
 
 msgid "Edit consumption product"
 msgstr "Wijzig voorraadproduct"
@@ -852,11 +885,20 @@ msgstr "Opslaan"
 msgid "Complete form"
 msgstr "Formulier afronden"
 
+msgid "Please check the following"
+msgstr "Graag de aandacht voor het volgende"
+
 msgid "Sign form as"
 msgstr "Formulier ondertekenen als"
 
 msgid "Revise"
 msgstr "Wijzigen"
+
+msgid "Correct the errors listed above before completing the form."
+msgstr "Verbeter bovenstaande fouten voordat je het formulier afrond."
+
+msgid "Export consumption forms"
+msgstr "Verbruiksformulieren exporteren"
 
 msgid "Finished!"
 msgstr "Voltooid!"
@@ -1088,12 +1130,6 @@ msgstr "Transacties"
 
 msgid "hasn't used Alexia Billing yet!"
 msgstr "heeft Alexia Financieel nog niet in gebruik!"
-
-msgid "Page"
-msgstr "Pagina"
-
-msgid "of"
-msgstr "van de"
 
 msgid "# Transactions"
 msgstr "# Transacties"
@@ -1497,6 +1533,9 @@ msgstr "Voer een geldige hexadecimale kleur in"
 
 msgid "Enter a valid RADIUS username"
 msgstr "Voer een geldige RADIUS-gebruikersnaam in"
+
+#~ msgid "Print"
+#~ msgstr "Print"
 
 #~ msgid "Event consumption #%s"
 #~ msgstr "Activiteitsconsumptie #%s"
