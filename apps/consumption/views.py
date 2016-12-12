@@ -70,7 +70,7 @@ def complete_dcf(request, pk):
 
     if request.method == 'POST':
         form = ConsumptionFormConfirmationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and cf.is_valid():
             cf.completed_by = request.user
             cf.completed_at = timezone.now()
             cf.save()
@@ -136,7 +136,7 @@ class WeightConsumptionProductUpdateView(ConsumptionProductUpdateView):
 
 
 class ConsumptionFormListView(FoundationManagerRequiredMixin, ListView):
-    model = ConsumptionForm
+    queryset = ConsumptionForm.objects.order_by('-event__starts_at').select_related('event__organizer')
     paginate_by = 30
 
 

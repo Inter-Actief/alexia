@@ -33,8 +33,16 @@ class WeightEntryForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(WeightEntryForm, self).clean()
         product = cleaned_data.get('product')
+        start_weight = cleaned_data.get('start_weight')
+        end_weight = cleaned_data.get('end_weight')
         flow_start = cleaned_data.get('flow_start')
         flow_end = cleaned_data.get('flow_end')
+
+        if product and product.full_weight < start_weight:
+            self.add_error('start_weight', ValidationError(_('Begin weight is higher than product max weight.')))
+
+        if product and end_weight and product.empty_weight > end_weight:
+            self.add_error('end_weight', ValidationError(_('End weight is lower than product min weight.')))
 
         if hasattr(product, 'has_flowmeter') and product.has_flowmeter and not flow_start:
             self.add_error('flow_start', ValidationError(_('Flowmeter positions are required for this product.')))

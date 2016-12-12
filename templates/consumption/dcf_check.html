@@ -12,6 +12,19 @@
                 <small>{{ event }}</small>
             </h1>
         </div>
+        {% if cf.has_issues %}
+        <div class="well">
+            <strong>{% trans 'Please check the following' %}</strong>
+            <ul class="dcf-issues">
+                {% for error in cf.issues.errors %}
+                <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+                {% for error in cf.issues.warnings %}
+                <li class="text-warning">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
         <div class="well">
             <table class="table table-bordered">
                 <tr>
@@ -60,14 +73,14 @@
                     <tr>
                         <td>{{ entry.product }}</td>
                         <td>{{ entry.start_weight }} kg</td>
-                        <td>{{ entry.end_weight }} kg</td>
+                        <td>{{ entry.end_weight|default:'?' }} kg</td>
                         <td>{{ entry.kegs_changed }}</td>
                         <td>
                             {% if entry.product.has_flowmeter %}
-                            {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end }} &#8467;
+                            {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end|default:'?' }} &#8467;
                             {% endif %}
                         </td>
-                        <td>{{ entry.total }}</td>
+                        <td>{{ entry.total|default:'?' }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -80,15 +93,26 @@
             <p>{{ cf.comments }}</p>
         </div>
         {% endif %}
+        {% if cf.is_valid %}
         <div class="well">
             {% crispy form %}
         </div>
+        {% endif %}
         <div class="well text-center">
-            <button type="submit" class="btn btn-lg btn-primary">
-                {% trans 'Sign form as' %}
-                {{ user.get_full_name }}
-            </button>
-            <a href="{% url 'dcf' event.pk %}" class="btn btn-default btn-lg">{% trans 'Revise' %}</a>
+            <p>
+                {% if cf.is_valid %}
+                <button type="submit" class="btn btn-lg btn-primary">
+                    {% trans 'Sign form as' %}
+                    {{ user.get_full_name }}
+                </button>
+                {% endif %}
+                <a href="{% url 'dcf' event.pk %}" class="btn btn-default btn-lg">{% trans 'Revise' %}</a>
+            </p>
+            {% if not cf.is_valid %}
+            <p>
+                {% trans 'Correct the errors listed above before completing the form.' %}
+            </p>
+            {% endif %}
         </div>
     </div>
 </form>

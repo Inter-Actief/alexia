@@ -64,6 +64,38 @@ class ConsumptionForm(models.Model):
     def __str__(self):
         return self.event.name
 
+    def issues(self):
+        issues = {
+            'errors': [],
+            'warnings': [],
+        }
+
+        # Validate weight entries
+        for e in self.weightentry_set.all():
+            # Has end weight?
+            if not e.end_weight:
+                issues['errors'].append(_('%(product)s has no end weight.') % {'product': e.product})
+            # Has flowmeter end?
+            if e.product.has_flowmeter and not e.flow_end:
+                issues['errors'].append(_('%(product)s has no flowmeter end.') % {'product': e.product})
+            if e.product.has_flowmeter and e.is_doubtful():
+                issues['warnings'].append(_('%(product)s weight and flowmeter differences are doubtful.') % {
+                    'product': e.product
+                })
+
+        self._issues = issues
+        return issues
+
+    def has_issues(self):
+        if not hasattr(self, '_issues'):
+            self._issues = self.issues()
+        return bool(len(self._issues['errors']) or len(self._issues['warnings']))
+
+    def is_valid(self):
+        if not hasattr(self, '_issues'):
+            self._issues = self.issues()
+        return not bool(len(self._issues['errors']))
+
     def is_completed(self):
         return bool(self.completed_by or self.completed_at)
 
@@ -100,6 +132,9 @@ class WeightEntry(Entry):
         return str(self.product)
 
     def total(self):
+        if not self.end_weight:
+            return False
+
         # No kegs changed?
         if self.kegs_changed == 0:
             return self.start_weight - self.end_weight
@@ -111,6 +146,16 @@ class WeightEntry(Entry):
         total += (self.kegs_changed - 1) * (self.product.full_weight - self.product.empty_weight)
 
         return total
+
+    def is_doubtful(self):
+        if not self.end_weight or not self.flow_end:
+            return False
+
+        weight_total = self.total()
+        flow_total = self.flow_end - self.flow_start
+        change_percentage = abs(((weight_total - flow_total) / flow_total) * 100)
+
+        return bool(change_percentage >= 25)
 
 
 @python_2_unicode_compatible

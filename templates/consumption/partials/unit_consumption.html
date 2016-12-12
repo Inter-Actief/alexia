@@ -8,6 +8,14 @@
         </div>
         <div class="col-xs-10">
             {{ unit_form.management_form }}
+            {% if weight_form.non_form_errors %}
+            <div class="alert alert-block alert-danger">
+                <h4 class="alert-heading">Errors</h4>
+                <ul>
+                    {{ formset.non_form_errors|unordered_list }}
+                </ul>
+            </div>
+            {% endif %}
             <table class="table">
                 <thead>
                     <tr>
@@ -16,15 +24,7 @@
                         <th colspan="3">{% trans 'Delete' %}</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for form in unit_form %}
-                    <tr>
-                        {% for field in form %}
-                        <td>{% crispy_field field %}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
+                {% include 'consumption/partials/formset_form.html' with formset=unit_form %}
             </table>
         </div>
     </div>
