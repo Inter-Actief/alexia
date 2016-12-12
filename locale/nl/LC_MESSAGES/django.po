@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 10:32+0100\n"
+"POT-Creation-Date: 2016-12-12 19:28+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -936,6 +936,30 @@ msgstr "Flowmeter begin"
 msgid "Flowmeter end"
 msgstr "Flowmeter eind"
 
+msgid "Consumption form not yet completed."
+msgstr "Verbruiksformulier nog niet afgerond."
+
+msgid "Keg beer"
+msgstr "Fustbier"
+
+msgid "Begin"
+msgstr "Begin"
+
+msgid "End"
+msgstr "Einde"
+
+msgid "Flow start"
+msgstr "Flow start"
+
+msgid "Flow end"
+msgstr "Flow eind"
+
+msgid "Total"
+msgstr "Totaal"
+
+msgid "No comments"
+msgstr "Geen commentaar"
+
 msgid "About"
 msgstr "Over"
 
@@ -1318,9 +1342,6 @@ msgstr "Omschrijving"
 msgid "Start"
 msgstr "Begin"
 
-msgid "End"
-msgstr "Einde"
-
 msgid "Tender comments"
 msgstr "Tappersinstructie"
 
@@ -1533,100 +1554,3 @@ msgstr "Voer een geldige hexadecimale kleur in"
 
 msgid "Enter a valid RADIUS username"
 msgstr "Voer een geldige RADIUS-gebruikersnaam in"
-
-#~ msgid "Print"
-#~ msgstr "Print"
-
-#~ msgid "Event consumption #%s"
-#~ msgstr "Activiteitsconsumptie #%s"
-
-#~ msgid "closed at"
-#~ msgstr "gesloten op"
-
-#~ msgid "event consumptions"
-#~ msgstr "activiteitconsumpties"
-
-#~ msgid "ideal amount"
-#~ msgstr "ideale hoeveelheid"
-
-#~ msgid "stock product"
-#~ msgstr "voorraadproduct"
-
-#~ msgid "stock products"
-#~ msgstr "voorraadproducten"
-
-#~ msgid "used at"
-#~ msgstr "gebruikt op"
-
-#~ msgid "tap"
-#~ msgstr "tap"
-
-#~ msgid "date"
-#~ msgstr "datum"
-
-#~ msgid "products"
-#~ msgstr "producten"
-
-#~ msgid "stock count"
-#~ msgstr "voorraadtelling"
-
-#~ msgid "stock counts"
-#~ msgstr "voorraadtellingen"
-
-#~ msgid "stock product amount"
-#~ msgstr "voorraadproducthoeveelheid"
-
-#~ msgid "stock product amounts"
-#~ msgstr "voorraadproducthoeveelheden"
-
-#~ msgid "Stock product"
-#~ msgstr "Voorraadproduct"
-
-#~ msgid "This is the location of your personal bartender iCal."
-#~ msgstr "Dit is de locatie van jouw persoonlijk tappers-iCal."
-
-#~ msgid "{pricegroup}: {productgroup} for {price}"
-#~ msgstr "{pricegroup}: {productgroup} voor {price}"
-
-#~ msgid ""
-#~ "\n"
-#~ "                    <a href=\"%(about_url)s\">Event management system "
-#~ "Alexia</a>\n"
-#~ "                    &mdash;\n"
-#~ "                    &copy; 2011-2016 of\n"
-#~ "                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
-#~ "Inter-Actief</a>,\n"
-#~ "                    <a href=\"https://www.arago.utwente.nl/\">S.V. Arago</"
-#~ "a>, and\n"
-#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-#~ "master/CONTRIBUTORS.md\">\n"
-#~ "                        individual contributors\n"
-#~ "                    </a>\n"
-#~ "                    &mdash;\n"
-#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-#~ "master/LICENSE.md\">\n"
-#~ "                        BSD 3-clause License\n"
-#~ "                    </a>\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "                    <a href=\"%(about_url)s\">Borrelbeheersysteem Alexia</"
-#~ "a>                     &mdash;\n"
-#~ "                    &copy; 2011-2016 of\n"
-#~ "                    <a href=\"http://www.inter-actief.net/\">I.C.T.S.V. "
-#~ "Inter-Actief</a>, \n"
-#~ "                    <a href=\"https://www.arago.utwente.nl/\">S.V. Arago</"
-#~ "a> en\n"
-#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-#~ "master/CONTRIBUTORS.md\">\n"
-#~ "                        individuele bijdragers\n"
-#~ "                    </a>\n"
-#~ "                    &mdash;\n"
-#~ "                    <a href=\"https://github.com/Inter-Actief/alexia/blob/"
-#~ "master/LICENSE.md\">\n"
-#~ "                        BSD 3-clauselicentie\n"
-#~ "                    </a>\n"
-#~ "                    "
-
-#~ msgid "There are no transactions."
-#~ msgstr "Er zijn geen transacties."

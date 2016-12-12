@@ -1,27 +1,29 @@
+{% load i18n %}
+
 <div class="page">
     {% if not object.is_completed %}
     <p class="alert">
-        Formulier is nog niet afgerond.
+        {% trans 'Consumption form not yet completed.' %}
     </p>
     {% endif %}
-    <h1>Verbruiksformulier</h1>
+    <h1>{% trans 'Consumption form' %}</h1>
     <table>
         <tr>
-            <th style="width: 15%">Vereniging:</td>
+            <th style="width: 15%">{% trans 'Organization' %}:</td>
             <td style="width: 35%">{{ object.event.organizer }}</td>
-            <th style="width: 15%">Ruimte:</td>
+            <th style="width: 15%">{% trans 'Location' %}:</td>
             <td style="width: 35%">{{ object.event.location.all|join:", " }}</td>
         </tr>
         <tr>
-            <th>Datum:</td>
+            <th>{% trans 'Date' %}:</td>
             <td colspan="3">{{ object.event.starts_at|date:"l j F Y" }}</td>
         </tr>
         <tr>
-            <th>Naam borrel:</td>
+            <th>{% trans 'Event' %}:</td>
             <td colspan="3">{{ object.event }}</td>
         </tr>
     </table>
-    <h2>Verbruik</h2>
+    <h2>{% trans 'Consumption' %}</h2>
     {% if object.unitentry_set.all|length > 0 %}
     <table>
     {% for entry in object.unitentry_set.all %}
@@ -35,13 +37,13 @@
     {% endif %}
     <table>
         <tr>
-            <th style="width: 30%">Fustbier</th>
-            <td style="width: 11.6667%">Begin</td>
-            <td style="width: 11.6667%">Einde</td>
-            <td style="width: 11.6667%"># Fust vervangen</td>
-            <td style="width: 11.6667%">Flow start</td>
-            <td style="width: 11.6667%">Flow eind</td>
-            <th style="width: 11.6667%">Totaal</th>
+            <th style="width: 30%">{% trans 'Keg beer' %}</th>
+            <td style="width: 11.6667%">{% trans 'Begin' %}</td>
+            <td style="width: 11.6667%">{% trans 'End' %}</td>
+            <td style="width: 11.6667%"># {% trans 'Kegs changed' %}</td>
+            <td style="width: 11.6667%">{% trans 'Flow start' %}</td>
+            <td style="width: 11.6667%">{% trans 'Flow end' %}</td>
+            <th style="width: 11.6667%">{% trans 'Total' %}</th>
         </tr>
     {% for entry in object.weightentry_set.all %}
         <tr>
@@ -55,17 +57,17 @@
         </tr>
     {% endfor %}
     </table>
-    <h2>Opmerkingen</h2>
+    <h2>{% trans 'Comments' %}</h2>
     <div class="comments">
         {% if object.comments %}
         {{ object.comments|linebreaks }}
         {% else %}
-        <p style="color: #aaa; font-style: italic">Geen opmerkingen</p>
+        <p style="color: #aaa; font-style: italic">{% trans 'No comments' %}</p>
         {% endif %}
     </div>
     {% if object.is_completed %}
     <p>&nbsp;</p>
     <hr>
-    <p style="text-align: center">Ondertekend door {{ object.completed_by.get_full_name }} op {{ object.completed_at|date:"l j F Y" }} om {{ object.completed_at|date:"H:i"}}.</p>
+    <p style="text-align: center">{% trans 'Signed off by' %} {{ object.completed_by.get_full_name }} {% trans 'on' %} {{ object.completed_at|date:"l j F Y" }} {% trans 'at' %} {{ object.completed_at|date:"H:i"}}.</p>
     {% endif %}
 </div>
