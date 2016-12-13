@@ -99,7 +99,7 @@ def consumptionform_export(request):
                 event__starts_at__lte=till_time,
             )
             filename = 'Verbruiksformulieren %s %d.pdf' % (from_time.strftime('%B'), year)
-            return PDFTemplateResponse(request, 'consumption/dcf_pdf_multi.html',
+            return PDFTemplateResponse(request, 'consumption/dcf_pdf.html',
                                        context={'objects': objects}, filename=filename)
     else:
         form = ExportConsumptionFormsForm()
@@ -155,7 +155,6 @@ class ConsumptionFormPDFView(FoundationManagerRequiredMixin, PDFTemplateView):
         return 'Verbruiksformulier %s.pdf' % self.object.event
 
     def get_context_data(self, **kwargs):
-        context = {}
+        context = super(ConsumptionFormPDFView, self).get_context_data(**kwargs)
         context['object'] = self.object
-        context.update(kwargs)
-        return super(ConsumptionFormPDFView, self).get_context_data(**context)
+        return context

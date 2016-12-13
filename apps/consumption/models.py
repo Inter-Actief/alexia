@@ -82,6 +82,9 @@ class ConsumptionForm(models.Model):
                 issues['warnings'].append(_('%(product)s weight and flowmeter differences are doubtful.') % {
                     'product': e.product
                 })
+        # Are there any entries?
+        if not self.weightentry_set.count() and not self.unitentry_set.count():
+            issues['errors'].append(_('This consumption form has no entries.'))
 
         self._issues = issues
         return issues

@@ -5,8 +5,14 @@
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
-        <h1>{{ object.event }}</h1>
+    <div class="page-header clearfix">
+        <h1>{{ object }}</h1>
+        <div class="text-right">
+            <a class="btn btn-default" href="{% url 'consumptionform_pdf' object.pk %}">
+                <span class="glyphicon glyphicon-print"></span>
+                {% trans 'PDF' %}
+            </a>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-6">
@@ -53,41 +59,42 @@
         </div>
     </div>
     <h2>Verbruik</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="col-xs-3"></th>
-                <th class="col-xs-2">{% trans 'Begin weight' %}</th>
-                <th class="col-xs-2">{% trans 'End weight' %}</th>
-                <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
-                <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
-                <th class="col-xs-2">{% trans 'Consumption' %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entry in object.weightentry_set.all %}
-            <tr>
-                <td>{{ entry.product }}</td>
-                <td>{{ entry.start_weight }} kg</td>
-                <td>{{ entry.end_weight }} kg</td>
-                <td>{{ entry.kegs_changed }}</td>
-                <td>
-                    {% if entry.product.has_flowmeter %}
-                    {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end }} &#8467;
-                    {% endif %}
-                </td>
-                <td>{{ entry.total }}</td>
-            </tr>
-        {% endfor %}
-        {% for entry in object.unitentry_set.all %}
-            <tr>
-                <td>{{ entry.product }}</td>
-                <td colspan="4"></td>
-                <td>{{ entry.amount }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div></div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-xs-3"></th>
+                    <th class="col-xs-2">{% trans 'Begin weight' %}</th>
+                    <th class="col-xs-2">{% trans 'End weight' %}</th>
+                    <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
+                    <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
+                    <th class="col-xs-2">{% trans 'Consumption' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entry in object.weightentry_set.all %}
+                <tr>
+                    <td>{{ entry.product }}</td>
+                    <td>{{ entry.start_weight }} kg</td>
+                    <td>{{ entry.end_weight }} kg</td>
+                    <td>{{ entry.kegs_changed }}</td>
+                    <td>
+                        {% if entry.product.has_flowmeter %}
+                        {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end }} &#8467;
+                        {% endif %}
+                    </td>
+                    <td>{{ entry.total }}</td>
+                </tr>
+            {% endfor %}
+            {% for entry in object.unitentry_set.all %}
+                <tr>
+                    <td>{{ entry.product }}</td>
+                    <td colspan="4"></td>
+                    <td>{{ entry.amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

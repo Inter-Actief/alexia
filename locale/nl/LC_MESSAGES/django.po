@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 19:28+0100\n"
+"POT-Creation-Date: 2016-12-13 10:50+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -225,6 +225,9 @@ msgstr "%(product)s heeft geen eindstand flowmeter."
 #, python-format
 msgid "%(product)s weight and flowmeter differences are doubtful."
 msgstr "%(product)s verschil tussen gewicht en flowmeter is dubieus."
+
+msgid "This consumption form has no entries."
+msgstr "Dit verbruiksformulier is leeg."
 
 msgid "consumption_form"
 msgstr "verbruiksformulier"
@@ -804,6 +807,9 @@ msgstr "Bewerk tijdelijk product %(object)s"
 msgid "New temporary product"
 msgstr "Nieuw tijdelijk product"
 
+msgid "PDF"
+msgstr "PDF"
+
 msgid "Details"
 msgstr "Details"
 
@@ -839,9 +845,6 @@ msgstr "Flowmeter"
 
 msgid "Has comments"
 msgstr "Heeft commentaar"
-
-msgid "PDF"
-msgstr "PDF"
 
 msgid "previous"
 msgstr "vorige"

@@ -57,34 +57,36 @@
         {% endif %}
         {% if cf.weightentry_set.all|length %}
         <div class="well">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="col-xs-3"></th>
-                        <th class="col-xs-2">{% trans 'Begin weight' %}</th>
-                        <th class="col-xs-2">{% trans 'End weight' %}</th>
-                        <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
-                        <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
-                        <th class="col-xs-2">{% trans 'Consumption' %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for entry in cf.weightentry_set.all %}
-                    <tr>
-                        <td>{{ entry.product }}</td>
-                        <td>{{ entry.start_weight }} kg</td>
-                        <td>{{ entry.end_weight|default:'?' }} kg</td>
-                        <td>{{ entry.kegs_changed }}</td>
-                        <td>
-                            {% if entry.product.has_flowmeter %}
-                            {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end|default:'?' }} &#8467;
-                            {% endif %}
-                        </td>
-                        <td>{{ entry.total|default:'?' }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3"></th>
+                            <th class="col-xs-2">{% trans 'Begin weight' %}</th>
+                            <th class="col-xs-2">{% trans 'End weight' %}</th>
+                            <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
+                            <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
+                            <th class="col-xs-2">{% trans 'Consumption' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in cf.weightentry_set.all %}
+                        <tr>
+                            <td>{{ entry.product }}</td>
+                            <td>{{ entry.start_weight }} kg</td>
+                            <td>{{ entry.end_weight|default:'?' }} kg</td>
+                            <td>{{ entry.kegs_changed }}</td>
+                            <td>
+                                {% if entry.product.has_flowmeter %}
+                                {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end|default:'?' }} &#8467;
+                                {% endif %}
+                            </td>
+                            <td>{{ entry.total|default:'?' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         {% endif %}
         {% if cf.comments %}
