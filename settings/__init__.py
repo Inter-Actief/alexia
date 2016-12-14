@@ -20,3 +20,4 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': 'settings.show_toolbar'
     }
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
