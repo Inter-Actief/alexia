@@ -2,7 +2,8 @@ import os
 
 from django.utils.translation import ugettext_lazy as _
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.normpath(os.path.join(os.path.abspath(__file__), '..', '..', '..'))
+print BASE_DIR
 
 # Auth
 AUTHENTICATION_BACKENDS = [
@@ -43,7 +44,9 @@ USE_L10N = True
 USE_TZ = True
 
 # HTTP
+INTERNAL_IPS = ['127.0.0.1']
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -70,6 +73,7 @@ INSTALLED_APPS = [
 
     'compressor',
     'crispy_forms',
+    'debug_toolbar',
     'eventlog',
     'wkhtmltopdf',
 
@@ -128,4 +132,4 @@ TEMPLATES = [
 # TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # URLs
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'alexia.conf.urls'
