@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <style>
+            body, td, th {
+                font-family: Calibri;
+                font-size: 110%;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: Cambria;
+            }
+
+            h1 {
+                color: #17365D;
+                border-bottom: 1px solid #4F81BD;
+                font-weight: normal;
+            }
+
+            h2 {
+                color: #365F91;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            table tr td, table tr th {
+                border-bottom: 1px solid black;
+                border-right: 1px solid black;
+                padding: 10px;
+            }
+
+            table tr:last-child td, table tr:last-child th {
+                border-bottom: 0;
+            }
+
+            table tr td:last-child, table tr th:last-child {
+                border-right: 0;
+            }
+
+            hr {
+                border-width: 0;
+                border-bottom: 1px solid #4F81BD;
+            }
+
+            .comments {
+                border: 1px solid black;
+                padding: 0 20px;
+            }
+
+            .page {
+                page-break-before: always;
+            }
+
+            .alert {
+                padding: 15px;
+                border: 1px solid #ebccd1;
+                border-radius: 4px;
+                background-color: #f2dede;
+                color: #a94442;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        {% block body %}{% endblock body %}
+    </body>
+</html>

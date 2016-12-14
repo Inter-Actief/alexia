@@ -43,12 +43,14 @@ def overview(request):
     # De lijst waarop we nog gaan filteren
     events = Event.objects.select_related().prefetch_related('participants', 'location').order_by('starts_at')
     events = events.prefetch_related(
-        Prefetch('bartender_availabilities',
+        Prefetch(
+            'bartender_availabilities',
             queryset=BartenderAvailability.objects.filter(availability__nature=Availability.ASSIGNED),
             to_attr='bartender_availabilities_assigned',
         ),
         'bartender_availabilities_assigned__user',
-        Prefetch('bartender_availabilities',
+        Prefetch(
+            'bartender_availabilities',
             queryset=BartenderAvailability.objects.filter(
                 Q(availability__nature=Availability.ASSIGNED),
                 Q(user__profile__is_iva=True) | Q(user__certificate__approved_at__isnull=False),

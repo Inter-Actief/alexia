@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('billing', '0001_initial'),
-        ('stock', '0001_initial'),
         ('scheduling', '0001_initial'),
         ('organization', '0001_initial'),
     ]
@@ -86,12 +85,6 @@ class Migration(migrations.Migration):
             model_name='permanentproduct',
             name='productgroup',
             field=models.ForeignKey(verbose_name='product group', to='billing.ProductGroup'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='permanentproduct',
-            name='stockproduct',
-            field=models.ForeignKey(verbose_name='stock product', blank=True, to='stock.StockProduct', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

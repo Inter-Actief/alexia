@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %}{% trans 'Consumption form' %}{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                {% trans 'Digital consumption form' %}
+                <small>{{ event }}</small>
+            </h1>
+        </div>
+        {% if cf.has_issues %}
+        <div class="well">
+            <strong>{% trans 'Please check the following' %}</strong>
+            <ul class="dcf-issues">
+                {% for error in cf.issues.errors %}
+                <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+                {% for error in cf.issues.warnings %}
+                <li class="text-warning">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div class="well">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="col-xs-3">{% trans 'Date' %}</th>
+                    <td class="col-xs-9">{{ event.starts_at|date:"l j F" }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Location' %}</th>
+                    <td>{{ event.location.all|join:', ' }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'Organizer' %}</th>
+                    <td>{{ event.organizer }}</td>
+                </tr>
+            </table>
+        </div>
+        {% if cf.unitentry_set.all|length %}
+        <div class="well">
+            <table class="table table-bordered">
+                <tbody>
+                {% for entry in cf.unitentry_set.all %}
+                    <tr>
+                        <th class="col-xs-3">{{ entry.product }}</th>
+                        <td class="col-xs-9">{{ entry.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        {% if cf.weightentry_set.all|length %}
+        <div class="well">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3"></th>
+                            <th class="col-xs-2">{% trans 'Begin weight' %}</th>
+                            <th class="col-xs-2">{% trans 'End weight' %}</th>
+                            <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
+                            <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
+                            <th class="col-xs-2">{% trans 'Consumption' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in cf.weightentry_set.all %}
+                        <tr>
+                            <td>{{ entry.product }}</td>
+                            <td>{{ entry.start_weight }} kg</td>
+                            <td>{{ entry.end_weight|default:'?' }} kg</td>
+                            <td>{{ entry.kegs_changed }}</td>
+                            <td>
+                                {% if entry.product.has_flowmeter %}
+                                {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end|default:'?' }} &#8467;
+                                {% endif %}
+                            </td>
+                            <td>{{ entry.total|default:'?' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% if cf.comments %}
+        <div class="well">
+            <h3>{% trans 'Comments' %}</h3>
+            <p>{{ cf.comments }}</p>
+        </div>
+        {% endif %}
+        {% if cf.is_valid %}
+        <div class="well">
+            {% crispy form %}
+        </div>
+        {% endif %}
+        <div class="well text-center">
+            <p>
+                {% if cf.is_valid %}
+                <button type="submit" class="btn btn-lg btn-primary">
+                    {% trans 'Sign form as' %}
+                    {{ user.get_full_name }}
+                </button>
+                {% endif %}
+                <a href="{% url 'dcf' event.pk %}" class="btn btn-default btn-lg">{% trans 'Revise' %}</a>
+            </p>
+            {% if not cf.is_valid %}
+            <p>
+                {% trans 'Correct the errors listed above before completing the form.' %}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</form>
+{% endblock body %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n crispy_forms_field compress %}
+
+{% block title %}{% trans 'Consumption form' %}{% endblock %}
+
+{% block head %}
+{% compress js %}
+<script src="{{ STATIC_URL }}js/dcf.js"></script>
+{% endcompress %}
+{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                {% trans 'Digital consumption form' %}
+                <small>{{ event }}</small>
+            </h1>
+        </div>
+        {% include 'consumption/partials/weight_consumption.html' %}
+        {% include 'consumption/partials/unit_consumption.html' %}
+        <div class="well">
+            {% for field in form %}
+            {% crispy_field field %}
+            {% endfor %}
+        </div>
+        <div class="well text-right">
+            <button class="btn btn-lg btn-default">{% trans 'Save' %}</button>
+            <a href="{% url 'dcf-complete' event.pk %}" class="btn btn-lg btn-primary" id="complete">{% trans 'Complete form' %}</a>
+        </div>
+    </div>
+</form>
+{% endblock body %}

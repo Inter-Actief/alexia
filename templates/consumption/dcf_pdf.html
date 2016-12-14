@@ -1,0 +1,9 @@
+{% extends 'consumption/pdf/base.html' %}
+
+{% block body %}
+{% for object in objects %}
+{% include 'consumption/pdf/page.html' %}
+{% empty %}
+{% include 'consumption/pdf/page.html' %}
+{% endfor %}
+{% endblock %}

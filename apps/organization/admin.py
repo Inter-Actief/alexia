@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
@@ -16,7 +15,7 @@ admin.site.unregister(User)
 
 class ProfileInline(admin.StackedInline):
     model = Profile
-    fields = ['is_iva', 'is_bhv']
+    fields = ['is_iva', 'is_bhv', 'is_foundation_manager']
 
 
 class AuthenticationDataInline(admin.StackedInline):

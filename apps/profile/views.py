@@ -25,7 +25,7 @@ def index(request):
 
     order_count = Order.objects.select_related('event').filter(
         authorization__in=request.user.authorizations.all()).count()
-    
+
     shares = []
     for authorization in request.user.authorizations.all():
         my_order_sum = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
