@@ -45,8 +45,7 @@ coverage.xml
 
 # Django stuff:
 *.log
-settings/local.py
-settings/local_code.py
+alexia/conf/settings/local.py
 media
 
 # Sphinx documentation

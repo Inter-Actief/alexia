@@ -8,7 +8,7 @@
     <h1>{% trans 'Access denied' %}</h1>
 </div>
 <p>{% trans "You don't have the rights to access this page." %}</p>
-{% if reason %}
-    <p>{% trans "Reason:" %} {{ reason }}</p>
+{% if exception %}
+    <p>{% trans "Reason:" %} {{ exception }}</p>
 {% endif %}
 {% endblock %}

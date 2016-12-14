@@ -6,6 +6,7 @@ from abc import abstractmethod
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.http import urlquote
@@ -96,3 +97,13 @@ class FoundationManagerRequiredMixin(PassesTestMixin):
     def test_requirement(self, request):
         return request.user.is_authenticated() and (
             request.user.is_superuser or request.user.profile.is_foundation_manager)
+
+
+class DenyWrongOrganizationMixin(object):
+    def get_object(self, queryset=None):
+        obj = super(DenyWrongOrganizationMixin, self).get_object(queryset)
+
+        if obj.organization != self.request.organization:
+            raise PermissionDenied
+
+        return obj

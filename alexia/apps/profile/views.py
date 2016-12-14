@@ -2,70 +2,86 @@ import mimetypes
 import uuid
 
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, reverse
+from django.views.generic.base import RedirectView, TemplateView, View
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
+from django.views.generic.list import ListView
 
 from alexia.apps.billing.models import Order
-from alexia.apps.organization.models import AuthenticationData
+from alexia.apps.organization.models import AuthenticationData, Certificate
 from alexia.apps.scheduling.models import Event
 from alexia.auth.backends import RADIUS_BACKEND_NAME
-from alexia.auth.decorators import tender_required
-
-from .forms import IvaForm, ProfileForm
-
-
-@login_required
-def index(request):
-    event_list = Event.objects.filter(orders__authorization__in=request.user.authorizations.all()) \
-                              .annotate(spent=Sum('orders__amount'))
-    event_count = event_list.count()
-    events = event_list.order_by('-ends_at')[:5]
-
-    order_count = Order.objects.select_related('event').filter(
-        authorization__in=request.user.authorizations.all()).count()
-
-    shares = []
-    for authorization in request.user.authorizations.all():
-        my_order_sum = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
-        all_order_sum = Order.objects.filter(authorization__organization=authorization.organization) \
-            .aggregate(total=Sum('amount'))
-
-        if not my_order_sum['total'] or not all_order_sum['total']:
-            percentage = 0
-        else:
-            percentage = (my_order_sum['total'] / all_order_sum['total']) * 100
-
-        shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
-
-    try:
-        radius_username = request.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
-    except AuthenticationData.DoesNotExist:
-        radius_username = None
-
-    return render(request, 'profile/index.html', locals())
+from alexia.auth.mixins import TenderRequiredMixin
+from alexia.forms import AlexiaModelForm, CrispyFormMixin
 
 
-@login_required
-@tender_required
-def ical_gen(request):
-    request.user.profile.ical_id = uuid.uuid4()
-    request.user.profile.save()
-    return redirect(index)
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context.update({
+            'events': Event.objects.filter(orders__authorization__in=self.request.user.authorizations.all())
+                                   .annotate(spent=Sum('orders__amount'))
+                                   .order_by('ends_at'),
+            'order_count': Order.objects.select_related('event')
+                                        .filter(authorization__in=self.request.user.authorizations.all())
+                                        .count(),
+            'shares': self.get_shares(self.request.user),
+            'radius_username': self.get_radius_username(self.request.user),
+        })
+        return context
+
+    def get_shares(self, user):
+        shares = []
+
+        for authorization in user.authorizations.all():
+            my_order_sum = Order.objects.filter(authorization=authorization).aggregate(total=Sum('amount'))
+            all_order_sum = Order.objects.filter(authorization__organization=authorization.organization) \
+                .aggregate(total=Sum('amount'))
+
+            if not my_order_sum['total'] or not all_order_sum['total']:
+                percentage = 0
+            else:
+                percentage = (my_order_sum['total'] / all_order_sum['total']) * 100
+
+            shares.append({'organization': authorization.organization, 'percentage': round(percentage, 2)})
+
+        return shares
+
+    def get_radius_username(self, user):
+        try:
+            return self.request.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+        except AuthenticationData.DoesNotExist:
+            return None
 
 
-@login_required
-def edit(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect(index)
-    else:
-        form = ProfileForm(instance=request.user)
+class GenerateIcalView(TenderRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        self.request.user.profile.ical_id = uuid.uuid4()
+        self.request.user.profile.save()
+        return reverse('profile')
 
-    return render(request, 'profile/edit.html', {'form': form})
+
+class ProfileUpdate(LoginRequiredMixin, CrispyFormMixin, UpdateView):
+    template_name = 'profile_form.html'
+    fields = ['email']
+
+    def get_object(self):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse('profile')
+
+
+class IvaForm(AlexiaModelForm):
+    class Meta:
+        model = Certificate
+        fields = ['file']
 
 
 @login_required
@@ -93,50 +109,33 @@ def iva(request):
     return render(request, 'profile/iva.html', locals())
 
 
-@login_required
-def view_iva(request):
-    if not request.user.certificate:
-        raise Http404
+class IvaView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        if not request.user.certificate:
+            raise Http404
 
-    iva_file = request.user.certificate.file
-    content_type, encoding = mimetypes.guess_type(iva_file.url)
-    content_type = content_type or 'application/octet-stream'
-    return HttpResponse(iva_file, content_type=content_type)
-
-
-@login_required
-def expenditures(request):
-    event_list = Event.objects.filter(orders__authorization__in=request.user.authorizations.all()) \
-                              .annotate(spent=Sum('orders__amount')) \
-                              .order_by('-ends_at')
-    paginator = Paginator(event_list, 25)
-
-    page = request.GET.get('page')
-    try:
-        events = paginator.page(page)
-    except PageNotAnInteger:
-        events = paginator.page(1)
-    except EmptyPage:
-        events = paginator.page(paginator.num_pages)
-
-    return render(request, 'profile/expenditures.html', locals())
+        iva_file = request.user.certificate.file
+        content_type, encoding = mimetypes.guess_type(iva_file.url)
+        content_type = content_type or 'application/octet-stream'
+        return HttpResponse(iva_file, content_type=content_type)
 
 
-@login_required
-def expenditures_event(request, pk):
-    event = Event.objects.get(pk=pk)
+class ExpenditureListView(LoginRequiredMixin, ListView):
+    template_name = 'billing/expenditure_list.html'
+    paginate_by = 25
 
-    order_list = Order.objects.filter(
-        authorization__in=request.user.authorizations.all(),
-        event=pk).order_by('-placed_at')
-    paginator = Paginator(order_list, 25)
+    def get_queryset(self):
+        return Event.objects.filter(orders__authorization__in=self.request.user.authorizations.all()) \
+                            .annotate(spent=Sum('orders__amount')) \
+                            .order_by('-ends_at')
 
-    page = request.GET.get('page')
-    try:
-        orders = paginator.page(page)
-    except PageNotAnInteger:
-        orders = paginator.page(1)
-    except EmptyPage:
-        orders = paginator.page(paginator.num_pages)
 
-    return render(request, 'profile/expenditures_event.html', locals())
+class ExpenditureDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'billing/expenditure_detail.html'
+    model = Event
+
+    def get_context_data(self, **kwargs):
+        context = super(ExpenditureDetailView, self).get_context_data(**kwargs)
+        context['order_list'] = self.object.orders.filter(authorization__in=self.request.user.authorizations.all()) \
+                                                  .order_by('-placed_at')
+        return context

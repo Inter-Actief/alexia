@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for o in orders %}
+        {% for o in order_list %}
             <tr>
                 <td>{{ o.placed_at|date:"l d F H:i" }}</td>
                 <td>&euro; {{ o.amount|floatformat:2 }}</td>
@@ -35,9 +35,4 @@
         </tbody>
     </table>
 </div>
-<p class="text-center">
-    {% if orders.has_previous %}<a href="?page={{ orders.previous_page_number }}">&laquo;</a>{% else %}&laquo;{% endif %}
-    {% trans 'Page' %} {{ orders.number }} {% trans 'of' %} {{ orders.paginator.num_pages }}
-    {% if orders.has_next     %}<a href="?page={{ orders.next_page_number }}">&raquo;</a>{%     else %}&raquo;{% endif %}
-</p>
 {% endblock %}

@@ -1,6 +1,6 @@
 # Voorbeeld voor lokale settings, wordt geimporteerd door __init__.py
 #
-from .base import *
+from .base import * # NOQA
 
 # Debug aan voor lokaal
 DEBUG = True

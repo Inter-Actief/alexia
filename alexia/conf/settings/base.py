@@ -10,8 +10,9 @@ AUTHENTICATION_BACKENDS = [
     'alexia.auth.backends.RadiusBackend',
 ]
 AUTH_USER_MODEL = 'auth.User'
-LOGIN_REDIRECT_URL = '/'  # DEPRECATED
-LOGIN_URL = '/login/'  # DEPRECATED
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

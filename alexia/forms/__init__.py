@@ -1,4 +1,5 @@
-from .mixins import *
+from .mixins import * # NOQA
+
 
 def _default_crispy_helper(submit_text=None):
     if not submit_text:

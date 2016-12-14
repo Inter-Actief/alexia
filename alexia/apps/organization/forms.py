@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
-from alexia.apps.organization.models import Certificate, Membership
+from alexia.apps.organization.models import Certificate
 from alexia.apps.scheduling.models import Availability, BartenderAvailability
 from alexia.forms import AlexiaForm, AlexiaModelForm
 from alexia.core.validators import validate_radius_usernam
@@ -45,12 +45,6 @@ class MembershipAddForm(AlexiaForm):
         max_length=8,
         validators=[validate_radius_usernam],
     )
-
-
-class MembershipEditForm(AlexiaModelForm):
-    class Meta:
-        model = Membership
-        fields = ['is_active', 'is_tender', 'is_planner', 'is_manager', 'comments']
 
 
 class CreateUserForm(AlexiaModelForm):

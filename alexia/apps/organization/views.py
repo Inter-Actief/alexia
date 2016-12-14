@@ -1,33 +1,41 @@
+from datetime import date
+from dateutil.relativedelta import relativedelta
 import mimetypes
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic.list import ListView
+from django.urls import reverse_lazy
 
+from alexia.forms import CrispyFormMixin
 from alexia.utils import log
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 from alexia.auth.decorators import manager_required
+from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin
 
 from .forms import (
-    CreateUserForm, MembershipAddForm, MembershipEditForm, UploadIvaForm,
+    CreateUserForm, MembershipAddForm, UploadIvaForm,
 )
 from .models import AuthenticationData, Membership, Profile
 
 
-@login_required
-@manager_required
-def membership_list(request):
-    memberships = request.organization.membership_set.select_related('user').order_by('user__first_name')
-    return render(request, 'membership/list.html', locals())
+class MembershipListView(ManagerRequiredMixin, ListView):
+    def get_queryset(self):
+        return self.request.organization.membership_set.select_related('user', 'user__certificate', 'user__profile') \
+            .order_by('user__first_name')
 
 
-@login_required
-@manager_required
-def iva_list(request):
-    memberships = request.organization.membership_set \
-        .filter(is_tender=True).select_related('user').order_by('user__first_name')
-    return render(request, 'membership/iva_list.html', locals())
+class IvaListView(ManagerRequiredMixin, ListView):
+    template_name_suffix = '_iva'
+
+    def get_queryset(self):
+        return self.request.organization.membership_set.filter(is_tender=True) \
+                                                       .select_related('user', 'user__certificate', 'user__profile') \
+                                                       .order_by('user__first_name')
 
 
 @login_required
@@ -46,7 +54,7 @@ def membership_add(request):
             membership, is_new = Membership.objects.get_or_create(user=user, organization=request.organization)
             if is_new:
                 log.membership_created(request.user, membership)
-            return redirect(membership_edit, pk=membership.pk)
+            return redirect('edit-membership', pk=membership.pk)
     else:
         form = MembershipAddForm()
 
@@ -80,102 +88,74 @@ def membership_create_user(request, username):
             membership, is_new = Membership.objects.get_or_create(user=user, organization=request.organization)
             if is_new:
                 log.membership_created(request.user, membership)
-            return redirect(membership_edit, pk=membership.pk)
+            return redirect('edit-membership', pk=membership.pk)
     else:
         form = CreateUserForm(initial={'username': username})
 
     return render(request, 'membership/create_user.html', locals())
 
 
-@login_required
-@manager_required
-def membership_show(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
+class MembershipDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailView):
+    model = Membership
 
-    if membership.organization != request.organization:
-        raise PermissionDenied
+    def get_context_data(self, **kwargs):
+        context = super(MembershipDetailView, self).get_context_data(**kwargs)
+        context.update({
+            'last_10_tended': self.object.tended()[:10],
+            'is_planner': self.request.user.is_superuser
+            or self.request.user.profile.is_planner(self.request.organization),
+        })
+        context.update(self.get_graph_data())
+        return context
 
-    last_10_tended = membership.tended().order_by('-event__starts_at')[:10]
-    is_planner = request.user.is_superuser or request.user.profile.is_planner(request.organization)
+    def get_graph_data(self):
+        _last_year = (date.today()-relativedelta(years=1, day=1))
+        _tended_dates = self.object.tended().filter(event__starts_at__gte=_last_year).values_list('event__starts_at')
 
-    from datetime import date
-    from dateutil.relativedelta import relativedelta
-    # Dates of all tended drinks in the last year.
-    _last_year = (date.today()-relativedelta(years=1, day=1))
-    _tended_dates = membership.tended().filter(event__starts_at__gte=_last_year).values_list('event__starts_at')
+        # Change from list of 1-tuples to just a list of elements
+        _tended_dates = [i[0] for i in _tended_dates]
 
-    # Change from list of 1-tuples to just a list of elements
-    _tended_dates = [i[0] for i in _tended_dates]
+        # Group by month
+        _graph_data = {}
+        for d in _tended_dates:
+            if d.strftime("%Y-%m") in _graph_data.keys():
+                _graph_data[d.strftime("%Y-%m")] += 1
+            else:
+                _graph_data[d.strftime("%Y-%m")] = 1
 
-    # Group by month
-    _graph_data = {}
-    for d in _tended_dates:
-        if d.strftime("%Y-%m") in _graph_data.keys():
-            _graph_data[d.strftime("%Y-%m")] += 1
-        else:
-            _graph_data[d.strftime("%Y-%m")] = 1
+        # Fill in 0 for the missing months
+        _date = date.today()
+        while _last_year <= _date:
+            if _date.strftime("%Y-%m") not in _graph_data.keys():
+                _graph_data[_date.strftime("%Y-%m")] = 0
+            _date -= relativedelta(months=1)
 
-    # Fill in 0 for the missing months
-    _date = date.today()
-    while _last_year <= _date:
-        if _date.strftime("%Y-%m") not in _graph_data.keys():
-            _graph_data[_date.strftime("%Y-%m")] = 0
-        _date -= relativedelta(months=1)
-
-    graph_headers = sorted(_graph_data.keys())
-    graph_content = [_graph_data[k] for k in graph_headers]
-
-    return render(request, 'membership/show.html', locals())
-
-
-@login_required
-@manager_required
-def membership_edit(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
-
-    if membership.organization != request.organization:
-        raise PermissionDenied
-
-    if request.method == 'POST':
-        form = MembershipEditForm(request.POST, instance=membership)
-        if form.is_valid():
-            membership = form.save()
-            log.membership_modified(request.user, membership)
-            return redirect(membership)
-    else:
-        form = MembershipEditForm(instance=membership)
-
-    return render(request, 'membership/form.html', locals())
+        graph_headers = sorted(_graph_data.keys())
+        return {
+            'graph_headers': graph_headers,
+            'graph_content': [_graph_data[k] for k in graph_headers],
+        }
 
 
-@login_required
-@manager_required
-def membership_delete(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
-
-    if membership.organization != request.organization:
-        raise PermissionDenied
-
-    if request.method == 'POST':
-        membership.delete()
-        log.membership_deleted(request.user, membership)
-        return redirect(membership_list)
-    else:
-        return render(request, 'membership/delete.html', locals())
+class MembershipUpdate(ManagerRequiredMixin, DenyWrongOrganizationMixin, CrispyFormMixin, UpdateView):
+    model = Membership
+    fields = ['is_active', 'is_tender', 'is_planner', 'is_manager', 'comments']
 
 
-@login_required
-@manager_required
-def membership_iva(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
+class MembershipDelete(ManagerRequiredMixin, DenyWrongOrganizationMixin, DeleteView):
+    model = Membership
+    success_url = reverse_lazy('memberships')
 
-    if membership.organization != request.organization:
-        raise PermissionDenied
 
-    iva_file = membership.user.certificate.file
-    content_type, encoding = mimetypes.guess_type(iva_file.url)
-    content_type = content_type or 'application/octet-stream'
-    return HttpResponse(iva_file, content_type=content_type)
+class MembershipIvaView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailView):
+    model = Membership
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        iva_file = self.object.user.certificate.file
+        content_type, encoding = mimetypes.guess_type(iva_file.url)
+        content_type = content_type or 'application/octet-stream'
+        return HttpResponse(iva_file, content_type=content_type)
 
 
 @login_required
@@ -194,7 +174,7 @@ def iva_upload(request, pk):
             certificate = form.save(commit=False)
             certificate.owner_id = membership.user.pk
             certificate.save()
-            return redirect(membership_list)
+            return redirect('memberships')
     else:
         form = UploadIvaForm(instance=certificate)
 
@@ -212,7 +192,7 @@ def iva_approve(request, pk):
 
     if certificate and not certificate.approved_at:
         certificate.approve(request.user)
-        return redirect(membership_list)
+        return redirect('memberships')
 
 
 @login_required
@@ -226,4 +206,4 @@ def iva_decline(request, pk):
 
     if certificate and not certificate.approved_at:
         certificate.decline()
-        return redirect(membership_list)
+        return redirect('memberships')

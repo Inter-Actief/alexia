@@ -20,10 +20,10 @@
             </tr>
         </thead>
         <tbody>
-        {% for e in events %}
+        {% for e in event_list %}
             <tr>
                 <td>{{ e.starts_at|date:"l d F" }}</td>
-                <td>{{ e.name }}</td>
+                <td><a href="{% url 'event-expenditures-profile' e.pk %}">{{ e.name }}</a></td>
                 <td>&euro; {{ e.spent|floatformat:2 }}</td>
                 <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
             </tr>
@@ -35,9 +35,5 @@
         </tbody>
     </table>
 </div>
-<p class="text-center">
-    {% if events.has_previous %}<a href="?page={{ events.previous_page_number }}">&laquo;</a>{% else %}&laquo;{% endif %}
-    {% trans 'Page' %} {{ events.number }} {% trans 'of' %} {{ events.paginator.num_pages }}
-    {% if events.has_next     %}<a href="?page={{ events.next_page_number }}">&raquo;</a>{%     else %}&raquo;{% endif %}
-</p>
+{% include 'partials/pagination.html' %}
 {% endblock %}

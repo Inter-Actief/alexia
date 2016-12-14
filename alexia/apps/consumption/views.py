@@ -1,6 +1,8 @@
 import calendar
 import datetime
 
+from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
+
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,7 +11,6 @@ from django.utils.translation import ugettext as _
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
-from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
 
 from alexia.apps.scheduling.models import Event
 from alexia.auth.decorators import foundation_manager_required

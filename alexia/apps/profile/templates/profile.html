@@ -20,7 +20,7 @@
         <table class="table table-bordered">
             <tr class="tr-muted"><th>{% trans 'Stats' %}</th></tr>
             <tr><td class="text-right"><strong class="pull-left">{% trans 'Transactions' %}</strong> {{ order_count }}</td></tr>
-            <tr><td class="text-right"><strong class="pull-left">{% trans 'Events attended' %}</strong> {{ event_count }}</td></tr>
+            <tr><td class="text-right"><strong class="pull-left">{% trans 'Events attended' %}</strong> {{ events|length }}</td></tr>
             {% if user.profile.is_tender %}<tr><td class="text-right"><strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}</td></tr>{% endif %}
         </table>
     </div>
@@ -47,7 +47,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for e in events %}
+                            {% for e in events|slice:":5" %}
                                 <tr>
                                     <td class="overflow-protect">{{ e.name }}</td>
                                     <td>&euro; {{ e.spent|floatformat:2 }}</td>
