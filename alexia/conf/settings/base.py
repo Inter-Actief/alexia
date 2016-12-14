@@ -3,12 +3,11 @@ import os
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.abspath(__file__), '..', '..', '..'))
-print BASE_DIR
 
 # Auth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'utils.auth.backends.radius.RadiusBackend',
+    'alexia.auth.backends.RadiusBackend',
 ]
 AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/'  # DEPRECATED
@@ -56,8 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'utils.middleware.profile_requirement_middleware',
-    'utils.middleware.primary_organization_middleware',
+    'alexia.middleware.common.CommonMiddleware',
 ]
 
 # Models
@@ -77,15 +75,15 @@ INSTALLED_APPS = [
     'eventlog',
     'wkhtmltopdf',
 
-    'api',
-    'apps.billing',
-    'apps.consumption',
-    'apps.general',
-    'apps.juliana',
-    'apps.organization',
-    'apps.profile',
-    'apps.scheduling',
-    'utils',
+    'alexia.api',
+    'alexia.apps.billing',
+    'alexia.apps.consumption',
+    'alexia.apps.general',
+    'alexia.apps.juliana',
+    'alexia.apps.organization',
+    'alexia.apps.profile',
+    'alexia.apps.scheduling',
+    'alexia.utils',
 ]
 
 # Security
@@ -121,7 +119,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
-                'utils.context_processors.organization',
+                'alexia.template.context_processors.organization',
             ],
             'debug': DEBUG,
         },

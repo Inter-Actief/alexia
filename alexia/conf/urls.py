@@ -3,10 +3,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-from apps.consumption.views import dcf, complete_dcf
-from apps.general import views as general_views
-from apps.juliana.views import juliana
-from apps.scheduling import views as scheduling_views
+from alexia.apps.consumption.views import dcf, complete_dcf
+from alexia.apps.general import views as general_views
+from alexia.apps.juliana.views import juliana
+from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
     # Root
@@ -18,15 +18,15 @@ urlpatterns = [
     url(r'^juliana/(?P<pk>\d+)/$', juliana, name='juliana'),
 
     # Apps
-    url(r'^billing/', include('apps.billing.urls')),
-    url(r'^consumption/', include('apps.consumption.urls')),
-    url(r'^organization/', include('apps.organization.urls')),
-    url(r'^profile/', include('apps.profile.urls')),
-    url(r'^scheduling/', include('apps.scheduling.urls')),
+    url(r'^billing/', include('alexia.apps.billing.urls')),
+    url(r'^consumption/', include('alexia.apps.consumption.urls')),
+    url(r'^organization/', include('alexia.apps.organization.urls')),
+    url(r'^profile/', include('alexia.apps.profile.urls')),
+    url(r'^scheduling/', include('alexia.apps.scheduling.urls')),
     url(r'^ical$', scheduling_views.ical),
     url(r'^ical/(?P<ical_id>[^/]+)$', scheduling_views.personal_ical, name='ical'),
 
-    url(r'^api/', include('api.urls')),
+    url(r'^api/', include('alexia.api.urls')),
 
     # "Static" general_views
     url(r'^about/$', general_views.about, name='about'),

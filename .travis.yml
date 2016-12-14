@@ -10,4 +10,4 @@ matrix:
 install:
   - pip install -r config/requirements.txt
 # command to run tests
-script: python manage.py test --settings settings.travis
+script: python manage.py test --settings alexia.conf.settings.test
