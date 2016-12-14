@@ -129,5 +129,3 @@ TEMPLATES = [
 
 # URLs
 ROOT_URLCONF = 'urls'
-
-WKHTMLTOPDF_CMD = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
