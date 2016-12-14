@@ -71,25 +71,6 @@ body {
   font-size: 13px;
 }
 
-#feedback {
-  display: block;
-  position: fixed;
-  left: -7px;
-  top: 50%;
-  opacity: .5;
-  z-index: 1337;
-  margin-top: -42px;
-}
-
-#feedback img {
-  border: 0;
-}
-
-#feedback:hover {
-  opacity: 1;
-  left: 0;
-}
-
 [class^="icon-alexia"] {
   /* Copied from Boodstrap 2.3.2
      https://github.com/twbs/bootstrap/blob/v2.3.2/less/sprites.less line 19-28 */
@@ -133,21 +114,11 @@ body {
     content: "Ja";
   }
 
-  #feedback {
-    display: none;
-  }
-
   body {
     padding: 0;
   }
 
   footer {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  #feedback {
     display: none;
   }
 }
