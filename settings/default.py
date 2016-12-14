@@ -53,8 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'utils.middleware.ProfileRequirementMiddleware',
-    'utils.middleware.PrimaryOrganizationMiddleware',
+    'utils.middleware.profile_requirement_middleware',
+    'utils.middleware.primary_organization_middleware',
 ]
 
 # Models
