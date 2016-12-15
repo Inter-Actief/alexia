@@ -1,6 +1,7 @@
 import calendar
 import datetime
 
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -135,20 +136,46 @@ class WeightConsumptionProductUpdateView(ConsumptionProductUpdateView):
     fields = ['name', 'full_weight', 'empty_weight', 'has_flowmeter']
 
 
-class ConsumptionFormListView(FoundationManagerRequiredMixin, ListView):
-    queryset = ConsumptionForm.objects.order_by('-event__starts_at').select_related('event__organizer')
+class ConsumptionFormListView(ListView):
     paginate_by = 30
 
+    def get_queryset(self):
+        profile = self.request.user.profile
 
-class ConsumptionFormDetailView(FoundationManagerRequiredMixin, DetailView):
+        if profile.is_foundation_manager:
+            qs = ConsumptionForm.objects.all()
+        elif profile.is_manager(self.request.organization):
+            qs = ConsumptionForm.objects.filter(event__organizer=self.request.organization)
+        else:
+            raise PermissionDenied
+
+        return qs.order_by('-event__starts_at').select_related('event__organizer')
+
+
+class ConsumptionFormDetailView(DetailView):
     model = ConsumptionForm
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
 
-class ConsumptionFormPDFView(FoundationManagerRequiredMixin, PDFTemplateView):
+        if not request.user.profile.is_foundation_manager \
+                and not request.user.profile.is_manager(self.object.event.organizer):
+            raise PermissionDenied
+
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+
+class ConsumptionFormPDFView(PDFTemplateView):
     template_name = 'consumption/dcf_pdf.html'
 
     def get(self, request, *args, **kwargs):
         self.object = get_object_or_404(ConsumptionForm, pk=kwargs['pk'])
+
+        if not request.user.profile.is_foundation_manager \
+                and not request.user.profile.is_manager(self.object.event.organizer):
+            raise PermissionDenied
+
         return super(ConsumptionFormPDFView, self).get(request, *args, **kwargs)
 
     def get_filename(self):

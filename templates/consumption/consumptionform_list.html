@@ -8,12 +8,14 @@
     <h1 class="pull-left">
          {% trans 'Consumption forms' %}
     </h1>
+    {% if user.profile.is_foundation_manager %}
     <div class="text-right">
         <a class="btn btn-default" href="{% url 'consumptionform_export' %}">
             <span class="glyphicon glyphicon-print"></span>
             {% trans 'Export' %}
         </a>
     </div>
+    {% endif %}
 </div>
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
