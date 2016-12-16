@@ -1,6 +1,5 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
-{% load as_json %}
+{% load i18n jsonize %}
 
 {% block extrajs %}
     <script src="{{ STATIC_URL }}js/Chart.min.js" type="text/javascript" charset="utf-8"></script>
@@ -30,10 +29,10 @@
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: {{ graph_headers|as_json }},
+                    labels: {{ graph_headers|jsonize }},
                     datasets: [{
                         label: '{% trans 'Times tended' %}',
-                        data: {{ graph_content|as_json }},
+                        data: {{ graph_content|jsonize }},
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1

@@ -7,5 +7,5 @@ register = Library()
 
 
 @register.filter(is_safe=True)
-def as_json(obj):
-    return mark_safe(json.dumps(obj))
+def jsonize(value):
+    return mark_safe(json.dumps(value))
