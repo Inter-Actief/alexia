@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from alexia.utils.tests import APITestCase
+
 from .common import format_authorization
 
 

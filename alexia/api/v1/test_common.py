@@ -4,10 +4,13 @@ import datetime
 
 from django.utils import timezone
 
-from alexia.apps.billing.models import Authorization, PriceGroup, PermanentProduct, ProductGroup, TemporaryProduct, \
-    Order, Purchase
+from alexia.apps.billing.models import (
+    Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
+    TemporaryProduct,
+)
 from alexia.apps.scheduling.models import Event
 from alexia.utils.tests import TestCase
+
 from .common import format_authorization, format_order
 
 

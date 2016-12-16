@@ -77,13 +77,13 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 
     'alexia.api',
-    'alexia.apps.billing',
-    'alexia.apps.consumption',
-    'alexia.apps.general',
-    'alexia.apps.juliana',
-    'alexia.apps.organization',
-    'alexia.apps.profile',
-    'alexia.apps.scheduling',
+    'alexia.apps.BillingConfig',
+    'alexia.apps.ConsumptionConfig',
+    'alexia.apps.GeneralConfig',
+    'alexia.apps.JulianaConfig',
+    'alexia.apps.OrganizationConfig',
+    'alexia.apps.ProfileConfig',
+    'alexia.apps.SchedulingConfig',
     'alexia.utils',
 ]
 

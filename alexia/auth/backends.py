@@ -1,10 +1,9 @@
-from pyrad.client import Client
-from pyrad.dictionary import Dictionary
 import pyrad.packet
-from django_auth_ldap.backend import LDAPBackend
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django_auth_ldap.backend import LDAPBackend
+from pyrad.client import Client
+from pyrad.dictionary import Dictionary
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 

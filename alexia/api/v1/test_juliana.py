@@ -7,7 +7,8 @@ from django.utils import timezone
 from jsonrpc.exceptions import InvalidParamsError
 
 from alexia.apps.billing.models import RfidCard
-from alexia.utils.tests import TestCase, APITestCase
+from alexia.utils.tests import APITestCase, TestCase
+
 from .common import format_authorization
 from .exceptions import ForbiddenError
 from .juliana import _get_validate_event, rfid_to_identifier

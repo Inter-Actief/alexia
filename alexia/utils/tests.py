@@ -3,12 +3,6 @@ from __future__ import unicode_literals
 import datetime
 import json
 
-from django.contrib.auth.models import User
-from django.core.serializers.json import DjangoJSONEncoder
-from django.core.urlresolvers import reverse
-from django.test import Client, testcases
-from django.utils import six, timezone
-
 from apps.billing.models import (
     Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
     TemporaryProduct,
@@ -17,6 +11,11 @@ from apps.organization.models import (
     AuthenticationData, Location, Organization, Profile,
 )
 from apps.scheduling.models import Availability, Event
+from django.contrib.auth.models import User
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core.urlresolvers import reverse
+from django.test import Client, testcases
+from django.utils import six, timezone
 from utils.auth.backends import RADIUS_BACKEND_NAME
 
 

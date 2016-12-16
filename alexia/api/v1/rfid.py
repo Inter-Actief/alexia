@@ -5,8 +5,9 @@ from jsonrpc import jsonrpc_method
 from alexia.apps.billing.models import RfidCard
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 from alexia.auth.decorators import manager_required
+
 from .common import api_v1_site, format_rfidcard
-from .exceptions import NotFoundError, InvalidParametersError
+from .exceptions import InvalidParametersError, NotFoundError
 
 
 @jsonrpc_method('rfid.list(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)

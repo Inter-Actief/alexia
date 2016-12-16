@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
-from alexia.apps.consumption.views import dcf, complete_dcf
+from alexia.apps.consumption.views import complete_dcf, dcf
 from alexia.apps.general import views as general_views
 from alexia.apps.juliana import views as juliana_views
 from alexia.apps.scheduling import views as scheduling_views

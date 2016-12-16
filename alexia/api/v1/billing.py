@@ -3,6 +3,7 @@ from jsonrpc import jsonrpc_method
 
 from alexia.apps.billing.models import Order
 from alexia.auth.decorators import manager_required
+
 from .common import api_v1_site, format_order
 from .exceptions import NotFoundError
 

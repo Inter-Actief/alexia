@@ -4,8 +4,8 @@ from django.utils.translation import ugettext as _
 
 from alexia.apps.organization.models import Certificate
 from alexia.apps.scheduling.models import Availability, BartenderAvailability
-from alexia.forms import AlexiaForm, AlexiaModelForm
 from alexia.core.validators import validate_radius_usernam
+from alexia.forms import AlexiaForm, AlexiaModelForm
 
 
 class BartenderAvailabilityForm(AlexiaModelForm):

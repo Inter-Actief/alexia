@@ -1,10 +1,11 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 from django.forms.models import model_to_dict
 from jsonrpc import jsonrpc_method
 
 from alexia.apps.organization.models import Location
 from alexia.apps.scheduling.models import Event, StandardReservation
+
 from .common import api_v1_site
 
 

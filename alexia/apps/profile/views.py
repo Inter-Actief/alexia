@@ -102,7 +102,7 @@ def iva(request):
             request.user.certificate = certificate
             request.user.save()
 
-            return redirect(index)
+            return redirect('profile')
     else:
         form = IvaForm(instance=certificate)
 

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.views.generic.detail import DetailView
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.detail import DetailView
 
 from alexia.apps.scheduling.models import Event
 from alexia.auth.mixins import TenderRequiredMixin

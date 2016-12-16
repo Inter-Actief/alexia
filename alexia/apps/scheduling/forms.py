@@ -8,7 +8,9 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from alexia.apps.organization.models import Location, Organization
-from alexia.apps.scheduling.models import Event, MailTemplate, StandardReservation
+from alexia.apps.scheduling.models import (
+    Event, MailTemplate, StandardReservation,
+)
 from alexia.forms import AlexiaModelForm
 from alexia.utils.mail import mail
 

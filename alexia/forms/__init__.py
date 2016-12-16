@@ -1,4 +1,4 @@
-from .mixins import * # NOQA
+from .mixins import *  # NOQA
 
 
 def _default_crispy_helper(submit_text=None):

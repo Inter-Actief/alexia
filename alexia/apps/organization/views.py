@@ -1,25 +1,23 @@
-from datetime import date
-from dateutil.relativedelta import relativedelta
 import mimetypes
+from datetime import date
 
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
-from django.urls import reverse_lazy
 
-from alexia.forms import CrispyFormMixin
-from alexia.utils import log
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 from alexia.auth.decorators import manager_required
 from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin
+from alexia.forms import CrispyFormMixin
+from alexia.utils import log
 
-from .forms import (
-    CreateUserForm, MembershipAddForm, UploadIvaForm,
-)
+from .forms import CreateUserForm, MembershipAddForm, UploadIvaForm
 from .models import AuthenticationData, Membership, Profile
 
 

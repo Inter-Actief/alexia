@@ -2,11 +2,12 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
-from alexia.apps.organization.models import Profile, AuthenticationData
+from alexia.apps.organization.models import AuthenticationData, Profile
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 from alexia.auth.decorators import manager_required
+
 from .common import api_v1_site, format_user
-from .exceptions import NotFoundError, InvalidParametersError
+from .exceptions import InvalidParametersError, NotFoundError
 
 
 @jsonrpc_method('user.add(radius_username=String, first_name=String, last_name=String, email=String) -> Object',

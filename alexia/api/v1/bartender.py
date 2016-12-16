@@ -5,6 +5,7 @@ from alexia.apps.organization.forms import BartenderAvailabilityForm
 from alexia.apps.organization.models import Membership
 from alexia.apps.scheduling.models import Event
 from alexia.auth.backends import RADIUS_BACKEND_NAME
+
 from .api_utils import user_list
 from .common import api_v1_site
 

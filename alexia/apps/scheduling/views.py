@@ -25,10 +25,10 @@ from alexia.apps.scheduling.models import (
     Availability, BartenderAvailability, Event, MailTemplate,
     StandardReservation,
 )
-from alexia.utils import log
 from alexia.auth.decorators import planner_required
 from alexia.auth.mixins import ManagerRequiredMixin
 from alexia.http import IcalResponse
+from alexia.utils import log
 from alexia.utils.calendar import generate_ical
 from alexia.utils.mixins import (
     CreateViewForOrganization, CrispyFormMixin, OrganizationFilterMixin,

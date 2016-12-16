@@ -1,6 +1,7 @@
 from jsonrpc import jsonrpc_method
 
 from alexia.apps.organization.models import Organization
+
 from .common import api_v1_site
 from .exceptions import NotFoundError
 

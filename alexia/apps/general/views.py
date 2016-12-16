@@ -1,7 +1,8 @@
 from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
+from django.contrib.auth import (
+    REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
+)
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import get_user_model
 # from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,23 +17,25 @@ from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
 
 from alexia.apps.organization.models import Location, Membership, Organization
-from alexia.apps.scheduling.models import Availability, BartenderAvailability, Event
+from alexia.apps.scheduling.models import (
+    Availability, BartenderAvailability, Event,
+)
 
 
 # Use this once LoginView is available in Django
 #
-#class LoginView(LoginView):
-#    def form_valid(self, form):
-#        user = form.get_user()
-#        auth_login(self.request, user)
+# class LoginView(LoginView):
+#     def form_valid(self, form):
+#         user = form.get_user()
+#         auth_login(self.request, user)
 #
-#        if hasattr(user, 'profile') and user.profile.current_organization:
-#            self.request.session['organization_pk'] = user.profile.current_organization.pk
+#         if hasattr(user, 'profile') and user.profile.current_organization:
+#             self.request.session['organization_pk'] = user.profile.current_organization.pk
 #
-#        if not user.first_name or not user.email:
-#            return HttpResponseRedirect(resolve_url('register'))
+#         if not user.first_name or not user.email:
+#             return HttpResponseRedirect(resolve_url('register'))
 #
-#        return HttpResponseRedirect(self.get_success_url())
+#         return HttpResponseRedirect(self.get_success_url())
 
 
 def _get_login_redirect_url(request, redirect_to):
