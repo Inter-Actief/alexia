@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
+from django.views.i18n import JavaScriptCatalog
 
 from alexia.apps.billing.views import JulianaView
 from alexia.apps.consumption.views import complete_dcf, dcf
@@ -44,6 +45,7 @@ urlpatterns = [
 
     # Internationalization
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     # Robots
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),

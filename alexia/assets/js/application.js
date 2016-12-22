@@ -28,9 +28,15 @@ $(function () {
         }, "text");
     });
 
+    $('.dateinput').datepicker({
+        autoclose: true,
+        format: gettext('yyyy-mm-dd'),
+        weekStart: 1,
+    });
+
     $('.timeinput').timepicker({
         defaultTime: false,
-        showMeridian: false
+        showMeridian: false,
     });
 
     $('[data-toggle="tooltip"]').tooltip();
