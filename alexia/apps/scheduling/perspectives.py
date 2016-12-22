@@ -52,7 +52,6 @@ def calendar_fetch(request):
             pass
 
         data.append({
-            'id': event.pk,
             'title': event.name,
             'start': event.starts_at.astimezone(tz).isoformat(),
             'end': event.ends_at.astimezone(tz).isoformat(),
@@ -62,8 +61,6 @@ def calendar_fetch(request):
             'location': ', '.join(map(lambda x: x.name, event.location.all())),
             'tenders': ', '.join(map(lambda x: x.first_name,
                                      event.get_assigned_bartenders())) or '<i>geen</i>',
-            'canEdit': request.user.profile.is_planner(event.organizer) if hasattr(request.user, 'profile') else False,
-            'editUrl': event.get_absolute_url()
         })
 
     return HttpResponse(json.dumps(data), content_type='application/json')

@@ -27,16 +27,13 @@ $(document).ready(function() {
             html  = "<b>{% trans 'Location' %}:</b> " + event.location;
             html += "<br><b>{% trans 'Organization' %}:</b> " + event.organizers;
             html += "<br><b>{% trans 'Bartenders' %}:</b> " + event.tenders;
-            if(event.canEdit) { html += "<br><a href=\"" + event.editUrl  + "\">{% trans 'edit' %}</a>"; }
 
-            element.qtip({
-                style: { classes: 'qtip-bootstrap' },
-                position: { target: 'mouse', adjust: { mouse: false } },
-                show: 'mousedown',
-                content: {
-                    title: event.title,
-                    text: html
-                }
+            element.popover({
+                container: 'body',
+                content: html,
+                html: true,
+                title: event.title,
+                trigger: 'hover',
             });
         },
 

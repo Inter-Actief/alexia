@@ -131,3 +131,9 @@ TEMPLATES = [
 
 # URLs
 ROOT_URLCONF = 'alexia.conf.urls'
+
+# Compressor
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
