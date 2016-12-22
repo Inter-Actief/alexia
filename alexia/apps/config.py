@@ -19,11 +19,6 @@ class GeneralConfig(AppConfig):
     verbose_name = _('General')
 
 
-class JulianaConfig(AppConfig):
-    name = 'alexia.apps.juliana'
-    verbose_name = _('Juliana')
-
-
 class OrganizationConfig(AppConfig):
     name = 'alexia.apps.organization'
     verbose_name = _('Organization')

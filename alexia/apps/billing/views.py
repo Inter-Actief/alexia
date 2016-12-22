@@ -1,9 +1,11 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import connection
 from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import ugettext as _
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -18,13 +20,66 @@ from alexia.apps.billing.models import (
 )
 from alexia.apps.scheduling.models import Event
 from alexia.auth.decorators import manager_required
-from alexia.auth.mixins import ManagerRequiredMixin
+from alexia.auth.mixins import ManagerRequiredMixin, TenderRequiredMixin
 from alexia.utils.mixins import (
     CreateViewForOrganization, CrispyFormMixin, EventOrganizerFilterMixin,
     FixedValueCreateView, OrganizationFilterMixin, OrganizationFormMixin,
 )
 
 from .models import Order, Purchase
+
+
+class JulianaView(TenderRequiredMixin, DetailView):
+    template_name = 'billing/juliana.html'
+    model = Event
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not self.object.is_tender(request.user):
+            raise PermissionDenied(_('You are not a tender for this event'))
+        if not self.object.can_be_opened(request.user):
+            raise PermissionDenied(_('This event is not open'))
+
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super(JulianaView, self).get_context_data(**kwargs)
+        context.update({
+            'products': self.get_product_list(),
+            'debug': settings.DEBUG,
+            'countdown': settings.JULIANA_COUNTDOWN if hasattr(settings, 'JULIANA_COUNTDOWN') else 5,
+            'androidapp': self.request.META.get('HTTP_X_REQUESTED_WITH') == 'net.inter_actief.juliananfc',
+        })
+        return context
+
+    def get_product_list(self):
+        products = []
+
+        for sellingprice in self.object.pricegroup.sellingprice_set.all():
+            for product in sellingprice.productgroup.permanentproduct_set.all():
+                products.append({
+                    'id': product.pk,
+                    'name': product.name,
+                    'text_color': product.text_color,
+                    'background_color': product.background_color,
+                    'price': int(sellingprice.price * 100),
+                    'position': product.position,
+                })
+
+        products.sort(key=lambda x: x['position'])
+
+        for product in self.object.temporaryproducts.all():
+            products.append({
+                'id': product.pk,
+                'name': product.name,
+                'text_color': product.text_color,
+                'background_color': product.background_color,
+                'price': int(product.price * 100),
+            })
+
+        return products
 
 
 @login_required

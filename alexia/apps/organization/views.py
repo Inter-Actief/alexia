@@ -56,7 +56,7 @@ def membership_add(request):
     else:
         form = MembershipAddForm()
 
-    return render(request, 'membership/form.html', locals())
+    return render(request, 'organization/membership_form.html', locals())
 
 
 @login_required
@@ -90,7 +90,7 @@ def membership_create_user(request, username):
     else:
         form = CreateUserForm(initial={'username': username})
 
-    return render(request, 'membership/create_user.html', locals())
+    return render(request, 'organization/membership_create_user.html', locals())
 
 
 class MembershipDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailView):
@@ -176,7 +176,7 @@ def iva_upload(request, pk):
     else:
         form = UploadIvaForm(instance=certificate)
 
-    return render(request, 'membership/iva_upload.html', locals())
+    return render(request, 'organization/membership_iva_upload.html', locals())
 
 
 @login_required

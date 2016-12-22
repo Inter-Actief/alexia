@@ -4,9 +4,9 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
+from alexia.apps.billing.views import JulianaView
 from alexia.apps.consumption.views import complete_dcf, dcf
 from alexia.apps.general import views as general_views
-from alexia.apps.juliana import views as juliana_views
 from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
@@ -16,7 +16,7 @@ urlpatterns = [
     # Short urls to 'subsystems'
     url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),
     url(r'^dcf/(?P<pk>\d+)/check/$', complete_dcf, name='dcf-complete'),
-    url(r'^juliana/(?P<pk>\d+)/$', juliana_views.JulianaView.as_view(), name='juliana'),
+    url(r'^juliana/(?P<pk>\d+)/$', JulianaView.as_view(), name='juliana'),
 
     # Apps
     url(r'^billing/', include('alexia.apps.billing.urls')),

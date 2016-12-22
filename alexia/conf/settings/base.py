@@ -80,7 +80,6 @@ INSTALLED_APPS = [
     'alexia.apps.BillingConfig',
     'alexia.apps.ConsumptionConfig',
     'alexia.apps.GeneralConfig',
-    'alexia.apps.JulianaConfig',
     'alexia.apps.OrganizationConfig',
     'alexia.apps.ProfileConfig',
     'alexia.apps.SchedulingConfig',

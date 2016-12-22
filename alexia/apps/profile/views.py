@@ -20,7 +20,7 @@ from alexia.forms import AlexiaModelForm, CrispyFormMixin
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'profile.html'
+    template_name = 'profile/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
@@ -68,7 +68,7 @@ class GenerateIcalView(TenderRequiredMixin, RedirectView):
 
 
 class ProfileUpdate(LoginRequiredMixin, CrispyFormMixin, UpdateView):
-    template_name = 'profile_form.html'
+    template_name = 'profile/profile_form.html'
     fields = ['email']
 
     def get_object(self):
@@ -106,7 +106,7 @@ def iva(request):
     else:
         form = IvaForm(instance=certificate)
 
-    return render(request, 'profile/iva.html', locals())
+    return render(request, 'profile/profile_iva.html', locals())
 
 
 class IvaView(LoginRequiredMixin, View):
