@@ -3,14 +3,8 @@
 
 {% block title %}{% trans 'Consumption form' %}{% endblock %}
 
-{% block head %}
-{% compress js %}
-<script src="{{ STATIC_URL }}js/dcf.js"></script>
-{% endcompress %}
-{% endblock %}
-
 {% block body %}
-<form method="post">
+<form method="post" class="disable-on-change">
     {% csrf_token %}
     <div class="container">
         <div class="page-header">

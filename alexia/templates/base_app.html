@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n active_menu %}
+{% load active_menu i18n static %}
 
 {% block body %}
 <div class="navbar navbar-fixed-top navbar-default">
@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="{{ STATIC_URL }}img/logo/alexia.svg" height="17" style="width: 61px; height: 17px" width="61">
+                <img src="{% static 'img/alexia.svg' %}" height="17" style="width: 61px; height: 17px" width="61">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="alexia-navbar-collapse">
@@ -86,7 +86,9 @@
                     {% if LANGUAGE_CODE != code %}
                         <li>
                             <a href="#" onclick="document.setLang_{{ code }}.submit();return false;" title="{{ name }}">
-                                <img src="{{STATIC_URL}}img/icon/flag_{{ code }}.png" alt="{{ name }}">
+                                {% with 'img/icon/flag_'|add:code|add:'.png' as flag_url %}
+                                <img src="{% static flag_url %}" alt="{{ name }}">
+                                {% endwith %}
                             </a>
                         </li>
                     {% endif %}

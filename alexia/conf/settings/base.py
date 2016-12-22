@@ -83,7 +83,6 @@ INSTALLED_APPS = [
     'alexia.apps.OrganizationConfig',
     'alexia.apps.ProfileConfig',
     'alexia.apps.SchedulingConfig',
-    'alexia.utils',
 ]
 
 # Security

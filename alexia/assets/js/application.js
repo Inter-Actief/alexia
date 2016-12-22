@@ -40,4 +40,12 @@ $(function () {
         document.execCommand('copy');
     });
 
+    var orig = $('form.disable-on-change').serialize();
+
+    $('form.disable-on-change').bind('change keyup', function() {
+        var disable = (orig != $(this).serialize());
+        $('#complete').toggleClass('disabled', disable);
+    });
+
+
 });

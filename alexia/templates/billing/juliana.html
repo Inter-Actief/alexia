@@ -1,16 +1,14 @@
-{% load compress %}
+{% load compress static %}
 <!doctype html>
 <html>
 <head>
     <title>Juliana</title>
     {% compress js %}
-    <script src="{{ STATIC_URL }}js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ STATIC_URL }}js/jquery-ui-1.11.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ STATIC_URL }}js/socket.io-0.9.16.min.js" type="text/javascript"></script>
-    <script src="{{ STATIC_URL }}js/bootstrap-3.3.5.min.js"></script>
-    <script src="{{ STATIC_URL }}js/juliana.js"></script>
+    <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap-3.3.7.js' %}"></script>
+    <script src="{% static 'js/juliana.js' %}"></script>
     {% endcompress %}
-    <script type="text/javascript">
+    <script>
         Settings = {
             api_url: "{% url 'api_v1_mountpoint' %}",
             event_id: {{ event.pk }},
@@ -27,8 +25,8 @@
         };
     </script>
     {% compress css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-3.3.5.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/juliana.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-3.3.7.css' %}">
+    <link rel="stylesheet" href="{% static 'css/juliana.css' %}">
     {% endcompress %}
 </head>
 <body>

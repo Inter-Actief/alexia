@@ -1,4 +1,4 @@
-{% load i18n compress %}
+{% load compress i18n static %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
@@ -7,25 +7,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Alexia drink management">
         <meta name="author" content="Alexia">
-        <link rel="apple-touch-icon" href="{{ STATIC_URL }}img/apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
         {% compress js %}
-        <script src="{{ STATIC_URL }}js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/jquery-ui-1.11.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-3.3.5.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-datepicker-1.4.0.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-datepicker-1.4.0.nl.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap3-timepicker2-1.0.0.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/fullcalendar.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/application.js" type="text/javascript" charset="utf-8"></script>
-        {% block extrajs %}{% endblock %}
+        {# Vendor #}
+        <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+        <script src="{% static 'js/bootstrap-3.3.7.js' %}"></script>
+        <script src="{% static 'js/bootstrap-datepicker-1.4.0.js' %}"></script>
+        <script src="{% static 'js/bootstrap-datepicker-1.4.0.nl.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap3-timepicker2-1.0.0.js' %}"></script>
+        <script src="{% static 'js/Chart-2.4.0.js' %}"></script>
+        <script src="{% static 'js/fullcalendar-1.6.7.js' %}"></script>
+        {# Alexia #}
+        <script src="{% static 'js/application.js' %}"></script>
         {% endcompress %}
         {% compress css %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-3.3.5.min.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-3.3.5-theme.min.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/application.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-datepicker3-1.4.0.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap3-timepicker2-1.0.0.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css" type="text/css" charset="utf-8">
+        {# Vendor #}
+        <link rel="stylesheet" href="{% static 'css/bootstrap-3.3.7.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-theme-3.3.7.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker3-1.4.0.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap3-timepicker2-1.0.0.css' %}">
+        <link rel="stylesheet" href="{% static 'css/fullcalendar-1.6.7.css' %}">
+        {# Alexia #}
+        <link rel="stylesheet" href="{% static 'css/application.css' %}">
         {% endcompress %}
         {% block head %}{% endblock head %}
       </head>
