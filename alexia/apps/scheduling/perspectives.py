@@ -31,8 +31,8 @@ def calendar_fetch(request):
         return redirect(calendar)
 
     tz = timezone.get_current_timezone()
-    from_time = datetime.datetime.fromtimestamp(float(request.GET.get('start')))
-    till_time = datetime.datetime.fromtimestamp(float(request.GET.get('end')))
+    from_time = datetime.datetime.fromtimestamp(float(request.GET.get('start')), tz=timezone.utc)
+    till_time = datetime.datetime.fromtimestamp(float(request.GET.get('end')), tz=timezone.utc)
     data = []
 
     for event in Event.objects.filter(ends_at__gte=from_time,
@@ -53,8 +53,8 @@ def calendar_fetch(request):
 
         data.append({
             'title': event.name,
-            'start': event.starts_at.astimezone(tz).isoformat(),
-            'end': event.ends_at.astimezone(tz).isoformat(),
+            'start': event.starts_at.isoformat(),
+            'end': event.ends_at.isoformat(),
             'color': color,
             'organizers': ', '.join(map(lambda x: x.name,
                                         event.participants.all())),

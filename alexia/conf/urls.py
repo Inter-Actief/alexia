@@ -47,6 +47,8 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
+    # Favicon
+    url(r'^favicon\.ico$', TemplateView.as_view(template_name='favicon.ico', content_type='image/x-icon')),
     # Robots
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]

@@ -18,6 +18,7 @@ $(document).ready(function() {
             center: 'title',
             right: 'month,agendaWeek'
         },
+        ignoreTimezone: false,
         defaultView: 'agendaWeek',
         loading: function(bool) {
             if(bool) $('#loading').show();
