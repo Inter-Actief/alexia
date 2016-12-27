@@ -3,12 +3,12 @@ import datetime
 
 from django import forms
 from django.utils import timezone
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.billing.models import (
     PermanentProduct, PriceGroup, ProductGroup, SellingPrice,
 )
-from alexia.forms import AlexiaForm, _default_crispy_helper
+from alexia.forms import default_crispy_helper
 
 
 class PermanentProductForm(forms.ModelForm):
@@ -32,8 +32,8 @@ class SellingPriceForm(forms.ModelForm):
         self.fields['productgroup'].queryset = ProductGroup.objects.filter(organization=organization)
 
 
-class FilterEventForm(AlexiaForm):
-    helper = _default_crispy_helper(_('Export'))
+class FilterEventForm(forms.Form):
+    helper = default_crispy_helper(_('Export'))
     helper.attrs = {'target': '_blank'}
 
     now = timezone.now()

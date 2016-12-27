@@ -22,9 +22,10 @@ from alexia.apps.scheduling.models import Event
 from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, TenderRequiredMixin,
 )
+from alexia.forms import CrispyFormMixin
 from alexia.utils.mixins import (
-    CreateViewForOrganization, CrispyFormMixin, EventOrganizerFilterMixin,
-    FixedValueCreateView, OrganizationFilterMixin, OrganizationFormMixin,
+    CreateViewForOrganization, EventOrganizerFilterMixin, FixedValueCreateView,
+    OrganizationFilterMixin, OrganizationFormMixin,
 )
 
 from .models import Order, Purchase

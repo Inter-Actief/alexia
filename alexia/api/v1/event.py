@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from jsonrpc import jsonrpc_method
 
 from alexia.apps.organization.models import Location
-from alexia.apps.scheduling.models import Event, StandardReservation
+from alexia.apps.scheduling.models import Event
 
 from .common import api_v1_site
 
@@ -65,26 +65,6 @@ def event_conflicts(request, start_date, start_time, end_date, end_time, event_i
 
     result = []
     for event in events:
-        result.append(model_to_dict(event))
-
-    return result
-
-
-@jsonrpc_method('event.conflicts_standard(String, String, String, String, Array) -> Array', site=api_v1_site,
-                authenticated=True)
-def event_conflicts_standard(request, start_date, start_time, end_date, end_time, locations=None):
-    """Returns the standard reservations which are booked at the same time as the to-be-planned event."""
-
-    start = datetime.strptime("%s %s" % (start_date, start_time), "%d-%m-%Y %H:%M")
-    end = datetime.strptime("%s %s" % (end_date, end_time), "%d-%m-%Y %H:%M")
-    s_reservations = StandardReservation.objects.occuring_at(start, end)
-
-    if locations:
-        locations = Location.objects.filter(pk__in=locations.split(','))
-        s_reservations = s_reservations.filter(location__in=locations)
-
-    result = []
-    for event in s_reservations:
         result.append(model_to_dict(event))
 
     return result

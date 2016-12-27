@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^bartender/$', perspectives.bartender, name='bartender-schedule'),
     url(r'^calendar/$', perspectives.calendar, name='calendar-schedule'),
     url(r'^calendar/fetch$', perspectives.calendar_fetch, name='fetch-calendar-schedule'),
-    url(r'^configuration/edit_standardreservations/$', views.edit_standardreservations, name='standard-reservations'),
 
     # Events
     url(r'^event/add/$', views.event_add, name='new-event'),

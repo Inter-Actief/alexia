@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import math
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from .managers import EventManager, StandardReservationManager
+from .managers import EventManager
 from .tools import notify_tenders
 
 
@@ -45,60 +45,6 @@ class MailTemplate(models.Model):
 
     def has_send_at(self):
         return self.name == 'reminder'
-
-
-@python_2_unicode_compatible
-class StandardReservation(models.Model):
-    MONDAY = 1
-    TUESDAY = 2
-    WEDNESDAY = 3
-    THURSDAY = 4
-    FRIDAY = 5
-    SATURDAY = 6
-    SUNDAY = 7
-
-    DAYS = (
-        (MONDAY, _('Monday')),
-        (TUESDAY, _('Tuesday')),
-        (WEDNESDAY, _('Wednesday')),
-        (THURSDAY, _('Thursday')),
-        (FRIDAY, _('Friday')),
-        (SATURDAY, _('Saturday')),
-        (SUNDAY, _('Sunday')),
-    )
-
-    organization = models.ForeignKey('organization.Organization', models.CASCADE, verbose_name=_('organization'))
-    start_day = models.SmallIntegerField(verbose_name=_('start day'), choices=DAYS)
-    start_time = models.TimeField(verbose_name=_('start time'), default=time(16, 0, 0))
-    end_day = models.PositiveSmallIntegerField(verbose_name=_('end day'), choices=DAYS)
-    end_time = models.TimeField(verbose_name=_('end time'), default=time(23, 59, 59))
-    location = models.ForeignKey('organization.Location', models.CASCADE, verbose_name=_('location'))
-
-    objects = StandardReservationManager()
-
-    class Meta:
-        verbose_name = _('standard reservation')
-        verbose_name_plural = _('standard reservations')
-
-    def __str__(self):
-        return '[%s] %s %s %s' % (
-            self.organization,
-            self.location,
-            _('on'),
-            self.get_start_day_display(),
-        )
-
-    def clean(self):
-        """Check whether the range start is before the range end."""
-        from django.core.exceptions import ValidationError
-
-        if self.start_day > self.end_day:
-            raise ValidationError(
-                _('The start day can not be after the end day.'))
-
-        if self.start_day == self.end_day and self.start_time >= self.end_time:
-            raise ValidationError(
-                _('The start time can not be after the end time.'))
 
 
 @python_2_unicode_compatible

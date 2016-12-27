@@ -14,7 +14,7 @@ from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
 from alexia.apps.scheduling.models import Event
 from alexia.auth.decorators import foundation_manager_required
 from alexia.auth.mixins import FoundationManagerRequiredMixin
-from alexia.utils.mixins import CrispyFormMixin
+from alexia.forms import CrispyFormMixin
 
 from .forms import (
     ConsumptionFormConfirmationForm, ConsumptionFormForm,

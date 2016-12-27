@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
 
-from alexia.forms import _default_crispy_helper
+from alexia.forms import default_crispy_helper
 
 from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
 
@@ -88,4 +88,4 @@ class ExportConsumptionFormsForm(forms.Form):
     month = forms.TypedChoiceField(label=_('Month'), choices=MONTHS.items(), coerce=int, initial=now.month - 1)
     year = forms.IntegerField(label=_('Year'), initial=now.year)
 
-    helper = _default_crispy_helper(_('Export'))
+    helper = default_crispy_helper(_('Export'))

@@ -1,8 +1,6 @@
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 
-from alexia.forms import default_crispy_helper
-
 
 class OrganizationFilterMixin(object):
     """
@@ -76,16 +74,3 @@ class OrganizationFormMixin(object):
         kwargs = super(OrganizationFormMixin, self).get_form_kwargs()
         kwargs['organization'] = self.request.organization
         return kwargs
-
-
-class CrispyFormMixin(object):
-    """
-    Mixin to add Crispy form helper.
-    """
-
-    def get_form(self, form_class=None):
-        form = super(CrispyFormMixin, self).get_form(form_class)
-
-        form.helper = default_crispy_helper()
-
-        return form

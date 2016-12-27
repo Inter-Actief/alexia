@@ -1,7 +1,6 @@
 import datetime
-import json
 
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
@@ -60,4 +59,4 @@ def calendar_fetch(request):
                                      event.get_assigned_bartenders())) or '<i>geen</i>',
         })
 
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    return JsonResponse(data, safe=False)

@@ -1,18 +1,14 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Organization
-from alexia.apps.scheduling.models import (
-    Event, MailTemplate, StandardReservation,
-)
+from alexia.apps.scheduling.models import Event
 from alexia.forms import AlexiaModelForm
-from alexia.utils.mail import mail
 
 
 class EventForm(AlexiaModelForm):
@@ -82,38 +78,6 @@ class EventForm(AlexiaModelForm):
                         )
 
         return cleaned_data
-
-    def save(self, organizer=None, *args, **kwargs):
-        event = super(EventForm, self).save(*args, **kwargs)
-        if not organizer:
-            organizer = event.organizer
-        # Mail voor standardreservations
-        for reservation in StandardReservation.objects.occuring_at(
-            self.cleaned_data['starts_at'],
-            self.cleaned_data['ends_at'],
-        ):
-            if reservation.location in self.cleaned_data['location'] and \
-                    not reservation.organization == organizer:
-                try:
-                    mt = MailTemplate.objects.get(organization=reservation.organization, name="reservations")
-                    if mt.is_active:
-                        addressees = reservation.organization.managers.all()
-                        mail(settings.EMAIL_FROM, addressees, mt.subject, mt.template, extraattrs={'event': event})
-                except MailTemplate.DoesNotExist:
-                    pass  # Dan maar geen mail...
-
-        return event
-
-
-class EditEventForm(EventForm):
-    def save(self, organizer=None, *args, **kwargs):
-        return super(EventForm, self).save(*args, **kwargs)
-
-
-class StandardReservationForm(forms.ModelForm):
-    class Meta:
-        model = StandardReservation
-        fields = ['organization', 'start_day', 'end_day', 'location']
 
 
 class FilterEventForm(forms.Form):

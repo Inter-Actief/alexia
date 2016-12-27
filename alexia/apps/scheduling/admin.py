@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.billing.admin import TemporaryProductInline
 
-from .models import Availability, Event, MailTemplate, StandardReservation
+from .models import Availability, Event, MailTemplate
 
 
 class AvailabilityInline(admin.TabularInline):
@@ -17,17 +17,6 @@ class MailTemplateAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     list_filter = ('organization', 'name', 'is_active')
     search_fields = ('name', 'subject', 'template')
-
-
-@admin.register(StandardReservation)
-class StandardReservationAdmin(admin.ModelAdmin):
-    fieldsets = (
-        (None, {
-            'fields': ('organization', 'location', ('start_day', 'start_time'), ('end_day', 'end_time')),
-        }),
-    )
-    list_display = ('organization', 'start_day', 'start_time', 'location')
-    list_filter = ('organization', 'start_day', 'location')
 
 
 @admin.register(Event)

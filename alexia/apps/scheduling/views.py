@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.query import Prefetch
-from django.forms.models import ModelForm, modelformset_factory
+from django.forms.models import ModelForm
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -18,20 +18,18 @@ from django.views.generic.list import ListView
 
 from alexia.apps.organization.forms import BartenderAvailabilityForm
 from alexia.apps.organization.models import Membership, Profile
-from alexia.apps.scheduling.forms import (
-    EditEventForm, EventForm, FilterEventForm, StandardReservationForm,
-)
+from alexia.apps.scheduling.forms import EventForm, FilterEventForm
 from alexia.apps.scheduling.models import (
     Availability, BartenderAvailability, Event, MailTemplate,
-    StandardReservation,
 )
 from alexia.auth.decorators import planner_required
 from alexia.auth.mixins import ManagerRequiredMixin
+from alexia.forms import CrispyFormMixin
 from alexia.http import IcalResponse
 from alexia.utils import log
 from alexia.utils.calendar import generate_ical
 from alexia.utils.mixins import (
-    CreateViewForOrganization, CrispyFormMixin, OrganizationFilterMixin,
+    CreateViewForOrganization, OrganizationFilterMixin,
 )
 
 
@@ -191,13 +189,13 @@ def event_edit(request, pk):
         raise PermissionDenied
 
     if request.method == 'POST':
-        form = EditEventForm(request, request.POST, instance=event)
+        form = EventForm(request, request.POST, instance=event)
         if form.is_valid():
             event = form.save()
             log.event_modified(request.user, event)
             return redirect(overview)
     else:
-        form = EditEventForm(instance=event)
+        form = EventForm(instance=event)
 
     return render(request, 'scheduling/event_form.html', locals())
 
@@ -303,22 +301,6 @@ def set_bartender_availability(request):
     else:
         # TODO Better error message and HTTP status code [JZ]
         return HttpResponse("NOTOK")
-
-
-def edit_standardreservations(request):
-    StandardReservationFormset = modelformset_factory(
-        StandardReservation, form=StandardReservationForm, can_delete=True)
-    if request.method == "POST":
-        formset = StandardReservationFormset(request.POST)
-        if formset.is_valid():
-            formset.save()
-
-            return render(request, 'closepopup.html', {})
-    else:
-        formset = StandardReservationFormset(
-            queryset=StandardReservation.objects.all())
-    return render(request, 'scheduling/standardreservations.html',
-                  {'formset': formset})
 
 
 def ical(request):

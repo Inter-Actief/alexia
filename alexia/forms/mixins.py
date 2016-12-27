@@ -4,7 +4,7 @@ from django.forms import Form, ModelForm
 from django.utils.translation import ugettext as _
 
 
-def _default_crispy_helper(submit_text=None):
+def default_crispy_helper(submit_text=None):
     if not submit_text:
         submit_text = _('Save')
 
@@ -16,13 +16,8 @@ def _default_crispy_helper(submit_text=None):
     return helper
 
 
-# legacy
-def default_crispy_helper(submit_text=None):
-    return _default_crispy_helper(submit_text)
-
-
 class BootstrapFormMixin:
-    helper = _default_crispy_helper()
+    helper = default_crispy_helper()
 
 
 class AlexiaForm(BootstrapFormMixin, Form):
@@ -39,5 +34,5 @@ class CrispyFormMixin(object):
     """
     def get_form(self, form_class=None):
         form = super(CrispyFormMixin, self).get_form(form_class)
-        form.helper = _default_crispy_helper()
+        form.helper = default_crispy_helper()
         return form
