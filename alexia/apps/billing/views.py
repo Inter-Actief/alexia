@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
@@ -7,7 +6,9 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import CreateView, DeleteView, FormView, UpdateView
+from django.views.generic.edit import (
+    CreateView, DeleteView, FormView, UpdateView,
+)
 from django.views.generic.list import ListView
 
 from alexia.apps.billing.forms import (
@@ -18,8 +19,9 @@ from alexia.apps.billing.models import (
     TemporaryProduct,
 )
 from alexia.apps.scheduling.models import Event
-from alexia.auth.decorators import manager_required
-from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin, TenderRequiredMixin
+from alexia.auth.mixins import (
+    DenyWrongOrganizationMixin, ManagerRequiredMixin, TenderRequiredMixin,
+)
 from alexia.utils.mixins import (
     CreateViewForOrganization, CrispyFormMixin, EventOrganizerFilterMixin,
     FixedValueCreateView, OrganizationFilterMixin, OrganizationFormMixin,
