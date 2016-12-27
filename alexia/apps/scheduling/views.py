@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.query import Prefetch
-from django.forms.models import ModelForm
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -378,24 +377,10 @@ class MailTemplateDetailView(MailTemplateObjectMixin, ManagerRequiredMixin, Orga
     pass
 
 
-class MailTemplateForm(ModelForm):
-    class Meta:
-        model = MailTemplate
-        fields = ['send_at', 'subject', 'template', 'is_active']
-
-
-class MailTemplateFormWithoutSendAt(MailTemplateForm):
-    class Meta(MailTemplateForm.Meta):
-        exclude = ['send_at']
-
-
 class MailTemplateUpdateView(MailTemplateObjectMixin, ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
                              UpdateView):
-    def get_form_class(self):
-        if self.object.has_send_at():
-            return MailTemplateForm
-        else:
-            return MailTemplateFormWithoutSendAt
+    model = MailTemplate
+    fields = ['subject', 'template', 'is_active']
 
 
 class AvailabilityListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):

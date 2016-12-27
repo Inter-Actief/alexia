@@ -26,12 +26,6 @@
                 <th>{% trans 'Is active' %}</th>
                 <td>{{ object.is_active|yesno }}</td>
             </tr>
-            {% if object.has_send_at %}
-            <tr>
-                <th>{% trans 'Send at' %}</th>
-                <td>{{ object.send_at }} minutes before event</td>
-            </tr>
-            {% endif %}
             <tr>
                 <th>{% trans 'Template' %}</th>
                 <td><pre>{{ object.template }}</pre></td>
