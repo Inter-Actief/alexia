@@ -88,7 +88,6 @@
 .bootstrap-timepicker-widget table {
   width: 100%;
   margin: 0;
-  max-width: 210px;
 }
 .bootstrap-timepicker-widget table td {
   text-align: center;
@@ -98,12 +97,9 @@
 }
 .bootstrap-timepicker-widget table td:not(.separator) {
   min-width: 30px;
-  max-width: 50px;
 }
 .bootstrap-timepicker-widget table td span {
   width: 100%;
-  display: block;
-  text-align: center;
 }
 .bootstrap-timepicker-widget table td a {
   border: 1px transparent solid;
@@ -127,26 +123,23 @@
   font-size: 18px;
 }
 .bootstrap-timepicker-widget table td input {
-  min-width: 25px;
+  width: 65px;
   margin: 0;
   text-align: center;
-  max-width: 50px;
 }
 .bootstrap-timepicker-widget .modal-content {
   padding: 4px;
-  max-width: 250px;
-  text-align: center;
 }
-
 @media (min-width: 767px) {
-  
+  .bootstrap-timepicker-widget.modal {
+    width: 200px;
+    margin-left: -100px;
+  }
 }
-
 @media (max-width: 767px) {
   .bootstrap-timepicker {
     width: 100%;
   }
-
   .bootstrap-timepicker .dropdown-menu {
     width: 100%;
   }

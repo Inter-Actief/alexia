@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 from django.utils import timezone
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Organization
 from alexia.apps.scheduling.models import (
@@ -134,9 +134,3 @@ class FilterEventForm(forms.Form):
     helper.label_class = 'col-lg-2'
     helper.field_class = 'col-lg-8'
     helper.add_input(Submit('submit', _('Filter')))
-
-    def __init__(self, *args, **kwargs):
-        super(FilterEventForm, self).__init__(*args, **kwargs)
-
-        # Workaround for https://github.com/maraujop/django-crispy-forms/issues/303
-        self.fields['location'].choices = self.fields['location'].choices

@@ -931,10 +931,10 @@ msgid "Status"
 msgstr "Status"
 
 msgid "Completed"
-msgstr "Afgerond"
+msgstr "Ingezonden"
 
 msgid "Pending"
-msgstr "In behandeling"
+msgstr "In afwachting"
 
 msgid "Signed off by"
 msgstr "Ondertekend door"
