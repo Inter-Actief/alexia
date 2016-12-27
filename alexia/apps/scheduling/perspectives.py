@@ -6,12 +6,10 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from alexia.apps.organization.models import Location
-from alexia.auth.decorators import tender_required
 
 from .models import Availability, Event
 
 
-@tender_required
 def bartender(request):
     events = Event.objects.filter(ends_at__gte=timezone.now(),
                                   bartender_availabilities__availability__nature=Availability.ASSIGNED,

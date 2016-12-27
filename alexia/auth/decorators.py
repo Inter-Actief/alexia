@@ -19,17 +19,6 @@ def ajax_required(f):
     return wrap
 
 
-def tender_required(f):
-    @wraps(f)
-    def wrap(request, *args, **kwargs):
-        if not request.user.is_authenticated() or not request.user.is_superuser and (
-                not request.organization or not request.user.profile.is_tender(request.organization)):
-            raise PermissionDenied
-        return f(request, *args, **kwargs)
-
-    return wrap
-
-
 def planner_required(f):
     @wraps(f)
     def wrap(request, *args, **kwargs):

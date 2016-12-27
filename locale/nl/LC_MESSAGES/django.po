@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-22 14:15+0100\n"
+"POT-Creation-Date: 2016-12-27 21:32+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -647,52 +647,14 @@ msgstr "Niet gevonden"
 msgid "The requested resource is not found."
 msgstr "Het opgevraagde bestand is niet gevonden."
 
-msgid "About"
-msgstr "Over"
-
-msgid "Developers"
-msgstr "Ontwikkelaars"
-
-msgid ""
-"\n"
-"            Alexia was developed for the drink basements under management of "
-"SBZ (Zilverling Drink Management Foundation). The\n"
-"            base of this application was developed during the design project "
-"course, part of the Computer Science Bachelor.\n"
-"            The following people contributed to this project:\n"
-"            "
-msgstr ""
-"\n"
-"            Alexia is ontwikkeld voor het beheer van de borrelruimtes van "
-"SBZ (Stichting Borrelbeheer Zilverling). De basis\n"
-"            van deze applicatie is gelegd tijdens het Ontwerpproject van de "
-"bachelor Technische Informatica. De volgende\n"
-"            mensen hebben daaraan bijgedragen:\n"
-"            "
-
-msgid "and"
-msgstr "en"
-
-msgid ""
-"\n"
-"            After the design project development of Alexia was continued by\n"
-"            "
-msgstr ""
-"\n"
-"            Na het Ontwerpproject is Alexia doorontwikkeld door\n"
-"            "
-
-msgid "Stats"
-msgstr "Statistieken"
-
-msgid "Drinks"
-msgstr "Borrels"
-
 msgid "Home"
 msgstr "Home"
 
 msgid "Event management system Alexia"
 msgstr "Borrelbeheersysteem Alexia"
+
+msgid "and"
+msgstr "en"
 
 msgid "individual contributors"
 msgstr "individuele bijdragers"
@@ -800,14 +762,75 @@ msgstr "Uitgegeven"
 msgid "There are no expenditures!"
 msgstr "Er zijn geen betalingen!"
 
+msgid "Name"
+msgstr "Naam"
+
+msgid "Organizer"
+msgstr "Organisator"
+
+msgid "# Transactions"
+msgstr "# Transacties"
+
+msgid "Revenue"
+msgstr "Omzet"
+
+msgid "Sales"
+msgstr "Verkopen"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Synchronized"
+msgstr "Gesynchroniseerd"
+
+msgid "Export transactions of"
+msgstr "Transacties exporteren van"
+
+#, python-format
+msgid "Transactions of %(organization)s"
+msgstr "Transacties van %(organization)s"
+
+msgid "Summary"
+msgstr "Samenvatting"
+
+msgid "Specification"
+msgstr "Specificatie"
+
+msgid "Stats"
+msgstr "Statistieken"
+
+msgid "Transactions"
+msgstr "Transacties"
+
+msgid "Price group"
+msgstr "Prijscategorie"
+
+msgid "hasn't used Alexia Billing yet!"
+msgstr "heeft Alexia Financieel nog niet in gebruik!"
+
+msgid "Payment"
+msgstr "Betaling"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Items"
+msgstr "Specificatie"
+
+msgid "Price"
+msgstr "Prijs"
+
+msgid "Empty payment!"
+msgstr "Lege transactie!"
+
 msgid "Permanent product"
 msgstr "Permanent product"
 
 msgid "Product information"
 msgstr "Productinformatie"
-
-msgid "Name"
-msgstr "Naam"
 
 msgid "Product group"
 msgstr "Productgroep"
@@ -844,14 +867,8 @@ msgstr "Acties"
 msgid "No permanent products defined."
 msgstr "Geen permanente producten gedefinieerd."
 
-msgid "Price group"
-msgstr "Prijscategorie"
-
 msgid "Prices"
 msgstr "Prijzen"
-
-msgid "Price"
-msgstr "Prijs"
 
 msgid "Delete"
 msgstr "Verwijderen"
@@ -920,12 +937,6 @@ msgstr "Nieuw tijdelijk product"
 
 msgid "PDF"
 msgstr "PDF"
-
-msgid "Details"
-msgstr "Details"
-
-msgid "Organizer"
-msgstr "Organisator"
 
 msgid "Status"
 msgstr "Status"
@@ -1023,9 +1034,6 @@ msgstr "Terug"
 msgid "By units"
 msgstr "Op eenheden"
 
-msgid "Product"
-msgstr "Product"
-
 msgid "Units consumed"
 msgstr "Eenheden verbruikt"
 
@@ -1068,42 +1076,40 @@ msgstr "Totaal"
 msgid "No comments"
 msgstr "Geen commentaar"
 
-msgid "Error"
-msgstr "Fout"
+msgid "About"
+msgstr "Over"
 
-msgid "Export transactions of"
-msgstr "Transacties exporteren van"
+msgid "Developers"
+msgstr "Ontwikkelaars"
 
-#, python-format
-msgid "Transactions of %(organization)s"
-msgstr "Transacties van %(organization)s"
+msgid ""
+"\n"
+"            Alexia was developed for the drink basements under management of "
+"SBZ (Zilverling Drink Management Foundation). The\n"
+"            base of this application was developed during the design project "
+"course, part of the Computer Science Bachelor.\n"
+"            The following people contributed to this project:\n"
+"            "
+msgstr ""
+"\n"
+"            Alexia is ontwikkeld voor het beheer van de borrelruimtes van "
+"SBZ (Stichting Borrelbeheer Zilverling). De basis\n"
+"            van deze applicatie is gelegd tijdens het Ontwerpproject van de "
+"bachelor Technische Informatica. De volgende\n"
+"            mensen hebben daaraan bijgedragen:\n"
+"            "
 
-msgid "Summary"
-msgstr "Samenvatting"
+msgid ""
+"\n"
+"            After the design project development of Alexia was continued by\n"
+"            "
+msgstr ""
+"\n"
+"            Na het Ontwerpproject is Alexia doorontwikkeld door\n"
+"            "
 
-msgid "Revenue"
-msgstr "Omzet"
-
-msgid "Specification"
-msgstr "Specificatie"
-
-msgid "Transactions"
-msgstr "Transacties"
-
-msgid "hasn't used Alexia Billing yet!"
-msgstr "heeft Alexia Financieel nog niet in gebruik!"
-
-msgid "# Transactions"
-msgstr "# Transacties"
-
-msgid "Sales"
-msgstr "Verkopen"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Synchronized"
-msgstr "Gesynchroniseerd"
+msgid "Drinks"
+msgstr "Borrels"
 
 msgid "Delete user"
 msgstr "Gebruiker verwijderen"
@@ -1215,15 +1221,6 @@ msgstr "Afkeuren"
 
 msgid "Upload"
 msgstr "Uploaden"
-
-msgid "Payment"
-msgstr "Betaling"
-
-msgid "Items"
-msgstr "Specificatie"
-
-msgid "Empty payment!"
-msgstr "Lege transactie!"
 
 msgid "edit"
 msgstr "wijzigen"
