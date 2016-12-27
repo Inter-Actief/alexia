@@ -1,14 +1,13 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db import connection
 from django.db.models import Count, Sum
+from django.db.models.functions import ExtractYear, TruncMonth
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, FormView, UpdateView
 from django.views.generic.list import ListView
 
 from alexia.apps.billing.forms import (
@@ -20,7 +19,7 @@ from alexia.apps.billing.models import (
 )
 from alexia.apps.scheduling.models import Event
 from alexia.auth.decorators import manager_required
-from alexia.auth.mixins import ManagerRequiredMixin, TenderRequiredMixin
+from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin, TenderRequiredMixin
 from alexia.utils.mixins import (
     CreateViewForOrganization, CrispyFormMixin, EventOrganizerFilterMixin,
     FixedValueCreateView, OrganizationFilterMixin, OrganizationFormMixin,
@@ -48,7 +47,6 @@ class JulianaView(TenderRequiredMixin, DetailView):
         context = super(JulianaView, self).get_context_data(**kwargs)
         context.update({
             'products': self.get_product_list(),
-            'debug': settings.DEBUG,
             'countdown': settings.JULIANA_COUNTDOWN if hasattr(settings, 'JULIANA_COUNTDOWN') else 5,
             'androidapp': self.request.META.get('HTTP_X_REQUESTED_WITH') == 'net.inter_actief.juliananfc',
         })
@@ -82,116 +80,110 @@ class JulianaView(TenderRequiredMixin, DetailView):
         return products
 
 
-@login_required
-@manager_required
-def order_list(request):
-    event_list = Event.objects.filter(organizer=request.organization) \
-        .annotate(order_count=Count('orders'), revenue=Sum('orders__amount')) \
-        .filter(order_count__gt=0, ) \
-        .order_by('-starts_at')
-    paginator = Paginator(event_list, 20)
+class OrderListView(ManagerRequiredMixin, ListView):
+    template_name = 'billing/order_list.html'
+    paginate_by = 20
 
-    page = request.GET.get('page')
-    try:
-        events = paginator.page(page)
-    except PageNotAnInteger:
-        events = paginator.page(1)
-    except EmptyPage:
-        events = paginator.page(paginator.num_pages)
+    def get_queryset(self):
+        return Event.objects.filter(organizer=self.request.organization) \
+            .annotate(order_count=Count('orders'), revenue=Sum('orders__amount')) \
+            .filter(order_count__gt=0, ) \
+            .order_by('-starts_at')
 
-    year_sql = connection.ops.date_extract_sql('year', 'starts_at')
-    stats_years = Event.objects.extra({'year': year_sql}) \
-                       .filter(organizer=request.organization).values('year') \
-                       .annotate(revenue=Sum('orders__amount')).order_by('-year')[:3]
-
-    return render(request, "order/list.html", locals())
+    def get_context_data(self, **kwargs):
+        context = super(OrderListView, self).get_context_data(**kwargs)
+        context['stats_years'] = Event.objects \
+            .filter(organizer=self.request.organization) \
+            .annotate(year=ExtractYear('starts_at')) \
+            .values('year') \
+            .order_by('-year') \
+            .annotate(revenue=Sum('orders__amount'))[:3]
+        return context
 
 
-@login_required
-@manager_required
-def order_show(request, pk):
-    event = get_object_or_404(Event, pk=pk)
+class OrderDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailView):
+    model = Event
+    template_name = 'billing/order_detail.html'
+    organization_field = 'organizer'
 
-    if request.organization != event.organizer:
-        raise PermissionDenied
+    def get_context_data(self, **kwargs):
+        products = Purchase.objects.filter(order__event=self.object) \
+            .values('product', 'product__name') \
+            .annotate(amount=Sum('amount'), price=Sum('price'))
 
-    products = Purchase.objects.filter(order__event=event) \
-        .values('product', 'product__name') \
-        .annotate(amount=Sum('amount'), price=Sum('price'))
-
-    orders = event.orders.select_related('authorization__user').order_by('-placed_at')
-    order_count = len(orders)  # efficientie: len() ipv count()
-    order_sum = orders.aggregate(Sum('amount'))['amount__sum']
-
-    return render(request, "order/show.html", locals())
-
-
-@login_required
-@manager_required
-def order_export(request):
-    if request.method == 'POST':
-        form = FilterEventForm(request.POST)
-        if form.is_valid():
-            event_list = Event.objects \
-                .filter(
-                    organizer=request.organization,
-                    starts_at__gte=form.cleaned_data['from_time'],
-                    starts_at__lte=form.cleaned_data['till_time'],
-                )
-            events = event_list \
-                .annotate(order_count=Count('orders'), revenue=Sum('orders__amount')) \
-                .filter(order_count__gt=0, ) \
-                .order_by('starts_at')
-            summary = event_list \
-                .extra({'month': 'MONTH(starts_at)'}) \
-                .values('month') \
-                .annotate(revenue=Sum('orders__amount')) \
-                .order_by('month')
-            return render(request, 'order/export_result.html', locals())
-    else:
-        form = FilterEventForm()
-
-    return render(request, 'order/export_form.html', locals())
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context.update({
+            'orders': self.object.orders.select_related('authorization__user').order_by('-placed_at'),
+            'products': products,
+            'revenue': products.aggregate(Sum('price'))['price__sum'],
+        })
+        return context
 
 
-@login_required
-def payment_show(request, pk):
-    order = get_object_or_404(Order, pk=pk)
+class OrderExportView(ManagerRequiredMixin, FormView):
+    template_name = 'billing/order_export_form.html'
+    form_class = FilterEventForm
 
-    # bekijk als: * dit mijn transactie is
-    #             * ik manager van de vereniging in kwestie ben
-    #             * ik superuser ben
-    if (order.authorization.user == request.user) \
-            or request.user.is_superuser \
-            or (request.organization and
-                request.organization == order.authorization.organization and
-                request.user.profile.is_manager(request.organization)):
-        return render(request, 'payment/show.html', locals())
-
-    raise PermissionDenied
-
-
-@login_required
-@manager_required
-def stats_year(request, year):
-    months = Event.objects.extra({'month': "month(starts_at)"}) \
-        .filter(organizer=request.organization, starts_at__year=year) \
-        .values('month').annotate(revenue=Sum('orders__amount')) \
-        .order_by('month')
-    return render(request, "order/stats_year.html", locals())
+    def form_valid(self, form):
+        event_list = Event.objects.filter(
+            organizer=self.request.organization,
+            starts_at__gte=form.cleaned_data['from_time'],
+            starts_at__lte=form.cleaned_data['till_time'],
+        )
+        events = event_list \
+            .annotate(order_count=Count('orders'), revenue=Sum('orders__amount')) \
+            .filter(order_count__gt=0) \
+            .order_by('starts_at')
+        summary = event_list \
+            .annotate(month=TruncMonth('starts_at')) \
+            .values('month') \
+            .annotate(revenue=Sum('orders__amount')) \
+            .order_by('month')
+        return render(self.request, 'billing/order_export_result.html', locals())
 
 
-@login_required
-@manager_required
-def stats_month(request, year, month):
-    month = int(month)
-    events = Event.objects.filter(
-        organizer=request.organization,
-        starts_at__year=year,
-        starts_at__month=month,
-    ).annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+class PaymentDetailView(DetailView):
+    model = Order
+    template_name = 'billing/payment_show.html'
 
-    return render(request, "order/stats_month.html", locals())
+    def get_object(self, queryset=None):
+        obj = super(PaymentDetailView, self).get_object(queryset)
+
+        if not self.request.user.is_superuser \
+                and not self.request.user.profile.is_manager(self.request.organization) \
+                and not self.request.organization == obj.authorization.organization:
+            raise PermissionDenied
+
+        return obj
+
+
+class OrderYearView(ManagerRequiredMixin, TemplateView):
+    template_name = 'billing/order_year.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderYearView, self).get_context_data(**kwargs)
+        context['obj_list'] = Event.objects.filter(
+            organizer=self.request.organization,
+            starts_at__year=kwargs['year'],
+        ).annotate(
+            date=TruncMonth('starts_at'),
+        ).values('date').annotate(
+            revenue=Sum('orders__amount'),
+        ).order_by('date')
+        return context
+
+
+class OrderMonthView(ManagerRequiredMixin, TemplateView):
+    template_name = 'billing/order_month.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderMonthView, self).get_context_data(**kwargs)
+        context['event_list'] = Event.objects.filter(
+            organizer=self.request.organization,
+            starts_at__year=kwargs['year'],
+            starts_at__month=kwargs['month'],
+        ).annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+        return context
 
 
 class PriceGroupListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):

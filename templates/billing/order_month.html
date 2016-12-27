@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for event in events %}
+        {% for event in event_list %}
             <tr>
                 <td>{{ event.starts_at|date:"l d F" }}</td>
                 <td><a href="{% url 'event-orders' event.pk %}">{{ event.name }}</a></td>

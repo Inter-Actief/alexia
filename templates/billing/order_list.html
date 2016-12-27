@@ -52,7 +52,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for e in events %}
+        {% for e in event_list %}
             <tr>
                 <td>{{ e.starts_at|date:"l d F" }}</td>
                 <td><a href="{% url 'event-orders' e.pk %}">{{ e.name }}</a></td>
@@ -62,15 +62,11 @@
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">{{ request.organization }} {% trans "hasn't used Alexia Billing yet!" %}</td>
+                <td colspan="5">{{ current_organization }} {% trans "hasn't used Alexia Billing yet!" %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-<p class="text-center">
-    {% if events.has_previous %}<a href="?page={{ events.previous_page_number }}">&laquo;</a>{% else %}&laquo;{% endif %}
-    {% trans 'Page' %} {{ events.number }} {% trans 'of' %} {{ events.paginator.num_pages }}
-    {% if events.has_next     %}<a href="?page={{ events.next_page_number }}">&raquo;</a>{%     else %}&raquo;{% endif %}
-</p>
+{% include 'partials/pagination.html' %}
 {% endblock %}

@@ -30,7 +30,6 @@ def calendar_fetch(request):
     if not request.is_ajax():
         return redirect(calendar)
 
-    tz = timezone.get_current_timezone()
     from_time = datetime.datetime.fromtimestamp(float(request.GET.get('start')), tz=timezone.utc)
     till_time = datetime.datetime.fromtimestamp(float(request.GET.get('end')), tz=timezone.utc)
     data = []

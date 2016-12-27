@@ -8,4 +8,4 @@ register = template.Library()
 
 @register.filter
 def month_name(month_number):
-    return _(calendar.month_name[month_number])
+    return _(calendar.month_name[int(month_number)])

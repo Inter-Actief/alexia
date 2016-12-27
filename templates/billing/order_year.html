@@ -1,7 +1,7 @@
 {% extends 'base_app.html' %}
 {% load i18n dates %}
 
-{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}{% endblock %} in {{ year }}
+{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
 <div class="page-header clearfix">
@@ -18,10 +18,10 @@
             </tr>
         </thead>
         <tbody>
-        {% for month in months %}
+        {% for obj in obj_list %}
             <tr>
-                <td><a href="{% url 'month-orders' year month.month %}">{{ month.month|month_name }}</a></td>
-                <td>&euro; {{ month.revenue|floatformat:2|default:"&mdash;" }}</td>
+                <td><a href="{% url 'month-orders' obj.date.year obj.date.month %}">{{ obj.date|date:"F Y" }}</a></td>
+                <td>&euro; {{ obj.revenue|floatformat:2|default:"&mdash;" }}</td>
             </tr>
         {% endfor %}
         </tbody>

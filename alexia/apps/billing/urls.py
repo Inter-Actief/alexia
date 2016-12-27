@@ -3,12 +3,12 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^order/$', views.order_list, name='orders'),
-    url(r'^order/(?P<pk>\d+)/$', views.order_show, name='event-orders'),
-    url(r'^order/export/$', views.order_export, name='export-orders'),
-    url(r'^stats/(?P<year>\d+)/$', views.stats_year, name='year-orders'),
-    url(r'^stats/(?P<year>\d+)/(?P<month>\d+)/$', views.stats_month, name='month-orders'),
-    url(r'^payment/(?P<pk>\d+)/$', views.payment_show, name='order'),
+    url(r'^order/$', views.OrderListView.as_view(), name='orders'),
+    url(r'^order/(?P<pk>\d+)/$', views.OrderDetailView.as_view(), name='event-orders'),
+    url(r'^order/export/$', views.OrderExportView.as_view(), name='export-orders'),
+    url(r'^stats/(?P<year>[0-9]{4})/$', views.OrderYearView.as_view(), name='year-orders'),
+    url(r'^stats/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$', views.OrderMonthView.as_view(), name='month-orders'),
+    url(r'^payment/(?P<pk>\d+)/$', views.PaymentDetailView.as_view(), name='order'),
 
     url(r'^pricegroup/$', views.PriceGroupListView.as_view(), name='pricegroup_list'),
     url(r'^pricegroup/create/$', views.PriceGroupCreateView.as_view(), name='pricegroup_create'),

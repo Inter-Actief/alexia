@@ -6,7 +6,7 @@ from abc import abstractmethod
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.http import urlquote
@@ -100,10 +100,22 @@ class FoundationManagerRequiredMixin(PassesTestMixin):
 
 
 class DenyWrongOrganizationMixin(object):
+    organization_field = 'organization'
+
     def get_object(self, queryset=None):
         obj = super(DenyWrongOrganizationMixin, self).get_object(queryset)
 
-        if obj.organization != self.request.organization:
-            raise PermissionDenied
+        try:
+            if getattr(obj, self.organization_field) != self.request.organization:
+                raise PermissionDenied
+        except AttributeError:
+            raise ImproperlyConfigured(
+                "%(obj)s has no attribute '%(field)s'. Define "
+                "%(cls)s.organization_field." % {
+                    'obj': obj.__class__.__name__,
+                    'field': self.organization_field,
+                    'cls': self.__class__.__name__,
+                }
+            )
 
         return obj

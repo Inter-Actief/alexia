@@ -165,9 +165,7 @@ def event_show(request, pk):
 @planner_required
 def event_add(request):
     if not request.organization:
-        return render(request, 'general_error.html', {
-            'error_msg': _('Creating an event requires an primary organization.')
-        })
+        raise PermissionDenied(_('Creating an event requires an primary organization.'))
 
     if request.method == 'POST':
         form = EventForm(request, request.POST)

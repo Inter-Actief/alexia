@@ -30,11 +30,11 @@
         <table class="table table-bordered">
             <tr>
                 <th>{% trans '# Transactions' %}</th>
-                <td>{{ order_count }}</td>
+                <td>{{ orders|length }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Revenue' %}</th>
-                <td>&euro; {{ order_sum|floatformat:2 }}</td>
+                <td>&euro; {{ revenue|floatformat:2 }}</td>
             </tr>
         </table>
     </div>

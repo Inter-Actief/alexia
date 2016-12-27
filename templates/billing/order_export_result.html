@@ -20,7 +20,7 @@
     <tbody>
         {% for s in summary %}
         <tr>
-            <td>{{ s.month|month_name }}</td>
+            <td>{{ s.month|date:"F Y" }}</td>
             <td>&euro; {{ s.revenue|floatformat:2 }}</td>
         </tr>
         {% endfor %}
@@ -39,7 +39,7 @@
     <tbody>
         {% for e in events %}
         <tr>
-            <td>{{ e.starts_at|date:"d M Y" }}</td>
+            <td>{{ e.starts_at|date }}</td>
             <td>{{ e.name }}</td>
             <td>&euro; {{ e.revenue|floatformat:2 }}</td>
         </tr>

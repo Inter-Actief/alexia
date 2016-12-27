@@ -116,7 +116,7 @@ class ChangeCurrentOrganizationView(LoginRequiredMixin, RedirectView):
 
 
 class AboutView(TemplateView):
-    template_name = 'about.html'
+    template_name = 'general/about.html'
 
     def get_context_data(self, **kwargs):
         context = super(AboutView, self).get_context_data(**kwargs)
@@ -140,4 +140,4 @@ class AboutView(TemplateView):
 
 
 class HelpView(TemplateView):
-    template_name = 'help.html'
+    template_name = 'general/help.html'
