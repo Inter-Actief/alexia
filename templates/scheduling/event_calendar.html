@@ -1,5 +1,4 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
 {% block title %}{% trans 'Planning' %}{% endblock %}
 
@@ -7,14 +6,12 @@
 <script>
 $(document).ready(function() {
     $('#calendar').fullCalendar({
-        events:  "{% url 'fetch-calendar-schedule' %}",
-        allDayDefault: false,
+        events:  '{% url 'fetch-calendar-schedule' %}',
         firstDay: 1,
         weekNumbers: true,
         weekMode: 'liquid',
-        aspectRatio: 1.6,
         header: {
-            left: 'today prev,next',
+            left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek'
         },
@@ -40,7 +37,6 @@ $(document).ready(function() {
 
         // week agenda view
         minTime: 10,
-        slotMinutes: 30,
         allDaySlot: false,
 
         // i18n
@@ -49,7 +45,7 @@ $(document).ready(function() {
             week: 'ddd d/M',
         },
         titleFormat: {
-            week: "d MMM yyyy{ '&#8212;' d MMM yyyy}"
+                week: "d MMM yyyy{ '&#8212;' d MMM yyyy}"
         },
         buttonText: {
             today: '{% trans 'today' %}',

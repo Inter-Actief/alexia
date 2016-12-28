@@ -1,43 +1,38 @@
-import collections
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
-from django.db.models import Q
-from django.db.models.query import Prefetch
-from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied, SuspiciousOperation
+from django.db.models import Prefetch, Q
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.utils import timezone
-from django.utils.translation import ugettext as _
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from alexia.apps.organization.forms import BartenderAvailabilityForm
-from alexia.apps.organization.models import Membership, Profile
-from alexia.apps.scheduling.forms import EventForm, FilterEventForm
-from alexia.apps.scheduling.models import (
-    Availability, BartenderAvailability, Event, MailTemplate,
-)
+from alexia.apps.organization.models import Location, Membership, Profile
 from alexia.auth.decorators import planner_required
-from alexia.auth.mixins import ManagerRequiredMixin
+from alexia.auth.mixins import (
+    DenyWrongOrganizationMixin, ManagerRequiredMixin, PlannerRequiredMixin, TenderRequiredMixin,
+)
 from alexia.forms import CrispyFormMixin
 from alexia.http import IcalResponse
 from alexia.utils import log
 from alexia.utils.calendar import generate_ical
 from alexia.utils.mixins import (
-    CreateViewForOrganization, OrganizationFilterMixin,
+    CreateViewForEvent, CreateViewForOrganization, OrganizationFilterMixin,
+    OrganizationFormMixin,
 )
 
-
-# =========================================================================
-# PAGES
-# =========================================================================
+from .forms import EventForm, FilterEventForm
+from .models import Availability, BartenderAvailability, Event, MailTemplate
 
 
-def overview(request):
+def event_list_view(request):
     # De lijst waarop we nog gaan filteren
     events = Event.objects.select_related().prefetch_related('participants', 'location').order_by('starts_at')
     events = events.prefetch_related(
@@ -55,7 +50,7 @@ def overview(request):
             ),
             to_attr='bartender_availabilities_iva',
         ),
-     )
+    )
 
     # Default from_time is now.
     from_time = timezone.now()
@@ -109,94 +104,115 @@ def overview(request):
     bartender_availabilities = BartenderAvailability.objects.filter(
         user_id=request.user.pk).values('event_id', 'availability_id')
 
-    # Rechten opslaan
-    is_planner = request.user.is_authenticated() and (
-        request.user.is_superuser or (request.organization and request.user.profile.is_planner(request.organization)))
-    is_tender = request.user.is_authenticated() and request.organization and request.user.profile.is_tender(
-        request.organization)
-
-    # Gebruiker opslaan
-    user = request.user
-
-    return render(request, 'scheduling/overview_list.html', locals())
+    return render(request, 'scheduling/event_list.html', locals())
 
 
-# =========================================================================
-# Events
-# =========================================================================
-def event_show(request, pk):
-    event = get_object_or_404(Event, pk=pk)
+class EventBartenderView(TenderRequiredMixin, ListView):
+    template_name_suffix = '_bartender'
 
-    is_tender = event.is_tender(request.user)
-    is_planner = request.user.is_authenticated() and request.user.profile.is_planner(event.organizer)
-    is_manager = request.user.is_authenticated() and request.user.profile.is_manager(event.organizer)
+    def get_queryset(self):
+        return Event.objects.filter(
+            ends_at__gte=timezone.now(),
+            bartender_availabilities__availability__nature=Availability.ASSIGNED,
+            bartender_availabilities__user=self.request.user
+        ).order_by('starts_at')
 
-    if is_planner:
+
+class EventCalendarView(TemplateView):
+    template_name = 'scheduling/event_calendar.html'
+
+
+class EventCalendarFetch(View):
+    def get(self, request, *args, **kwargs):
+        start = request.GET.get('start', None)
+        end = request.GET.get('end', None)
+
+        if not (start and end) or not request.is_ajax():
+            raise SuspiciousOperation('Bad calendar fetch request')
+
+        from_time = datetime.fromtimestamp(float(start), tz=timezone.utc)
+        till_time = datetime.fromtimestamp(float(end), tz=timezone.utc)
+
+        data = []
+        for event in Event.objects.filter(ends_at__gte=from_time,
+                                          starts_at__lte=till_time).prefetch_related('location'):
+            color = '#888888'
+            try:
+                location = event.location.get()
+                color = '#' + location.color if location.color else color
+            except:
+                pass
+
+            data.append({
+                'title': event.name,
+                'allDay': False,
+                'start': event.starts_at.isoformat(),
+                'end': event.ends_at.isoformat(),
+                'color': color,
+                'organizers': ', '.join(map(lambda x: x.name, event.participants.all())),
+                'location': ', '.join(map(lambda x: x.name, event.location.all())),
+                'tenders': ', '.join(map(lambda x: x.first_name, event.get_assigned_bartenders())) or '<i>geen</i>',
+            })
+        return JsonResponse(data, safe=False)
+
+
+class EventDetailView(DetailView):
+    model = Event
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetailView, self).get_context_data(**kwargs)
+        if self.request.user.profile.is_planner(self.object.organizer):
+            context.update(self.get_tender_list())
+        return context
+
+    def get_tender_list(self):
         tenders = Membership.objects.select_related('user').filter(
-            organization__in=event.participants.all(), is_tender=True). \
-            order_by("is_active", "user__first_name")
-        bas = collections.defaultdict(list)
+            organization__in=self.object.participants.all(),
+            is_tender=True,
+        ).order_by('-is_active', 'user__first_name')
 
-        for ba in BartenderAvailability.objects.select_related().filter(event=event):
-            bas[ba.user].append(ba)
+        bas = {}
+        for ba in self.object.bartender_availabilities.all():
+            bas[ba.user] = ba
 
-        active_availabilities = []
-        inactive_availabilities = []
-        for t in tenders:
-            ba = bas[t.user]
-            a = ba[0].availability if ba else None
-            t_info = {'user': t.user,
-                      'availability': a,
-                      'membership_id': t.pk,
-                      'last_tended': t.tended()[0] if len(t.tended()) > 0 else None
-                      }
-            if t.is_active:
-                active_availabilities.append(t_info)
-            else:
-                inactive_availabilities.append(t_info)
+        tender_list = []
+        for tender in tenders:
+            try:
+                availability = bas[tender.user].availability
+            except KeyError:
+                availability = None
 
-    return render(request, 'scheduling/event_show.html', locals())
+            tender_list.append({
+                'tender': tender,
+                'availability': availability,
+                'last_tended': tender.last_tended()
+            })
+        return {'tender_list': tender_list}
 
 
-@login_required
-@planner_required
-def event_add(request):
-    if not request.organization:
-        raise PermissionDenied(_('Creating an event requires an primary organization.'))
+class EventCreateView(PlannerRequiredMixin, OrganizationFormMixin, CrispyFormMixin, CreateViewForEvent):
+    model = Event
+    form_class = EventForm
 
-    if request.method == 'POST':
-        form = EventForm(request, request.POST)
-        if form.is_valid():
-            event = form.save(commit=False, organizer=request.organization)
-            event.organizer = request.organization
-            event.save()
-            form.save_m2m()
-            log.event_created(request.user, event)
-            return redirect(overview)
-    else:
-        form = EventForm(request)
+    def get_initial(self):
+        return {'participants': self.request.organization}
 
-    return render(request, 'scheduling/event_form.html', locals())
+    def form_valid(self, form):
+        response = super(EventCreateView, self).form_valid(form)
+        log.event_created(self.request.user, self.object)
+        return response
 
 
-@login_required
-@planner_required
-def event_edit(request, pk):
-    event = get_object_or_404(Event, pk=pk)
+class EventUpdateView(PlannerRequiredMixin, OrganizationFormMixin, DenyWrongOrganizationMixin, CrispyFormMixin,
+                      UpdateView):
+    model = Event
+    form_class = EventForm
+    organization_field = 'organizer'
 
-    if event.organizer != request.organization:
-        raise PermissionDenied
-
-    if request.method == 'POST':
-        form = EventForm(request, request.POST, instance=event)
-        if form.is_valid():
-            event = form.save()
-            log.event_modified(request.user, event)
-            return redirect(overview)
-    else:
-        form = EventForm(instance=event)
-
-    return render(request, 'scheduling/event_form.html', locals())
+    def form_valid(self, form):
+        response = super(EventUpdateView, self).form_valid(form)
+        log.event_modified(self.request.user, self.object)
+        return response
 
 
 @login_required
@@ -230,7 +246,7 @@ def event_edit_bartender_availability(request, pk, user_pk):
                 log.availability_created(
                     request.user, event, user,
                     bartender_availability.availability)
-            return redirect(event_show, pk=event.pk)
+            return redirect('event', pk=event.pk)
     else:
         form = BartenderAvailabilityForm(instance=bartender_availability,
                                          event=event, user=user)
@@ -238,20 +254,14 @@ def event_edit_bartender_availability(request, pk, user_pk):
     return render(request, 'scheduling/event_bartender_availability_form.html', locals())
 
 
-@login_required
-@planner_required
-def event_delete(request, pk):
-    event = get_object_or_404(Event, pk=pk)
+class EventDelete(PlannerRequiredMixin, DenyWrongOrganizationMixin, DeleteView):
+    model = Event
+    organization_field = 'organizer'
+    success_url = reverse_lazy('schedule')
 
-    if event.organizer != request.organization:
-        raise PermissionDenied
-
-    if request.method == 'POST':
-        event.delete()
-        log.event_deleted(request.user, event)
-        return redirect(overview)
-    else:
-        return render(request, 'scheduling/event_delete.html', locals())
+    def get_success_url(self):
+        log.event_deleted(self.request.user, self.object)
+        return super(EventDelete, self).get_success_url()
 
 
 @login_required

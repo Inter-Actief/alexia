@@ -56,6 +56,15 @@ class FixedValueCreateView(SingleObjectTemplateResponseMixin, BaseFixedValueCrea
     template_name_suffix = '_form'
 
 
+class CreateViewForEvent(FixedValueCreateView):
+    """
+    View for creating a new object instance with the current organization as default for the organizer field,
+    """
+
+    def get_instance(self):
+        return self.model(organizer=self.request.organization)
+
+
 class CreateViewForOrganization(FixedValueCreateView):
     """
     View for creating a new object instance with the current organization as default for the organization field,

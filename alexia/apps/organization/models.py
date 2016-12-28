@@ -90,60 +90,20 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
-    def next_tending(self):
-        return BartenderAvailability.objects.filter(
-            user=self.user,
-            event__ends_at__gte=timezone.now(),
-            availability__nature=Availability.ASSIGNED,
-        ).order_by('event__starts_at')[0].event
+    def is_manager(self, organization):
+        if self.user.is_superuser:
+            return True
+        return self.user.membership_set.filter(organization=organization, is_manager=True).exists()
 
-    def is_manager(self, organization=None):
-        if not organization:
-            return self.user.membership_set.filter(is_manager=True).exists()
-        else:
-            return self.user.membership_set.filter(organization=organization, is_manager=True).exists()
+    def is_planner(self, organization):
+        if self.user.is_superuser:
+            return True
+        return self.user.membership_set.filter(organization=organization, is_planner=True).exists()
 
-    def is_planner(self, organization=None):
-        if not organization:
-            return self.user.membership_set.filter(is_planner=True).exists()
-        else:
-            return self.user.membership_set.filter(organization=organization, is_planner=True).exists()
-
-    def is_tender(self, organization=None):
-        if not organization:
-            return self.user.membership_set.filter(is_tender=True).exists()
-        else:
-            return self.user.membership_set.filter(organization=organization, is_tender=True).exists()
-
-    def is_membership_or_higher(self, organization=None):
-        return self.is_membership(organization) or self.is_planner_or_higher(organization)
-
-    def is_planner_or_higher(self, organization=None):
-        return self.is_planner() or self.is_organization_manager_or_higher(organization)
-
-    def is_organization_manager_or_higher(self, organization=None):
-        return self.is_manager(organization)
-
-    def can_add_memberships(self, organization=None):
-        return self.is_manager_or_higher(organization)
-
-    def can_edit_memberships(self, organization=None):
-        return self.is_manager_or_higher(organization)
-
-    def can_add_events(self, organization=None):
-        return self.is_planner_or_higher(organization)
-
-    def can_edit_events(self, organization=None):
-        return self.is_planner_or_higher(organization)
-
-    def can_view_pricegroups(self, organization=None):
-        return self.can_add_events(organization) or self.can_edit_events(organization)
-
-    def can_edit_membershipavailability(self, user=None, organization=None):
-        if user != self.user:
-            return self.is_planner_or_higher(organization)
-        else:
-            return self.is_membership_or_higher(organization)
+    def is_tender(self, organization):
+        if self.user.is_superuser:
+            return True
+        return self.user.membership_set.filter(organization=organization, is_tender=True).exists()
 
     def has_iva(self):
         try:
@@ -235,6 +195,21 @@ class Membership(models.Model):
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED
         ).order_by('-event__starts_at')
+
+    def last_tended(self):
+        event = self.user.bartender_availability_set.select_related('event').filter(
+            event__ends_at__lte=timezone.now(),
+            availability__nature=Availability.ASSIGNED
+        ).order_by('-event__starts_at')
+
+        if not event:
+            return None
+        else:
+            event = event[0].event
+            return '%s - %s ' % (
+                event.starts_at.strftime('%d-%m-%Y'),
+                event.name,
+            )
 
 
 def _get_certificate_path(instance, filename):

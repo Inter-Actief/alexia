@@ -33,17 +33,17 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'schedule' %}">{% trans 'List' %}</a></li>
+                        <li><a href="{% url 'event-list' %}">{% trans 'List' %}</a></li>
                         <li><a href="{% url 'calendar-schedule' %}">{% trans 'Calendar' %}</a></li>
-                        {% if request.user.profile.is_tender %}<li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>{% endif %}
-                        {% if current_organization and request.user.profile.is_manager %}
+                        {% if is_tender %}<li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>{% endif %}
+                        {% if is_manager %}
                         <li class="divider"></li>
                         <li><a href="{% url 'availability_list' %}">{% trans 'Availabilities' %}</a></li>
                         <li><a href="{% url 'mailtemplate_list' %}">{% trans 'Mail templates' %}</a></li>
                         {% endif %}
                     </ul>
                 </li>
-                {% if current_organization and request.user.profile.is_manager %}
+                {% if is_manager %}
                 <li class="{% active_menu 'apps.organization.views' 'active' %}">
                     <a href="{% url 'memberships' %}">
                         {% trans 'Users' %}
@@ -64,14 +64,14 @@
                     </ul>
                 </li>
                 {% endif %}
-                {% if current_organization and user.profile.is_manager or user.profile.is_foundation_manager %}
+                {% if is_manager or is_foundation_manager %}
                 <li class="dropdown {% active_menu 'apps.consumption.views' 'active' %}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Consumption' %}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        {% if user.is_superuser or user.profile.is_foundation_manager %}
+                        {% if is_foundation_manager %}
                         <li><a href="{% url 'consumptionproduct_list' %}">{% trans 'Consumption products' %}</a></li>
                         {% endif %}
                         <li><a href="{% url 'consumptionform_list' %}">{% trans 'Consumption forms' %}</a></li>

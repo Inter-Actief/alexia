@@ -356,8 +356,7 @@ class SellingPriceMatrixView(ManagerRequiredMixin, TemplateView):
 
         organization = self.request.organization
 
-        pricegroups = PriceGroup.objects.filter(organization=organization) \
-            .prefetch_related('sellingprice_set', 'sellingprice_set__productgroup')
+        pricegroups = organization.pricegroups.prefetch_related('sellingprice_set', 'sellingprice_set__productgroup')
         productgroups = ProductGroup.objects.filter(organization=organization)
 
         pricedata = dict([(pricegroup,

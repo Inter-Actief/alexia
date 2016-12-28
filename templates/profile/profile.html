@@ -21,13 +21,13 @@
             <tr class="tr-muted"><th>{% trans 'Stats' %}</th></tr>
             <tr><td class="text-right"><strong class="pull-left">{% trans 'Transactions' %}</strong> {{ order_count }}</td></tr>
             <tr><td class="text-right"><strong class="pull-left">{% trans 'Events attended' %}</strong> {{ events|length }}</td></tr>
-            {% if user.profile.is_tender %}<tr><td class="text-right"><strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}</td></tr>{% endif %}
+            {% if is_tender %}<tr><td class="text-right"><strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}</td></tr>{% endif %}
         </table>
     </div>
     <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#billing" data-toggle="tab">{% trans 'Billing' %}</a></li>
-            {% if user.profile.is_tender %}<li><a href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a></li>{% endif %}
+            {% if is_tender %}<li><a href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a></li>{% endif %}
         </ul>
         <div class="tab-content" id="tabContent">
             <div class="tab-pane active" id="billing">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
             </div>
-            {% if user.profile.is_tender %}
+            {% if is_tender %}
             <div class="tab-pane" id="bartender">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6">

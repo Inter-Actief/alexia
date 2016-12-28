@@ -1,7 +1,8 @@
-{% load compress i18n static %}
+{% load compress static %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
+        <script>var LOCALE='{{ LANGUAGE_CODE }}';</script>
         <meta charset="utf-8">
         <title>{% block title %}{% trans 'Home' %}{% endblock title %} | Alexia</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,6 @@
         {# Alexia #}
         <script src="{% static 'js/application.js' %}"></script>
         {% endcompress %}
-        <script src="{% url 'javascript-catalog' %}"></script>
         {% compress css %}
         {# Vendor #}
         <link rel="stylesheet" href="{% static 'css/bootstrap-3.3.7.css' %}">

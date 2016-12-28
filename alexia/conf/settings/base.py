@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'alexia.middleware.common.CommonMiddleware',
@@ -110,6 +109,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
+            'builtins': ['django.templatetags.i18n'],
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
@@ -117,6 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
                 'alexia.template.context_processors.organization',
+                'alexia.template.context_processors.permissions',
             ],
             'debug': DEBUG,
         },

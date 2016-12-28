@@ -13,10 +13,10 @@ class AvailabilityInline(admin.TabularInline):
 
 @admin.register(MailTemplate)
 class MailTemplateAdmin(admin.ModelAdmin):
-    list_display = ('organization', 'name', 'subject', 'is_active')
-    list_display_links = ('name',)
-    list_filter = ('organization', 'name', 'is_active')
-    search_fields = ('name', 'subject', 'template')
+    list_display = ['organization', 'name', 'subject', 'is_active']
+    list_display_links = ['name']
+    list_filter = ['organization', 'name', 'is_active']
+    search_fields = ['name', 'subject', 'template']
 
 
 @admin.register(Event)
@@ -35,10 +35,8 @@ class EventAdmin(admin.ModelAdmin):
         }),
     )
     date_hierarchy = 'starts_at'
-    list_display = ('organizer', 'name', 'starts_at', 'ends_at')
-    list_display_links = ('name',)
-    list_filter = ('organizer', 'participants', 'location')
-    search_fields = ('name', 'description')
-    inlines = [
-        TemporaryProductInline,
-    ]
+    list_display = ['organizer', 'name', 'starts_at', 'ends_at']
+    list_display_links = ['name']
+    list_filter = ['organizer', 'participants', 'location']
+    search_fields = ['name', 'description']
+    inlines = [TemporaryProductInline]

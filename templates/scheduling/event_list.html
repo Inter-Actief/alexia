@@ -1,7 +1,32 @@
-{% extends 'scheduling/overview.html' %}
-{% load i18n %}
+{% extends 'base_app.html' %}
+{% load crispy_forms_tags %}
 
-{% block overview %}
+{% block title %}{% trans 'Planning' %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {% trans 'Planning' %}
+        {% if is_planner %}
+        <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            {% trans 'Add event' %}
+        </a>
+        {% endif %}
+    </h1>
+</div>
+<div class="panel-group" id="filters">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#filters" href="#filters_form">{% trans 'Filters' %}</a>
+        </div>
+        <div id="filters_form" class="panel-collapse collapse">
+            <div class="panel-body">
+                {# crispy filter_form #}
+            </div>
+        </div>
+    </div>
+</div>
 {% if events %}
 <div class="table-responsive">
     <table class="table table-hover table-condensed table-events">
@@ -118,4 +143,4 @@
 	{% endif %}
 </p>
 {% endif %}
-{% endblock overview %}
+{% endblock %}

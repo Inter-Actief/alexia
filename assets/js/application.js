@@ -1,3 +1,10 @@
+var LOCALE = $('html').attr('lang') || 'en';
+var dateformats = {
+    nl: 'dd-mm-yyyy',
+    en: 'yyyy-mm-dd',
+};
+var csrftoken = getCookie('csrftoken');
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -14,6 +21,18 @@ function getCookie(name) {
     return cookieValue;
 }
 
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader('X-CSRFToken', csrftoken);
+        }
+    }
+});
+
 $(function () {
 
     $('.bartender_availability').change(function () {
@@ -21,8 +40,7 @@ $(function () {
 
         $.post('/scheduling/ajax/bartender_availability/', {
             event_id: event_id,
-            availability_id: $(this).val(),
-            csrfmiddlewaretoken: getCookie('csrftoken')
+            availability_id: $(this).val()
         }, function (data) {
             $('#assigned_bartenders_' + event_id).html(data).effect("highlight");
         }, "text");
@@ -30,7 +48,7 @@ $(function () {
 
     $('.dateinput').datepicker({
         autoclose: true,
-        format: gettext('yyyy-mm-dd'),
+        format: dateformats[LOCALE],
         weekStart: 1,
     });
 

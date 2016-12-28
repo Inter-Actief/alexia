@@ -166,6 +166,10 @@ class TemporaryProduct(Product):
     )
     price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)
 
+    class Meta:
+        verbose_name = _('temporary product')
+        verbose_name_plural = _('temporary products')
+
     def get_absolute_url(self):
         return reverse('temporaryproduct_detail', args=[self.pk])
 

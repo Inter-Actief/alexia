@@ -1,29 +1,25 @@
 from django.conf.urls import url
 
-from . import perspectives, views
+from . import views
 
 urlpatterns = [
-    # Others
-    url(r'^$', views.overview, name='schedule'),
-    url(r'^bartender/$', perspectives.bartender, name='bartender-schedule'),
-    url(r'^calendar/$', perspectives.calendar, name='calendar-schedule'),
-    url(r'^calendar/fetch$', perspectives.calendar_fetch, name='fetch-calendar-schedule'),
+    url(r'^$', views.event_list_view, name='event-list'),
+    url(r'^bartender/$', views.EventBartenderView.as_view(), name='bartender-schedule'),
+    url(r'^calendar/$', views.EventCalendarView.as_view(), name='calendar-schedule'),
+    url(r'^calendar/fetch/$', views.EventCalendarFetch.as_view(), name='fetch-calendar-schedule'),
 
-    # Events
-    url(r'^event/add/$', views.event_add, name='new-event'),
-    url(r'^event/(?P<pk>\d+)/$', views.event_show, name='event'),
-    url(r'^event/(?P<pk>\d+)/edit/$', views.event_edit, name='edit-event'),
+    url(r'^event/add/$', views.EventCreateView.as_view(), name='new-event'),
+    url(r'^event/(?P<pk>\d+)/$', views.EventDetailView.as_view(), name='event'),
+    url(r'^event/(?P<pk>\d+)/edit/$', views.EventUpdateView.as_view(), name='edit-event'),
     url(r'^event/(?P<pk>\d+)/edit/bartender_availability/(?P<user_pk>\d+)/$',
         views.event_edit_bartender_availability, name='edit-event-bartender-availability'),
-    url(r'^event/(?P<pk>\d+)/delete/$', views.event_delete, name='delete-event'),
+    url(r'^event/(?P<pk>\d+)/delete/$', views.EventDelete.as_view(), name='delete-event'),
 
-    # Mail templates
     url(r'^mailtemplate/$', views.MailTemplateListView.as_view(), name='mailtemplate_list'),
     url(r'^mailtemplate/(?P<name>[a-z]+)/$', views.MailTemplateDetailView.as_view(), name='mailtemplate_detail'),
     url(r'^mailtemplate/(?P<name>[a-z]+)/update/$', views.MailTemplateUpdateView.as_view(),
         name='mailtemplate_update'),
 
-    # Availabilities
     url(r'^availability/$', views.AvailabilityListView.as_view(), name='availability_list'),
     url(r'^availability/create/$', views.AvailabilityCreateView.as_view(), name='availability_create'),
     url(r'^availability/(?P<pk>\d+)/$', views.AvailabilityDetailView.as_view(), name='availability_detail'),

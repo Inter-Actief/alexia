@@ -2,8 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView
-from django.views.i18n import JavaScriptCatalog
+from django.views.generic import RedirectView, TemplateView
 
 from alexia.apps.billing.views import JulianaView
 from alexia.apps.consumption.views import complete_dcf, dcf
@@ -12,7 +11,7 @@ from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
     # Root
-    url(r'^$', scheduling_views.overview, name='root'),
+    url(r'^$', RedirectView.as_view(pattern_name='event-list', permanent=True)),
 
     # Short urls to 'subsystems'
     url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),
@@ -45,7 +44,6 @@ urlpatterns = [
 
     # Internationalization
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     # Robots
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
