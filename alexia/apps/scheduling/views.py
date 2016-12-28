@@ -15,7 +15,6 @@ from django.views.generic.list import ListView
 
 from alexia.apps.organization.forms import BartenderAvailabilityForm
 from alexia.apps.organization.models import Membership, Profile
-from alexia.auth.decorators import planner_required
 from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, PlannerRequiredMixin,
     TenderRequiredMixin,
@@ -217,8 +216,11 @@ class EventUpdateView(PlannerRequiredMixin, OrganizationFormMixin, DenyWrongOrga
 
 
 @login_required
-@planner_required
 def event_edit_bartender_availability(request, pk, user_pk):
+    if not request.user.is_authenticated() or not request.user.is_superuser and (
+            not request.organization or not request.user.profile.is_planner(request.organization)):
+        raise PermissionDenied
+
     event = get_object_or_404(Event, pk=pk)
     user = get_object_or_404(User, pk=user_pk)
 

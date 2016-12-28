@@ -83,9 +83,8 @@ class ConsumptionFormConfirmationForm(forms.Form):
     helper.form_tag = False
 
 
-class ExportConsumptionFormsForm(forms.Form):
+class ExportForm(forms.Form):
+    helper = default_crispy_helper(_('Export'))
     now = timezone.now()
     month = forms.TypedChoiceField(label=_('Month'), choices=MONTHS.items(), coerce=int, initial=now.month - 1)
     year = forms.IntegerField(label=_('Year'), initial=now.year)
-
-    helper = default_crispy_helper(_('Export'))

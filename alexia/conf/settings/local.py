@@ -39,3 +39,6 @@ EMAIL_SUBJECT_PREFIX = '[Alexia] '
 EMAIL_FROM = 'Alexia <alexia@localhost>'
 DEFAULT_FROM_EMAIL = EMAIL_FROM
 SERVER_EMAIL = EMAIL_FROM
+
+# Path to wkhtmltopdf (or helper script)
+WKHTMLTOPDF_CMD = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'

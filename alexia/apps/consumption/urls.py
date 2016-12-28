@@ -13,7 +13,7 @@ urlpatterns = [
         name='weightconsumptionproduct_update'),
 
     url(r'^forms/$', views.ConsumptionFormListView.as_view(), name='consumptionform_list'),
-    url(r'^forms/export/$', views.consumptionform_export, name='consumptionform_export'),
+    url(r'^forms/export/$', views.ConsumptionFormExportView.as_view(), name='consumptionform_export'),
     url(r'^forms/(?P<pk>\d+)/$', views.ConsumptionFormDetailView.as_view(), name='consumptionform_detail'),
     url(r'^forms/(?P<pk>\d+)/pdf/$', views.ConsumptionFormPDFView.as_view(), name='consumptionform_pdf'),
 ]

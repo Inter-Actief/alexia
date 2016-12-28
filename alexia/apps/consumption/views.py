@@ -7,18 +7,17 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.list import ListView
 from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
 
 from alexia.apps.scheduling.models import Event
-from alexia.auth.decorators import foundation_manager_required
 from alexia.auth.mixins import FoundationManagerRequiredMixin
 from alexia.forms import CrispyFormMixin
 
 from .forms import (
-    ConsumptionFormConfirmationForm, ConsumptionFormForm,
-    ExportConsumptionFormsForm, UnitEntryFormSet, WeightEntryFormSet,
+    ConsumptionFormConfirmationForm, ConsumptionFormForm, ExportForm,
+    UnitEntryFormSet, WeightEntryFormSet,
 )
 from .models import (
     ConsumptionForm, ConsumptionProduct, WeightConsumptionProduct,
@@ -81,30 +80,26 @@ def complete_dcf(request, pk):
     return render(request, 'consumption/dcf_check.html', locals())
 
 
-@foundation_manager_required
-def consumptionform_export(request):
-    if request.method == 'POST':
-        form = ExportConsumptionFormsForm(request.POST)
-        if form.is_valid():
-            # Create date range
-            month = form.cleaned_data['month']
-            year = form.cleaned_data['year']
-            last_day = calendar.monthrange(year, month)[1]
-            from_time = datetime.datetime(year, month, 1)
-            till_time = datetime.datetime(year, month, last_day, 23, 59, 59)
-            # Export pdf
-            objects = ConsumptionForm.objects.filter(
-                completed_at__isnull=False,
-                event__starts_at__gte=from_time,
-                event__starts_at__lte=till_time,
-            )
-            filename = 'Verbruiksformulieren %s %d.pdf' % (from_time.strftime('%B'), year)
-            return PDFTemplateResponse(request, 'consumption/dcf_pdf.html',
-                                       context={'objects': objects}, filename=filename)
-    else:
-        form = ExportConsumptionFormsForm()
+class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
+    form_class = ExportForm
+    template_name = 'consumption/dcf_export.html'
 
-    return render(request, 'consumption/dcf_export.html', locals())
+    def form_valid(self, form):
+        month = form.cleaned_data['month']
+        year = form.cleaned_data['year']
+        last_day = calendar.monthrange(year, month)[1]
+        from_time = datetime.datetime(year, month, 1)
+        till_time = datetime.datetime(year, month, last_day, 23, 59, 59)
+        objects = ConsumptionForm.objects.filter(
+            event__starts_at__gte=from_time,
+            event__starts_at__lte=till_time,
+        )
+        return PDFTemplateResponse(
+            self.request,
+            'consumption/dcf_pdf.html',
+            context={'objects': objects},
+            filename='Verbruiksformulieren %s %d.pdf' % (from_time.strftime('%B'), year),
+        )
 
 
 class ConsumptionProductListView(FoundationManagerRequiredMixin, ListView):
