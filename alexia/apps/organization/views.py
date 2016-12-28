@@ -2,22 +2,23 @@ import mimetypes
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
-from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
+from django.contrib.auth import get_user_model
 from django.http import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import DeleteView, UpdateView
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic.base import RedirectView
+from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.edit import (
+    CreateView, DeleteView, FormView, ModelFormMixin, UpdateView,
+)
 from django.views.generic.list import ListView
 
 from alexia.auth.backends import RADIUS_BACKEND_NAME
-from alexia.auth.decorators import manager_required
 from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin
 from alexia.forms import CrispyFormMixin
 from alexia.utils import log
 
-from .forms import CreateUserForm, MembershipAddForm, UploadIvaForm
+from .forms import MembershipAddForm, UploadIvaForm
 from .models import AuthenticationData, Membership, Profile
 
 
@@ -32,65 +33,54 @@ class IvaListView(ManagerRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.request.organization.membership_set.filter(is_tender=True) \
-                                                       .select_related('user', 'user__certificate', 'user__profile') \
-                                                       .order_by('user__first_name')
+            .select_related('user', 'user__certificate', 'user__profile').order_by('user__first_name')
 
 
-@login_required
-@manager_required
-def membership_add(request):
-    if request.method == 'POST':
-        form = MembershipAddForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            try:
-                authentication_data = AuthenticationData.objects.get(username=username, backend=RADIUS_BACKEND_NAME)
-            except AuthenticationData.DoesNotExist:
-                return redirect(membership_create_user, username=username)
+class MembershipCreateView(ManagerRequiredMixin, CrispyFormMixin, FormView):
+    form_class = MembershipAddForm
+    template_name = 'organization/membership_form.html'
 
-            user = authentication_data.user
-            membership, is_new = Membership.objects.get_or_create(user=user, organization=request.organization)
-            if is_new:
-                log.membership_created(request.user, membership)
-            return redirect('edit-membership', pk=membership.pk)
-    else:
-        form = MembershipAddForm()
-
-    return render(request, 'organization/membership_form.html', locals())
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        try:
+            authentication_data = AuthenticationData.objects.get(username=username, backend=RADIUS_BACKEND_NAME)
+        except AuthenticationData.DoesNotExist:
+            return redirect('add-membership', username=username)
+        user = authentication_data.user
+        membership, is_new = Membership.objects.get_or_create(user=user, organization=self.request.organization)
+        if is_new:
+            log.membership_created(self.request.user, membership)
+        return redirect('edit-membership', pk=membership.pk)
 
 
-@login_required
-@manager_required
-def membership_create_user(request, username):
-    try:
-        AuthenticationData.objects.get(username=username, backend=RADIUS_BACKEND_NAME)
-        # Account already exists
-        raise Http404
-    except AuthenticationData.DoesNotExist:
-        pass
+class UserCreateView(ManagerRequiredMixin, CrispyFormMixin, CreateView):
+    model = get_user_model()
+    fields = ['first_name', 'last_name', 'email']
 
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = username
-            user.set_unusable_password()
-            user.save()
+    def get_context_data(self, **kwargs):
+        if AuthenticationData.objects.filter(username=self.kwargs['username'], backend=RADIUS_BACKEND_NAME).count():
+            raise Http404('Account already exists')
 
-            data = AuthenticationData(user=user, backend=RADIUS_BACKEND_NAME, username=username)
-            data.save()
+        context = super(UserCreateView, self).get_context_data(**kwargs)
+        context['username'] = self.kwargs['username']
+        return context
 
-            profile = Profile(user=user)
-            profile.save()
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.username = self.kwargs['username']
+        user.set_unusable_password()
+        user.save()
 
-            membership, is_new = Membership.objects.get_or_create(user=user, organization=request.organization)
-            if is_new:
-                log.membership_created(request.user, membership)
-            return redirect('edit-membership', pk=membership.pk)
-    else:
-        form = CreateUserForm(initial={'username': username})
+        data = AuthenticationData(user=user, backend=RADIUS_BACKEND_NAME, username=self.kwargs['username'])
+        data.save()
 
-    return render(request, 'organization/membership_create_user.html', locals())
+        profile = Profile(user=user)
+        profile.save()
+
+        membership, is_new = Membership.objects.get_or_create(user=user, organization=self.request.organization)
+        if is_new:
+            log.membership_created(self.request.user, membership)
+        return redirect('edit-membership', pk=membership.pk)
 
 
 class MembershipDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailView):
@@ -156,52 +146,49 @@ class MembershipIvaView(ManagerRequiredMixin, DenyWrongOrganizationMixin, Detail
         return HttpResponse(iva_file, content_type=content_type)
 
 
-@login_required
-@manager_required
-def iva_upload(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
-    if membership.organization != request.organization:
-        raise PermissionDenied
+class MembershipIvaUpdate(ManagerRequiredMixin, DenyWrongOrganizationMixin, CrispyFormMixin, ModelFormMixin,
+                          DetailView):
+    model = Membership
+    form_class = UploadIvaForm
+    template_name = 'organization/certificate_form.html'
 
-    certificate = getattr(membership.user, 'certificate', None)
-    if request.method == 'POST':
-        form = UploadIvaForm(request.POST, request.FILES, instance=certificate)
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
         if form.is_valid():
-            if certificate:
-                certificate.delete()
-            certificate = form.save(commit=False)
-            certificate.owner_id = membership.user.pk
-            certificate.save()
-            return redirect('memberships')
-    else:
-        form = UploadIvaForm(instance=certificate)
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-    return render(request, 'organization/membership_iva_upload.html', locals())
+    def get_form_kwargs(self):
+        kwargs = super(MembershipIvaUpdate, self).get_form_kwargs()
+        kwargs['instance'] = getattr(self.object.user, 'certificate', None)
+        return kwargs
 
-
-@login_required
-@manager_required
-def iva_approve(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
-    certificate = membership.user.certificate
-
-    if membership.organization != request.organization:
-        raise PermissionDenied
-
-    if certificate and not certificate.approved_at:
-        certificate.approve(request.user)
+    def form_valid(self, form):
+        if hasattr(self.object.user, 'certificate'):
+            self.object.user.certificate.delete()
+        certificate = form.save(commit=False)
+        certificate.owner = self.object.user
+        certificate.save()
         return redirect('memberships')
 
 
-@login_required
-@manager_required
-def iva_decline(request, pk):
-    membership = get_object_or_404(Membership, pk=pk)
-    certificate = membership.user.certificate
+class MembershipIvaApprove(ManagerRequiredMixin, DenyWrongOrganizationMixin, SingleObjectMixin, RedirectView):
+    model = Membership
 
-    if membership.organization != request.organization:
-        raise PermissionDenied
+    def get_redirect_url(self, *args, **kwargs):
+        certificate = self.get_object().user.certificate
+        if certificate and not certificate.approved_at:
+            certificate.approve(self.request.user)
+        return reverse('memberships')
 
-    if certificate and not certificate.approved_at:
-        certificate.decline()
-        return redirect('memberships')
+
+class MembershipIvaDecline(ManagerRequiredMixin, DenyWrongOrganizationMixin, SingleObjectMixin, RedirectView):
+    model = Membership
+
+    def get_redirect_url(self, *args, **kwargs):
+        certificate = self.get_object().user.certificate
+        if certificate and not certificate.approved_at:
+            certificate.decline()
+        return reverse('memberships')

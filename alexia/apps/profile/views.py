@@ -1,14 +1,14 @@
 import mimetypes
 import uuid
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect, render, reverse
+from django.shortcuts import redirect, reverse
+from django.urls import reverse_lazy
 from django.views.generic.base import RedirectView, TemplateView, View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 
 from alexia.apps.billing.models import Order
@@ -16,7 +16,7 @@ from alexia.apps.organization.models import AuthenticationData, Certificate
 from alexia.apps.scheduling.models import Event
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 from alexia.auth.mixins import TenderRequiredMixin
-from alexia.forms import AlexiaModelForm, CrispyFormMixin
+from alexia.forms import CrispyFormMixin
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -70,43 +70,27 @@ class GenerateIcalView(TenderRequiredMixin, RedirectView):
 class ProfileUpdate(LoginRequiredMixin, CrispyFormMixin, UpdateView):
     template_name = 'profile/profile_form.html'
     fields = ['email']
+    success_url = reverse_lazy('profile')
 
     def get_object(self):
         return self.request.user
 
-    def get_success_url(self):
-        return reverse('profile')
 
+class IvaUpdate(LoginRequiredMixin, CrispyFormMixin, CreateView):
+    model = Certificate
+    fields = ['file']
 
-class IvaForm(AlexiaModelForm):
-    class Meta:
-        model = Certificate
-        fields = ['file']
+    def get(self, request, *args, **kwargs):
+        self.object = getattr(self.request.user, 'certificate', None)
+        return self.render_to_response(self.get_context_data())
 
-
-@login_required
-def iva(request):
-    certificate = getattr(request.user, 'certificate', None)
-
-    if request.method == 'POST':
-        form = IvaForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Delete the old
-            if certificate:
-                certificate.delete()
-            # Save the new
-            certificate = form.save(commit=False)
-            certificate._id = str(request.user.pk)
-            certificate.save()
-            # Attach to profile
-            request.user.certificate = certificate
-            request.user.save()
-
-            return redirect('profile')
-    else:
-        form = IvaForm(instance=certificate)
-
-    return render(request, 'profile/profile_iva.html', locals())
+    def form_valid(self, form):
+        if hasattr(self.request.user, 'certificate'):
+            self.request.user.certificate.delete()
+        certificate = form.save(commit=False)
+        certificate.owner = self.request.user
+        certificate.save()
+        return redirect('profile')
 
 
 class IvaView(LoginRequiredMixin, View):

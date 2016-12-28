@@ -1,5 +1,5 @@
 {% extends 'base_app.html' %}
-{% load i18n crispy_forms_tags %}
+{% load crispy_forms_tags %}
 
 {% block title %}{% trans 'Upload IVA certificate' %}{% endblock %}
 
@@ -12,10 +12,11 @@
 
 {% if certificate.approved_at %}
 <div class="alert alert-danger">
-    {% trans '<strong>Caution!</strong> This user has an approved IVA certificate. Uploading a new one will make the current one invalid!' %}
+    {% trans '<strong>Caution!</strong> This is already an approved IVA certificate. Uploading a new one will make the current one invalid!' %}
 </div>
 {% endif %}
 
+{% if membership %}
 <div class="form-horizontal">
     <div class="form-group">
         <label class="control-label col-lg-2">{% trans 'User' %}</label>
@@ -30,6 +31,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 {% crispy form %}
 

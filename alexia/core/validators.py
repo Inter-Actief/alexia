@@ -19,5 +19,5 @@ radius_username_validator = RegexValidator(
 )
 
 
-def validate_radius_usernam(value):
+def validate_radius_username(value):
     return radius_username_validator(value)

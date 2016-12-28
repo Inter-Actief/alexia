@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-28 16:53+0100\n"
+"POT-Creation-Date: 2016-12-28 20:57+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -587,6 +587,9 @@ msgstr "Niet gevonden"
 msgid "The requested resource is not found."
 msgstr "Het opgevraagde bestand is niet gevonden."
 
+msgid "Create user"
+msgstr "Maak gebruiker"
+
 msgid "Home"
 msgstr "Home"
 
@@ -1057,25 +1060,26 @@ msgstr ""
 msgid "Drinks"
 msgstr "Borrels"
 
+msgid "Upload IVA certificate"
+msgstr "IVA certificaat uploaden"
+
+msgid ""
+"<strong>Caution!</strong> This is already an approved IVA certificate. "
+"Uploading a new one will make the current one invalid!"
+msgstr ""
+"<strong>Pas op!</strong> Dit is al een IVA-ceritficaat dat "
+"goedgekeurd is. Als je een nieuwe upload wordt de oude automatisch "
+"verwijderd!"
+
+msgid "User"
+msgstr "Gebruiker"
+
 msgid "Delete user"
 msgstr "Gebruiker verwijderen"
 
 #, python-format
 msgid "Are you sure you want to delete user %(membership)s?"
 msgstr "Weet je zeker dat je de gebruiker %(membership)s wil verwijderen?"
-
-msgid "Create user"
-msgstr "Gebruiker aanmaken"
-
-#, python-format
-msgid ""
-"\n"
-"        Create user %(username)s\n"
-"        "
-msgstr ""
-"\n"
-"        Maak gebruiker %(username)s\n"
-"        "
 
 msgid "User details"
 msgstr "Gebruikersgegevens"
@@ -1123,20 +1127,6 @@ msgstr "Manager"
 
 msgid "There are no users"
 msgstr "Er zijn geen gebruikers"
-
-msgid "Upload IVA certificate"
-msgstr "IVA certificaat uploaden"
-
-msgid ""
-"<strong>Caution!</strong> This user has an approved IVA certificate. "
-"Uploading a new one will make the current one invalid!"
-msgstr ""
-"<strong>Pas op!</strong> Deze gebruiker heeft al een IVA-ceritficaat dat "
-"goedgekeurd is. Als je een nieuwe upload wordt de oude automatisch "
-"verwijderd!"
-
-msgid "User"
-msgstr "Gebruiker"
 
 msgid "Print IVA list"
 msgstr "IVA-lijst uitdraaien"
@@ -1293,11 +1283,20 @@ msgstr "Beschikbaarheden van %(organization)s"
 msgid "No availabilities defined."
 msgstr "Geen beschikbaarheden gedefinieerd."
 
-msgid "Edit bartender availability"
-msgstr "Bewerk tapperbeschikbaarheid"
+msgid "Time"
+msgstr "Tijd"
 
 msgid "Bartenders"
 msgstr "Tappers"
+
+msgid "Instructions"
+msgstr "Tappersinstructie"
+
+msgid "You don\\"
+msgstr ""
+
+msgid "Edit bartender availability"
+msgstr "Bewerk tapperbeschikbaarheid"
 
 msgid "today"
 msgstr "vandaag"
@@ -1480,6 +1479,32 @@ msgstr "Onbekend"
 msgid "Edit event"
 msgstr "Activiteit bewerken"
 
+msgid "Filters"
+msgstr "Filters"
+
+msgid "Kegs"
+msgstr "Fusten"
+
+msgid "Has tender comments"
+msgstr "Heeft tappersinstructie"
+
+msgid "Risky activity"
+msgstr "Risicoactiviteit"
+
+msgid "Point of sale"
+msgstr "Kassa"
+
+msgid "DCF"
+msgstr "DVF"
+
+#, python-format
+msgid "No events have been planned from %(s)s until %(e)s."
+msgstr "Er zijn geen activiteiten gepland van %(s)s tot %(e)s."
+
+#, python-format
+msgid "No events have been planned after %(s)s."
+msgstr "Er zijn geen activiteiten gepland na %(s)s."
+
 msgid "Mail template"
 msgstr "Mailsjabloon"
 
@@ -1499,38 +1524,3 @@ msgstr "Bewerk mailsjabloon %(object)s"
 #, python-format
 msgid "Mail templates of %(organization)s"
 msgstr "Mailsjablonen van %(organization)s"
-
-msgid "Filters"
-msgstr "Filters"
-
-msgid "Time"
-msgstr "Tijd"
-
-msgid "Instructions"
-msgstr "Tappersinstructie"
-
-#, python-format
-msgid "No events have been planned from %(s)s until %(e)s."
-msgstr "Er zijn geen activiteiten gepland van %(s)s tot %(e)s."
-
-msgid "Kegs"
-msgstr "Fusten"
-
-msgid "Has tender comments"
-msgstr "Heeft tappersinstructie"
-
-msgid "Risky activity"
-msgstr "Risicoactiviteit"
-
-msgid "Point of sale"
-msgstr "Kassa"
-
-msgid "DCF"
-msgstr "DVF"
-
-#, python-format
-msgid "No events have been planned after %(s)s."
-msgstr "Er zijn geen activiteiten gepland na %(s)s."
-
-#~ msgid "Inactive bartenders"
-#~ msgstr "Inactieve tappers"

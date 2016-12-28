@@ -1,11 +1,10 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Certificate
 from alexia.apps.scheduling.models import Availability, BartenderAvailability
-from alexia.core.validators import validate_radius_usernam
-from alexia.forms import AlexiaForm, AlexiaModelForm
+from alexia.core.validators import validate_radius_username
+from alexia.forms import AlexiaModelForm
 
 
 class BartenderAvailabilityForm(AlexiaModelForm):
@@ -37,23 +36,17 @@ class BartenderAvailabilityForm(AlexiaModelForm):
         return ba
 
 
-class MembershipAddForm(AlexiaForm):
+class MembershipAddForm(forms.Form):
     username = forms.CharField(
         label=_('RADIUS username'),
         help_text=_('Student or employee account'),
         min_length=8,
         max_length=8,
-        validators=[validate_radius_usernam],
+        validators=[validate_radius_username],
     )
 
 
-class CreateUserForm(AlexiaModelForm):
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
-
-
-class UploadIvaForm(AlexiaModelForm):
+class UploadIvaForm(forms.ModelForm):
     class Meta:
         model = Certificate
-        fields = ('file',)
+        fields = ['file']

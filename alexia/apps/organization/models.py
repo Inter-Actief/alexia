@@ -5,8 +5,6 @@ import os
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models.signals import pre_delete
-from django.dispatch.dispatcher import receiver
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
@@ -83,7 +81,6 @@ class Profile(models.Model):
     ical_id = models.CharField(_('iCal identifier'), max_length=36, null=True)
 
     class Meta:
-        ordering = ['user']
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
 
@@ -145,16 +142,15 @@ class Organization(models.Model):
     public_objects = PublicOrganizationManager()
 
     class Meta:
-        ordering = ['name']
         verbose_name = _('organization')
         verbose_name_plural = _('organizations')
 
     def __str__(self):
         return self.name
 
-    def save(self, force_insert=False, **kwargs):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.__str__())
-        super(Organization, self).save()
+        super(Organization, self).save(*args, **kwargs)
 
 
 @python_2_unicode_compatible
@@ -176,7 +172,6 @@ class Membership(models.Model):
     is_active = models.BooleanField(_('is currently active'), default=True)
 
     class Meta:
-        ordering = ('user', 'organization')
         unique_together = ('user', 'organization')
         verbose_name = _('membership')
         verbose_name_plural = _('memberships')
@@ -184,7 +179,8 @@ class Membership(models.Model):
     def __str__(self):
         return _('%(user)s of %(organization)s') % {
             'user': self.user.get_full_name(),
-            'organization': self.organization}
+            'organization': self.organization,
+        }
 
     def get_absolute_url(self):
         return reverse('membership', args=[self.pk])
@@ -243,6 +239,12 @@ class Certificate(models.Model):
             self.owner.get_full_name(),
         )
 
+    def delete(self, *args, **kwargs):
+        self.file.delete(False)
+        super(Certificate, self).delete(*args, **kwargs)
+
+    delete.alters_data = True
+
     def approve(self, approver):
         self.approved_by = approver
         self.approved_at = timezone.now()
@@ -254,8 +256,3 @@ class Certificate(models.Model):
         self.delete()
 
     decline.alters_data = True
-
-
-@receiver(pre_delete, sender=Certificate)
-def certificate_delete(sender, instance, **kwargs):
-    instance.file.delete(False)

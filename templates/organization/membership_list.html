@@ -76,7 +76,7 @@
                 {% with membership.tended|first as last_tended %}
                 <td>{% if last_tended %}<abbr title="{{ last_tended.event.name  }}">{{ last_tended.event.starts_at|date:"j b Y" }}</abbr>{% else %}&mdash;{% endif %}</td>
                 {% endwith %}
-                <td>{{ membership.user.last_login }}</td>
+                <td>{{ membership.user.last_login|default:'&mdash;' }}</td>
                 <td>
                     <a class="btn btn-xs btn-default" href="{% url 'edit-membership' membership.pk %}">
                         <span class="glyphicon glyphicon-pencil"></span>
