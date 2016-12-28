@@ -17,7 +17,7 @@ from alexia.apps.organization.models import (
     AuthenticationData, Location, Organization, Profile,
 )
 from alexia.apps.scheduling.models import Availability, Event
-from alexia.utils.auth.backends import RADIUS_BACKEND_NAME
+from alexia.auth.backends import RADIUS_BACKEND_NAME
 
 
 class SimpleTestCase(testcases.SimpleTestCase):
