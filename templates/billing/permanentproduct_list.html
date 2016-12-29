@@ -1,19 +1,18 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% blocktrans with organization=request.organization %}Permanent products of {{ organization }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with organization=current_organization %}Permanent products of {{ organization }}{% endblocktrans %}{% endblock title %}
 
 {% block content %}
-<div class="page-header clearfix">
-    <h1 class="pull-left">
-         {% blocktrans with organization=request.organization %}Permanent products of {{ organization }}{% endblocktrans %}
+<div class="page-header">
+    <h1>
+         {% blocktrans with organization=current_organization %}Permanent products of {{ organization }}{% endblocktrans %}
+         <div class="pull-right">
+             <a class="btn btn-primary" href="{% url 'permanentproduct_create' %}">
+                 <span class="glyphicon glyphicon-plus"></span>
+                 {% trans 'Add' %}
+             </a>
+         </div>
     </h1>
-    <div class="text-right">
-        <a class="btn btn-primary" href="{% url 'permanentproduct_create' %}">
-            <span class="glyphicon glyphicon-plus"></span>
-            {% trans 'Add' %}
-        </a>
-    </div>
 </div>
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
@@ -26,17 +25,17 @@
             </tr>
         </thead>
         <tbody>
-        {% for object in object_list %}
+        {% for permanentproduct in permanentproduct_list %}
             <tr>
-                <td {% if object.background_color %}style="background-color: #{{ object.background_color }};"{% endif %}>
-                    <a href="{{ object.get_absolute_url }}" {% if object.text_color %}style="color: #{{ object.text_color }};"{% endif %}>
-                        {{ object.name }}
+                <td {% if permanentproduct.background_color %}style="background-color: #{{ permanentproduct.background_color }};"{% endif %}>
+                    <a href="{{ permanentproduct.get_absolute_url }}" {% if permanentproduct.text_color %}style="color: #{{ permanentproduct.text_color }};"{% endif %}>
+                        {{ permanentproduct.name }}
                     </a>
                 </td>
-                <td><a href="{{ object.productgroup.get_absolute_url }}">{{ object.productgroup }}</a></td>
-                <td>{{ object.position }}</td>
+                <td><a href="{{ permanentproduct.productgroup.get_absolute_url }}">{{ permanentproduct.productgroup }}</a></td>
+                <td>{{ permanentproduct.position }}</td>
                 <td>
-                    <a class="btn btn-xs btn-default" href="{% url 'permanentproduct_update' object.pk %}">
+                    <a class="btn btn-xs btn-default" href="{% url 'permanentproduct_update' permanentproduct.pk %}">
                         <span class="glyphicon glyphicon-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
@@ -44,10 +43,10 @@
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">{% trans "No permanent products defined." %}</td>
+                <td colspan="4">{% trans 'No permanent products defined.' %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-{% endblock %}
+{% endblock content %}

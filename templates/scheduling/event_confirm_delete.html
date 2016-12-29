@@ -1,7 +1,6 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'Delete event' %}{% endblock %}
+{% block title %}{% trans 'Delete event' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
@@ -12,4 +11,4 @@
      {% csrf_token %}
      <input type="submit" value="{% trans 'Yes, I am sure' %}" class="btn btn-danger">
 </form>
-{% endblock %}
+{% endblock content %}

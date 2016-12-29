@@ -1,13 +1,10 @@
 {% extends 'base_app.html' %}
-{% load i18n crispy_forms_tags %}
 
-{% block title %}{% trans 'My payments' %}{% endblock %}
+{% block title %}{% trans 'My payments' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>
-        {% blocktrans %}My payments at {{ event }}{% endblocktrans %}
-    </h1>
+    <h1>{% blocktrans %}My payments at {{ event }}{% endblocktrans %}</h1>
 </div>
 <div class="table-responsive">
     <table class="table table-striped">
@@ -20,12 +17,12 @@
             </tr>
         </thead>
         <tbody>
-        {% for o in order_list %}
+        {% for order in order_list %}
             <tr>
-                <td>{{ o.placed_at|date:"l d F H:i" }}</td>
-                <td>&euro; {{ o.amount|floatformat:2 }}</td>
-                <td>{{ o.added_by.get_full_name }}</td>
-                <td><a href="{% url 'order' o.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                <td>{{ order.placed_at|date:"l d F H:i" }}</td>
+                <td>&euro; {{ order.amount|floatformat:2 }}</td>
+                <td>{{ order.added_by.get_full_name }}</td>
+                <td><a href="{% url 'order' order.pk %}" class="btn btn-xs btn-default">Details</a></td>
             </tr>
         {% empty %}
             <tr>
@@ -35,4 +32,4 @@
         </tbody>
     </table>
 </div>
-{% endblock %}
+{% endblock content %}

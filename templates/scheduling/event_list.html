@@ -1,17 +1,18 @@
 {% extends 'base_app.html' %}
-{% load crispy_forms_tags %}
 
-{% block title %}{% trans 'Planning' %}{% endblock %}
+{% block title %}{% trans 'Planning' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>
         {% trans 'Planning' %}
         {% if is_planner %}
-        <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">
-            <span class="glyphicon glyphicon-plus"></span>
-            {% trans 'Add event' %}
-        </a>
+        <div class="pull-right">
+            <a href="{% url 'new-event' %}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                {% trans 'Add event' %}
+            </a>
+        </div>
         {% endif %}
     </h1>
 </div>
@@ -22,12 +23,11 @@
         </div>
         <div id="filters_form" class="panel-collapse collapse">
             <div class="panel-body">
-                {# crispy filter_form #}
+                {% crispy filter_form %}
             </div>
         </div>
     </div>
 </div>
-{% if events %}
 <div class="table-responsive">
     <table class="table table-hover table-condensed table-events">
         <thead>
@@ -45,7 +45,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for e in events %}
+        {% for e in events %}
             <tr{% if e.option or e.is_risky %} class="{% if e.option %}tr-muted{% endif %}{% if e.is_risky %} tr-yellow {% endif %}"{% endif %}>
                 <td>
                     {% if e.starts_at|date == e.ends_at|date %}
@@ -130,17 +130,18 @@
                 </td>
                 {% endif %}
             </tr>
-            {% endfor %}
+        {% empty %}
+            <tr>
+                <td colspan="10">
+                    {% if end_time %}
+            		{% blocktrans with a=from_time|date:"j F H:i" b=end_time|date:"j F H:i" %}There's nothing scheduled between {{ a }} and {{ b }}.{% endblocktrans %}
+                	{% else %}
+            		{% blocktrans with datetime=from_time|date:"j F H:i" %}There's nothing scheduled after {{ datetime }}.{% endblocktrans %}
+                	{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>
-{% else %}
-<p id="no-events-message">
-	{% if end_time %}
-		{% blocktrans with from_time|date:"j F H:i" as s and end_time|date:"j F H:i" as e %}No events have been planned from {{ s }} until {{ e }}.{% endblocktrans %}
-	{% else %}
-		{% blocktrans with from_time|date:"j F H:i" as s %}No events have been planned after {{ s }}.{% endblocktrans %}
-	{% endif %}
-</p>
-{% endif %}
-{% endblock %}
+{% endblock content %}

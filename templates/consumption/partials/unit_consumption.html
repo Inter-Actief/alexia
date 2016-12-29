@@ -1,4 +1,4 @@
-{% load crispy_forms_field i18n static %}
+{% load crispy_forms_field %}
 
 <div class="well">
     <div class="row">
@@ -6,23 +6,15 @@
             <img src="{% static 'img/bottle.svg' %}" width="150">
             <h3>{% trans 'By units' %}</h3>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-10 dynamic-formset" data-prefix="{{ unit_form.prefix }}">
             {{ unit_form.management_form }}
-            {% if weight_form.non_form_errors %}
-            <div class="alert alert-block alert-danger">
-                <h4 class="alert-heading">Errors</h4>
-                <ul>
-                    {{ formset.non_form_errors|unordered_list }}
-                </ul>
-            </div>
-            {% endif %}
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>{% trans 'Product' %}</th>
-                            <th>{% trans 'Units consumed' %}</th>
-                            <th colspan="3">{% trans 'Delete' %}</th>
+                            <th width="30%">{% trans 'Product' %}</th>
+                            <th width="60%">{% trans 'Units consumed' %}</th>
+                            <th width="10%" colspan="3">{% trans 'Delete' %}</th>
                         </tr>
                     </thead>
                     {% include 'consumption/partials/formset_form.html' with formset=unit_form %}

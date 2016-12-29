@@ -1,7 +1,6 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{{ user.get_full_name }}{% endblock %}
+{% block title %}{{ user.get_full_name }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
@@ -12,24 +11,46 @@
         <div class="well">
             <dl class="dl-vertical">
                 <dt>{% trans 'RADIUS username' %}</dt>
-                <dd>{{ radius_username|default:"&mdash;" }}</dd>
+                <dd>{{ radius_username|default:'&mdash;' }}</dd>
                 <dt>{% trans 'Email address' %} <a href="{% url 'edit-profile' %}">({% trans 'edit' %})</a></dt>
                 <dd>{{ user.email }}</dd>
             </dl>
         </div>
         <table class="table table-bordered">
-            <tr class="tr-muted"><th>{% trans 'Stats' %}</th></tr>
-            <tr><td class="text-right"><strong class="pull-left">{% trans 'Transactions' %}</strong> {{ order_count }}</td></tr>
-            <tr><td class="text-right"><strong class="pull-left">{% trans 'Events attended' %}</strong> {{ events|length }}</td></tr>
-            {% if is_tender %}<tr><td class="text-right"><strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}</td></tr>{% endif %}
+            <tr class="tr-muted">
+                <th>{% trans 'Stats' %}</th>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    <strong class="pull-left">{% trans 'Transactions' %}</strong> {{ order_count }}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-right">
+                    <strong class="pull-left">{% trans 'Events attended' %}</strong> {{ events|length }}
+                </td>
+            </tr>
+            {% if is_tender %}
+            <tr>
+                <td class="text-right">
+                    <strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}
+                </td>
+            </tr>
+            {% endif %}
         </table>
     </div>
     <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#billing" data-toggle="tab">{% trans 'Billing' %}</a></li>
-            {% if is_tender %}<li><a href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a></li>{% endif %}
+            <li class="active">
+                <a href="#billing" data-toggle="tab">{% trans 'Billing' %}</a>
+            </li>
+            {% if is_tender %}
+            <li>
+                <a href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a>
+            </li>
+            {% endif %}
         </ul>
-        <div class="tab-content" id="tabContent">
+        <div class="tab-content">
             <div class="tab-pane active" id="billing">
                 <div class="row">
                     <div class="col-xs-12 col-lg-6">
@@ -47,7 +68,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for e in events|slice:":5" %}
+                            {% for e in events|slice:':5' %}
                                 <tr>
                                     <td class="overflow-protect">{{ e.name }}</td>
                                     <td>&euro; {{ e.spent|floatformat:2 }}</td>
@@ -70,24 +91,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for rfid_card in user.rfids.all %}
+                            {% for rfid_card in user.rfids.all %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ rfid_card.identifier }}</td>
-                                    <td>
-                                    {% if rfid_card.is_active %}
-                                        {% trans 'Yes' %}
-                                    {% else %}
-                                        {% trans 'No' %}
-                                    {% endif %}
-                                    </td>
-                                    <td>{{ rfid_card.registered_at|default:"&mdash;" }}</td>
+                                    <td>{{ rfid_card.is_active|yesno }}</td>
+                                    <td>{{ rfid_card.registered_at|default:'&mdash;' }}</td>
                                 </tr>
-                                {% empty %}
+                            {% empty %}
                                 <tr>
-                                    <td colspan="4">{% trans "You don't have any registered RFID cards." %}</td>
+                                    <td colspan="4">{% blocktrans %}You don't have any registered RFID cards.{% endblocktrans %}</td>
                                 </tr>
-                                {% endfor %}
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -104,12 +119,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for share in shares %}
+                            {% for share in shares %}
                                 <tr>
                                     <td>{{ share.organization }}</td>
                                     <td>{{ share.percentage }}%</td>
                                 </tr>
-                                {% endfor %}
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -124,7 +139,6 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>{% trans 'Organization' %}</th>
                                     <th>{% trans 'Roles' %}</th>
                                 </tr>
@@ -132,7 +146,6 @@
                             <tbody>
                             {% for membership in user.membership_set.all %}
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
                                     <td>{{ membership.organization }}</td>
                                     <td>
                                         {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
@@ -142,7 +155,7 @@
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="3">{% trans "You don't have any authorizations" %}<td>
+                                    <td colspan="3">{% blocktrans %}You don't have any authorizations.{% endblocktrans %}<td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -155,7 +168,7 @@
                         </h4>
                         {% if user.profile.ical_id %}
                         <div class="input-group">
-                            <input type="text" class="form-control" value="https://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
+                            <input type="text" class="form-control" value="{{ request.scheme }}://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
                                     <span class="glyphicon glyphicon-copy"></span>
@@ -171,11 +184,9 @@
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>
                             <dd>{{ user.certificate.uploaded_at|default:"&mdash;" }}</dd>
-
                             {% if user.certificate %}
                             <dt>{% trans 'Approved' %}</dt>
                             <dd>{{ user.certificate.approved_at|default:"&mdash;" }}</dd>
-
                             <dt>{% trans 'Certificate' %}</dt>
                             <dd><a href="{% url 'view-iva-profile' %}" target="_blank">{% trans 'view' %}</a></dd>
                             {% endif %}

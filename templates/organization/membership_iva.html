@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% load i18n %}
 
-{% block title %}{% blocktrans with organization=request.organization.name %}Users of {{ organization }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with organization=request.organization.name %}Tenders of {{ organization }}{% endblocktrans %}{% endblock title %}
 
 {% block body %}
 <div class="page-header">
@@ -19,32 +18,20 @@
         </tr>
     </thead>
     <tbody>
-        {% for membership in membership_list %}
+    {% for membership in membership_list %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td><a href="{% url 'membership' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
+            <td>{{ membership.user.get_full_name }}</td>
             <td>
                 {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
                 {% if membership.is_planner %}<span class="label label-default">{% trans 'Planner' %}</span>{% endif %}
                 {% if membership.is_manager %}<span class="label label-default">{% trans 'Manager' %}</span>{% endif %}
             </td>
             <td>
-                {% if membership.user.profile.has_iva %}
-                <i class="icon-alexia-ok"></i>
-                {% else %}
-                <i class="icon-alexia-notok"></i>
-                {% endif %}
+                <i class="icon-alexia-{% if not membership.user.profile.has_iva %}not{% endif %}ok"></i>
             </td>
         </tr>
-        {% empty %}
-        <tr>
-            <td colspan="7">{% trans 'There are no users' %}</td>
-        </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>
-
-<script type="text/javascript">
-window.print();
-</script>
-{% endblock %}
+{% endblock body %}

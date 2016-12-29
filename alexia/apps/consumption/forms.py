@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
 
-from alexia.forms import default_crispy_helper
+from alexia.forms import EmptyInlineFormSet, default_crispy_helper
 
 from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
 
@@ -53,7 +53,13 @@ class WeightEntryForm(forms.ModelForm):
         return cleaned_data
 
 
-WeightEntryFormSet = inlineformset_factory(ConsumptionForm, WeightEntry, form=WeightEntryForm)
+WeightEntryFormSet = inlineformset_factory(
+    ConsumptionForm,
+    WeightEntry,
+    form=WeightEntryForm,
+    formset=EmptyInlineFormSet,
+    extra=0
+)
 
 
 class UnitEntryForm(forms.ModelForm):
@@ -66,7 +72,13 @@ class UnitEntryForm(forms.ModelForm):
         self.fields['product'].queryset = ConsumptionProduct.objects.filter(weightconsumptionproduct=None)
 
 
-UnitEntryFormSet = inlineformset_factory(ConsumptionForm, UnitEntry, form=UnitEntryForm)
+UnitEntryFormSet = inlineformset_factory(
+    ConsumptionForm,
+    UnitEntry,
+    form=UnitEntryForm,
+    formset=EmptyInlineFormSet,
+    extra=0
+)
 
 
 class ConsumptionFormConfirmationForm(forms.Form):

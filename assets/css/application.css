@@ -1,30 +1,20 @@
-.logo-head {
-	height: 150px;
-	width: 100%;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center center;
-	display: inline-block;
-}
-@media (max-width: 767px) {
-    /* Small logo on small screens */
-    .logo-head {
-        height: 75px;
-    }
-}
-
-.logo-head.logo-alexia {
-    background-image: url('/static/img/alexia.svg');
-}
-
-hr.fix {
-	width: 100%;
-	clear: both;
-	background-color: transparent;
-	border: none;
+.navbar-brand > img {
+	width: 61px;
+	height: 17px;
 }
 
 .login-form { text-align: center; }
+
+.login-form .login-logo {
+	height: 150px;
+	max-width: 100%;
+}
+
+@media (max-width: 767px) {
+    .login-form .login-logo {
+        height: 75px;
+    }
+}
 
 label.control-label { font-weight: bold; }
 
@@ -130,6 +120,10 @@ body {
     }
 }
 
+#alexia-navbar-login {
+	padding: 15px;
+}
+
 #alexia-navbar-login input {
     margin-bottom: 5px;
 }
@@ -151,4 +145,33 @@ ul.dcf-issues li.text-danger:before {
 
 ul.dcf-issues li.text-warning:before {
 	content: "\e107";
+}
+
+iframe#iva-list {
+	display: none;
+}
+
+span.reverse {
+	unicode-bidi: bidi-override;
+	direction: rtl;
+	white-space: nowrap;
+}
+
+.table > tbody > tr.dynamic-form-empty {
+	display: none;
+}
+
+.table > tbody > tr.dynamic-form-add > td {
+	padding: 0;
+}
+
+.table > tbody > tr.dynamic-form-add > td > a {
+	display: block;
+	text-align: center;
+	font-size: 14pt;
+	line-height: 50px;
+}
+
+.table > tbody > tr.dynamic-form-add > td > a:hover {
+	background-color: #ccc;
 }

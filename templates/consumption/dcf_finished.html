@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% load i18n static %}
 
-{% block title %}{% trans 'Consumption form' %}{% endblock %}
+{% block title %}{% trans 'Consumption form' %}{% endblock title %}
 
 {% block body %}
 <div class="container">
@@ -21,7 +20,10 @@
         <h3>{% trans 'Tenders, thank you!' %}</h3>
     </div>
     <p class="text-center">
-        <a href="{% url 'root' %}" class="btn btn-primary">{% trans 'Back' %}</a>
+        <a href="{% url 'event-list' %}" class="btn btn-primary">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            {% trans 'Back' %}
+        </a>
     </p>
 </div>
 {% endblock body %}

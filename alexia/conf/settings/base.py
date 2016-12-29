@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'debug_toolbar',
     'eventlog',
+    'jsonrpc',
     'wkhtmltopdf',
 
     'alexia.api',
@@ -109,7 +110,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
-            'builtins': ['django.templatetags.i18n'],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'django.contrib.staticfiles.templatetags.staticfiles',
+                'django.templatetags.i18n',
+            ],
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',

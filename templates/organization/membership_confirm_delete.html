@@ -1,5 +1,4 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
 {% block title %}{% trans 'Delete user' %}{% endblock %}
 
@@ -11,7 +10,9 @@
     {% csrf_token %}
     <p>
         <strong>
-            {% blocktrans %}Are you sure you want to delete user {{ membership }}?{% endblocktrans %}
+            {% blocktrans trimmed with user=membership.user.get_full_name organization=current_organization %}
+            Are you sure you want to delete {{ user }} from {{ organization }}?
+            {% endblocktrans %}
         </strong>
     </p>
     <div class="form-actions">
@@ -21,4 +22,4 @@
         <a class="btn btn-default" href="{% url 'memberships' %}">{% trans 'Cancel' %}</a>
     </div>
 </form>
-{% endblock %}
+{% endblock content %}

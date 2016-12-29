@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-28 21:18+0100\n"
+"POT-Creation-Date: 2016-12-29 19:27+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -59,7 +59,7 @@ msgid "price group"
 msgstr "prijscategorie"
 
 msgid "price groups"
-msgstr "prijscategoriën"
+msgstr "prijscategorieën"
 
 msgid "product group"
 msgstr "productgroep"
@@ -315,9 +315,6 @@ msgstr "Je bent geen tapper bij deze borrel."
 
 msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
-
-msgid "Javascript must be enabled to reveal email address"
-msgstr "Javascript moet zijn ingeschakeld om dit e-mailadres te bekijken."
 
 msgid "Availability"
 msgstr "Beschikbaarheid"
@@ -578,8 +575,8 @@ msgstr "Geen toegang"
 msgid "You don't have the rights to access this page."
 msgstr "Helaas beschik jij niet over de rechten om deze pagina op te vragen."
 
-msgid "Reason:"
-msgstr "Reden:"
+msgid "Reason"
+msgstr "Reden"
 
 msgid "Not found"
 msgstr "Niet gevonden"
@@ -590,9 +587,6 @@ msgstr "Het opgevraagde bestand is niet gevonden."
 msgid "Create user"
 msgstr "Maak gebruiker"
 
-msgid "Home"
-msgstr "Home"
-
 msgid "Event management system Alexia"
 msgstr "Borrelbeheersysteem Alexia"
 
@@ -601,9 +595,6 @@ msgstr "en"
 
 msgid "individual contributors"
 msgstr "individuele bijdragers"
-
-msgid "Toggle navigation"
-msgstr "Schakel navigatie in/uit"
 
 msgid "Planning"
 msgstr "Planning"
@@ -633,7 +624,7 @@ msgid "Products"
 msgstr "Producten"
 
 msgid "Price groups"
-msgstr "Prijscategoriën"
+msgstr "Prijscategorieën"
 
 msgid "Price matrix"
 msgstr "Prijsmatrix"
@@ -655,9 +646,6 @@ msgstr "Help"
 
 msgid "No organization"
 msgstr "Geen organisatie"
-
-msgid "No organizations available"
-msgstr "Geen organisaties beschikbaar"
 
 msgid "My profile"
 msgstr "Mijn profiel"
@@ -732,8 +720,9 @@ msgstr "ID"
 msgid "Synchronized"
 msgstr "Gesynchroniseerd"
 
-msgid "Export transactions of"
-msgstr "Transacties exporteren van"
+#, python-format
+msgid "Export transactions of %(organization)s"
+msgstr "Exporteer transacties van %(organization)s"
 
 #, python-format
 msgid "Transactions of %(organization)s"
@@ -754,8 +743,9 @@ msgstr "Transacties"
 msgid "Price group"
 msgstr "Prijscategorie"
 
-msgid "hasn't used Alexia Billing yet!"
-msgstr "heeft Alexia Financieel nog niet in gebruik!"
+#, python-format
+msgid "%(organization)s hasn't used Alexia Billing yet!"
+msgstr "%(organization)s heeft Alexia Financieel nog niet in gebruik!"
 
 msgid "Payment"
 msgstr "Betaling"
@@ -769,20 +759,17 @@ msgstr "Specificatie"
 msgid "Price"
 msgstr "Prijs"
 
-msgid "Empty payment!"
-msgstr "Lege transactie!"
-
 msgid "Permanent product"
 msgstr "Permanent product"
+
+msgid "Modify"
+msgstr "Wijzigen"
 
 msgid "Product information"
 msgstr "Productinformatie"
 
 msgid "Product group"
 msgstr "Productgroep"
-
-msgid "Modify"
-msgstr "Wijzigen"
 
 msgid "Juliana settings"
 msgstr "Juliana-instellingen"
@@ -793,9 +780,8 @@ msgstr "Positie"
 msgid "Color example"
 msgstr "Kleurvoorbeeld"
 
-#, python-format
-msgid "Edit permanent product %(object)s"
-msgstr "Bewerk permanent product %(object)s"
+msgid "Edit permanent product"
+msgstr "Wijzig permanent product"
 
 msgid "New permanent product"
 msgstr "Nieuw permanent product"
@@ -822,26 +808,24 @@ msgstr "Verwijderen"
 msgid "No prices defined."
 msgstr "Geen prijzen gedefinieerd."
 
-#, python-format
-msgid "Edit price group %(object)s"
-msgstr "Bewerk prijscategorie %(object)s"
+msgid "Edit price group"
+msgstr "Wijzig prijscategorie"
 
 msgid "New price group"
 msgstr "Nieuwe prijscategorie"
 
 #, python-format
 msgid "Price groups of %(organization)s"
-msgstr "Prijscategoriën van %(organization)s"
+msgstr "Prijscategorieën van %(organization)s"
 
 msgid "No price groups defined."
-msgstr "Geen prijscategoriën gedefinieerd."
+msgstr "Geen prijscategorieën gedefinieerd."
 
 msgid "No products defined."
 msgstr "Geen producten gedefinieerd."
 
-#, python-format
-msgid "Edit product group %(object)s"
-msgstr "Bewerk productgroep %(object)s"
+msgid "Edit product group"
+msgstr "Wijzig productgroep"
 
 msgid "New product group"
 msgstr "Nieuwe productgroep"
@@ -854,19 +838,18 @@ msgid "No product groups defined."
 msgstr "Geen productgroepen gedefinieerd."
 
 #, python-format
-msgid "Delete selling price %(object)s"
-msgstr "Verwijder verkoopprijs %(object)s"
+msgid "Delete selling price %(sellingprice)s"
+msgstr "Verwijder verkoopprijs %(sellingprice)s"
 
-#, python-format
-msgid "Are you sure you want to delete selling price %(object)s?"
-msgstr "Weet je zeker dat je de verkoopprijs %(object)s wil verwijderen?"
+#, fuzzy, python-format
+msgid "Are you sure you want to delete selling price %(sellingprice)s?"
+msgstr "Weet je zeker dat je de verkoopprijs %(sellingprice)s wil verwijderen?"
 
 msgid "Cancel"
 msgstr "Annuleren"
 
-#, python-format
-msgid "Edit selling price %(object)s"
-msgstr "Bewerk verkoopprijs %(object)s"
+msgid "Edit selling price"
+msgstr "Wijzig verkoopprijs"
 
 msgid "New selling price"
 msgstr "Nieuwe verkoopprijs"
@@ -874,9 +857,8 @@ msgstr "Nieuwe verkoopprijs"
 msgid "Temporary product"
 msgstr "Tijdelijk product"
 
-#, python-format
-msgid "Edit temporary product %(object)s"
-msgstr "Bewerk tijdelijk product %(object)s"
+msgid "Edit temporary product"
+msgstr "Wijzig tijdelijk product"
 
 msgid "New temporary product"
 msgstr "Nieuw tijdelijk product"
@@ -917,18 +899,6 @@ msgstr "Flowmeter"
 msgid "Has comments"
 msgstr "Heeft commentaar"
 
-msgid "previous"
-msgstr "vorige"
-
-msgid "Page"
-msgstr "Pagina"
-
-msgid "of"
-msgstr "van de"
-
-msgid "next"
-msgstr "volgende"
-
 msgid "Edit consumption product"
 msgstr "Wijzig voorraadproduct"
 
@@ -943,9 +913,6 @@ msgstr "Nieuw (CE)"
 
 msgid "Type"
 msgstr "Type"
-
-msgid "No consumption products defined."
-msgstr "Geen voorraadproducten gedefinieerd."
 
 msgid "Consumption form"
 msgstr "Verbruiksformulier"
@@ -993,10 +960,10 @@ msgid "By weight"
 msgstr "Op gewicht"
 
 msgid "Initial weight"
-msgstr "Begingewicht"
+msgstr "Gewicht begin"
 
 msgid "Final weight"
-msgstr "Eindgewicht"
+msgstr "Gewicht eind"
 
 msgid "Flowmeter start"
 msgstr "Flowmeter begin"
@@ -1035,30 +1002,18 @@ msgid "Developers"
 msgstr "Ontwikkelaars"
 
 msgid ""
-"\n"
-"            Alexia was developed for the drink basements under management of "
-"SBZ (Zilverling Drink Management Foundation). The\n"
-"            base of this application was developed during the design project "
-"course, part of the Computer Science Bachelor.\n"
-"            The following people contributed to this project:\n"
-"            "
+"Alexia was developed for the drink basements under management of SBZ "
+"(Zilverling Drink Management Foundation). The base of this application was "
+"developed during the design project course, part of the Computer Science "
+"Bachelor. The following people contributed to this project:"
 msgstr ""
-"\n"
-"            Alexia is ontwikkeld voor het beheer van de borrelruimtes van "
-"SBZ (Stichting Borrelbeheer Zilverling). De basis\n"
-"            van deze applicatie is gelegd tijdens het Ontwerpproject van de "
-"bachelor Technische Informatica. De volgende\n"
-"            mensen hebben daaraan bijgedragen:\n"
-"            "
+"Alexia is ontwikkeld voor het beheer van de borrelruimtes van SBZ (Stichting "
+"Borrelbeheer Zilverling). De basis van deze applicatie is gelegd tijdens het "
+"Ontwerpproject van de bachelor Technische Informatica. De volgende mensen "
+"hebben daaraan bijgedragen:"
 
-msgid ""
-"\n"
-"            After the design project development of Alexia was continued by\n"
-"            "
-msgstr ""
-"\n"
-"            Na het Ontwerpproject is Alexia doorontwikkeld door\n"
-"            "
+msgid "After the design project development of Alexia was continued by"
+msgstr "Na het Ontwerpproject is Alexia doorontwikkeld door"
 
 msgid "Drinks"
 msgstr "Borrels"
@@ -1066,12 +1021,15 @@ msgstr "Borrels"
 msgid "Upload IVA certificate"
 msgstr "IVA certificaat uploaden"
 
+msgid "Caution!"
+msgstr "Let op!"
+
 msgid ""
-"<strong>Caution!</strong> This is already an approved IVA certificate. "
-"Uploading a new one will make the current one invalid!"
+"This is already an approved IVA certificate. Uploading a new one will make "
+"the current one invalid!"
 msgstr ""
-"<strong>Pas op!</strong> Dit is al een IVA-ceritficaat dat goedgekeurd is. "
-"Als je een nieuwe upload wordt de oude automatisch verwijderd!"
+"Dit is al een IVA-ceritficaat dat goedgekeurd is. Als je een nieuwe upload "
+"wordt de oude automatisch verwijderd!"
 
 msgid "User"
 msgstr "Gebruiker"
@@ -1080,8 +1038,11 @@ msgid "Delete user"
 msgstr "Gebruiker verwijderen"
 
 #, python-format
-msgid "Are you sure you want to delete user %(membership)s?"
-msgstr "Weet je zeker dat je de gebruiker %(membership)s wil verwijderen?"
+msgid "Are you sure you want to delete %(user)s from %(organization)s?"
+msgstr "Weet je zeker dat je %(user)s wil verwijderen van %(organization)s?"
+
+msgid "Times tended"
+msgstr "Aantal keer getapt"
 
 msgid "User details"
 msgstr "Gebruikersgegevens"
@@ -1092,9 +1053,6 @@ msgstr "E-mailadres"
 msgid "Times tended last year"
 msgstr "Getapt afgelopen jaar"
 
-msgid "Times tended"
-msgstr "Aantal keer getapt"
-
 msgid "Last tended events"
 msgstr "Laatst getapte activiteiten"
 
@@ -1103,10 +1061,6 @@ msgstr "Gebruiker wijzigen"
 
 msgid "Add user"
 msgstr "Gebruiker toevoegen"
-
-#, python-format
-msgid "Users of %(organization)s"
-msgstr "Gebruikers van %(organization)s"
 
 #, python-format
 msgid "Tenders of %(organization)s"
@@ -1127,8 +1081,9 @@ msgstr "Planner"
 msgid "Manager"
 msgstr "Manager"
 
-msgid "There are no users"
-msgstr "Er zijn geen gebruikers"
+#, python-format
+msgid "Users of %(organization)s"
+msgstr "Gebruikers van %(organization)s"
 
 msgid "Print IVA list"
 msgstr "IVA-lijst uitdraaien"
@@ -1210,8 +1165,8 @@ msgstr ""
 msgid "Roles"
 msgstr "Rollen"
 
-msgid "You don't have any authorizations"
-msgstr "Je bent nergens voor geautoriseerd"
+msgid "You don't have any authorizations."
+msgstr "Je bent nergens voor geautoriseerd."
 
 msgid "iCal bartender agenda"
 msgstr "iCal tappersrooster"
@@ -1243,16 +1198,6 @@ msgstr "inzien"
 msgid "Modify profile"
 msgstr "Bewerk profiel"
 
-msgid "Manage IVA certificate"
-msgstr "IVA-certificaat instellen"
-
-msgid ""
-"<strong>Caution!</strong> You already have an approved IVA certificate. "
-"Uploading a new one will make the current one invalid!"
-msgstr ""
-"<strong>Pas op!</strong> Je hebt al een IVA-ceritficaat dat goedgekeurd is. "
-"Als je een nieuwe upload wordt de oude automatisch verwijderd!"
-
 msgid "Log in"
 msgstr "Inloggen"
 
@@ -1268,12 +1213,8 @@ msgstr ""
 "Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te "
 "mogen."
 
-msgid "Nature"
-msgstr "Soort"
-
-#, python-format
-msgid "Edit availability %(object)s"
-msgstr "Bewerk beschikbaarheid %(object)s"
+msgid "Edit availability"
+msgstr "Wijzig beschikbaarheid"
 
 msgid "New availability"
 msgstr "Nieuwe beschikbaarheid"
@@ -1281,6 +1222,9 @@ msgstr "Nieuwe beschikbaarheid"
 #, python-format
 msgid "Availabilities of %(organization)s"
 msgstr "Beschikbaarheden van %(organization)s"
+
+msgid "Nature"
+msgstr "Soort"
 
 msgid "No availabilities defined."
 msgstr "Geen beschikbaarheden gedefinieerd."
@@ -1294,8 +1238,8 @@ msgstr "Tappers"
 msgid "Instructions"
 msgstr "Tappersinstructie"
 
-msgid "You don\\"
-msgstr ""
+msgid "You don't have any events to tend."
+msgstr "Je hoeft nergens te tappen."
 
 msgid "Edit bartender availability"
 msgstr "Bewerk tapperbeschikbaarheid"
@@ -1443,9 +1387,6 @@ msgstr "Weet je zeker dat je activiteit \"%(event)s\" wil verwijderen?"
 msgid "Yes, I am sure"
 msgstr "Ik weet het heel, heel zeker"
 
-msgid "Gegevens"
-msgstr "Information"
-
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -1457,9 +1398,6 @@ msgstr "Begin"
 
 msgid "Tender comments"
 msgstr "Tappersinstructie"
-
-msgid "There are no tender comments."
-msgstr "Er is geen tappersinstructie."
 
 msgid "Temporary products"
 msgstr "Tijdelijke producten"
@@ -1500,12 +1438,12 @@ msgid "DCF"
 msgstr "DVF"
 
 #, python-format
-msgid "No events have been planned from %(s)s until %(e)s."
-msgstr "Er zijn geen activiteiten gepland van %(s)s tot %(e)s."
+msgid "There's nothing scheduled between %(a)s and %(b)s."
+msgstr "Er is niks ingepland tussen %(a)s en %(b)s."
 
 #, python-format
-msgid "No events have been planned after %(s)s."
-msgstr "Er zijn geen activiteiten gepland na %(s)s."
+msgid "There's nothing scheduled after %(datetime)s."
+msgstr "Er is niks ingepland na %(datetime)s."
 
 msgid "Mail template"
 msgstr "Mailsjabloon"
@@ -1519,10 +1457,12 @@ msgstr "Is actief"
 msgid "Template"
 msgstr "Sjabloon"
 
-#, python-format
-msgid "Edit mail template %(object)s"
-msgstr "Bewerk mailsjabloon %(object)s"
+msgid "Edit mail template"
+msgstr "Wijzig mailsjabloon"
 
 #, python-format
 msgid "Mail templates of %(organization)s"
 msgstr "Mailsjablonen van %(organization)s"
+
+msgid "No mail templates defined."
+msgstr "Geen mailsjablonen gedefinieerd."

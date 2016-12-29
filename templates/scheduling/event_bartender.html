@@ -1,12 +1,11 @@
 {% extends 'base_app.html' %}
 
-{% block title %}{% trans 'Bartender' %}{% endblock %}
+{% block title %}{% trans 'Bartender' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h2>{% trans 'Bartender' %}</h2>
+    <h1>{% trans 'Bartender' %}</h1>
 </div>
-{% if event_list %}
 <div class="table-responsive">
     <table class="table table-hover table-condensed table-events">
         <thead>
@@ -21,24 +20,24 @@
         </thead>
         <tbody>
         {% for event in event_list %}
-            <tr{% if eevent.option %} class="event-option"{% endif %}>
+            <tr{% if event.option %} class="event-option"{% endif %}>
                 <td>
                     {% if event.starts_at|date == event.ends_at|date %}
                     {{ event.starts_at|date:"D d b" }}
                     {% else %}
-                    {{ event.starts_at|date:"D d b" }}<br />{{ event.ends_at|date:"D d b" }}
+                    {{ event.starts_at|date:"D d b" }}<br>{{ event.ends_at|date:"D d b" }}
                     {% endif %}
                 </td>
                 <td>
                     {% if event.starts_at|date == event.ends_at|date %}
                     {{ event.starts_at|time:"TIME_FORMAT" }} - {{ event.ends_at|time:"TIME_FORMAT" }}
                     {% else %}
-                    {{ event.starts_at|time:"TIME_FORMAT" }}<br />{{ event.ends_at|time:"TIME_FORMAT" }}
+                    {{ event.starts_at|time:"TIME_FORMAT" }}<br>{{ event.ends_at|time:"TIME_FORMAT" }}
                     {% endif %}
                 </td>
                 <td>{{ event.location.all|join:"<br>" }}</td>
                 <td>
-                    {% if event.organizer == request.organization and is_planner %}
+                    {% if event.organizer == current_organization and is_planner %}
                     <a href="{% url 'event' event.pk %}">{{ event.name }}</a>
                     {% else %}
                     {{ event.name }}
@@ -49,11 +48,12 @@
                 </td>
                 <td>{{ event.tender_comments }}</td>
             </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">{% blocktrans %}You don't have any events to tend.{% endblocktrans %}</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-{% else %}
-<p id="no-events-message">{% trans 'You don\'t have any events to tend.' %}</p>
-{% endif %}
-{% endblock %}
+{% endblock content %}

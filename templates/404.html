@@ -1,11 +1,11 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'Not found' %}{% endblock %}
+{% block title %}{% trans 'Not found' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>{% trans 'Not found' %}</h1>
 </div>
-<p>{% trans "The requested resource is not found." %}</p>
-{% endblock %}
+
+<p>{% trans 'The requested resource is not found.' %}</p>
+{% endblock content %}

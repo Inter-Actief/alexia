@@ -1,56 +1,52 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'Price group' %}: {{ object }}{% endblock %}
+{% block title %}{% trans 'Price group' %} {{ pricegroup }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>{% trans 'Price group' %}: {{ object }}</h1>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-6">
-        <table class="table table-bordered">
-            <tr>
-                <th>{% trans 'Name' %}</th>
-                <td>{{ object.name }}</td>
-            </tr>
-            <tr>
-                <th>{% trans 'Organization' %}</th>
-                <td>{{ object.organization }}</td>
-            </tr>
-        </table>
-        <p>
-            <a class="btn btn-default" href="{% url 'pricegroup_update' object.pk %}">
+    <h1>
+        <small>{% trans 'Price group' %}</small>
+        {{ pricegroup }}
+        <div class="pull-right">
+            <a class="btn btn-default" href="{% url 'pricegroup_update' pricegroup.pk %}">
                 <span class="glyphicon glyphicon-pencil"></span>
                 {% trans 'Modify' %}
             </a>
-        </p>
-    </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-xs-12">
-        <h3 class="pull-left">{% trans 'Prices' %}</h3>
-        <div class="text-right clearfix">
-            <a class="btn btn-primary" href="{% url 'sellingprice_create' pricegroup_pk=object.pk %}">
-                <span class="glyphicon glyphicon-plus"></span>
-                {% trans 'Add' %}
-            </a>
         </div>
+    </h1>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>{% trans 'Details' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-xs-6">{% trans 'Name' %}</th>
+                <td class="col-xs-6">{{ pricegroup.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Organization' %}</th>
+                <td>{{ pricegroup.organization }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <h3>
+            {% trans 'Prices' %}
+        </h3>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>{% trans 'Product group' %}</th>
-                        <th style="text-align: right;">{% trans 'Price' %}</th>
-                        <th>{% trans 'Actions' %}</th>
+                        <th class="col-xs-3">{% trans 'Product group' %}</th>
+                        <th class="col-xs-3 text-right">{% trans 'Price' %}</th>
+                        <th class="col-xs-6">{% trans 'Actions' %}</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for sellingprice in object.sellingprice_set.all %}
+                {% for sellingprice in pricegroup.sellingprice_set.all %}
                     <tr>
                         <td><a href="{{ sellingprice.productgroup.get_absolute_url }}">{{ sellingprice.productgroup }}</a></td>
-                        <td style="text-align: right;">&euro; {{ sellingprice.price }}</td>
+                        <td class="text-right">&euro; {{ sellingprice.price }}</td>
                         <td>
                             <a class="btn btn-xs btn-default" href="{% url 'sellingprice_update' sellingprice.pk %}">
                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -64,12 +60,20 @@
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="3">{% trans "No prices defined." %}</td>
+                        <td colspan="3">{% trans 'No prices defined.' %}</td>
                     </tr>
                 {% endfor %}
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            <a class="btn btn-primary btn-xs" href="{% url 'sellingprice_create' pricegroup_pk=pricegroup.pk %}">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                {% trans 'Add' %}
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

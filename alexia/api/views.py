@@ -8,7 +8,7 @@ from jsonrpc.site import jsonrpc_site
 
 
 class APIBrowserView(TemplateView):
-    template_name = 'api/browse.html'
+    template_name = 'browse.html'
     site = jsonrpc_site
     mountpoint = 'jsonrpc_mountpoint'
 

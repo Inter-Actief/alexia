@@ -64,12 +64,14 @@ $(function () {
         document.execCommand('copy');
     });
 
-    var orig = $('form.disable-on-change').serialize();
-
-    $('form.disable-on-change').bind('change keyup', function() {
-        var disable = (orig != $(this).serialize());
-        $('#complete').toggleClass('disabled', disable);
+    $('[data-set-lang]').click(function() {
+        var code = $(this).data('set-lang');
+        $('form#set-lang-' + code).submit();
     });
 
-
+    $('[data-print]').click(function(event) {
+        event.preventDefault();
+        var id = $(this).data('print').substr(1);
+        document.getElementById(id).contentWindow.print();
+    });
 });

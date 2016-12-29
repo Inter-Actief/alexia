@@ -9,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
@@ -98,12 +99,10 @@ def login(request, template_name='registration/login.html',
 class RegisterView(LoginRequiredMixin, UpdateView):
     template_name = 'registration/register.html'
     fields = ['first_name', 'last_name', 'email']
+    success_url = reverse_lazy('event-list')
 
     def get_object(self):
         return self.request.user
-
-    def get_success_url(self):
-        return resolve_url('root')
 
 
 class ChangeCurrentOrganizationView(LoginRequiredMixin, RedirectView):

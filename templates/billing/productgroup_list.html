@@ -1,45 +1,42 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% blocktrans with organization=request.organization %}Product groups of {{ organization }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with organization=current_organization %}Product groups of {{ organization }}{% endblocktrans %}{% endblock title %}
 
 {% block content %}
-<div class="page-header clearfix">
-    <h1 class="pull-left">
-         {% blocktrans with organization=request.organization %}Product groups of {{ organization }}{% endblocktrans %}
+<div class="page-header">
+    <h1>
+         {% blocktrans with organization=current_organization %}Product groups of {{ organization }}{% endblocktrans %}
+         <div class="pull-right">
+             <a class="btn btn-primary" href="{% url 'productgroup_create' %}">
+                 <span class="glyphicon glyphicon-plus"></span>
+                 {% trans 'Add' %}
+             </a>
+         </div>
     </h1>
-    <div class="text-right">
-        <a class="btn btn-primary" href="{% url 'productgroup_create' %}">
-            <span class="glyphicon glyphicon-plus"></span>
-            {% trans 'Add' %}
-        </a>
-    </div>
 </div>
-<div class="table-responsive">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>{% trans 'Name' %}</th>
-                <th>{% trans 'Actions' %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for object in object_list %}
-            <tr>
-                <td><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></td>
-                <td>
-                    <a class="btn btn-xs btn-default" href="{% url 'productgroup_update' object.pk %}">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        {% trans 'Modify' %}
-                    </a>
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="2">{% trans "No product groups defined." %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endblock %}
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="col-xs-8">{% trans 'Name' %}</th>
+            <th class="col-xs-4">{% trans 'Actions' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for productgroup in productgroup_list %}
+        <tr>
+            <td><a href="{{ productgroup.get_absolute_url }}">{{ productgroup.name }}</a></td>
+            <td>
+                <a class="btn btn-xs btn-default" href="{% url 'productgroup_update' productgroup.pk %}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    {% trans 'Modify' %}
+                </a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="2">{% trans 'No product groups defined.' %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

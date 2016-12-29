@@ -1,7 +1,6 @@
 {% extends 'base_app.html' %}
-{% load i18n crispy_forms_tags %}
 
-{% block title %}{% trans 'My expenditures' %}{% endblock %}
+{% block title %}{% trans 'My expenditures' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
@@ -20,12 +19,12 @@
             </tr>
         </thead>
         <tbody>
-        {% for e in event_list %}
+        {% for event in event_list %}
             <tr>
-                <td>{{ e.starts_at|date:"l d F" }}</td>
-                <td><a href="{% url 'event-expenditures-profile' e.pk %}">{{ e.name }}</a></td>
-                <td>&euro; {{ e.spent|floatformat:2 }}</td>
-                <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                <td>{{ event.starts_at|date:"l d F" }}</td>
+                <td><a href="{% url 'event-expenditures-profile' event.pk %}">{{ event.name }}</a></td>
+                <td>&euro; {{ event.spent|floatformat:2 }}</td>
+                <td><a href="{% url 'event-expenditures-profile' event.pk %}" class="btn btn-xs btn-default">Details</a></td>
             </tr>
         {% empty %}
             <tr>
@@ -36,4 +35,4 @@
     </table>
 </div>
 {% include 'partials/pagination.html' %}
-{% endblock %}
+{% endblock content %}

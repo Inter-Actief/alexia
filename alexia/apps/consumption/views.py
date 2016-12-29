@@ -1,6 +1,7 @@
 import calendar
 import datetime
 
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -29,13 +30,13 @@ def dcf(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
     if not event.is_tender(request.user):
-        return render(request, '403.html', {'reason': _('You are not a tender for this event.')}, status=403)
+        raise PermissionDenied(_('You are not a tender for this event.'))
 
     # Get consumption form or create one
     cf = event.consumptionform if hasattr(event, 'consumptionform') else ConsumptionForm(event=event)
 
     if cf.is_completed():
-        return render(request, '403.html', {'reason': _('This consumption form has been completed.')}, status=403)
+        raise PermissionDenied(_('This consumption form has been completed.'))
 
     # Post or show form?
     if request.method == 'POST':
@@ -60,12 +61,14 @@ def complete_dcf(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
     if not event.is_tender(request.user):
-        return render(request, '403.html', {'reason': _('You are not a tender for this event')}, status=403)
+        raise PermissionDenied(_('You are not a tender for this event'))
 
     if not hasattr(event, 'consumptionform'):
         raise Http404
 
     cf = event.consumptionform
+    if cf.is_completed():
+        raise PermissionDenied(_('This consumption form has been completed.'))
 
     if request.method == 'POST':
         form = ConsumptionFormConfirmationForm(request.POST)

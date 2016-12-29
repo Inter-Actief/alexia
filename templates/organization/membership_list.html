@@ -1,21 +1,22 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% blocktrans with organization=request.organization.name %}Users of {{ organization }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with organization=request.organization.name %}Users of {{ organization }}{% endblocktrans %}{% endblock title %}
 
 {% block content %}
-<div class="page-header clearfix">
-    <h1 class="pull-left">
-        {% blocktrans with organization=request.organization.name %}Users of {{ organization }}{% endblocktrans %}
+<div class="page-header">
+    <h1>
+        {% blocktrans with organization=current_organization %}Users of {{ organization }}{% endblocktrans %}
+        <div class="pull-right">
+            <a href="{% url 'new-membership' %}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                {% trans 'Add user' %}
+            </a>
+            <a href="{% url 'iva-memberships' %}" target="_blank" class="btn btn-default" data-print="#iva-list">
+                <span class="glyphicon glyphicon-print"></span>
+                {% trans 'Print IVA list' %}
+            </a>
+        </div>
     </h1>
-    <div class="text-right">
-        <a href="{% url 'new-membership' %}" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span> {% trans 'Add user' %}
-        </a>
-        <a href="{% url 'iva-memberships' %}" target="_blank" class="btn btn-default">
-            <span class="glyphicon glyphicon-print"></span> {% trans 'Print IVA list' %}
-        </a>
-    </div>
 </div>
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-condensed">
@@ -33,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for membership in membership_list %}
+        {% for membership in membership_list %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td><a href="{% url 'membership' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
@@ -43,11 +44,7 @@
                     {% if membership.is_manager %}<span class="label label-default">{% trans 'Manager' %}</span>{% endif %}
                 </td>
                 <td>
-                    {% if membership.is_active %}
-                        <span class="icon-alexia-ok"></span>
-                    {% else %}
-                        <span class="icon-alexia-notok"></span>
-                    {% endif %}
+                    <span class="icon-alexia-{% if not membership.is_active %}not{% endif %}ok"></span>
                 </td>
                 <td>
                     {% if membership.user.profile.has_iva %}
@@ -65,7 +62,7 @@
                     {% else %}
                     {% if membership.is_tender %}
                     <i class="icon-alexia-notok"></i>
-                    <a href="{% url 'upload-iva-membership' membership.pk %}" title="{%  trans 'Upload' %}"><i class="icon-alexia-upload"></i></a>
+                    <a href="{% url 'upload-iva-membership' membership.pk %}" title="{% trans 'Upload' %}"><i class="icon-alexia-upload"></i></a>
                     {% else %}
                     &mdash;
                     {% endif %}
@@ -88,12 +85,9 @@
                     </a>
                 </td>
             </tr>
-            {% empty %}
-            <tr>
-                <td colspan="9">{% trans 'There are no users' %}</td>
-            </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>
-{% endblock %}
+<iframe id="iva-list" src="{% url 'iva-memberships' %}"></iframe>
+{% endblock content %}

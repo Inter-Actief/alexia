@@ -1,11 +1,11 @@
 {% extends 'base_app.html' %}
-{% load i18n dates %}
+{% load dates %}
 
-{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ year }}{% endblock title %}
 
 {% block content %}
-<div class="page-header clearfix">
-    <h1 class="pull-left">
+<div class="page-header">
+    <h1>
          {% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ year }}
     </h1>
 </div>
@@ -27,4 +27,4 @@
         </tbody>
     </table>
 </div>
-{% endblock %}
+{% endblock content %}

@@ -1,54 +1,56 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'Temporary product' %}: {{ object }}{% endblock %}
+{% block title %}{% trans 'Temporary product' %} {{ temporaryproduct }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>{% trans 'Temporary product' %}: {{ object }}</h1>
+    <h1>
+        <small>{% trans 'Temporary product' %}</small>
+        {{ temporaryproduct }}
+        <div class="pull-right">
+            <a class="btn btn-default" href="{% url 'temporaryproduct_update' temporaryproduct.pk %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                {% trans 'Modify' %}
+            </a>
+        </div>
+    </h1>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-6">
         <h3>{% trans 'Product information' %}</h3>
         <table class="table table-bordered">
             <tr>
                 <th>{% trans 'Name' %}</th>
-                <td>{{ object.name }}</td>
+                <td>{{ temporaryproduct.name }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Event' %}</th>
-                <td><a href="{{ object.event.get_absolute_url }}">{{ object.event }}</a></td>
+                <td><a href="{{ temporaryproduct.event.get_absolute_url }}">{{ temporaryproduct.event }}</a></td>
             </tr>
             <tr>
                 <th>{% trans 'Price' %}</th>
-                <td>&euro; {{ object.price }}</td>
+                <td>&euro; {{ temporaryproduct.price }}</td>
             </tr>
         </table>
-        <p>
-            <a class="btn btn-default" href="{% url 'temporaryproduct_update' object.pk %}">
-                <span class="glyphicon glyphicon-pencil"></span>
-                {% trans 'Modify' %}
-            </a>
-        </p>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-6">
         <h3>{% trans 'Juliana settings' %}</h3>
         <table class="table table-bordered">
             <tr>
                 <th>{% trans 'Text color' %}</th>
-                <td>{{ object.text_color|default:"&mdash;" }}</td>
+                <td>{{ temporaryproduct.text_color|default:"&mdash;" }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Background color' %}</th>
-                <td>{{ object.background_color|default:"&mdash;" }}</td>
+                <td>{{ temporaryproduct.background_color|default:"&mdash;" }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Color example' %}</th>
-                <td {% if object.background_color %}style="background-color: #{{ object.background_color }}; border-color: #{{ object.background_color }};"{% endif %}>
-                    <span {% if object.text_color %}style="color: #{{ object.text_color }};"{% endif %} >{{ object.name }}</span>
+                <td {% if temporaryproduct.background_color %}style="background-color: #{{ temporaryproduct.background_color }}; border-color: #{{ temporaryproduct.background_color }};"{% endif %}>
+                    <span {% if temporaryproduct.text_color %}style="color: #{{ temporaryproduct.text_color }};"{% endif %} >{{ object.name }}</span>
                 </td>
             </tr>
         </table>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

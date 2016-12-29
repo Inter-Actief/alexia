@@ -1,13 +1,10 @@
 {% extends 'base_app.html' %}
-{% load i18n crispy_forms_tags %}
 
-{% block title %}{% trans 'Export transactions of' %} {{ current_organization }}{% endblock %}
+{% block title %}{% blocktrans with organization=current_organization %}Export transactions of {{ organization }}{% endblocktrans %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>
-        {% trans 'Export transactions of' %} {{ current_organization }}
-    </h1>
+    <h1>{% blocktrans with organization=current_organization %}Export transactions of {{ organization }}{% endblocktrans %}</h1>
 </div>
 {% crispy form %}
-{% endblock %}
+{% endblock content %}

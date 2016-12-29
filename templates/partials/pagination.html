@@ -8,7 +8,7 @@
             {% endif %}
         </li>
         {% for page in page_obj.paginator.page_range %}
-        <li{% if page == page_obj.number %} class="active" {% endif %}>
+        <li{% if page == page_obj.number %} class="active"{% endif %}>
             {% if page == page_obj.number %}
             <a href="#">{{ page }}</a>
             {% else %}
