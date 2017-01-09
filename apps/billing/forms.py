@@ -37,13 +37,20 @@ class FilterEventForm(AlexiaForm):
     helper.attrs = {'target': '_blank'}
 
     now = timezone.now()
-    last_day = calendar.monthrange(now.year, now.month - 1)[1]
+    if now.month > 1:
+        last_month = now.month - 1
+        year = now.year
+    else:
+        last_month = 12
+        year = now.year - 1
+
+    last_day = calendar.monthrange(now.year, last_month)[1]
 
     from_time = forms.SplitDateTimeField(
         label=_('From time'),
-        initial=datetime.datetime(now.year, now.month - 1, 1),
+        initial=datetime.datetime(year, last_month, 1),
     )
     till_time = forms.SplitDateTimeField(
         label=_('Till time'),
-        initial=datetime.datetime(now.year, now.month - 1, last_day, 23, 59, 59),
+        initial=datetime.datetime(year, last_month, last_day, 23, 59, 59),
     )
