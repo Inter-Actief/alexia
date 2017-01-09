@@ -35,6 +35,26 @@ $(document).ready(function() {
             });
         },
 
+        selectable: true,
+        selectHelper: true,
+        select: function(startDate, endDate, allDay) {
+            if (allDay) return this.unselect();
+
+            var message = '{% trans 'Create event?' %}\n\n';
+            message += '{% trans 'From' %}: ' + startDate.toLocaleString() + '\n';
+            message += '{% trans 'Till' %}: ' + endDate.toLocaleString();
+
+            if(window.confirm(message)) {
+                var query = {
+                    starts_at: startDate.toISOString(),
+                    ends_at: endDate.toISOString(),
+                };
+                window.location.href = '{% url 'new-event' %}?' + $.param(query);
+            } else {
+                this.unselect();
+            }
+        },
+
         // week agenda view
         minTime: 10,
         allDaySlot: false,
@@ -72,13 +92,15 @@ $(document).ready(function() {
 {% block content %}
 <div class="page-header">
     <h1>
-        {% trans 'Planning' %}
-        <small id="loading" style="display: none">{% trans 'Loading...' %}</small>
+        {% trans 'Calendar' %}
+        <small id="loading" style="display: none;">{% trans 'Loading...' %}</small>
         {% if is_planner %}
-        <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">
-            <span class="glyphicon glyphicon-plus"></span>
-            {% trans 'Add event' %}
-        </a>
+        <div class="pull-right">
+            <a href="{% url 'new-event' %}" class="btn btn-primary pull-right">
+                <span class="glyphicon glyphicon-plus"></span>
+                {% trans 'Add event' %}
+            </a>
+        </div>
         {% endif %}
     </h1>
 </div>

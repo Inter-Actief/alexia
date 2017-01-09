@@ -41,7 +41,7 @@
                 <th>{% trans 'IVA' %}</th>
                 <th>{% trans 'Bartenders' %}</th>
                 {% if is_tender %}<th></th>{% endif %}
-                {% if is_planner or is_tender %}<th class="col-xs-2"></th>{% endif %}
+                {% if is_planner or is_tender %}<th class="col-xs-1"></th>{% endif %}
             </tr>
         </thead>
         <tbody>
@@ -113,7 +113,7 @@
                 {% endif %}
                 {% if is_tender or is_planner %}
                 <td>
-                    <div class="btn-group btn-group-sm">
+                    <div class="btn-group btn-group-xs">
                     {% if is_planner %}
                     {% if e.organizer == request.organization %}
                     <a class="btn btn-default" href="{% url 'edit-event' e.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>

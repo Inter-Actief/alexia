@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-29 19:27+0100\n"
+"POT-Creation-Date: 2016-12-29 21:21+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -841,7 +841,7 @@ msgstr "Geen productgroepen gedefinieerd."
 msgid "Delete selling price %(sellingprice)s"
 msgstr "Verwijder verkoopprijs %(sellingprice)s"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Are you sure you want to delete selling price %(sellingprice)s?"
 msgstr "Weet je zeker dat je de verkoopprijs %(sellingprice)s wil verwijderen?"
 
@@ -1244,6 +1244,15 @@ msgstr "Je hoeft nergens te tappen."
 msgid "Edit bartender availability"
 msgstr "Bewerk tapperbeschikbaarheid"
 
+msgid "Create event?"
+msgstr "Activiteit aanmaken?"
+
+msgid "From"
+msgstr "Van"
+
+msgid "Till"
+msgstr "Tot"
+
 msgid "today"
 msgstr "vandaag"
 
@@ -1323,50 +1332,46 @@ msgid "Dec."
 msgstr "dec"
 
 msgid "Sunday"
-msgstr ""
+msgstr "Zondag"
 
 msgid "Monday"
-msgstr ""
+msgstr "Maandag"
 
 msgid "Tuesday"
-msgstr ""
+msgstr "Dinsdag"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Woensdag"
 
 msgid "Thursday"
-msgstr ""
+msgstr "Donderdag"
 
 msgid "Friday"
-msgstr ""
+msgstr "Vrijdag"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Zaterdag"
 
 msgid "Sun"
-msgstr ""
+msgstr "Zo"
 
-#, fuzzy
-#| msgid "on"
 msgid "Mon"
-msgstr "op"
+msgstr "Ma"
 
 msgid "Tue"
-msgstr ""
+msgstr "Di"
 
 msgid "Wed"
-msgstr ""
+msgstr "Wo"
 
 msgid "Thu"
-msgstr ""
+msgstr "Do"
 
 msgid "Fri"
-msgstr ""
+msgstr "Vr"
 
-#, fuzzy
-#| msgid "at"
 msgid "Sat"
-msgstr "om"
+msgstr "Za"
 
 msgid "Week"
 msgstr "Week"

@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import DeleteView, UpdateView
@@ -195,7 +196,11 @@ class EventCreateView(PlannerRequiredMixin, OrganizationFormMixin, CrispyFormMix
     form_class = EventForm
 
     def get_initial(self):
-        return {'participants': self.request.organization}
+        return {
+            'participants': self.request.organization,
+            'starts_at': parse_datetime(self.request.GET.get('starts_at', '')),
+            'ends_at': parse_datetime(self.request.GET.get('ends_at', '')),
+        }
 
     def form_valid(self, form):
         response = super(EventCreateView, self).form_valid(form)
