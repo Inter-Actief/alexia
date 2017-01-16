@@ -9,10 +9,9 @@
 
 ## Projectstructuur
 
- * api/ - de code voor de Alexia-API
- * apps/ - de 'core' Django apps van Alexia
- * assets/ - CSS/JavaScript/Afbeeldingen/enz.
- * config/ - configuratie-files voor de omgeving van Alexia
- * locale/ - I18N
- * templates/ - template-code voor Alexia, strikt gescheiden van de apps
- * utils/ - overige functionaliteit die niet thuis horen in de apps
+ * alexia/ - Alle Python-code
+ * assets/ - CSS/Webfonts/Images/Javascript
+ * bin/ - Hulpscripts
+ * config/ - Configuratie voor de environment
+ * locale/ - Vertalingen
+ * templates/ - Templates

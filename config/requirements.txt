@@ -6,6 +6,6 @@ django-debug-toolbar==1.6
 django-wkhtmltopdf==3.1.0
 mysqlclient>=1.3.7,<1.4
 eventlog==0.11.0
-icalendar==3.11.1
+icalendar==3.11.2
 pyrad==2.0
 git+git://github.com/samuraisam/django-json-rpc@a88d744d960e828f3eb21265da0f10a694b8ebcf

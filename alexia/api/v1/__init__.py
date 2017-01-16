@@ -1,1 +1,3 @@
-from . import api, authorization, billing, juliana, organization, rfid, user
+from . import (  # NOQA
+    api, authorization, billing, juliana, organization, rfid, user,
+)

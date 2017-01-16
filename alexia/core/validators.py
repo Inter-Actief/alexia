@@ -13,7 +13,7 @@ def validate_color(value):
 
 
 radius_username_validator = RegexValidator(
-    r'^[ms][0-9]{7}$',
+    r'^[dmsx][0-9]{7}$',
     _('Enter a valid RADIUS username'),
     code='invalid',
 )

@@ -14,7 +14,8 @@ def permissions(request):
     if request.user.is_superuser:
         return {'is_tender': True, 'is_planner': True, 'is_manager': True, 'is_foundation_manager': True}
 
-    if not hasattr(request.user, 'membership_set'):
+    if (not request.organization or not hasattr(request.user, 'membership_set') or
+            not (request.organization in request.user.membership_set.all())):
         return {'is_tender': False, 'is_planner': False, 'is_manager': False, 'is_foundation_manager': False}
 
     membership = request.user.membership_set.get(organization=request.organization)
