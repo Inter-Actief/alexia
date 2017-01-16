@@ -10,4 +10,4 @@
 - Niek Tax
 - Jelte Zeilstra
 
-**[Full contributors list](https://github.com/Inter-Actief/alexia/contributors)**
+**[Full contributors list](https://github.com/Inter-Actief/alexia/graphs/contributors)**

@@ -4,8 +4,8 @@ from jsonrpc import jsonrpc_method
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 from alexia.auth.backends import RADIUS_BACKEND_NAME
-from alexia.auth.decorators import manager_required
 
+from .api_utils import manager_required
 from .common import api_v1_site, format_user
 from .exceptions import InvalidParametersError, NotFoundError
 

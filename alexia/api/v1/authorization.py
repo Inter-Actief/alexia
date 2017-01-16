@@ -5,8 +5,8 @@ from jsonrpc import jsonrpc_method
 
 from alexia.apps.billing.models import Authorization
 from alexia.auth.backends import RADIUS_BACKEND_NAME
-from alexia.auth.decorators import manager_required
 
+from .api_utils import manager_required
 from .common import api_v1_site, format_authorization
 from .exceptions import InvalidParametersError, NotFoundError
 

@@ -9,6 +9,7 @@ Alexia is the management system for the drink rooms in the Zilverling at the Uni
 
 - [Quick start](#quick-start)
 - [Project structure](#project-structure)
+- [Copyright and license](#copyright-and-license)
 
 ## Quick start
 
@@ -36,3 +37,7 @@ To set up your own copy of Alexia, use the following steps:
 - config/ - Configuration for the Alexia environment
 - locale/ - Internationalization
 - templates/ - Templates
+
+## Copyright and license
+
+Code and documentation copyright 2017 the [Alexia Authors](https://github.com/Inter-Actief/alexia/graphs/contributors). Code released under the [BSD 3-Clause License](https://github.com/Inter-Actief/alexia/blob/master/LICENSE.md).
