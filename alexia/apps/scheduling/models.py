@@ -124,8 +124,6 @@ class Event(models.Model):
         occuring_at = Event.objects.occuring_at(start, end)
         if location:
             occuring_at = occuring_at.filter(location=location)
-        else:
-            occuring_at = occuring_at.filter(location__is_public=True)
 
         return occuring_at
 
@@ -197,9 +195,6 @@ class Availability(models.Model):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('availability_detail', args=[self.pk])
 
     def css_class(self):
         classes = {

@@ -17,7 +17,6 @@ from alexia.core.validators import validate_color
 @python_2_unicode_compatible
 class Location(models.Model):
     name = models.CharField(_('name'), max_length=32)
-    is_public = models.BooleanField(_('is public'), default=False)
     prevent_conflicting_events = models.BooleanField(_('prevent conflicting events'), default=True)
     color = models.CharField(_('color'), blank=True, max_length=6, validators=[validate_color])
 
@@ -118,18 +117,10 @@ class Profile(models.Model):
         ).count()
 
 
-class PublicOrganizationManager(models.Manager):
-    use_for_related_fields = True
-
-    def get_queryset(self):
-        return super(PublicOrganizationManager, self).get_queryset().exclude(is_public=False)
-
-
 @python_2_unicode_compatible
 class Organization(models.Model):
     name = models.CharField(_('name'), max_length=32, unique=True)
     slug = models.SlugField(_('slug'), editable=False, unique=True)
-    is_public = models.BooleanField(_('is public'), default=False)
     color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     members = models.ManyToManyField(
@@ -139,7 +130,6 @@ class Organization(models.Model):
     )
 
     objects = models.Manager()
-    public_objects = PublicOrganizationManager()
 
     class Meta:
         verbose_name = _('organization')

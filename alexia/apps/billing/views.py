@@ -4,6 +4,7 @@ from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
+from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
@@ -148,7 +149,7 @@ class OrderExportView(ManagerRequiredMixin, FormView):
 
 class PaymentDetailView(DetailView):
     model = Order
-    template_name = 'billing/payment_show.html'
+    template_name = 'billing/payment_detail.html'
 
     def get_object(self, queryset=None):
         obj = super(PaymentDetailView, self).get_object(queryset)
@@ -187,6 +188,7 @@ class OrderMonthView(ManagerRequiredMixin, TemplateView):
             starts_at__year=kwargs['year'],
             starts_at__month=kwargs['month'],
         ).annotate(revenue=Sum('orders__amount')).order_by('starts_at')
+        context['month_name'] = MONTHS[int(kwargs['month'])]
         return context
 
 

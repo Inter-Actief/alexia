@@ -3,12 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.billing.models import TemporaryProduct
 
-from .models import Availability, Event, MailTemplate
-
-
-class AvailabilityInline(admin.TabularInline):
-    model = Availability
-    extra = 0
+from .models import Event, MailTemplate
 
 
 class TemporaryProductInline(admin.TabularInline):

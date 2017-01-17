@@ -124,7 +124,6 @@ class AboutView(TemplateView):
             'users': get_user_model().objects.count(),
             'tenders': Membership.objects.values('user_id').distinct().count(),
             'locations': Location.objects.count(),
-            'public_locations': Location.objects.filter(is_public=True).count(),
             'first_event': Event.objects.order_by('starts_at')[0],
             'events': Event.objects.count(),
             'bartender_availabilities': BartenderAvailability.objects.count(),

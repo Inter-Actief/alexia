@@ -27,7 +27,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context.update({
             'events': Event.objects.filter(orders__authorization__in=self.request.user.authorizations.all())
                                    .annotate(spent=Sum('orders__amount'))
-                                   .order_by('ends_at'),
+                                   .order_by('-ends_at'),
             'order_count': Order.objects.select_related('event')
                                         .filter(authorization__in=self.request.user.authorizations.all())
                                         .count(),
@@ -105,7 +105,7 @@ class IvaView(LoginRequiredMixin, View):
 
 
 class ExpenditureListView(LoginRequiredMixin, ListView):
-    template_name = 'billing/expenditure_list.html'
+    template_name = 'profile/expenditure_list.html'
     paginate_by = 25
 
     def get_queryset(self):
@@ -115,7 +115,7 @@ class ExpenditureListView(LoginRequiredMixin, ListView):
 
 
 class ExpenditureDetailView(LoginRequiredMixin, DetailView):
-    template_name = 'billing/expenditure_detail.html'
+    template_name = 'profile/expenditure_detail.html'
     model = Event
 
     def get_context_data(self, **kwargs):

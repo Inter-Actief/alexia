@@ -101,10 +101,10 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         data['organization2'].save()
 
         # Location
-        data['location1'] = Location(name='Location 1', is_public=True, prevent_conflicting_events=True)
+        data['location1'] = Location(name='Location 1', prevent_conflicting_events=True)
         data['location1'].save()
 
-        data['location2'] = Location(name='Location 2', is_public=True, prevent_conflicting_events=False)
+        data['location2'] = Location(name='Location 2', prevent_conflicting_events=False)
         data['location2'].save()
 
     def load_billing_data(self):

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load active_menu %}
+{% load menuitem %}
 
 {% block body %}
 <div class="navbar navbar-fixed-top navbar-default">
@@ -16,7 +16,7 @@
         </div>
         <div class="collapse navbar-collapse" id="alexia-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="dropdown{% active_menu 'apps.scheduling.views' %}">
+                {% menuitem 'apps.scheduling.views' class='dropdown' %}
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Planning' %}
                         <span class="caret"></span>
@@ -33,14 +33,14 @@
                         <li><a href="{% url 'mailtemplate_list' %}">{% trans 'Mail templates' %}</a></li>
                         {% endif %}
                     </ul>
-                </li>
+                {% endmenuitem %}
                 {% if is_manager %}
-                <li{% active_menu 'apps.organization.views' ' class="active"' %}>
+                {% menuitem 'apps.organization.views' %}
                     <a href="{% url 'memberships' %}">
                         {% trans 'Users' %}
                     </a>
-                </li>
-                <li class="dropdown{% active_menu 'apps.billing.views' %}">
+                {% endmenuitem %}
+                {% menuitem 'apps.billing.views' class='dropdown' %}
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Billing' %}
                         <span class="caret"></span>
@@ -53,15 +53,15 @@
                         <li class="divider"></li>
                         <li><a href="{% url 'orders' %}">{% trans 'Orders' %}</a></li>
                     </ul>
-                </li>
-                <li{% active_menu 'apps.consumption.views.ConsumptionForm' ' class="active"' %}>
+                {% endmenuitem %}
+                {% menuitem 'apps.consumption.views.ConsumptionForm' %}
                     <a href="{% url 'consumptionform_list' %}">
                         {% trans 'Consumption' %}
                     </a>
-                </li>
+                {% endmenuitem %}
                 {% endif %}
                 {% if is_foundation_manager %}
-                <li class="dropdown{% active_menu 'apps.consumption.views' %}">
+                {% menuitem 'apps.consumption.views' class='dropdown' %}
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Management' %}
                         <span class="caret"></span>
@@ -70,7 +70,7 @@
                         <li><a href="{% url 'consumptionproduct_list' %}">{% trans 'Consumption products' %}</a></li>
                         <li><a href="{% url 'consumptionform_list' %}">{% trans 'Consumption forms' %}</a></li>
                     </ul>
-                </li>
+                {% endmenuitem %}
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -90,11 +90,11 @@
                 </li>
                 {% endif %}
                 {% endfor %}
-                <li{% active_menu 'apps.general.views.HelpView' ' class="active"' %}>
+                {% menuitem 'apps.general.views.HelpView' %}
                     <a href="{% url 'help' %}">
                         {% trans 'Help' %}
                     </a>
-                </li>
+                {% endmenuitem %}
                 {% if user.is_authenticated %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -110,7 +110,7 @@
                     </ul>
                 </li>
                 <li class="divider-vertical"></li>
-                <li class="dropdown">
+                {% menuitem 'apps.profile.views' class='dropdown' %}
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{ user.get_full_name|default:user }}
                         <span class="caret"></span>
@@ -124,7 +124,7 @@
                             <a href="{% url 'logout' %}">{% trans 'Log out' %}</a>
                         </li>
                     </ul>
-                </li>
+                {% endmenuitem %}
                 {% else %}
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">

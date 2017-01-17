@@ -7,12 +7,12 @@
     <h1>{% trans 'Payment' %} #{{ order.pk }}</h1>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-6">
         <h3>{% trans 'Details' %}</h3>
         <table class="table table-bordered">
             <tr>
-                <th>{% trans 'Debtor' %}</th>
-                <td>{{ order.authorization.user.get_full_name }}</td>
+                <th class="col-xs-6">{% trans 'Debtor' %}</th>
+                <td class="col-xs-6">{{ order.authorization.user.get_full_name }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Timestamp' %}</th>
@@ -37,8 +37,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>{% trans 'Product' %}</th>
-                    <th>{% trans 'Price' %}</th>
+                    <th class="col-xs-6">{% trans 'Product' %}</th>
+                    <th class="col-xs-6">{% trans 'Price' %}</th>
                 </tr>
             </thead>
             <tbody>

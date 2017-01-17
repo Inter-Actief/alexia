@@ -22,7 +22,6 @@ urlpatterns = [
 
     url(r'^availability/$', views.AvailabilityListView.as_view(), name='availability_list'),
     url(r'^availability/create/$', views.AvailabilityCreateView.as_view(), name='availability_create'),
-    url(r'^availability/(?P<pk>\d+)/$', views.AvailabilityDetailView.as_view(), name='availability_detail'),
     url(r'^availability/(?P<pk>\d+)/update/$', views.AvailabilityUpdateView.as_view(), name='availability_update'),
 
     # AJAT (Asynchroon Javascript en Tekst... wie gebruikt er nog in

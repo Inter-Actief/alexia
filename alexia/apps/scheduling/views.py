@@ -405,10 +405,6 @@ class AvailabilityListView(ManagerRequiredMixin, OrganizationFilterMixin, ListVi
     model = Availability
 
 
-class AvailabilityDetailView(ManagerRequiredMixin, OrganizationFilterMixin, DetailView):
-    model = Availability
-
-
 class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin,
                              CreateViewForOrganization):
     model = Availability

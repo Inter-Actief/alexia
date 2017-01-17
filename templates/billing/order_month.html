@@ -1,12 +1,11 @@
 {% extends 'base_app.html' %}
-{% load dates %}
 
-{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ month|month_name }} {{ year }}{% endblock title %}
+{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ month_name }} {{ year }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>
-        {% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ month|month_name }} {{ year }}
+        {% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ month_name }} {{ year }}
     </h1>
 </div>
 <div class="table-responsive">

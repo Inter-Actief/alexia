@@ -83,4 +83,4 @@ def organization_list(request):
     ]
     """
 
-    return [o.slug for o in Organization.public_objects.filter(is_public=True)]
+    return [o.slug for o in Organization.object.all()]
