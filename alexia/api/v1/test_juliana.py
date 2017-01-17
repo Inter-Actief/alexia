@@ -218,7 +218,7 @@ class JulianaTest(APITestCase):
             'uid': '98:ab:54:ef',
         }
 
-        self.data['user2'].rfids.create(identifier='02,98:ab:54:ef', is_active=True)
+        self.data['user2'].rfidcard_set.create(identifier='02,98:ab:54:ef', is_active=True)
         authorization = self.data['user2'].authorizations.create(organization=self.data['organization1'])
         # Ignore microseconds
         authorization.start_date = authorization.start_date.replace(microsecond=0)
@@ -282,7 +282,7 @@ class JulianaTest(APITestCase):
             'uid': '98:ab:54:ef',
         }
 
-        self.data['user2'].rfids.create(identifier='02,98:ab:54:ef', is_active=True)
+        self.data['user2'].rfidcard_set.create(identifier='02,98:ab:54:ef', is_active=True)
         self.data['user2'].authorizations.create(organization=self.data['organization2'])
 
         self.send_and_compare_request_error(

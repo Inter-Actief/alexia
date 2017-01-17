@@ -1,0 +1,22 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Price group' %} {{ pricegroup }}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {% trans 'Delete price group' %}
+    </h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <p>{% trans 'Are you sure you want to delete this price group? The following prices will also be deleted:' %}</p>
+    <ul>
+    {{ pricegroup.sellingprice_set.all|unordered_list }}
+    </ul>
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash"></span>
+        {% trans 'Delete' %}
+    </button>
+</form>
+{% endblock content %}

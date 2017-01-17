@@ -1,0 +1,17 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Delete temporary product' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Delete temporary product' %}</h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <p>{% blocktrans with product=temporaryproduct event=temporaryproduct.event %}Are you sure you want to delete {{ product }} from {{ event }}?{% endblocktrans %}</p>
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash"></span>
+        {% trans 'Delete' %}
+    </button>
+</form>
+{% endblock content %}

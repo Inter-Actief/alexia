@@ -1,0 +1,23 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Delete product' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Delete product' %}</h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <strong>
+            {% blocktrans trimmed with product=permanentproduct productgroup=permanentproduct.productgroup %}
+            Are you sure you want to delete {{ product }} from {{ productgroup }}?
+            {% endblocktrans %}
+        </strong>
+    </p>
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash"></span>
+        {% trans 'Delete' %}
+    </button>
+</form>
+{% endblock content %}

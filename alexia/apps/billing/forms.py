@@ -32,29 +32,23 @@ class SellingPriceForm(forms.ModelForm):
         self.fields['productgroup'].queryset = ProductGroup.objects.filter(organization=organization)
 
 
-def get_previous_month_start():
+def get_previous_month(start=True):
     now = timezone.now()
     year = now.year - 1 if now.month == 1 else now.year
     month = 12 if now.month == 1 else now.month - 1
-    return datetime.datetime(year, month, 1)
+
+    if start:
+        return datetime.datetime(year, month, 1)
+    return datetime.datetime(year, month, calendar.monthrange(year, month)[1], 23, 59, 59)
 
 
 def get_previous_month_end():
-    now = timezone.now()
-    year = now.year - 1 if now.month == 1 else now.year
-    month = 12 if now.month == 1 else now.month - 1
-    return datetime.datetime(year, month, calendar.monthrange(year, month)[1], 23, 59, 59)
+    return get_previous_month(False)
 
 
 class FilterEventForm(forms.Form):
     helper = default_crispy_helper(_('Export'))
     helper.attrs = {'target': '_blank'}
 
-    from_time = forms.SplitDateTimeField(
-        label=_('From time'),
-        initial=get_previous_month_start,
-    )
-    till_time = forms.SplitDateTimeField(
-        label=_('Till time'),
-        initial=get_previous_month_end,
-    )
+    from_time = forms.SplitDateTimeField(label=_('From time'), initial=get_previous_month)
+    till_time = forms.SplitDateTimeField(label=_('Till time'), initial=get_previous_month_end)

@@ -1,21 +1,21 @@
 {% extends 'base_app.html' %}
 
-{% block title %}{% blocktrans %}Delete selling price {{ sellingprice }}{% endblocktrans %}{% endblock title %}
+{% block title %}{% trans 'Delete selling price' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>{% blocktrans %}Delete selling price {{ sellingprice }}{% endblocktrans %}</h1>
+    <h1>{% trans 'Delete selling price' %}</h1>
 </div>
 <form method="post">
     {% csrf_token %}
     <p>
-        <strong>{% blocktrans %}Are you sure you want to delete selling price {{ sellingprice }}?{% endblocktrans %}</strong>
+        <strong>{% blocktrans price=sellingprice %}Are you sure you want to delete {{ price }}?{% endblocktrans %}</strong>
     </p>
     <div class="form-actions">
         <button type="submit" class="btn btn-danger">
-            <span class="glyphicon glyphicon-trash"></span> {% trans 'Delete' %}
+            <span class="glyphicon glyphicon-trash"></span>
+            {% trans 'Delete' %}
         </button>
-        <a class="btn btn-default" href="{{ sellingprice.get_absolute_url }}">{% trans 'Cancel' %}</a>
     </div>
 </form>
 {% endblock content %}

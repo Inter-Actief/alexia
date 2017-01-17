@@ -1,20 +1,22 @@
 {% extends 'base_app.html' %}
 
 {% block title %}
-{% if object.pk %}
+{% if pricegroup.pk %}
 {% trans 'Edit price group' %}
 {% else %}
 {% trans 'New price group' %}
 {% endif %}
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    {% if object.pk %}
-    {% trans 'Edit price group' %}
-    {% else %}
-    {% trans 'New price group' %}
-    {% endif %}
+    <h1>
+        {% if pricegroup.pk %}
+        {% trans 'Edit price group' %}
+        {% else %}
+        {% trans 'New price group' %}
+        {% endif %}
+    </h1>
 </div>
 {% crispy form %}
-{% endblock %}
+{% endblock content %}

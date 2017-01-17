@@ -69,12 +69,10 @@
             <tbody>
             {% for temporaryproduct in event.temporaryproducts.all %}
                 <tr>
-                    <td>
-                        {% if is_manager %}
-                        <a href="{{ temporaryproduct.get_absolute_url }}">{{ temporaryproduct.name }}</a></td>
-                        {% else %}
-                        {{ temporaryproduct.name }}
-                        {% endif %}
+                    <td{% if temporaryproduct.background_color %} style="background-color: #{{ temporaryproduct.background_color }}"{% endif %}>
+                        <span{% if temporaryproduct.text_color %} style="color: #{{ temporaryproduct.text_color }}"{% endif %}>
+                            {{ temporaryproduct.name }}
+                        </span>
                     </td>
                     <td class="text-right">&euro; {{ temporaryproduct.price }}</td>
                     {% if is_manager %}
@@ -83,12 +81,16 @@
                             <span class="glyphicon glyphicon-pencil"></span>
                             {% trans 'Modify' %}
                         </a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'temporaryproduct_delete' temporaryproduct.pk %}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            {% trans 'Delete' %}
+                        </a>
                     </td>
                     {% endif %}
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="{% if is_manager %}3{% else %}2{% endif %}">{% trans 'No temporary products defined.' %}</td>
+                    <td colspan="{% if is_manager %}3{% else %}2{% endif %}" class="text-center"><i>{% trans 'No temporary products defined.' %}</i></td>
                 </tr>
             {% endfor %}
             {% if is_manager %}

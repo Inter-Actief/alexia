@@ -1,11 +1,11 @@
 {% extends 'base_app.html' %}
 
-{% block title %}{% blocktrans with organization=current_organization %}Price groups of {{ organization }}{% endblocktrans %}{% endblock title %}
+{% block title %}{% trans 'Price groups' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>
-         {% blocktrans with organization=current_organization %}Price groups of {{ organization }}{% endblocktrans %}
+         {% trans 'Price groups' %}
          <div class="pull-right">
              <a class="btn btn-primary" href="{% url 'pricegroup_create' %}">
                  <span class="glyphicon glyphicon-plus"></span>
@@ -29,6 +29,10 @@
                 <a class="btn btn-xs btn-default" href="{% url 'pricegroup_update' pricegroup.pk %}">
                     <span class="glyphicon glyphicon-pencil"></span>
                     {% trans 'Modify' %}
+                </a>
+                <a class="btn btn-xs btn-danger" href="{% url 'pricegroup_delete' pricegroup.pk %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                    {% trans 'Delete' %}
                 </a>
             </td>
         </tr>

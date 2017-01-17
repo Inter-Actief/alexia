@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
@@ -207,6 +208,11 @@ class PriceGroupUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, Crispy
     fields = ['name']
 
 
+class PriceGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, DeleteView):
+    model = PriceGroup
+    success_url = reverse_lazy('pricegroup_list')
+
+
 class ProductGroupListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):
     model = ProductGroup
 
@@ -226,11 +232,12 @@ class ProductGroupUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, Cris
     fields = ['name']
 
 
+class ProductGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, DeleteView):
+    model = ProductGroup
+    success_url = reverse_lazy('productgroup_list')
+
+
 class ProductRedirectView(ManagerRequiredMixin, SingleObjectMixin, RedirectView):
-    """
-    View to redirect to either the PermanentProductDetailView or the
-    TemporaryProductDetailView depending on the type of product.
-    """
     model = Product
     permanent = True
 
@@ -238,7 +245,7 @@ class ProductRedirectView(ManagerRequiredMixin, SingleObjectMixin, RedirectView)
         obj = self.get_object()
 
         if obj.is_permanent:
-            self.pattern_name = 'permanentproduct_detail'
+            self.pattern_name = 'product_detail'
         elif obj.is_temporary:
             self.pattern_name = 'temporaryproduct_detail'
         else:
@@ -247,43 +254,34 @@ class ProductRedirectView(ManagerRequiredMixin, SingleObjectMixin, RedirectView)
         return super(ProductRedirectView, self).get_redirect_url(*args, **kwargs)
 
 
-class PermanentProductListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):
-    model = PermanentProduct
-
-    def get_queryset(self):
-        return super(PermanentProductListView, self).get_queryset().order_by('position')
-
-
-class PermanentProductDetailView(ManagerRequiredMixin, OrganizationFilterMixin, DetailView):
+class ProductListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):
     model = PermanentProduct
 
 
-class PermanentProductCreateView(ManagerRequiredMixin, OrganizationFormMixin, CrispyFormMixin,
-                                 CreateViewForOrganization):
-    """
-    Create view for permanent products.
+class ProductDetailView(ManagerRequiredMixin, OrganizationFilterMixin, DetailView):
+    model = PermanentProduct
 
-    Sets initial ProductGroup if productgroup_pk is provided.
-    """
 
+class ProductCreateView(ManagerRequiredMixin, OrganizationFormMixin, CrispyFormMixin, CreateViewForOrganization):
     model = PermanentProduct
     form_class = PermanentProductForm
 
     def get_initial(self):
-        initial = super(PermanentProductCreateView, self).get_initial()
+        initial = super(ProductCreateView, self).get_initial()
         if 'productgroup_pk' in self.kwargs:
             initial['productgroup'] = get_object_or_404(ProductGroup, pk=self.kwargs['productgroup_pk'])
         return initial
 
 
-class PermanentProductUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, OrganizationFormMixin, CrispyFormMixin,
-                                 UpdateView):
+class ProductUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, OrganizationFormMixin, CrispyFormMixin,
+                        UpdateView):
     model = PermanentProduct
     form_class = PermanentProductForm
 
 
-class TemporaryProductDetailView(ManagerRequiredMixin, EventOrganizerFilterMixin, DetailView):
-    model = TemporaryProduct
+class ProductDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, DeleteView):
+    model = PermanentProduct
+    success_url = reverse_lazy('product_list')
 
 
 class TemporaryProductCreateView(ManagerRequiredMixin, CrispyFormMixin, FixedValueCreateView):
@@ -294,19 +292,26 @@ class TemporaryProductCreateView(ManagerRequiredMixin, CrispyFormMixin, FixedVal
         event = get_object_or_404(Event, pk=self.kwargs['event_pk'])
         return self.model(event=event)
 
+    def get_success_url(self):
+        return reverse('event', args=[self.object.event.pk])
+
 
 class TemporaryProductUpdateView(ManagerRequiredMixin, EventOrganizerFilterMixin, CrispyFormMixin, UpdateView):
     model = TemporaryProduct
     fields = ['name', 'price', 'text_color', 'background_color']
 
+    def get_success_url(self):
+        return reverse('event', args=[self.object.event.pk])
+
+
+class TemporaryProductDeleteView(ManagerRequiredMixin, EventOrganizerFilterMixin, DeleteView):
+    model = TemporaryProduct
+
+    def get_success_url(self):
+        return reverse('event', args=[self.object.event.pk])
+
 
 class SellingPriceCreateView(ManagerRequiredMixin, OrganizationFormMixin, CrispyFormMixin, CreateView):
-    """
-    Create view for selling prices.
-
-    Sets initial PriceGroup or ProductGroup if pricegroup_pk or productgroup_pk is provided.
-    """
-
     model = SellingPrice
     form_class = SellingPriceForm
 
@@ -320,10 +325,6 @@ class SellingPriceCreateView(ManagerRequiredMixin, OrganizationFormMixin, Crispy
 
 
 class SellingPriceFilterMixin(object):
-    """
-    Mixin to select only SellingPrice object belonging to the current organization.
-    """
-
     def get_queryset(self):
         organization = self.request.organization
         return super(SellingPriceFilterMixin, self).get_queryset().filter(pricegroup__organization=organization,
@@ -343,16 +344,11 @@ class SellingPriceDeleteView(ManagerRequiredMixin, SellingPriceFilterMixin, Dele
         return self.object.pricegroup.get_absolute_url()
 
 
-class SellingPriceMatrixView(ManagerRequiredMixin, TemplateView):
-    """
-    Price matrix view.
-
-    Displays a matrix with all pricegroup-productgroup combinations.
-    """
-    template_name = 'billing/sellingprice_matrix.html'
+class SellingPriceListView(ManagerRequiredMixin, TemplateView):
+    template_name = 'billing/sellingprice_list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SellingPriceMatrixView, self).get_context_data(**kwargs)
+        context = super(SellingPriceListView, self).get_context_data(**kwargs)
 
         organization = self.request.organization
 

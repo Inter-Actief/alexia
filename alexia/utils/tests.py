@@ -5,8 +5,8 @@ import json
 
 from django.contrib.auth.models import User
 from django.core.serializers.json import DjangoJSONEncoder
-from django.core.urlresolvers import reverse
 from django.test import Client, testcases
+from django.urls import reverse
 from django.utils import six, timezone
 
 from alexia.apps.billing.models import (

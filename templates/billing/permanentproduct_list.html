@@ -1,13 +1,13 @@
 {% extends 'base_app.html' %}
 
-{% block title %}{% blocktrans with organization=current_organization %}Permanent products of {{ organization }}{% endblocktrans %}{% endblock title %}
+{% block title %}{% trans 'Products' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>
-         {% blocktrans with organization=current_organization %}Permanent products of {{ organization }}{% endblocktrans %}
+         {% trans 'Products' %}
          <div class="pull-right">
-             <a class="btn btn-primary" href="{% url 'permanentproduct_create' %}">
+             <a class="btn btn-primary" href="{% url 'product_create' %}">
                  <span class="glyphicon glyphicon-plus"></span>
                  {% trans 'Add' %}
              </a>
@@ -18,10 +18,10 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>{% trans 'Name' %}</th>
-                <th>{% trans 'Product group' %}</th>
-                <th>{% trans 'Position' %}</th>
-                <th>{% trans 'Actions' %}</th>
+                <th class="col-xs-3">{% trans 'Name' %}</th>
+                <th class="col-xs-3">{% trans 'Product group' %}</th>
+                <th class="col-xs-3">{% trans 'Position' %}</th>
+                <th class="col-xs-3">{% trans 'Actions' %}</th>
             </tr>
         </thead>
         <tbody>
@@ -35,15 +35,19 @@
                 <td><a href="{{ permanentproduct.productgroup.get_absolute_url }}">{{ permanentproduct.productgroup }}</a></td>
                 <td>{{ permanentproduct.position }}</td>
                 <td>
-                    <a class="btn btn-xs btn-default" href="{% url 'permanentproduct_update' permanentproduct.pk %}">
+                    <a class="btn btn-xs btn-default" href="{% url 'product_update' permanentproduct.pk %}">
                         <span class="glyphicon glyphicon-pencil"></span>
                         {% trans 'Modify' %}
+                    </a>
+                    <a class="btn btn-xs btn-danger" href="{% url 'product_delete' permanentproduct.pk %}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        {% trans 'Delete' %}
                     </a>
                 </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">{% trans 'No permanent products defined.' %}</td>
+                <td colspan="4" class="text-center"><i>{% trans 'No products defined.' %}</i></td>
             </tr>
         {% endfor %}
         </tbody>

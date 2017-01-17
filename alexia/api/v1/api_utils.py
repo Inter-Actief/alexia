@@ -1,4 +1,6 @@
-# Helpers
+from functools import wraps
+
+from django.core.exceptions import PermissionDenied
 
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 

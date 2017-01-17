@@ -80,6 +80,8 @@ class Event(models.Model):
     )
     pricegroup = models.ForeignKey(
         'billing.PriceGroup',
+        models.SET_NULL,
+        null=True,
         related_name='events',
         verbose_name=_('pricegroup'),
     )

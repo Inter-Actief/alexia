@@ -1,6 +1,6 @@
 {% extends 'base_app.html' %}
 
-{% block title %}{% trans 'Temporary product' %} {{ temporaryproduct }}{% endblock title %}
+{% block title %}{{ temporaryproduct }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
@@ -11,6 +11,10 @@
             <a class="btn btn-default" href="{% url 'temporaryproduct_update' temporaryproduct.pk %}">
                 <span class="glyphicon glyphicon-pencil"></span>
                 {% trans 'Modify' %}
+            </a>
+            <a class="btn btn-danger" href="{% url 'temporaryproduct_delete' temporaryproduct.pk %}">
+                <span class="glyphicon glyphicon-trash"></span>
+                {% trans 'Delete' %}
             </a>
         </div>
     </h1>

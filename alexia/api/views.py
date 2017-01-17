@@ -1,7 +1,7 @@
 from json import dumps
 
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.urls import reverse
 from django.views.generic.base import TemplateView
 from jsonrpc import mochikit
 from jsonrpc.site import jsonrpc_site

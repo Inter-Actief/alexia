@@ -1,21 +1,26 @@
 {% extends 'base_app.html' %}
 
-{% block title %}{% trans 'Permanent product' %}: {{ permanentproduct }}{% endblock title %}
+{% block title %}{{ permanentproduct }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>
-        {% trans 'Permanent product' %}: {{ permanentproduct }}
+        <small>{% trans 'Product' %}</small>
+        {{ permanentproduct }}
         <div class="pull-right">
-            <a class="btn btn-default" href="{% url 'permanentproduct_update' permanentproduct.pk %}">
+            <a class="btn btn-default" href="{% url 'product_update' permanentproduct.pk %}">
                 <span class="glyphicon glyphicon-pencil"></span>
                 {% trans 'Modify' %}
+            </a>
+            <a class="btn btn-trash" href="{% url 'product_delete' permanentproduct.pk %}">
+                <span class="glyphicon glyphicon-trash"></span>
+                {% trans 'Delete' %}
             </a>
         </div>
     </h1>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-6">
         <h3>{% trans 'Product information' %}</h3>
         <table class="table table-bordered">
             <tr>
@@ -32,7 +37,7 @@
             </tr>
         </table>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-6">
         <h3>{% trans 'Juliana settings' %}</h3>
         <table class="table table-bordered">
             <tr>
@@ -41,16 +46,16 @@
             </tr>
             <tr>
                 <th>{% trans 'Text color' %}</th>
-                <td>{{ permanentproduct.text_color|default:"&mdash;" }}</td>
+                <td>{{ permanentproduct.text_color|default:'&mdash;' }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Background color' %}</th>
-                <td>{{ permanentproduct.background_color|default:"&mdash;" }}</td>
+                <td>{{ permanentproduct.background_color|default:'&mdash;' }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Color example' %}</th>
-                <td {% if permanentproduct.background_color %}style="background-color: #{{ permanentproduct.background_color }};"{% endif %}>
-                    <span {% if permanentproduct.text_color %}style="color: #{{ permanentproduct.text_color }};"{% endif %}>{{ permanentproduct.name }}</span>
+                <td{% if permanentproduct.background_color %} style="background-color: #{{ permanentproduct.background_color }}"{% endif %}>
+                    <span{% if permanentproduct.text_color %} style="color: #{{ permanentproduct.text_color }}"{% endif %}>{{ permanentproduct.name }}</span>
                 </td>
             </tr>
         </table>

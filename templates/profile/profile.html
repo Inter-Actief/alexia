@@ -91,7 +91,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for rfid_card in user.rfids.all %}
+                            {% for rfid_card in user.rfidcard_set.all %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ rfid_card.identifier }}</td>

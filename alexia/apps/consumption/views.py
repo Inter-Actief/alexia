@@ -2,9 +2,9 @@ import calendar
 import datetime
 
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views.generic.detail import DetailView

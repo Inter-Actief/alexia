@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-29 21:21+0100\n"
+"POT-Creation-Date: 2017-01-17 10:36+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -31,12 +31,6 @@ msgstr "Je bent geen manager bij de geselecteerde organisatie!"
 msgid "You are not a foundation manager."
 msgstr "Je bent geen stichtingsmananger."
 
-msgid "Owner"
-msgstr "Eigenaar"
-
-msgid "Debtor"
-msgstr "Debiteur"
-
 msgid "Export"
 msgstr "Exporteren"
 
@@ -52,23 +46,30 @@ msgstr "organisatie"
 msgid "name"
 msgstr "naam"
 
+msgid "product group"
+msgstr "productgroep"
+
 msgid "product groups"
 msgstr "productgroepen"
 
 msgid "price group"
-msgstr "prijscategorie"
+msgstr "prijsgroep"
 
 msgid "price groups"
-msgstr "prijscategorieën"
-
-msgid "product group"
-msgstr "productgroep"
+msgstr "prijsgroepen"
 
 msgid "price"
 msgstr "prijs"
 
-msgid "for"
-msgstr "voor"
+msgid "selling price"
+msgstr "verkoopprijs"
+
+msgid "selling prices"
+msgstr "verkoopprijzen"
+
+#, python-brace-format
+msgid "{product} for {price}"
+msgstr "{product} voor {price}"
 
 msgid "Text color"
 msgstr "Tekstkleur"
@@ -84,6 +85,12 @@ msgstr "Achtergrondkleur voor Juliana"
 
 msgid "position"
 msgstr "positie"
+
+msgid "product"
+msgstr "product"
+
+msgid "products"
+msgstr "producten"
 
 msgid "event"
 msgstr "activiteit"
@@ -106,11 +113,17 @@ msgstr "geregistreerd op"
 msgid "user"
 msgstr "gebruiker"
 
+msgid "managed by"
+msgstr "beheerd door"
+
 msgid "RFID card"
 msgstr "RFID-kaart"
 
 msgid "RFID cards"
 msgstr "RFID-kaarten"
+
+msgid "owner"
+msgstr "eigenaar"
 
 msgid "start date"
 msgstr "begindatum"
@@ -118,17 +131,15 @@ msgstr "begindatum"
 msgid "end date"
 msgstr "einddatum"
 
-msgid "account"
-msgstr "bankrekening"
-
 msgid "authorization"
 msgstr "autorisatie"
 
 msgid "authorizations"
 msgstr "autorisaties"
 
-msgid "at"
-msgstr "om"
+#, python-brace-format
+msgid "{user} of {organization}"
+msgstr "{user} van {organization}"
 
 msgid "placed at"
 msgstr "geplaatst op"
@@ -154,8 +165,12 @@ msgstr "transactie"
 msgid "orders"
 msgstr "transacties"
 
-msgid "product"
-msgstr "product"
+#, python-brace-format
+msgid "{user} at {time} on {event}"
+msgstr "{user} om {time} bij {event}"
+
+msgid "debtor"
+msgstr "debiteur"
 
 msgid "purchase"
 msgstr "aankoop"
@@ -498,7 +513,7 @@ msgid "bartenders"
 msgstr "tappers"
 
 msgid "pricegroup"
-msgstr "prijscategorie"
+msgstr "prijsgroep"
 
 msgid "number of kegs"
 msgstr "aantal fusten"
@@ -620,11 +635,11 @@ msgstr "Gebruikers"
 msgid "Product groups"
 msgstr "Productgroepen"
 
+msgid "Price groups"
+msgstr "Prijsgroepen"
+
 msgid "Products"
 msgstr "Producten"
-
-msgid "Price groups"
-msgstr "Prijscategorieën"
 
 msgid "Price matrix"
 msgstr "Prijsmatrix"
@@ -717,6 +732,9 @@ msgstr "Product"
 msgid "ID"
 msgstr "ID"
 
+msgid "Debtor"
+msgstr "Debiteur"
+
 msgid "Synchronized"
 msgstr "Gesynchroniseerd"
 
@@ -741,7 +759,7 @@ msgid "Transactions"
 msgstr "Transacties"
 
 msgid "Price group"
-msgstr "Prijscategorie"
+msgstr "Prijsgroep"
 
 #, python-format
 msgid "%(organization)s hasn't used Alexia Billing yet!"
@@ -759,8 +777,15 @@ msgstr "Specificatie"
 msgid "Price"
 msgstr "Prijs"
 
-msgid "Permanent product"
-msgstr "Permanent product"
+msgid "Delete product"
+msgstr "Product verwijderen"
+
+#, python-format
+msgid "Are you sure you want to delete %(product)s from %(productgroup)s?"
+msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(productgroup)s?"
+
+msgid "Delete"
+msgstr "Verwijderen"
 
 msgid "Modify"
 msgstr "Wijzigen"
@@ -780,15 +805,11 @@ msgstr "Positie"
 msgid "Color example"
 msgstr "Kleurvoorbeeld"
 
-msgid "Edit permanent product"
-msgstr "Wijzig permanent product"
+msgid "Edit product"
+msgstr "Wijzig product"
 
-msgid "New permanent product"
-msgstr "Nieuw permanent product"
-
-#, python-format
-msgid "Permanent products of %(organization)s"
-msgstr "Permanente producten van %(organization)s"
+msgid "New product"
+msgstr "Nieuw product"
 
 msgid "Add"
 msgstr "Toevoegen"
@@ -796,33 +817,40 @@ msgstr "Toevoegen"
 msgid "Actions"
 msgstr "Acties"
 
-msgid "No permanent products defined."
-msgstr "Geen permanente producten gedefinieerd."
+msgid "No products defined."
+msgstr "Geen producten gedefinieerd."
+
+msgid "Delete price group"
+msgstr "Verwijder prijsgroep"
+
+msgid ""
+"Are you sure you want to delete this price group? The following prices will "
+"also be deleted:"
+msgstr ""
+"Weet je zeker dat je deze prijsgroep wil verwijderen? De volgende prijzen "
+"worden ook verwijderd:"
 
 msgid "Prices"
 msgstr "Prijzen"
-
-msgid "Delete"
-msgstr "Verwijderen"
 
 msgid "No prices defined."
 msgstr "Geen prijzen gedefinieerd."
 
 msgid "Edit price group"
-msgstr "Wijzig prijscategorie"
+msgstr "Wijzig prijsgroep"
 
 msgid "New price group"
-msgstr "Nieuwe prijscategorie"
-
-#, python-format
-msgid "Price groups of %(organization)s"
-msgstr "Prijscategorieën van %(organization)s"
+msgstr "Nieuwe prijsgroep"
 
 msgid "No price groups defined."
-msgstr "Geen prijscategorieën gedefinieerd."
+msgstr "Geen prijsgroepen gedefinieerd."
 
-msgid "No products defined."
-msgstr "Geen producten gedefinieerd."
+msgid ""
+"Are you sure you want to delete this product group? The following products "
+"will also be deleted:"
+msgstr ""
+"Weet je zeker dat je deze productgroep wil verwijderen? De volgende "
+"producten worden ook verwijderd:"
 
 msgid "Edit product group"
 msgstr "Wijzig productgroep"
@@ -830,29 +858,28 @@ msgstr "Wijzig productgroep"
 msgid "New product group"
 msgstr "Nieuwe productgroep"
 
-#, python-format
-msgid "Product groups of %(organization)s"
-msgstr "Productgroepen van %(organization)s"
-
 msgid "No product groups defined."
 msgstr "Geen productgroepen gedefinieerd."
 
-#, python-format
-msgid "Delete selling price %(sellingprice)s"
-msgstr "Verwijder verkoopprijs %(sellingprice)s"
+msgid "Delete selling price"
+msgstr "Verwijder verkoopprijs"
 
 #, python-format
-msgid "Are you sure you want to delete selling price %(sellingprice)s?"
-msgstr "Weet je zeker dat je de verkoopprijs %(sellingprice)s wil verwijderen?"
-
-msgid "Cancel"
-msgstr "Annuleren"
+msgid "Are you sure you want to delete %(price)s?"
+msgstr "Weet je zeker dat je %(price)s wil verwijderen?"
 
 msgid "Edit selling price"
 msgstr "Wijzig verkoopprijs"
 
 msgid "New selling price"
 msgstr "Nieuwe verkoopprijs"
+
+msgid "Delete temporary product"
+msgstr "Verwijder tijdelijk product"
+
+#, python-format
+msgid "Are you sure you want to delete %(product)s from %(event)s?"
+msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(event)s?"
 
 msgid "Temporary product"
 msgstr "Tijdelijk product"
@@ -883,6 +910,9 @@ msgstr "Ondertekend door"
 
 msgid "on"
 msgstr "op"
+
+msgid "at"
+msgstr "om"
 
 msgid "Begin weight"
 msgstr "Begingewicht"
@@ -1040,6 +1070,9 @@ msgstr "Gebruiker verwijderen"
 #, python-format
 msgid "Are you sure you want to delete %(user)s from %(organization)s?"
 msgstr "Weet je zeker dat je %(user)s wil verwijderen van %(organization)s?"
+
+msgid "Cancel"
+msgstr "Annuleren"
 
 msgid "Times tended"
 msgstr "Aantal keer getapt"

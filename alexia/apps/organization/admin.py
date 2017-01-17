@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from alexia.apps.billing.admin import AuthorizationInline, RfidCardInline
+from alexia.apps.billing.models import Authorization, RfidCard
 from alexia.apps.scheduling.admin import AvailabilityInline
 
 from .models import (
@@ -11,6 +11,19 @@ from .models import (
 )
 
 admin.site.unregister(User)
+
+
+class AuthorizationInline(admin.TabularInline):
+    model = Authorization
+    extra = 0
+    exclude = ['account']
+
+
+class RfidCardInline(admin.TabularInline):
+    model = RfidCard
+    extra = 0
+    readonly_fields = ('registered_at',)
+    raw_id_fields = ('managed_by',)
 
 
 class ProfileInline(admin.StackedInline):
