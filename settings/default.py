@@ -72,6 +72,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'eventlog',
 
+    # SSL Runserver
+    'sslserver',
+
     'api',
     'apps.billing',
     'apps.general',
