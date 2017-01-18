@@ -73,6 +73,9 @@ INSTALLED_APPS = [
     'eventlog',
     'wkhtmltopdf',
 
+    # SSL Runserver
+    'sslserver',
+
     'api',
     'apps.billing',
     'apps.consumption',
