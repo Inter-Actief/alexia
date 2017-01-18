@@ -2,6 +2,7 @@ Django>=1.9,<1.10
 django-compressor==1.6
 django-crispy-forms>=1.5.2,<1.6
 django-debug-toolbar>=1.5,<1.6
+django-wkhtmltopdf==3.1.0
 git+git://github.com/Inter-Actief/django-json-rpc.git#egg=django_json_rpc
 git+git://github.com/Inter-Actief/django-sslserver@389a4e42dba5a9b3ca1f3a4013044e07a52dc43c
 mysqlclient>=1.3.7,<1.4

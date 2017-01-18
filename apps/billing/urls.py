@@ -6,8 +6,8 @@ urlpatterns = [
     url(r'^order/$', views.order_list, name='orders'),
     url(r'^order/(?P<pk>\d+)/$', views.order_show, name='event-orders'),
     url(r'^order/export/$', views.order_export, name='export-orders'),
-    url(r'^stats/(?P<year>\d+)/$', views.stats_year, name='year-orders'),
-    url(r'^stats/(?P<year>\d+)/(?P<month>\d+)/$', views.stats_month, name='month-orders'),
+    url(r'^stats/([0-9]{4})/$', views.stats_year, name='year-orders'),
+    url(r'^stats/([0-9]{4})/([0-9]{1,2})/$', views.stats_month, name='month-orders'),
     url(r'^payment/(?P<pk>\d+)/$', views.payment_show, name='order'),
 
     url(r'^pricegroup/$', views.PriceGroupListView.as_view(), name='pricegroup_list'),

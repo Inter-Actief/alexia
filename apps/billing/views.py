@@ -3,13 +3,16 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import connection
 from django.db.models import Count, Sum
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from apps.billing.forms import FilterEventForm, PermanentProductForm, SellingPriceForm
+from apps.billing.forms import (
+    FilterEventForm, PermanentProductForm, SellingPriceForm,
+)
 from apps.billing.models import (
     PermanentProduct, PriceGroup, Product, ProductGroup, SellingPrice,
     TemporaryProduct,
@@ -128,6 +131,8 @@ def stats_year(request, year):
 @manager_required
 def stats_month(request, year, month):
     month = int(month)
+    if month not in range(1, 12):
+        raise Http404
     events = Event.objects.filter(
         organizer=request.organization,
         starts_at__year=year,

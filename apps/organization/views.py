@@ -9,7 +9,9 @@ from utils import log
 from utils.auth.backends import RADIUS_BACKEND_NAME
 from utils.auth.decorators import manager_required
 
-from .forms import CreateUserForm, MembershipAddForm, MembershipEditForm, UploadIvaForm
+from .forms import (
+    CreateUserForm, MembershipAddForm, MembershipEditForm, UploadIvaForm,
+)
 from .models import AuthenticationData, Membership, Profile
 
 

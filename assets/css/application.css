@@ -163,3 +163,21 @@ body {
     margin-bottom: 5px;
 }
 
+ul.dcf-issues {
+	list-style: none;
+}
+
+ul.dcf-issues li:before {
+	font-family: 'Glyphicons Halflings';
+	display: inline-block;
+    margin-left: -1.3em;
+    width: 1.3em;
+}
+
+ul.dcf-issues li.text-danger:before {
+	content: "\e101";
+}
+
+ul.dcf-issues li.text-warning:before {
+	content: "\e107";
+}

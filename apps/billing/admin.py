@@ -36,6 +36,8 @@ class TemporaryProductInline(admin.TabularInline):
 
 def _user_full_name(obj):
     return obj.user.get_full_name()
+
+
 _user_full_name.short_description = _('Owner')
 
 

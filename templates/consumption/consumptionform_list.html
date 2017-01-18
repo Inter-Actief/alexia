@@ -1,0 +1,79 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Consumption forms' %}{% endblock %}
+
+{% block content %}
+<div class="page-header clearfix">
+    <h1 class="pull-left">
+         {% trans 'Consumption forms' %}
+    </h1>
+    {% if user.profile.is_foundation_manager %}
+    <div class="text-right">
+        <a class="btn btn-default" href="{% url 'consumptionform_export' %}">
+            <span class="glyphicon glyphicon-print"></span>
+            {% trans 'Export' %}
+        </a>
+    </div>
+    {% endif %}
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="col-xs-2">{% trans 'Date' %}</th>
+                <th class="col-xs-2">{% trans 'Organization' %}</th>
+                <th class="col-xs-5">{% trans 'Event' %}</th>
+                <th class="col-xs-2"></th>
+                <th class="col-xs-1"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.event.starts_at|date:"l j F" }}</td>
+                <td>{{ object.event.organizer }}</td>
+                <td>
+                    <a href="{% url 'consumptionform_detail' object.pk %}">
+                        {{ object.event }}
+                    </a>
+                </td>
+                <td>
+                    {% if object.is_completed %}
+                    <span class="text-success">{% trans 'Completed' %}</span>
+                    {% else %}
+                    <span class="text-danger">{% trans 'Pending' %}</span>
+                    {% endif %}
+                    {% if object.comments %}
+                    <abbr title="{% trans 'Has comments' %}">
+                        <span class="glyphicon glyphicon-comment"><span>
+                    </abbr>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-default" href="{% url 'consumptionform_pdf' object.pk %}">
+                        <span class="glyphicon glyphicon-cloud-download"></span>
+                        {% trans 'PDF' %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">{% trans 'previous' %}</a>
+        {% endif %}
+
+        <span class="current">
+            {% trans 'Page' %} {{ page_obj.number }} {% trans 'of' %} {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{% trans 'next' %}</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

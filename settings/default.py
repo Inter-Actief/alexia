@@ -71,18 +71,19 @@ INSTALLED_APPS = [
     'compressor',
     'crispy_forms',
     'eventlog',
+    'wkhtmltopdf',
 
     # SSL Runserver
     'sslserver',
 
     'api',
     'apps.billing',
+    'apps.consumption',
     'apps.general',
     'apps.juliana',
     'apps.organization',
     'apps.profile',
     'apps.scheduling',
-    'apps.stock',
     'utils',
 ]
 
