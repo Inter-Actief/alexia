@@ -1,0 +1,49 @@
+{% extends 'base_app.html' %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with organization=request.organization %}Availability matrix of {{ organization }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% blocktrans with organization=request.organization %}Availability matrix of {{ organization }}{% endblocktrans %}</h2>
+</div>
+
+{% if events %}
+<div class="table-responsive">
+    <table class="table table-striped table-condensed table-events">
+        <thead>
+            <tr>
+                <th>{% trans 'Tender' %}</th>
+                <th>{% trans 'Tended' %}</th>
+                <th>{% trans 'Last tended' %}</th>
+                {% for e in events %}
+                <th>{{ e.name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tenders %}
+            <tr>
+                <td><a href="{% url 'apps.organization.views.membership_show' t.tender.id %}">{{ t.tender.user.get_full_name }}</a></td>
+                <td>{{ t.tended }}</td>
+                <td>
+                    <span {% if t.last_tended %}title="{{ t.last_tended }}"{% endif %}>
+                        {% if t.last_tended %}{{ t.last_tended.starts_at|date:"j b Y" }}{% else %}{% trans 'Never' %}{% endif %}
+                    </span>
+                </td>
+                {% for e in t.events %}
+                <td>
+                    <a href="{% url 'apps.scheduling.views.event_edit_bartender_availability' pk=e.event.pk user_pk=t.tender.user.pk %}">
+                        <span class="label label-{{ e.availability.css_class|default:'default' }}">{{ e.availability|default:_("Unknown") }}</span>
+                    </a>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p id="no-events-message">{% trans 'No events have been planned.' %}</p>
+{% endif %}
+{% endblock %}

@@ -36,6 +36,9 @@
                         <li><a href="{% url 'schedule' %}">{% trans 'List' %}</a></li>
                         <li><a href="{% url 'calendar-schedule' %}">{% trans 'Calendar' %}</a></li>
                         {% if request.user.profile.is_tender %}<li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>{% endif %}
+                        {% if current_organization and request.user.profile.is_planner %}
+                        <li><a href="{% url 'matrix' %}">{% trans 'Availability matrix' %}</a></li>
+                        {% endif %}
                         {% if current_organization and request.user.profile.is_manager %}
                         <li class="divider"></li>
                         <li><a href="{% url 'availability_list' %}">{% trans 'Availabilities' %}</a></li>
