@@ -19,7 +19,7 @@ def template_mass_mail(subject, message, recipient_context_list=None):
             to=recipient_list,
             connection=connection,
         )
-        mail.attach_alternative(html_message.render(context), 'text/html')
+        mail.attach_alternative(html_message.render(context).replace('\n', '<br>'), 'text/html')
         messages.append(mail)
 
     connection.send_messages(messages)

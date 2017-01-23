@@ -265,7 +265,7 @@ def event_edit_bartender_availability(request, pk, user_pk):
 class EventDelete(PlannerRequiredMixin, DenyWrongOrganizationMixin, DeleteView):
     model = Event
     organization_field = 'organizer'
-    success_url = reverse_lazy('schedule')
+    success_url = reverse_lazy('event-list')
 
     def get_success_url(self):
         log.event_deleted(self.request.user, self.object)

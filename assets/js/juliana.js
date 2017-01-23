@@ -452,8 +452,12 @@ $(function () {
                 Receipt.clear();
                 break;
             case 'check':
-                State.toggleTo(State.CHECK);
-                Display.set('Scan een kaart');
+                if (Receipt.receipt.length) {
+                    Display.set('Kan alleen zonder bon');
+                } else {
+                    State.toggleTo(State.CHECK);
+                    Display.set('Scan een kaart');
+                }
                 break;
             case 'cash':
                 Receipt.cash();
