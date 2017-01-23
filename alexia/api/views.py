@@ -8,26 +8,22 @@ from jsonrpc.site import jsonrpc_site
 
 
 class APIBrowserView(TemplateView):
-    template_name = 'browse.html'
+    template_name = 'api/browse.html'
     site = jsonrpc_site
     mountpoint = 'jsonrpc_mountpoint'
 
     def get(self, request, *args, **kwargs):
-        # Override get to provide mochikit.js and interpreter.js
         if request.GET.get('f', None) == 'mochikit.js':
             return HttpResponse(mochikit.mochikit, content_type='application/x-javascript')
         if request.GET.get('f', None) == 'interpreter.js':
             return HttpResponse(mochikit.interpreter, content_type='application/x-javascript')
-
         return super(APIBrowserView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(APIBrowserView, self).get_context_data(**kwargs)
 
         desc = self.site.service_desc()
-        methods = sorted(desc['procs'], key=lambda x: x['name'])
-
-        context['methods'] = methods
+        context['methods'] = sorted(desc['procs'], key=lambda x: x['name'])
         context['method_names_str'] = dumps([m['name'] for m in desc['procs']])
         context['mountpoint'] = reverse(self.mountpoint)
 

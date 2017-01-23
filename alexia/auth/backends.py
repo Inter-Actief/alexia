@@ -8,6 +8,7 @@ from pyrad.dictionary import Dictionary
 from alexia.apps.organization.models import AuthenticationData, Profile
 
 User = get_user_model()
+LDAP_BACKEND_NAME = 'utils.auth.backends.ldap.MultiLDAPBackend'
 RADIUS_BACKEND_NAME = 'utils.auth.backends.radius.RadiusBackend'
 
 
@@ -31,7 +32,7 @@ def get_or_create_user(backend, username):
 
 class MultiLDAPBackend(LDAPBackend):
     def get_or_create_user(self, username, ldap_user):
-        backend = self.__module__ + "." + self.__class__.__name__
+        backend = LDAP_BACKEND_NAME
         return get_or_create_user(backend, username)
 
 
