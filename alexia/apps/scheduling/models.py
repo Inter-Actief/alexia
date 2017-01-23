@@ -11,7 +11,6 @@ from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from .managers import EventManager
 from .tools import notify_tenders
 
 
@@ -33,6 +32,7 @@ class MailTemplate(models.Model):
     is_active = models.BooleanField(_('is active'), default=False)
 
     class Meta:
+        ordering = ['organization']
         unique_together = ('organization', 'name')
         verbose_name = _('mail template')
         verbose_name_plural = _('mail templates')
@@ -102,9 +102,8 @@ class Event(models.Model):
         ),
     )
 
-    objects = EventManager()
-
     class Meta:
+        ordering = ['-starts_at']
         verbose_name = _('event')
         verbose_name_plural = _('events')
 
@@ -116,12 +115,20 @@ class Event(models.Model):
 
     @staticmethod
     def conflicting_events(start, end, location=None):
-        """Returns a list of all events that conflict. If a location is given,
-        the events within the time range at that location is returned. If no
-        location is given, all public locations are assumed.
-        """
+        # An event is in the given interval if the event's start or end date
+        # is in the given interval, or when the start date is before the given
+        # interval and the end date is after the given interval.
+        #
+        #        START  --------------------------------- END
+        #                                       o----------------
+        #    --------------o
+        #    o--------------------------------------------------o
+        occuring_at = Event.objects.filter(
+            (Q(starts_at__gt=start) & Q(starts_at__lt=end)) |  # start < start_date < end
+            (Q(ends_at__gt=start) & Q(ends_at__lte=end)) |     # start < end_date < end
+            (Q(starts_at__lte=start) & Q(ends_at__gte=end))    # start <= start_date & end_date => end
+        )
 
-        occuring_at = Event.objects.occuring_at(start, end)
         if location:
             occuring_at = occuring_at.filter(location=location)
 

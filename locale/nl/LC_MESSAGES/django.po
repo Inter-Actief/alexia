@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-17 10:36+0100\n"
+"POT-Creation-Date: 2017-01-23 13:11+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -331,6 +331,9 @@ msgstr "Je bent geen tapper bij deze borrel."
 msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
+msgid "Permissions"
+msgstr "Permissies"
+
 msgid "Availability"
 msgstr "Beschikbaarheid"
 
@@ -339,9 +342,6 @@ msgstr "RADIUS-gebruikersnaam"
 
 msgid "Student or employee account"
 msgstr "Student- of medewerkers-gebruikersnaam"
-
-msgid "is public"
-msgstr "is openbaar"
 
 msgid "prevent conflicting events"
 msgstr "voorkom conflicterende activiteiten"
@@ -677,42 +677,14 @@ msgstr "Gebruikersnaam"
 msgid "Password"
 msgstr "Wachtwoord"
 
-msgid "My payments"
-msgstr "Mijn uitgaven"
-
-#, python-format
-msgid "My payments at %(event)s"
-msgstr "Mijn uitgaven op %(event)s"
-
-msgid "Timestamp"
-msgstr "Tijdstempel"
-
-msgid "Amount"
-msgstr "Bedrag"
-
-msgid "Handled by"
-msgstr "Afgehandeld door"
-
-msgid "There are no payments!"
-msgstr "Er zijn geen betalingen!"
-
-msgid "My expenditures"
-msgstr "Mijn uitgaven"
-
-msgid "Date"
-msgstr "Datum"
-
 msgid "Event"
 msgstr "Activiteit"
 
-msgid "Amount spent"
-msgstr "Uitgegeven"
-
-msgid "There are no expenditures!"
-msgstr "Er zijn geen betalingen!"
-
 msgid "Name"
 msgstr "Naam"
+
+msgid "Date"
+msgstr "Datum"
 
 msgid "Organizer"
 msgstr "Organisator"
@@ -734,6 +706,12 @@ msgstr "ID"
 
 msgid "Debtor"
 msgstr "Debiteur"
+
+msgid "Amount"
+msgstr "Bedrag"
+
+msgid "Timestamp"
+msgstr "Tijdstempel"
 
 msgid "Synchronized"
 msgstr "Gesynchroniseerd"
@@ -770,6 +748,9 @@ msgstr "Betaling"
 
 msgid "Details"
 msgstr "Details"
+
+msgid "Handled by"
+msgstr "Afgehandeld door"
 
 msgid "Items"
 msgstr "Specificatie"
@@ -1148,6 +1129,25 @@ msgstr "Afkeuren"
 msgid "Upload"
 msgstr "Uploaden"
 
+msgid "My payments"
+msgstr "Mijn uitgaven"
+
+#, python-format
+msgid "My payments at %(event)s"
+msgstr "Mijn uitgaven op %(event)s"
+
+msgid "There are no payments!"
+msgstr "Er zijn geen betalingen!"
+
+msgid "My expenditures"
+msgstr "Mijn uitgaven"
+
+msgid "Amount spent"
+msgstr "Uitgegeven"
+
+msgid "There are no expenditures!"
+msgstr "Er zijn geen betalingen!"
+
 msgid "edit"
 msgstr "wijzigen"
 
@@ -1365,46 +1365,46 @@ msgid "Dec."
 msgstr "dec"
 
 msgid "Sunday"
-msgstr "Zondag"
+msgstr "zondag"
 
 msgid "Monday"
-msgstr "Maandag"
+msgstr "maandag"
 
 msgid "Tuesday"
-msgstr "Dinsdag"
+msgstr "dinsdag"
 
 msgid "Wednesday"
-msgstr "Woensdag"
+msgstr "woensdag"
 
 msgid "Thursday"
-msgstr "Donderdag"
+msgstr "donderdag"
 
 msgid "Friday"
-msgstr "Vrijdag"
+msgstr "vrijdag"
 
 msgid "Saturday"
-msgstr "Zaterdag"
+msgstr "zaterdag"
 
 msgid "Sun"
-msgstr "Zo"
+msgstr "zo"
 
 msgid "Mon"
-msgstr "Ma"
+msgstr "ma"
 
 msgid "Tue"
-msgstr "Di"
+msgstr "di"
 
 msgid "Wed"
-msgstr "Wo"
+msgstr "wo"
 
 msgid "Thu"
-msgstr "Do"
+msgstr "do"
 
 msgid "Fri"
-msgstr "Vr"
+msgstr "vr"
 
 msgid "Sat"
-msgstr "Za"
+msgstr "za"
 
 msgid "Week"
 msgstr "Week"

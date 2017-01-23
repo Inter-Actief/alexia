@@ -8,10 +8,10 @@ urlpatterns = [
     url(r'^calendar/$', views.EventCalendarView.as_view(), name='calendar-schedule'),
     url(r'^calendar/fetch/$', views.EventCalendarFetch.as_view(), name='fetch-calendar-schedule'),
 
-    url(r'^event/add/$', views.EventCreateView.as_view(), name='new-event'),
+    url(r'^event/create/$', views.EventCreateView.as_view(), name='new-event'),
     url(r'^event/(?P<pk>\d+)/$', views.EventDetailView.as_view(), name='event'),
-    url(r'^event/(?P<pk>\d+)/edit/$', views.EventUpdateView.as_view(), name='edit-event'),
-    url(r'^event/(?P<pk>\d+)/edit/bartender_availability/(?P<user_pk>\d+)/$',
+    url(r'^event/(?P<pk>\d+)/update/$', views.EventUpdateView.as_view(), name='edit-event'),
+    url(r'^event/(?P<pk>\d+)/update/bartender_availability/(?P<user_pk>\d+)/$',
         views.event_edit_bartender_availability, name='edit-event-bartender-availability'),
     url(r'^event/(?P<pk>\d+)/delete/$', views.EventDelete.as_view(), name='delete-event'),
 

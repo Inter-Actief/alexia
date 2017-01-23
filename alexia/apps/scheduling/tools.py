@@ -1,30 +1,27 @@
-from django.conf import settings
-
-from alexia.utils.mail import mail
+from alexia.core.mail import template_mass_mail
 
 
 def notify_tenders(sender, instance, **kwargs):
-    from alexia.apps.scheduling.models import Event, MailTemplate
-
+    from .models import Event, MailTemplate
     mail_template = None
 
-    if instance.pk is None:
-        if not instance.is_closed:
-            mail_template = "enrollopen"
+    if not instance.pk and not instance.is_closed:
+        mail_template = MailTemplate.ENROLL_OPEN
     else:
         orig = Event.objects.get(pk=instance.pk)
         if orig.is_closed and not instance.is_closed:
-            mail_template = "enrollopen"
+            mail_template = MailTemplate.ENROLL_OPEN
         elif not orig.is_closed and instance.is_closed:
-            mail_template = "enrollclosed"
+            mail_template = MailTemplate.ENROLL_CLOSED
 
     if mail_template:
         try:
-            mt = MailTemplate.objects.get(organization=instance.organizer, name=mail_template)
-            if mt.is_active:
-                members = instance.organizer.membership_set.filter(is_tender=True, is_active=True) \
-                    .exclude(user__email="")
-                addressees = [m.user for m in members]
-                mail(settings.EMAIL_FROM, addressees, mt.subject, mt.template, extraattrs={'event': instance})
+            mt = MailTemplate.objects.get(organization=instance.organizer, name=mail_template, is_active=True)
+            bartenders = instance.organizer.membership_set.filter(is_tender=True, is_active=True)
+            recipients = [
+                ([bartender.user.email], {'addressee': bartender.user, 'event': instance})
+                for bartender in bartenders
+            ]
+            template_mass_mail(mt.subject, mt.template, recipients)
         except MailTemplate.DoesNotExist:
             pass

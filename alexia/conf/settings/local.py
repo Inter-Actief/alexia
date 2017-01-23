@@ -34,6 +34,7 @@ RADIUS_SECRET = ''
 RADIUS_IDENTIFIER = ''
 
 # Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_SUBJECT_PREFIX = '[Alexia] '
 EMAIL_FROM = 'Alexia <alexia@localhost>'
