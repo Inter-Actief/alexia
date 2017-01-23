@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 13:11+0100\n"
+"POT-Creation-Date: 2017-01-23 21:28+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -461,11 +461,11 @@ msgstr "De einddtijd is eerder dan de begintijd."
 msgid "There is already an event in %(location)s."
 msgstr "Er is al een activiteit in %(location)s."
 
-msgid "Locations"
-msgstr "Ruimtes"
-
 msgid "Filter"
 msgstr "Filter"
+
+msgid "Locations"
+msgstr "Ruimtes"
 
 msgid "Enrollment open"
 msgstr "Inschrijving geopend"

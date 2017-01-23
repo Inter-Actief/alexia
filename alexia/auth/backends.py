@@ -38,7 +38,7 @@ class MultiLDAPBackend(LDAPBackend):
 class RadiusBackend(object):
     def authenticate(self, username=None, password=None):
         srv = Client(server=settings.RADIUS_HOST, authport=settings.RADIUS_PORT,
-                     secret=settings.RADIUS_SECRET.enocde(), dict=Dictionary(settings.RADIUS_DICT))
+                     secret=settings.RADIUS_SECRET.encode(), dict=Dictionary(settings.RADIUS_DICT))
 
         req = srv.CreateAuthPacket(code=pyrad.packet.AccessRequest, User_Name=username.encode())
         req["User-Password"] = req.PwCrypt(password)
