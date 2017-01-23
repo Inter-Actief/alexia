@@ -1,6 +1,7 @@
 import calendar
 import datetime
 
+from crispy_forms.helper import FormHelper
 from django import forms
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -56,3 +57,13 @@ class FilterEventForm(AlexiaForm):
         helper = super(FilterEventForm, self).get_helper()
         helper.attrs = {'target': '_blank'}
         return helper
+
+
+class DeletePriceGroupForm(forms.Form):
+    new_pricegroup = forms.ModelChoiceField(None, label=_('New price group'))
+
+    def __init__(self, queryset, *args, **kwargs):
+        super(DeletePriceGroupForm, self).__init__(*args, **kwargs)
+        self.fields['new_pricegroup'].queryset = queryset
+        self.helper = FormHelper()
+        self.helper.form_tag = False

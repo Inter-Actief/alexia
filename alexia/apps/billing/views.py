@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.dates import MONTHS
@@ -10,12 +10,13 @@ from django.utils.translation import ugettext as _
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import (
-    CreateView, DeleteView, FormView, UpdateView,
+    CreateView, DeleteView, FormMixin, FormView, UpdateView,
 )
 from django.views.generic.list import ListView
 
 from alexia.apps.billing.forms import (
-    FilterEventForm, PermanentProductForm, SellingPriceForm,
+    DeletePriceGroupForm, FilterEventForm, PermanentProductForm,
+    SellingPriceForm,
 )
 from alexia.apps.billing.models import (
     PermanentProduct, PriceGroup, Product, ProductGroup, SellingPrice,
@@ -214,9 +215,27 @@ class PriceGroupUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, Crispy
     fields = ['name']
 
 
-class PriceGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, DeleteView):
+class PriceGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, FormMixin, DeleteView):
     model = PriceGroup
     success_url = reverse_lazy('pricegroup_list')
+    form_class = DeletePriceGroupForm
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            Event.objects.filter(pricegroup=self.object).update(pricegroup=form.cleaned_data['new_pricegroup'])
+            success_url = self.get_success_url()
+            self.object.delete()
+            return HttpResponseRedirect(success_url)
+        else:
+            return self.form_invalid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(PriceGroupDeleteView, self).get_form_kwargs()
+        kwargs['queryset'] = PriceGroup.objects.filter(organization=self.request.organization) \
+            .exclude(pk=self.object.pk)
+        return kwargs
 
 
 class ProductGroupListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):

@@ -14,6 +14,8 @@
     <ul>
     {{ pricegroup.sellingprice_set.all|unordered_list }}
     </ul>
+    <p>{% trans 'Events with this price group need a new pricegroup. Please choose one.' %}</p>
+    {% crispy form %}
     <button type="submit" class="btn btn-danger">
         <span class="glyphicon glyphicon-trash"></span>
         {% trans 'Delete' %}

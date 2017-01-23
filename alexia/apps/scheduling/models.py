@@ -80,7 +80,7 @@ class Event(models.Model):
     )
     pricegroup = models.ForeignKey(
         'billing.PriceGroup',
-        models.SET_NULL,
+        models.PROTECT,
         null=True,
         verbose_name=_('pricegroup'),
     )
