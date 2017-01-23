@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Organization
-from alexia.forms import AlexiaModelForm, default_crispy_helper
+from alexia.forms import AlexiaForm, AlexiaModelForm
 
 from .models import Event
 
@@ -55,7 +55,9 @@ class EventForm(AlexiaModelForm):
         return locations
 
 
-class FilterEventForm(forms.Form):
+class FilterEventForm(AlexiaForm):
+    submit_text = _('Filter')
+
     location = forms.ModelMultipleChoiceField(
         queryset=Location.objects.all(),
         initial=Location.objects.all(),
@@ -67,5 +69,7 @@ class FilterEventForm(forms.Form):
     from_time = forms.SplitDateTimeField(label=_('From time'), initial=timezone.now)
     till_time = forms.SplitDateTimeField(label=_('Till time'), required=False)
 
-    helper = default_crispy_helper(_('Filter'))
-    helper.form_method = 'GET'
+    def get_helper(self):
+        helper = super(FilterEventForm, self).get_helper()
+        helper.form_method = 'GET'
+        return helper

@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
 
-from alexia.forms import EmptyInlineFormSet, default_crispy_helper
+from alexia.forms import AlexiaForm, EmptyInlineFormSet
 
 from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
 
@@ -105,8 +105,8 @@ def get_year():
     return now.year - 1 if now.month == 1 else now.year
 
 
-class ExportForm(forms.Form):
-    helper = default_crispy_helper(_('Export'))
+class ExportForm(AlexiaForm):
+    submit_text = _('Export')
 
     month = forms.TypedChoiceField(label=_('Month'), choices=MONTHS.items(), coerce=int, initial=get_previous_month)
     year = forms.IntegerField(label=_('Year'), initial=get_year)

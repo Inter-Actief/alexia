@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from alexia.apps.billing.models import (
     PermanentProduct, PriceGroup, ProductGroup, SellingPrice,
 )
-from alexia.forms import default_crispy_helper
+from alexia.forms import AlexiaForm
 
 
 class PermanentProductForm(forms.ModelForm):
@@ -46,9 +46,13 @@ def get_previous_month_end():
     return get_previous_month(False)
 
 
-class FilterEventForm(forms.Form):
-    helper = default_crispy_helper(_('Export'))
-    helper.attrs = {'target': '_blank'}
+class FilterEventForm(AlexiaForm):
+    submit_text = _('Export')
 
     from_time = forms.SplitDateTimeField(label=_('From time'), initial=get_previous_month)
     till_time = forms.SplitDateTimeField(label=_('Till time'), initial=get_previous_month_end)
+
+    def get_helper(self):
+        helper = super(FilterEventForm, self).get_helper()
+        helper.attrs = {'target': '_blank'}
+        return helper

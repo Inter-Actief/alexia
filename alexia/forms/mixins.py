@@ -4,20 +4,35 @@ from django.forms import Form, ModelForm
 from django.utils.translation import ugettext as _
 
 
-def default_crispy_helper(submit_text=None):
-    if not submit_text:
-        submit_text = _('Save')
+class BaseCrispyFormMixin(object):
+    submit_text = None
 
-    helper = FormHelper()
-    helper.form_class = 'form-horizontal'
-    helper.label_class = 'col-md-2'
-    helper.field_class = 'col-md-10'
-    helper.add_input(Submit('submit', submit_text))
-    return helper
+    def get_helper(self):
+        helper = FormHelper()
+        helper.form_class = 'form-horizontal'
+        helper.label_class = 'col-md-2'
+        helper.field_class = 'col-md-10'
+        helper.add_input(Submit('submit', self.get_submit_text()))
+        return helper
+
+    def get_submit_text(self):
+        if self.submit_text:
+            return self.submit_text
+        else:
+            return _('Save')
 
 
-class BootstrapFormMixin:
-    helper = default_crispy_helper()
+class CrispyFormMixin(BaseCrispyFormMixin):
+    def get_form(self, form_class=None):
+        form = super(CrispyFormMixin, self).get_form(form_class)
+        form.helper = self.get_helper()
+        return form
+
+
+class BootstrapFormMixin(BaseCrispyFormMixin):
+    def __init__(self, *args, **kwargs):
+        self.helper = self.get_helper()
+        super(BootstrapFormMixin, self).__init__(*args, **kwargs)
 
 
 class AlexiaForm(BootstrapFormMixin, Form):
@@ -26,13 +41,3 @@ class AlexiaForm(BootstrapFormMixin, Form):
 
 class AlexiaModelForm(BootstrapFormMixin, ModelForm):
     pass
-
-
-class CrispyFormMixin(object):
-    """
-    Mixin to add Crispy form helper.
-    """
-    def get_form(self, form_class=None):
-        form = super(CrispyFormMixin, self).get_form(form_class)
-        form.helper = default_crispy_helper()
-        return form
