@@ -1,58 +1,64 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'Permanent product' %}: {{ object }}{% endblock %}
+{% block title %}{{ permanentproduct }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>{% trans 'Permanent product' %}: {{ object }}</h1>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-6">
-        <h3>{% trans 'Product information' %}</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th>{% trans 'Name' %}</th>
-                <td>{{ object.name }}</td>
-            </tr>
-            <tr>
-                <th>{% trans 'Organization' %}</th>
-                <td>{{ object.organization }}</td>
-            </tr>
-            <tr>
-                <th>{% trans 'Product group' %}</th>
-                <td><a href="{{ object.productgroup.get_absolute_url }}">{{ object.productgroup }}</a></td>
-            </tr>
-        </table>
-        <p>
-            <a class="btn btn-default" href="{% url 'permanentproduct_update' object.pk %}">
+    <h1>
+        <small>{% trans 'Product' %}</small>
+        {{ permanentproduct }}
+        <div class="pull-right">
+            <a class="btn btn-default" href="{% url 'product_update' permanentproduct.pk %}">
                 <span class="glyphicon glyphicon-pencil"></span>
                 {% trans 'Modify' %}
             </a>
-        </p>
+            <a class="btn btn-trash" href="{% url 'product_delete' permanentproduct.pk %}">
+                <span class="glyphicon glyphicon-trash"></span>
+                {% trans 'Delete' %}
+            </a>
+        </div>
+    </h1>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>{% trans 'Product information' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-xs-6">{% trans 'Name' %}</th>
+                <td class="col-xs-6">{{ permanentproduct.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Organization' %}</th>
+                <td>{{ permanentproduct.organization }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Product group' %}</th>
+                <td><a href="{{ permanentproduct.productgroup.get_absolute_url }}">{{ permanentproduct.productgroup }}</a></td>
+            </tr>
+        </table>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-sm-6">
         <h3>{% trans 'Juliana settings' %}</h3>
         <table class="table table-bordered">
             <tr>
-                <th>{% trans 'Position' %}</th>
-                <td>{{ object.position }}</td>
+                <th class="col-xs-6">{% trans 'Position' %}</th>
+                <td class="col-xs-6">{{ permanentproduct.position }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Text color' %}</th>
-                <td>{{ object.text_color|default:"&mdash;" }}</td>
+                <td>{{ permanentproduct.text_color|default:'&mdash;' }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Background color' %}</th>
-                <td>{{ object.background_color|default:"&mdash;" }}</td>
+                <td>{{ permanentproduct.background_color|default:'&mdash;' }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Color example' %}</th>
-                <td {% if object.background_color %}style="background-color: #{{ object.background_color }};"{% endif %}>
-                    <span {% if object.text_color %}style="color: #{{ object.text_color }};"{% endif %}>{{ object.name }}</span>
+                <td{% if permanentproduct.background_color %} style="background-color: #{{ permanentproduct.background_color }}"{% endif %}>
+                    <span{% if permanentproduct.text_color %} style="color: #{{ permanentproduct.text_color }}"{% endif %}>{{ permanentproduct.name }}</span>
                 </td>
             </tr>
         </table>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

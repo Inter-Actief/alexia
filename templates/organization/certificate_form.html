@@ -1,0 +1,37 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Upload IVA certificate' %}{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>{% trans 'Upload IVA certificate' %}</h1>
+</div>
+
+{% if certificate.approved_at %}
+<div class="alert alert-danger">
+    <strong>{% trans 'Caution!' %}</strong>
+    {% trans 'This is already an approved IVA certificate. Uploading a new one will make the current one invalid!' %}
+</div>
+{% endif %}
+
+{% if membership %}
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-2">{% trans 'User' %}</label>
+        <div class="controls col-lg-10">
+            <p class="input-static">{{ membership.user.get_full_name }}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">{% trans 'Organization' %}</label>
+        <div class="controls col-lg-10">
+            <p class="input-static">{{ membership.organization.name }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% crispy form %}
+
+{% endblock content %}

@@ -1,13 +1,9 @@
 language: python
-# List of Python versions to test
-matrix:
-  fast_finish: true
-  include:
-    - python: 2.7
-    - python: 3.4
-    - python: 3.5
-# command to the requirements
-install:
-  - pip install -r config/requirements.txt
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+# command to install dependencies
+install: "pip install -r config/requirements.txt"
 # command to run tests
-script: python manage.py test --settings settings.travis
+script: "python manage.py test --settings alexia.conf.settings.test"

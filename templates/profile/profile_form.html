@@ -1,0 +1,10 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Modify profile' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Modify profile' %}</h1>
+</div>
+{% crispy form %}
+{% endblock content %}

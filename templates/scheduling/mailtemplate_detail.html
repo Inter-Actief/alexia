@@ -1,48 +1,40 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'Mail template' %}: {{ object }}{% endblock %}
+{% block title %}{% trans 'Mail template' %} {{ mailtemplate }}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
-    <h1>{% trans 'Mail template' %}: {{ object }}</h1>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-6">
-        <table class="table table-bordered">
-            <tr>
-                <th>{% trans 'Name' %}</th>
-                <td>{{ object.get_name_display }}</td>
-            </tr>
-            <tr>
-                <th>{% trans 'Organization' %}</th>
-                <td>{{ object.organization }}</td>
-            </tr>
-            <tr>
-                <th>{% trans 'Subject' %}</th>
-                <td>{{ object.subject }}</td>
-            </tr>
-            <tr>
-                <th>{% trans 'Is active' %}</th>
-                <td>{{ object.is_active|yesno }}</td>
-            </tr>
-            {% if object.has_send_at %}
-            <tr>
-                <th>{% trans 'Send at' %}</th>
-                <td>{{ object.send_at }} minutes before event</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>{% trans 'Template' %}</th>
-                <td><pre>{{ object.template }}</pre></td>
-            </tr>
-        </table>
-        <p>
-            <a class="btn btn-default" href="{% url 'mailtemplate_update' object.name %}">
+    <h1>
+        <small>{% trans 'Mail template' %}</small>
+        {{ mailtemplate }}
+        <div class="pull-right">
+            <a class="btn btn-default" href="{% url 'mailtemplate_update' mailtemplate.name %}">
                 <span class="glyphicon glyphicon-pencil"></span>
                 {% trans 'Modify' %}
             </a>
-        </p>
-    </div>
+        </div>
+    </h1>
 </div>
-{% endblock %}
+<table class="table table-bordered">
+    <tr>
+        <th>{% trans 'Name' %}</th>
+        <td>{{ mailtemplate.get_name_display }}</td>
+    </tr>
+    <tr>
+        <th>{% trans 'Organization' %}</th>
+        <td>{{ mailtemplate.organization }}</td>
+    </tr>
+    <tr>
+        <th>{% trans 'Subject' %}</th>
+        <td>{{ mailtemplate.subject }}</td>
+    </tr>
+    <tr>
+        <th>{% trans 'Is active' %}</th>
+        <td>{{ mailtemplate.is_active|yesno }}</td>
+    </tr>
+    <tr>
+        <th>{% trans 'Template' %}</th>
+        <td><pre>{{ mailtemplate.template }}</pre></td>
+    </tr>
+</table>
+{% endblock content %}

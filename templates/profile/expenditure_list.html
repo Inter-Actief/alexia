@@ -1,0 +1,38 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'My expenditures' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {% trans 'My expenditures' %}
+    </h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans 'Date' %}</th>
+                <th>{% trans 'Event' %}</th>
+                <th>{% trans 'Amount spent' %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in event_list %}
+            <tr>
+                <td>{{ event.starts_at|date:"l d F" }}</td>
+                <td><a href="{% url 'event-expenditures-profile' event.pk %}">{{ event.name }}</a></td>
+                <td>&euro; {{ event.spent|floatformat:2 }}</td>
+                <td><a href="{% url 'event-expenditures-profile' event.pk %}" class="btn btn-xs btn-default">Details</a></td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">{% trans 'There are no expenditures!' %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include 'partials/pagination.html' %}
+{% endblock content %}

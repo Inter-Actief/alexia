@@ -1,5 +1,4 @@
 {% extends 'base_app.html' %}
-{% load i18n crispy_forms_tags %}
 
 {% block title %}
 {% if event.pk %}
@@ -7,39 +6,25 @@
 {% else %}
 {% trans 'Add event' %}
 {% endif %}
-{% endblock %}
-
-{% block head %}
-    <script>
-    $(function () {
-        $('.dateinput').datepicker({
-            autoclose: true,
-            format: '{% trans 'yyyy-mm-dd' %}',
-            weekStart: 1
-        });
-    });
-    </script>
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
-    <div class="page-header">
-        <h1>
-            {% if event.pk %}
-            {% trans 'Edit event' %}
-            {% else %}
-            {% trans 'Add event' %}
-            {% endif %}
-        </h1>
-    </div>
-
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="control-label col-lg-2">{% trans 'Organizer' %}</label>
-            <div class="controls col-lg-8">
-                <p class="input-static">{{ request.organization }}</p>
-            </div>
+<div class="page-header">
+    <h1>
+        {% if event.pk %}
+        {% trans 'Edit event' %}
+        {% else %}
+        {% trans 'Add event' %}
+        {% endif %}
+    </h1>
+</div>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-2">{% trans 'Organizer' %}</label>
+        <div class="controls col-lg-8">
+            <p class="input-static">{{ current_organization }}</p>
         </div>
     </div>
-
-    {% crispy form %}
-{% endblock %}
+</div>
+{% crispy form %}
+{% endblock content %}

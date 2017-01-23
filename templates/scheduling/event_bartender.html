@@ -1,0 +1,59 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Bartender' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Bartender' %}</h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover table-condensed table-events">
+        <thead>
+            <tr>
+                <th class="col-sm-2">{% trans 'Date' %}</th>
+                <th class="col-sm-2">{% trans 'Time' %}</th>
+                <th class="col-sm-1">{% trans 'Location' %}</th>
+                <th class="col-sm-3">{% trans 'Name' %}</th>
+                <th class="col-sm-2">{% trans 'Bartenders' %}</th>
+                <th class="col-sm-2">{% trans 'Instructions' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in event_list %}
+            <tr{% if event.option %} class="event-option"{% endif %}>
+                <td>
+                    {% if event.starts_at|date == event.ends_at|date %}
+                    {{ event.starts_at|date:"D d b" }}
+                    {% else %}
+                    {{ event.starts_at|date:"D d b" }}<br>{{ event.ends_at|date:"D d b" }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if event.starts_at|date == event.ends_at|date %}
+                    {{ event.starts_at|time:"TIME_FORMAT" }} - {{ event.ends_at|time:"TIME_FORMAT" }}
+                    {% else %}
+                    {{ event.starts_at|time:"TIME_FORMAT" }}<br>{{ event.ends_at|time:"TIME_FORMAT" }}
+                    {% endif %}
+                </td>
+                <td>{{ event.location.all|join:"<br>" }}</td>
+                <td>
+                    {% if event.organizer == current_organization and is_planner %}
+                    <a href="{% url 'event' event.pk %}">{{ event.name }}</a>
+                    {% else %}
+                    {{ event.name }}
+                    {% endif %}
+                </td>
+                <td id="assigned_bartenders_{{ event.pk }}">
+                    {% include 'scheduling/partials/assigned_bartenders.html' with e=e %}
+                </td>
+                <td>{{ event.tender_comments }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">{% blocktrans %}You don't have any events to tend.{% endblocktrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

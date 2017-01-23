@@ -1,0 +1,10 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% blocktrans with organization=current_organization %}Export transactions of {{ organization }}{% endblocktrans %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% blocktrans with organization=current_organization %}Export transactions of {{ organization }}{% endblocktrans %}</h1>
+</div>
+{% crispy form %}
+{% endblock content %}

@@ -1,12 +1,11 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% blocktrans with organization=request.organization %}Mail templates of {{ organization }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with organization=current_organization %}Mail templates of {{ organization }}{% endblocktrans %}{% endblock title %}
 
 {% block content %}
-<div class="page-header clearfix">
-    <h1 class="pull-left">
-         {% blocktrans with organization=request.organization %}Mail templates of {{ organization }}{% endblocktrans %}
+<div class="page-header">
+    <h1>
+         {% blocktrans with organization=current_organization %}Mail templates of {{ organization }}{% endblocktrans %}
     </h1>
 </div>
 <div class="table-responsive">
@@ -20,13 +19,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for object in object_list %}
+        {% for mailtemplate in object_list %}
             <tr>
-                <td><a href="{{ object.get_absolute_url }}">{{ object.get_name_display }}</a></td>
-                <td>{{ object.subject }}</td>
-                <td>{{ object.is_active|yesno }}</td>
+                <td><a href="{{ mailtemplate.get_absolute_url }}">{{ mailtemplate.get_name_display }}</a></td>
+                <td>{{ mailtemplate.subject }}</td>
+                <td>{{ mailtemplate.is_active|yesno }}</td>
                 <td>
-                    <a class="btn btn-xs btn-default" href="{% url 'mailtemplate_update' object.name %}">
+                    <a class="btn btn-xs btn-default" href="{% url 'mailtemplate_update' mailtemplate.name %}">
                         <span class="glyphicon glyphicon-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
@@ -34,10 +33,10 @@
             </tr>
         {% empty %}
             <tr>
-                <td colspan="2">{% trans "No price groups defined." %}</td>
+                <td colspan="4">{% trans 'No mail templates defined.' %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
-{% endblock %}
+{% endblock content %}

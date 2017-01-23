@@ -1,0 +1,35 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'My payments' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% blocktrans %}My payments at {{ event }}{% endblocktrans %}</h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans 'Timestamp' %}</th>
+                <th>{% trans 'Amount' %}</th>
+                <th>{% trans 'Handled by' %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in order_list %}
+            <tr>
+                <td>{{ order.placed_at|date:"l d F H:i" }}</td>
+                <td>&euro; {{ order.amount|floatformat:2 }}</td>
+                <td>{{ order.added_by.get_full_name }}</td>
+                <td><a href="{% url 'order' order.pk %}" class="btn btn-xs btn-default">Details</a></td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">{% trans 'There are no payments!' %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

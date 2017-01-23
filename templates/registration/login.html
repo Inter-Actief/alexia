@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{% trans 'Login' %}{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+            <div class="well login-form">
+                <img src="{% static 'img/alexia.svg' %}" alt="Alexia" class="login-logo">
+                <h2>{% trans 'Log in' %}</h2>
+                <p>{% trans 'Log in with your student or employee account and password.' %}</p>
+                <form id="form-login" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {{ form | crispy }}
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">{% trans 'Log in' %}</button>
+                        <a href="{% url 'help' %}" class="btn">{% trans 'Help' %}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

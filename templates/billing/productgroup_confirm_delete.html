@@ -1,0 +1,22 @@
+    {% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Product group' %} {{ productgroup }}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        <small>{% trans 'Product group' %}</small>
+        {{ productgroup }}
+    </h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <p>{% trans 'Are you sure you want to delete this product group? The following products will also be deleted:' %}</p>
+    <ul>
+    {{ productgroup.permanentproduct_set.all|unordered_list }}
+    </ul>
+    <button type="submit" class="btn btn-danger">
+        <span class="glyphicon glyphicon-trash"></span> {% trans 'Delete' %}
+    </button>
+</form>
+{% endblock content %}

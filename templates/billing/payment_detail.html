@@ -1,0 +1,55 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Payment' %} #{{ order.pk }}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Payment' %} #{{ order.pk }}</h1>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>{% trans 'Details' %}</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-xs-6">{% trans 'Debtor' %}</th>
+                <td class="col-xs-6">{{ order.authorization.user.get_full_name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Timestamp' %}</th>
+                <td>{{ order.placed_at|date:"l d F H:i" }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Event' %}</th>
+                <td>{{ order.event }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Amount' %}</th>
+                <td>&euro; {{ order.amount|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Handled by' %}</th>
+                <td>{{ order.added_by.get_full_name }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h3>{% trans 'Items' %}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-xs-6">{% trans 'Product' %}</th>
+                    <th class="col-xs-6">{% trans 'Price' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for purchase in order.purchases.all %}
+                <tr>
+                    <td>{{ purchase.amount }} &times; {{ purchase.product }}</td>
+                    <td>&euro; {{ purchase.price|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

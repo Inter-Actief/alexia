@@ -1,18 +1,17 @@
 {% extends 'base_app.html' %}
-{% load i18n hide_email %}
 
-{% block title %}Help{% endblock %}
+{% block title %}Help{% endblock title %}
 
 {% block content %}
 <div class="page-header">
     <h1>Help</h1>
 </div>
 <p>
-    Alexia is het borrelbeheersysteem van de studieverenigingen van de faculteiten EWI en MB, samenwerkend in Stichting Borrelbeheer Zilverling. In dit systeem worden de borrelruimtes gereserveerd en in de toekomst kunnen ook verbruik en verkoop geregistreerd worden.
+    Alexia is het borrelbeheersysteem van de studieverenigingen van de faculteiten EWI en MB, samenwerkend in Stichting
+    Borrelbeheer Zilverling. In dit systeem worden de borrelruimtes gereserveerd en in de toekomst kunnen ook verbruik
+    en verkoop geregistreerd worden.
 </p>
-<h2>
-    Inhoudsopgave
-</h2>
+<h2>Inhoudsopgave</h2>
 <ul>
     <li><a href="#inloggen">Inloggen</a></li>
     <li><a href="#beschikbaarheid">Beschikbaarheid aangeven</a></li>
@@ -20,140 +19,123 @@
     <li><a href="#tappersbeheren">Tappers beheren</a></li>
     <li><a href="#bugs">Fouten of suggesties?</a></li>
 </ul>
-<h2 id="inloggen">
-    Inloggen
-</h2>
+<h2 id="inloggen">Inloggen</h2>
 <p>
-    Het inloggen in Alexia gaat door middel van je UTwente-account (s- of m-nummer en bijbehorend wachtwoord). Het wachtwoord voor het oude borrelbeheersysteem wordt dus niet meer gebruikt.
+    Het inloggen in Alexia gaat door middel van je UTwente-account (s- of m-nummer en bijbehorend wachtwoord). Het
+    wachtwoord voor het oude borrelbeheersysteem wordt dus niet meer gebruikt.
 </p>
 <p>
-    Op de inlogpagina kan je tevens aangeven voor welke vereniging je inlogt, door het logo van die vereniging aan te klikken.
+    Op de inlogpagina kan je tevens aangeven voor welke vereniging je inlogt, door het logo van die vereniging aan te
+    klikken.
 </p>
-<h3>
-    Eerste keer inloggen
-</h3>
+<h3>Eerste keer inloggen</h3>
 <p>
-    Als je voor de eerste keer inlogt, kan je gevraagd worden naar je naam en/of e-mailadres. Hier vul je het e-mailadres in waarop je alle mails vanuit Alexia wilt ontvangen.
+    Als je voor de eerste keer inlogt, kan je gevraagd worden naar je naam en/of e-mailadres. Hier vul je het
+    e-mailadres in waarop je alle mails vanuit Alexia wilt ontvangen.
 </p>
-<h2 id="beschikbaarheid">
-    Beschikbaarheid aangeven
-</h2>
+<h2 id="beschikbaarheid">Beschikbaarheid aangeven</h2>
 <p>
-    Als je een tapper bent voor een vereniging, kun je je beschikbaarheid aangeven onder de knop <a href="{% url 'schedule' %}">Planning</a>. Op deze pagina kun je alle ingeplande borrels zien. Bij de borrels waar jouw vereniging deelneemt, kun je met het keuzemenu rechts aangeven of je die borrel wilt tappen.
+    Als je een tapper bent voor een vereniging, kun je je beschikbaarheid aangeven onder de knop
+    <a href="{% url 'event-list' %}">Planning</a>. Op deze pagina kun je alle ingeplande borrels zien. Bij de borrels
+    waar jouw vereniging deelneemt, kun je met het keuzemenu rechts aangeven of je die borrel wilt tappen.
 </p>
 <p>
-    <em>Kan je je beschikbaarheid niet wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als tapper bent geregistreerd bij je vereniging. Verder kan het zijn dat het aangeven van de beschikbaarheid is uitgeschakeld voor een borrel.
+    <em>Kan je je beschikbaarheid niet wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd
+    rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je
+    controleren of je ook als tapper bent geregistreerd bij je vereniging. Verder kan het zijn dat het aangeven van de
+    beschikbaarheid is uitgeschakeld voor een borrel.
 </p>
-<h2 id="plannen">
-    Borrels plannen
-</h2>
+<h2 id="plannen">Borrels plannen</h2>
 <p>
-    Met de knop <a href="{% url 'new-event' %}">Nieuwe activiteit</a> op de pagina <a href="{% url 'schedule' %}">Planning</a> kun je als Planner nieuwe borrels inplannen. Met het potloodje <a class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a> kun je borrels wijzigen en met het prullenbakje <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> kun je geplande borrels verwijderen.
+    Met de knop <a href="{% url 'new-event' %}">Nieuwe activiteit</a> op de pagina
+    <a href="{% url 'event-list' %}">Planning</a> kun je als Planner nieuwe borrels inplannen. Met het potloodje
+    <a class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a> kun je borrels wijzigen en
+    met het prullenbakje <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> kun je
+    geplande borrels verwijderen.
 </p>
 <dl>
-    <dt>
-        Participants
-    </dt>
+    <dt>Participants</dt>
     <dd>
         Geeft aan welke vereniging meedoen met deze activiteit. Tappers van de verenigingen die je selecteerd kunnen zich inschrijven als tapper voor de borrel.
     </dd>
-    <dt>
-        Naam
-    </dt>
+    <dt>Naam</dt>
     <dd>
         De naam van de borrel of activiteit
     </dd>
-    <dt>
-        Omschrijving
-    </dt>
+    <dt>Omschrijving</dt>
     <dd>
         Extra informatie over een borrel. Momenteel alleen zichtbaar voor planners.
     </dd>
-    <dt>
-        Begintijd
-    </dt>
+    <dt>Begintijd</dt>
     <dd>
         De begintijd van de reservering. De reservering mag niet overlappen met andere reserveringen in dezelfde ruimte.
     </dd>
-    <dt>
-        Eindtijd
-    </dt>
+    <dt>Eindtijd</dt>
     <dd>
         De eindtijd van de reservering.
     </dd>
-    <dt>
-        Inschrijving gesloten
-    </dt>
+    <dt>Inschrijving gesloten</dt>
     <dd>
         Als dit vakje is aangevinkt, kunnen tappers zich niet meer inschrijven voor deze borrel of hun beschikbaarheid wijzigen.
     </dd>
-    <dt>
-        Location
-    </dt>
+    <dt>Location</dt>
     <dd>
         De gereserveerde ruimte(s).
     </dd>
-    <dt>
-        Aantal fusten
-    </dt>
+    <dt>Aantal fusten</dt>
     <dd>
         Het aantal fusten bier dat je verwacht te verbruiken.
     </dd>
-    <dt>
-        Prijscategorie
-    </dt>
+    <dt>Prijscategorie</dt>
     <dd>
         De categorie voor verkoopprijzen voor deze borrel. Wordt momenteel niet gebruikt.
     </dd>
 </dl>
 <p>
-    <em>Kan je geen borrels plannen of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als planner bent geregistreerd bij je vereniging.
+    <em>Kan je geen borrels plannen of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd
+    rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je
+    controleren of je ook als planner bent geregistreerd bij je vereniging.
 </p>
-<h2 id="tappersbeheren">
-    Tappers beheren
-</h2>
+<h2 id="tappersbeheren">Tappers beheren</h2>
 <p>
-    Op de pagina <a href="{% url 'memberships' %}">Gebruikers</a> kunnen Managers van de vereniging de tappers, planners en managers van de vereniging bekijken, toevogen, bewerken of verwijderen.
+    Op de pagina <a href="{% url 'memberships' %}">Gebruikers</a> kunnen Managers van de vereniging de tappers,
+    planners en managers van de vereniging bekijken, toevogen, bewerken of verwijderen.
 </p>
 <dl>
-    <dt>
-        RADIUS-gebruikersnaam
-    </dt>
+    <dt>RADIUS-gebruikersnaam</dt>
     <dd>
         Vul hier het s- of m-nummer van de betreffende persoon in.
     </dd>
-    <dt>
-        Mag op borrels tappen
-    </dt>
+    <dt>Mag op borrels tappen</dt>
     <dd>
         Geeft aan dat de persoon zich in kan schrijven als tapper voor borrels.
     </dd>
-    <dt>
-        Mag borrels aanmaken en wijzigen
-    </dt>
+    <dt>Mag borrels aanmaken en wijzigen</dt>
     <dd>
         Geeft aan dat de persoon borrels kan aanmaken, wijzigen en verwijderen.
     </dd>
-    <dt>
-        Mag tappers aanmaken en wijzigen
-    </dt>
+    <dt>Mag tappers aanmaken en wijzigen</dt>
     <dd>
         Geeft aan dat de persoon tappers, planners en managers kan aanmaken, wijzigen en verwijderen.
     </dd>
 </dl>
 <p>
-    Als een persoon voor de eerste keer wordt toegevoegd aan het systeem, moet je ook zijn voornaam, achternaam en e-mailadres invullen.
+    Als een persoon voor de eerste keer wordt toegevoegd aan het systeem, moet je ook zijn voornaam, achternaam en
+    e-mailadres invullen.
 </p>
 <p>
-    <em>Kan je geen tappes inzien of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je controleren of je ook als manager bent geregistreerd bij je vereniging.
+    <em>Kan je geen tappes inzien of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts
+    bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je
+    controleren of je ook als manager bent geregistreerd bij je vereniging.
 </p>
-<h2 id="bugs">
-    Fouten of suggesties?
-</h2>
+<h2 id="bugs">Fouten of suggesties?</h2>
 <p>
-    Als je een probleem hebt met de planning van een borrel, kun je contact opnemen met het bestuur van Stichting Borrelbeheer Zilverling via {% hide_email "overleg@sbz.utwente.nl" %}.
+    Als je een probleem hebt met de planning van een borrel, kun je contact opnemen met het bestuur van Stichting
+    Borrelbeheer Zilverling via <span class="reverse">ln.etnewtu.zbs@gelrevo</span>.
 </p>
 <p>
-    Heb je een fout gevonden in dit borrelbeheersysteem of heb je suggesties voor verbetering, dat kun je contact opnemen met de <a href="https://www.inter-actief.utwente.nl/commissies/2/www-commissie/">WWW-commissie</a> van Inter-<i>Actief</i> via {% hide_email "www@inter-actief.net" %}.
+    Heb je een fout gevonden in dit borrelbeheersysteem of heb je suggesties voor verbetering, dat kun je contact
+    opnemen met de <a href="https://www.inter-actief.utwente.nl/commissies/2/www-commissie/">WWW-commissie</a> van
+    Inter-<i>Actief</i> via <span class="reverse">ten.feitca-retni@www</span>.
 </p>
-{% endblock %}
+{% endblock content %}

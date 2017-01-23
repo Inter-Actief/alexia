@@ -1,7 +1,6 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'About' %}{% endblock %}
+{% block title %}{% trans 'About' %}{% endblock title %}
 
 {% block content %}
 <div class="page-header">
@@ -11,7 +10,7 @@
     <div class="col-xs-12 col-sm-6">
         <h3>{% trans 'Developers' %}</h3>
         <p>
-            {% blocktrans %}
+            {% blocktrans trimmed %}
             Alexia was developed for the drink basements under management of SBZ (Zilverling Drink Management Foundation). The
             base of this application was developed during the design project course, part of the Computer Science Bachelor.
             The following people contributed to this project:
@@ -25,9 +24,7 @@
             </ul>
         </p>
         <p>
-            {% blocktrans %}
-            After the design project development of Alexia was continued by
-            {% endblocktrans %}
+            {% trans 'After the design project development of Alexia was continued by' %}
             <ul>
                 <li>Cas Ebbers;</li>
                 <li>Nick Schot;</li>
@@ -40,15 +37,16 @@
         <h3>{% trans 'Stats' %}</h3>
         <h4>{% trans 'Organization' %}</h4>
         <p>
-            Alexia kent <strong>{{ count.users }} (oud-)gebruikers</strong>. Er zijn
+            Alexia kent
+            <strong>{{ count.users }} (oud-)gebruikers</strong>. Er zijn
             <strong>{{ count.organizations }} verenigingen </strong> met
             <strong>{{ count.tenders }} tappers</strong>. Verder zijn er
-            <strong>{{ count.locations }} locaties</strong> waarvan er
-            <strong>{{ count.public_locations }} fysieke borrelruimtes</strong> zijn.
+            <strong>{{ count.locations }} locaties</strong>.
         </p>
         <h4>{% trans 'Drinks' %}</h4>
         <p>
-            Het systeem registreert borrels sinds <strong>{{ count.first_event.starts_at|date }}</strong> en sindsdien zijn er
+            Het systeem registreert borrels sinds
+            <strong>{{ count.first_event.starts_at|date }}</strong> en sindsdien zijn er
             <strong>{{ count.events }} borrels</strong> aangemeld. Voor deze borrels hebben de tappers
             <strong>{{ count.bartender_availabilities }} keer</strong> hun beschikbaarheid aangegeven, waarvan er
             <strong>{{ count.bartender_availabilities_yes }} keer 'ja'</strong> is gezegd door de tappers, en er
@@ -56,4 +54,4 @@
         </p>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

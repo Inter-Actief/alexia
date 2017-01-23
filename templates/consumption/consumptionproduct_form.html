@@ -1,5 +1,4 @@
 {% extends 'base_app.html' %}
-{% load i18n crispy_forms_tags %}
 
 {% block title %}
 {% if object.pk %}
@@ -7,7 +6,7 @@
 {% else %}
 {% trans 'New consumption product' %}
 {% endif %}
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
 <div class="page-header">
@@ -19,6 +18,5 @@
         {% endif %}
     </h1>
 </div>
-
 {% crispy form %}
-{% endblock %}
+{% endblock content %}

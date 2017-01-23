@@ -1,0 +1,29 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ year }}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+         {% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %} in {{ year }}
+    </h1>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans 'Month' %}</th>
+                <th>{% trans 'Revenue' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for obj in obj_list %}
+            <tr>
+                <td><a href="{% url 'month-orders' obj.date.year obj.date.month %}">{{ obj.date|date:"F Y" }}</a></td>
+                <td>&euro; {{ obj.revenue|floatformat:2|default:"&mdash;" }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

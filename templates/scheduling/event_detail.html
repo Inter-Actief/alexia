@@ -1,0 +1,134 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{{ event }}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {{ event }}
+        {% if is_planner %}
+        <div class="pull-right">
+            <a href="{% url 'edit-event' event.pk %}" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil"></span>
+                {% trans 'Modify' %}
+            </a>
+        </div>
+        {% endif %}
+    </h1>
+</div>
+<div class="row">
+    <div class="col-xs-12{% if is_planner %} col-sm-6{% endif %}">
+        <h3>
+            {% trans 'Details' %}
+        </h3>
+        <table class="table table-bordered">
+            {% if event.description %}
+            <tr>
+                <th>{% trans 'Description' %}</th>
+                <td>{{ event.description|linebreaks }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th class="col-xs-4">{% trans 'Organizer' %}</th>
+                <td class="col-xs-8">{{ event.organizer }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Participants' %}</th>
+                <td>{{ event.participants.all|join:', ' }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Location' %}</th>
+                <td>{{ event.location.all|join:', ' }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'Start' %}</th>
+                <td>{{ event.starts_at|date:"l d F H:i" }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'End' %}</th>
+                <td>{{ event.ends_at|date:"l d F H:i" }}</td>
+            </tr>
+        </table>
+        {% if is_tender or is_planner or is_manager %}
+        {% if event.tender_comments %}
+        <h3>{% trans 'Tender comments' %}</h3>
+        <div class="well well-sm">{{ event.tender_comments }}</div>
+        {% endif %}
+        <h3>{% trans 'Temporary products' %}</h3>
+        <p>{% trans 'Temporary products can only be created or modified by managers.' %}</p>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="col-xs-4">{% trans 'Name' %}</th>
+                    <th class="text-right">{% trans 'Price' %}</th>
+                    {% if is_manager %}
+                    <th>{% trans 'Actions' %}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for temporaryproduct in event.temporaryproducts.all %}
+                <tr>
+                    <td{% if temporaryproduct.background_color %} style="background-color: #{{ temporaryproduct.background_color }}"{% endif %}>
+                        <span{% if temporaryproduct.text_color %} style="color: #{{ temporaryproduct.text_color }}"{% endif %}>
+                            {{ temporaryproduct.name }}
+                        </span>
+                    </td>
+                    <td class="text-right">&euro; {{ temporaryproduct.price }}</td>
+                    {% if is_manager %}
+                    <td>
+                        <a class="btn btn-default btn-xs" href="{% url 'temporaryproduct_update' temporaryproduct.pk %}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            {% trans 'Modify' %}
+                        </a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'temporaryproduct_delete' temporaryproduct.pk %}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            {% trans 'Delete' %}
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="{% if is_manager %}3{% else %}2{% endif %}" class="text-center"><i>{% trans 'No temporary products defined.' %}</i></td>
+                </tr>
+            {% endfor %}
+            {% if is_manager %}
+                <tr>
+                    <td colspan="{% if is_manager %}3{% else %}2{% endif %}" class="text-center">
+                        <a href="{% url 'temporaryproduct_create' event_pk=event.pk %}" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            {% trans 'Add' %}
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    {% if is_planner %}
+    <div class="col-xs-12 col-sm-6">
+        <h3>{% trans 'Bartenders' %}</h3>
+        <table class="table table-condensed">
+        {% for obj in tender_list %}
+            <tr{% if not obj.tender.is_active %} class="tr-muted"{% endif %}>
+                <td class="col-xs-6 text-right">
+                    <a title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" href="{% url 'membership' obj.tender.pk %}">
+                        {{ obj.tender.user.get_full_name }}
+                    </a>
+                </td>
+                <td class="col-xs-6">
+                    <a href="{% url 'edit-event-bartender-availability' pk=event.pk user_pk=obj.tender.user.pk %}">
+                        <span title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" class="label label-{{ obj.availability.css_class|default:'default' }}">
+                            {{ obj.availability|default:_("Unknown") }}
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

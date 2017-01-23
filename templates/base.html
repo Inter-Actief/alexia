@@ -1,37 +1,26 @@
-{% load i18n compress %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
+        <script>var LOCALE='{{ LANGUAGE_CODE }}';</script>
+        <title>{% block title %}{% endblock title %} | Alexia</title>
         <meta charset="utf-8">
-        <title>{% block title %}{% trans 'Home' %}{% endblock title %} | Alexia</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Alexia drink management">
-        <meta name="author" content="Alexia">
-        <link rel="apple-touch-icon" href="{{ STATIC_URL }}img/apple-touch-icon.png">
-        {% compress js %}
-        <script src="{{ STATIC_URL }}js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/jquery-ui-1.11.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-3.3.5.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-datepicker-1.4.0.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-datepicker-1.4.0.nl.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap3-timepicker2-1.0.0.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/fullcalendar.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/jquery.qtip.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="{{ STATIC_URL }}js/application.js" type="text/javascript" charset="utf-8"></script>
-        {% block extrajs %}{% endblock %}
-        {% endcompress %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+        <link rel="icon" href="{% static 'img/favicon.png' %}">
         {% compress css %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-3.3.5.min.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-3.3.5-theme.min.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/application.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-datepicker3-1.4.0.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap3-timepicker2-1.0.0.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.qtip.min.css" type="text/css" charset="utf-8">
+        {# Vendor #}
+        <link rel="stylesheet" href="{% static 'css/bootstrap-3.3.7.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-colorpicker.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-theme-3.3.7.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker-1.6.4.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker-0.5.2.css' %}">
+        <link rel="stylesheet" href="{% static 'css/fullcalendar-1.6.7.css' %}">
+        {# Alexia #}
+        <link rel="stylesheet" href="{% static 'css/application.css' %}">
         {% endcompress %}
-        {% block head %}{% endblock head %}
-      </head>
-      <body>
+    </head>
+    <body>
         {% block body %}{% endblock body %}
         <hr>
         <footer>
@@ -39,7 +28,7 @@
                 <div class="row text-center">
                     <a href="{% url 'about' %}">{% trans "Event management system Alexia" %}</a>
                     &mdash;
-                    &copy; 2011-2016
+                    &copy; 2011-2017
                     <a href="http://www.inter-actief.net/">I.C.T.S.V. Inter-Actief</a>,
                     <a href="https://www.arago.utwente.nl/">S.V. Arago</a>, {% trans "and" %}
                     <a href="https://github.com/Inter-Actief/alexia/blob/master/CONTRIBUTORS.md">{% trans "individual contributors" %}</a>
@@ -48,5 +37,18 @@
                 </div>
             </div>
         </footer>
+        {% compress js %}
+        {# Vendor #}
+        <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+        <script src="{% static 'js/bootstrap-3.3.7.js' %}"></script>
+        <script src="{% static 'js/bootstrap-colorpicker.js' %}"></script>
+        <script src="{% static 'js/bootstrap-datepicker-1.6.4.js' %}"></script>
+        <script src="{% static 'js/bootstrap-timepicker-0.5.2.js' %}"></script>
+        <script src="{% static 'js/Chart-2.4.0.js' %}"></script>
+        <script src="{% static 'js/fullcalendar-1.6.7.js' %}"></script>
+        {# Alexia #}
+        <script src="{% static 'js/application.js' %}"></script>
+        {% endcompress %}
+        {% block extrajs %}{% endblock extrajs %}
     </body>
 </html>

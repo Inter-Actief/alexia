@@ -1,0 +1,10 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Create user' %}{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans 'Create user' %} {{ username }}</h1>
+</div>
+{% crispy form %}
+{% endblock content %}

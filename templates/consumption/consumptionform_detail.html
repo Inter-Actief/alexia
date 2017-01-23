@@ -1,18 +1,19 @@
 {% extends 'base_app.html' %}
-{% load i18n %}
 
-{% block title %}{{ object.event }} {% trans 'consumption form' %}{% endblock %}
+{% block title %}{{ consumptionform.event }} {% trans 'consumption form' %}{% endblock title %}
 
 {% block content %}
 <div class="container">
-    <div class="page-header clearfix">
-        <h1>{{ object }}</h1>
-        <div class="text-right">
-            <a class="btn btn-default" href="{% url 'consumptionform_pdf' object.pk %}">
-                <span class="glyphicon glyphicon-print"></span>
-                {% trans 'PDF' %}
-            </a>
-        </div>
+    <div class="page-header">
+        <h1>
+            {{ consumptionform }}
+            <div class="pull-right">
+                <a class="btn btn-default" href="{% url 'consumptionform_pdf' consumptionform.pk %}">
+                    <span class="glyphicon glyphicon-print"></span>
+                    {% trans 'PDF' %}
+                </a>
+            </div>
+        </h1>
     </div>
     <div class="row">
         <div class="col-sm-6">
@@ -20,41 +21,41 @@
             <table class="table table-bordered">
                 <tr>
                     <th class="col-xs-3">{% trans 'Date' %}</th>
-                    <td class="col-xs-9">{{ object.event.starts_at|date:"l j F" }}</td>
+                    <td class="col-xs-9">{{ consumptionform.event.starts_at|date:"l j F" }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Location' %}</th>
-                    <td>{{ object.event.location.all|join:', ' }}</td>
+                    <td>{{ consumptionform.event.location.all|join:', ' }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Organizer' %}</th>
-                    <td>{{ object.event.organizer }}</td>
+                    <td>{{ consumptionform.event.organizer }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Status' %}</th>
                     <td>
-                        {% if object.is_completed %}
-                        {% trans 'Completed' %}
+                        {% if consumptionform.is_completed %}
+                        <span class="text-success">{% trans 'Completed' %}</span>
                         {% else %}
-                        {% trans 'Pending' %}
+                        <span class="text-danger">{% trans 'Pending' %}</span>
                         {% endif %}
                     </td>
             </table>
         </div>
         <div class="col-sm-6">
-            {% if object.is_completed %}
+            {% if consumptionform.is_completed %}
             <h3>{% trans 'Signed off by' %}</h3>
             <p>
-                {{ object.completed_by.get_full_name }}
+                {{ consumptionform.completed_by.get_full_name }}
                 {% trans 'on' %}
-                {{ object.completed_at|date:"l j F Y" }}
+                {{ consumptionform.completed_at|date:"l j F Y" }}
                 {% trans 'at' %}
-                {{ object.completed_at|date:"H:i"}}
+                {{ consumptionform.completed_at|date:"H:i"}}
             </p>
             {% endif %}
-            {% if object.comments %}
+            {% if consumptionform.comments %}
             <h3>{% trans 'Comments' %}</h3>
-            {{ object.comments|linebreaks }}
+            {{ consumptionform.comments|linebreaks }}
             {% endif %}
         </div>
     </div>
@@ -72,21 +73,39 @@
                 </tr>
             </thead>
             <tbody>
-            {% for entry in object.weightentry_set.all %}
+            {% for entry in consumptionform.weightentry_set.all %}
                 <tr>
                     <td>{{ entry.product }}</td>
                     <td>{{ entry.start_weight }} kg</td>
-                    <td>{{ entry.end_weight }} kg</td>
+                    <td>
+                        {% if entry.end_weight %}
+                        {{ entry.end_weight }} kg
+                        {% else %}
+                        <img src="{% static 'img/pending.gif' %}">
+                        {% endif %}
+                    </td>
                     <td>{{ entry.kegs_changed }}</td>
                     <td>
                         {% if entry.product.has_flowmeter %}
-                        {{ entry.flow_start }} &#8467; &mdash; {{ entry.flow_end }} &#8467;
+                        {{ entry.flow_start }} &#8467;
+                        &mdash;
+                        {% if entry.flow_end %}
+                        {{ entry.flow_end }} &#8467;
+                        {% else %}
+                        <img src="{% static 'img/pending.gif' %}">
+                        {% endif %}
                         {% endif %}
                     </td>
-                    <td>{{ entry.total }}</td>
+                    <td>
+                        {% if entry.total %}
+                        {{ entry.total }}
+                        {% else %}
+                        <img src="{% static 'img/pending.gif' %}">
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
-            {% for entry in object.unitentry_set.all %}
+            {% for entry in consumptionform.unitentry_set.all %}
                 <tr>
                     <td>{{ entry.product }}</td>
                     <td colspan="4"></td>
@@ -97,4 +116,4 @@
         </table>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}
