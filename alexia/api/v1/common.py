@@ -14,7 +14,6 @@ def format_authorization(authorization):
         'user_id': authorization.user.id,
         'start_date': authorization.start_date.isoformat(),
         'end_date': authorization.end_date.isoformat() if authorization.end_date else None,
-        'account': authorization.account,
     }
 
 

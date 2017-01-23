@@ -45,7 +45,6 @@ def order_unsynchronized(request, unused=0):
             "id": 1254,
             "rfid": "02,06:65:74:49",
             "authorization": {
-                "account": "NL13TEST0123456789",
                 "id": 1,
                 "end_date": null,
                 "start_date": "2014-09-21T14:16:06+00:00",
@@ -73,7 +72,6 @@ def order_unsynchronized(request, unused=0):
             "id": 1255,
             "rfid": "02,06:65:74:49",
             "authorization": {
-                "account": "NL13TEST0123456789",
                 "id": 1,
                 "end_date": null,
                 "start_date": "2014-09-21T14:16:06+00:00",
@@ -129,7 +127,6 @@ def order_get(request, order_id):
         "id": 1255,
         "rfid": "02,06:65:74:49",
         "authorization": {
-            "account": "NL13TEST0123456789",
             "id": 1,
             "end_date": null,
             "start_date": "2014-09-21T14:16:06+00:00",

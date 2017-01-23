@@ -19,7 +19,8 @@ class CommonTest(TestCase):
         super(CommonTest, self).setUp()
         self.load_organization_data()
 
-    def test_authorization_with_account(self):
+
+    def test_authorization(self):
         """
         Test the authorization.list call.
         """
@@ -28,8 +29,7 @@ class CommonTest(TestCase):
         start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
 
         # Create authorization
-        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'],
-                             account='NL13TEST0123456789', start_date=start_date)
+        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], start_date=start_date)
 
         auth_json = {
             'id': auth.id,
@@ -37,30 +37,6 @@ class CommonTest(TestCase):
             'user_id': self.data['user1'].id,
             'start_date': '2014-09-21T14:16:06+00:00',
             'end_date': None,
-            'account': 'NL13TEST0123456789',
-        }
-
-        self.convertAndAssertJSONEqual(format_authorization(auth), auth_json)
-
-    def test_authorization_without_account(self):
-        """
-        Test the authorization.list call.
-        """
-
-        # '2014-09-21T14:16:06+00:00'
-        start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
-
-        # Create authorization
-        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], account=None,
-                             start_date=start_date)
-
-        auth_json = {
-            'id': auth.id,
-            'user': self.data['user1'].username,
-            'user_id': self.data['user1'].id,
-            'start_date': '2014-09-21T14:16:06+00:00',
-            'end_date': None,
-            'account': None,
         }
 
         self.convertAndAssertJSONEqual(format_authorization(auth), auth_json)
@@ -76,8 +52,8 @@ class CommonTest(TestCase):
         end_date = timezone.make_aware(datetime.datetime(2015, 4, 16, 2, 56, 33), timezone.utc)
 
         # Create authorization
-        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'],
-                             account='NL13TEST0123456789', start_date=start_date, end_date=end_date)
+        auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], start_date=start_date,
+                             end_date=end_date)
 
         auth_json = {
             'id': auth.id,
@@ -85,7 +61,6 @@ class CommonTest(TestCase):
             'user_id': self.data['user1'].id,
             'start_date': '2014-09-21T14:16:06+00:00',
             'end_date': '2015-04-16T02:56:33+00:00',
-            'account': 'NL13TEST0123456789',
         }
 
         self.convertAndAssertJSONEqual(format_authorization(auth), auth_json)

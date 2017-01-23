@@ -47,7 +47,6 @@ class RfidCardInline(admin.TabularInline):
 class AuthorizationInline(admin.TabularInline):
     model = Authorization
     extra = 0
-    exclude = ['account']
 
 
 @admin.register(User)

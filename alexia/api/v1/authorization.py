@@ -29,7 +29,6 @@ def authorization_list(request, radius_username=None):
     Example return value:
     [
         {
-            "account": "NL13TEST0123456789",
             "id": 1,
             "end_date": null,
             "start_date": "2014-09-21T14:16:06+00:00",
@@ -78,7 +77,6 @@ def authorization_get(request, radius_username):
     Example return value:
     [
         {
-            "account": "NL13TEST0123456789",
             "id": 1,
             "end_date": null,
             "start_date": "2014-09-21T14:16:06+00:00"
@@ -96,17 +94,16 @@ def authorization_get(request, radius_username):
             'id': authorization.pk,
             'start_date': authorization.start_date.isoformat(),
             'end_date': authorization.end_date.isoformat() if authorization.end_date else None,
-            'account': authorization.account,
         })
 
     return result
 
 
-@jsonrpc_method('authorization.add(radius_username=String, account=String) -> Object',
+@jsonrpc_method('authorization.add(radius_username=String) -> Object',
                 site=api_v1_site, authenticated=True)
 @manager_required
 @transaction.atomic()
-def authorization_add(request, radius_username, account):
+def authorization_add(request, radius_username):
     """
     Add a new authorization to the specified user.
 
@@ -115,11 +112,9 @@ def authorization_add(request, radius_username, account):
     Returns the authorization on success.
 
     radius_username    -- RADIUS username to search for.
-    account            -- Bank account number.
 
     Example return value:
     {
-        "account": "NL13TEST0123456789",
         "id": 1,
         "end_date": null,
         "start_date": "2014-09-21T14:16:06+00:00",
@@ -135,7 +130,7 @@ def authorization_add(request, radius_username, account):
     except User.DoesNotExist:
         raise InvalidParametersError('User with provided radius_username does not exits')
 
-    authorization = Authorization(user=user, organization=request.organization, account=account)
+    authorization = Authorization(user=user, organization=request.organization)
     authorization.save()
 
     return format_authorization(authorization)
