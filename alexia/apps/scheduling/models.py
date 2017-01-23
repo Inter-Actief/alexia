@@ -82,7 +82,6 @@ class Event(models.Model):
         'billing.PriceGroup',
         models.SET_NULL,
         null=True,
-        related_name='events',
         verbose_name=_('pricegroup'),
     )
     kegs = models.PositiveSmallIntegerField(verbose_name=_("number of kegs"))

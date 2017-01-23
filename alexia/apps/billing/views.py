@@ -26,7 +26,7 @@ from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, TenderRequiredMixin,
 )
 from alexia.forms import CrispyFormMixin
-from alexia.utils.mixins import (
+from alexia.views import (
     CreateViewForOrganization, EventOrganizerFilterMixin, FixedValueCreateView,
     OrganizationFilterMixin, OrganizationFormMixin,
 )
@@ -114,7 +114,7 @@ class OrderDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailVi
 
     def get_context_data(self, **kwargs):
         products = Purchase.objects.filter(order__event=self.object) \
-            .values('product', 'product__name') \
+            .values('product') \
             .annotate(amount=Sum('amount'), price=Sum('price'))
 
         context = super(OrderDetailView, self).get_context_data(**kwargs)

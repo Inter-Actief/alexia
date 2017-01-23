@@ -9,7 +9,7 @@ from alexia.apps.billing.models import (
     TemporaryProduct,
 )
 from alexia.apps.scheduling.models import Event
-from alexia.utils.tests import TestCase
+from alexia.test import TestCase
 
 from .common import format_authorization, format_order
 

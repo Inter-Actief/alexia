@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from alexia.apps.billing.models import Order
-from alexia.utils.tests import APITestCase
+from alexia.test import APITestCase
 
 from .common import format_order
 

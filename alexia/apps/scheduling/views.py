@@ -24,7 +24,7 @@ from alexia.forms import CrispyFormMixin
 from alexia.http import IcalResponse
 from alexia.utils import log
 from alexia.utils.calendar import generate_ical
-from alexia.utils.mixins import (
+from alexia.views import (
     CreateViewForEvent, CreateViewForOrganization, OrganizationFilterMixin,
     OrganizationFormMixin,
 )

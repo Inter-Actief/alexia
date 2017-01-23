@@ -42,4 +42,4 @@ def generate_ical(events, name='Alexia', tender=False):
 
         cal.add_component(e)
 
-    return cal.to_ical()
+    return cal
