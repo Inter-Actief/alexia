@@ -46,7 +46,7 @@ class RadiusBackend(object):
         reply = srv.SendPacket(req)
 
         if reply.code == pyrad.packet.AccessAccept:
-            backend = self.__module__ + "." + self.__class__.__name__
+            backend = RADIUS_BACKEND_NAME
             user, created = get_or_create_user(backend, username)
             return user
 
