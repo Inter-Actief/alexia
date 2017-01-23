@@ -5,7 +5,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'alexia_test',
-        'USER': 'travis',
+        'USER': 'root',
     }
 }
 

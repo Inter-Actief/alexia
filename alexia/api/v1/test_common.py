@@ -82,9 +82,10 @@ class CommonTest(TestCase):
         productgroup = ProductGroup(organization=self.data['organization1'], name='Product group')
         productgroup.save()
 
-        product1 = PermanentProduct(productgroup=productgroup, organization=self.data['organization1'], position=0)
+        product1 = PermanentProduct(productgroup=productgroup, organization=self.data['organization1'], position=0,
+                                    name='PermanentProduct')
         product1.save()
-        product2 = TemporaryProduct(event=event, price=2.33)
+        product2 = TemporaryProduct(event=event, price=2.33, name='TemporaryProduct')
         product2.save()
 
         authorization = Authorization(user=self.data['user1'], organization=self.data['organization1'],
@@ -94,8 +95,8 @@ class CommonTest(TestCase):
         order = Order(event=event, authorization=authorization, placed_at=placed_at, added_by=self.data['user1'])
         order.save()
 
-        Purchase(order=order, product=product1, amount=1, price=0.50).save()
-        Purchase(order=order, product=product2, amount=2, price=4.66).save()
+        Purchase(order=order, product=product1.name, amount=1, price=0.50).save()
+        Purchase(order=order, product=product2.name, amount=2, price=4.66).save()
         order.save()
 
         order_json = {
@@ -111,16 +112,16 @@ class CommonTest(TestCase):
             'purchases': [
                 {
                     'product': {
-                        'id': product1.id,
-                        'name': '',
+                        'id': -1,
+                        'name': product1.name,
                     },
                     'amount': 1,
                     'price': '0.50',
                 },
                 {
                     'product': {
-                        'id': product2.id,
-                        'name': '',
+                        'id': -1,
+                        'name': product2.name,
                     },
                     'amount': 2,
                     'price': '4.66',

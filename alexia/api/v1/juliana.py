@@ -148,7 +148,7 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
         if price != p['price'] / Decimal(100):
             raise InvalidParamsError('Price for product %s is incorrect' % p['product'])
 
-        purchase = Purchase(order=order, product=product, amount=amount, price=price)
+        purchase = Purchase(order=order, product=product.name, amount=amount, price=price)
         purchase.save()
 
     order.save(force_update=True)  # ensure order.amount is correct

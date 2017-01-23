@@ -27,12 +27,12 @@ def order_unsynchronized(request, unused=0):
             "purchases": [
                 {
                     "price": "5.00",
-                    "product": {"id": 1, "name": "Grolsch"},
+                    "product": {"name": "Grolsch"},
                     "amount": 10
                 },
                 {
                     "price": "1.00",
-                    "product": {"id": 2, "name": "Coca Cola"},
+                    "product": {"name": "Coca Cola"},
                     "amount": 2
                 }
             ],
@@ -55,11 +55,11 @@ def order_unsynchronized(request, unused=0):
             "purchases": [
                 {
                     "price": "1.00",
-                    "product": {"id": 2, "name": "Coca Cola"},
+                    "product": {"name": "Coca Cola"},
                     "amount": 2
                 }, {
                     "price": "0.50",
-                    "product": {"id": 1, "name": "Grolsch"},
+                    "product": {"name": "Grolsch"},
                     "amount": 1
                 }
             ],
@@ -83,7 +83,7 @@ def order_unsynchronized(request, unused=0):
     result = []
     orders = Order.objects.filter(authorization__organization=request.organization, synchronized=False)
 
-    orders = orders.select_related('authorization__user', 'event').prefetch_related('purchases__product')
+    orders = orders.select_related('authorization__user', 'event')
 
     for order in orders:
         result.append(format_order(order))
@@ -110,11 +110,11 @@ def order_get(request, order_id):
         "purchases": [
             {
                 "price": "1.00",
-                "product": {"id": 2, "name": "Coca Cola"},
+                "product": {"name": "Coca Cola"},
                 "amount": 2
             }, {
                 "price": "0.50",
-                "product": {"id": 1, "name": "Grolsch"},
+                "product": {"name": "Grolsch"},
                 "amount": 1
             }
         ],

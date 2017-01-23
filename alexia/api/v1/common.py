@@ -27,8 +27,8 @@ def format_event(event):
 def format_order(order):
     purchases = [{
         'product': {
-            'id': p.product.pk,
-            'name': p.product.name,
+            'id': -1,
+            'name': p.product,
         },
         'amount': p.amount,
         'price': p.price,
