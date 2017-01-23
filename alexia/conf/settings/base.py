@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'eventlog',
     'jsonrpc',
+    'sslserver',
     'wkhtmltopdf',
 
     'alexia.api',

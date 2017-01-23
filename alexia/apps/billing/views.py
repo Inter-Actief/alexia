@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.dates import MONTHS
@@ -182,6 +183,9 @@ class OrderMonthView(ManagerRequiredMixin, TemplateView):
     template_name = 'billing/order_month.html'
 
     def get_context_data(self, **kwargs):
+        if int(kwargs['month']) not in range(1, 13):
+            raise Http404
+
         context = super(OrderMonthView, self).get_context_data(**kwargs)
         context['event_list'] = Event.objects.filter(
             organizer=self.request.organization,
