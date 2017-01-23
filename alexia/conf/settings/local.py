@@ -43,3 +43,5 @@ SERVER_EMAIL = EMAIL_FROM
 
 # Path to wkhtmltopdf (or helper script)
 WKHTMLTOPDF_CMD = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
+
+# Test

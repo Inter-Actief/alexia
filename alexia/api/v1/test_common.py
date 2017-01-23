@@ -19,7 +19,6 @@ class CommonTest(TestCase):
         super(CommonTest, self).setUp()
         self.load_organization_data()
 
-
     def test_authorization(self):
         """
         Test the authorization.list call.
