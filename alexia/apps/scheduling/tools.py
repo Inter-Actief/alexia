@@ -5,8 +5,9 @@ def notify_tenders(sender, instance, **kwargs):
     from .models import Event, MailTemplate
     mail_template = None
 
-    if not instance.pk and not instance.is_closed:
-        mail_template = MailTemplate.ENROLL_OPEN
+    if not instance.pk:
+        if instance.is_closed:
+            mail_template = MailTemplate.ENROLL_OPEN
     else:
         orig = Event.objects.get(pk=instance.pk)
         if orig.is_closed and not instance.is_closed:
