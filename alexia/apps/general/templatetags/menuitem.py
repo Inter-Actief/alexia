@@ -21,7 +21,11 @@ class MenuItemNode(Node):
         if 'class' in self.kwargs:
             classes = self.kwargs['class'].resolve(context).split()
 
-        func = resolve(context['request'].path).func
+        try:
+            func = resolve(context['request'].path).func
+        except Resolver404:
+            return ''
+
         match = func.__module__ + '.' + func.__name__
         if re.search(pattern, match):
             classes.append('active')
