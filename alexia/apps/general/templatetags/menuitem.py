@@ -2,7 +2,7 @@ import re
 
 from django.template import Library, Node, TemplateSyntaxError
 from django.template.base import token_kwargs
-from django.urls import resolve, Resolver404
+from django.urls import Resolver404, resolve
 from django.utils.html import format_html
 
 register = Library()
