@@ -38,10 +38,10 @@ class WeightEntryForm(forms.ModelForm):
         flow_start = cleaned_data.get('flow_start')
         flow_end = cleaned_data.get('flow_end')
 
-        if product and product.full_weight < start_weight:
+        if product and start_weight and product.full_weight < start_weight:
             self.add_error('start_weight', ValidationError(_('Begin weight is higher than product max weight.')))
 
-        if product and end_weight and product.empty_weight > end_weight:
+        if product and end_weight and end_weight and product.empty_weight > end_weight:
             self.add_error('end_weight', ValidationError(_('End weight is lower than product min weight.')))
 
         if hasattr(product, 'has_flowmeter') and product.has_flowmeter and not flow_start:
