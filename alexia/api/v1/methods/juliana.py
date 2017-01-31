@@ -6,7 +6,9 @@ from django.db.models import Sum
 from jsonrpc import jsonrpc_method
 from jsonrpc.exceptions import OtherError
 
-from alexia.api.exceptions import ForbiddenError, InvalidParamsError, ObjectNotFoundError
+from alexia.api.exceptions import (
+    ForbiddenError, InvalidParamsError, ObjectNotFoundError,
+)
 from alexia.apps.billing.models import (
     Authorization, Order, Product, Purchase, RfidCard,
 )

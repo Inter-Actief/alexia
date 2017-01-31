@@ -1,8 +1,7 @@
 from django.conf.urls import url
-from django.views.generic.base import TemplateView
 
+from .v1 import APIv1BrowserView, APIv1DocumentationView, api_v1_site
 from .views import APIInfoView
-from .v1 import api_v1_site, APIv1BrowserView, APIv1DocumentationView
 
 urlpatterns = [
     url(r'^$', APIInfoView.as_view(), name='api'),

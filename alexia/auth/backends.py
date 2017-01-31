@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django_auth_ldap.backend import LDAPBackend
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 
@@ -28,11 +29,6 @@ def get_or_create_user(backend, username):
 
 class MultiLDAPBackend(LDAPBackend):
     def get_or_create_user(self, username, ldap_user):
-        try:
-            from django_auth_ldap.backend import LDAPBackend
-        except ImportError:
-            return None
-
         backend = LDAP_BACKEND_NAME
         return get_or_create_user(backend, username)
 

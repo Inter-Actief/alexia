@@ -3,7 +3,7 @@ from django.db import transaction
 from jsonrpc import jsonrpc_method
 
 from alexia.api.decorators import manager_required
-from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
+from alexia.api.exceptions import InvalidParamsError
 from alexia.apps.billing.models import RfidCard
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
