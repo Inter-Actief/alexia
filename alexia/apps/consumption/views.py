@@ -35,7 +35,7 @@ def dcf(request, pk):
     # Get consumption form or create one
     cf = event.consumptionform if hasattr(event, 'consumptionform') else ConsumptionForm(event=event)
 
-    if cf.is_completed():
+    if cf.is_completed(request.user):
         raise PermissionDenied(_('This consumption form has been completed.'))
 
     # Post or show form?
@@ -67,7 +67,7 @@ def complete_dcf(request, pk):
         raise Http404
 
     cf = event.consumptionform
-    if cf.is_completed():
+    if cf.is_completed(request.user):
         raise PermissionDenied(_('This consumption form has been completed.'))
 
     if request.method == 'POST':
@@ -139,7 +139,7 @@ class ConsumptionFormListView(ListView):
     def get_queryset(self):
         profile = self.request.user.profile
 
-        if profile.is_foundation_manager:
+        if self.request.user.is_superuser or profile.is_foundation_manager:
             qs = ConsumptionForm.objects.all()
         elif profile.is_manager(self.request.organization):
             qs = ConsumptionForm.objects.filter(event__organizer=self.request.organization)

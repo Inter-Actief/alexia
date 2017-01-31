@@ -99,7 +99,9 @@ class ConsumptionForm(models.Model):
             self._issues = self.issues()
         return not bool(len(self._issues['errors']))
 
-    def is_completed(self):
+    def is_completed(self, user=None):
+        if user and user.is_superuser:
+            return False
         return bool(self.completed_by or self.completed_at)
 
 
