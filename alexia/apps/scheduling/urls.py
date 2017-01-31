@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^bartender/$', views.EventBartenderView.as_view(), name='bartender-schedule'),
     url(r'^calendar/$', views.EventCalendarView.as_view(), name='calendar-schedule'),
     url(r'^calendar/fetch/$', views.EventCalendarFetch.as_view(), name='fetch-calendar-schedule'),
+    url(r'^matrix/$', views.EventMatrixView.as_view(), name='event_matrix'),
 
     url(r'^event/create/$', views.EventCreateView.as_view(), name='new-event'),
     url(r'^event/(?P<pk>\d+)/$', views.EventDetailView.as_view(), name='event'),

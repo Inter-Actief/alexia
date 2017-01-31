@@ -27,6 +27,9 @@
                         {% if is_tender %}
                         <li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>
                         {% endif %}
+                        {% if is_planner %}
+                        <li><a href="{% url 'event_matrix' %}">{% trans 'Availability matrix' %}</a></li>
+                        {% endif %}
                         {% if is_manager %}
                         <li class="divider"></li>
                         <li><a href="{% url 'availability_list' %}">{% trans 'Availabilities' %}</a></li>

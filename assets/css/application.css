@@ -175,3 +175,20 @@ span.reverse {
 .table > tbody > tr.dynamic-form-add > td > a:hover {
 	background-color: #ccc;
 }
+
+.table > thead > tr > th.diag {
+	height: 140px;
+    white-space: nowrap;
+}
+
+.table > thead > tr > th.diag > div {
+	transform:
+		translate(25px, 5px)
+		rotate(-45deg);
+	width: 0px;
+}
+
+.table > thead > tr > th.diag > div > span {
+	border-bottom: 2px solid #ddd;
+	padding: 5px;
+}

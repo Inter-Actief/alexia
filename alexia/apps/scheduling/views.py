@@ -157,6 +157,55 @@ class EventCalendarFetch(View):
         return JsonResponse(data, safe=False)
 
 
+class EventMatrixView(TemplateView):
+    template_name = 'scheduling/event_matrix.html'
+
+    def get_context_data(self, **kwargs):
+        events = self.get_events()
+
+        context = super(EventMatrixView, self).get_context_data(**kwargs)
+        context['events'] = events
+        context['tenders'] = self.get_tenders(events)
+        return context
+
+    def get_events(self):
+        return Event.objects.select_related().prefetch_related(
+            Prefetch(
+                'bartender_availabilities',
+                queryset=BartenderAvailability.objects.select_related('user', 'event', 'availability')
+            )
+        ).filter(ends_at__gte=timezone.now(), participants=self.request.organization).order_by('starts_at')
+
+    def get_tenders(self, events):
+        tenders_list = Membership.objects.select_related('user').filter(
+            organization=self.request.organization,
+            is_tender=True,
+            is_active=True
+        ).order_by('user__first_name')
+
+        tenders = []
+        for tender in tenders_list:
+            tender_availabilities = [
+                next((a.availability for a in e.bartender_availabilities.all() if a.user == tender.user), None)
+                for e in events
+            ]
+            tender_events = [
+                {'event': event, 'availability': availability}
+                for event, availability in zip(events, tender_availabilities)
+            ]
+            tended = [
+                a.event
+                for a in tender.tended() if a.event.starts_at < timezone.now()
+            ]
+            tenders.append({
+                'tender': tender,
+                'tended': len(tended),
+                'last_tended': tended[0] if tended else None,
+                'events': tender_events
+            })
+        return tenders
+
+
 class EventDetailView(DetailView):
     model = Event
 

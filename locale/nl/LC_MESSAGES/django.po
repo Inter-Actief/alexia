@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-31 15:04+0100\n"
+"POT-Creation-Date: 2017-01-31 17:04+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -625,6 +625,9 @@ msgstr "Kalender"
 
 msgid "Personal schedule"
 msgstr "Tappersrooster"
+
+msgid "Availability matrix"
+msgstr "Beschikbaarheidsmatrix"
 
 msgid "Availabilities"
 msgstr "Beschikbaarheden"
@@ -1491,6 +1494,9 @@ msgstr "Er is niks ingepland tussen %(a)s en %(b)s."
 #, python-format
 msgid "There's nothing scheduled after %(datetime)s."
 msgstr "Er is niks ingepland na %(datetime)s."
+
+msgid "No events have been planned."
+msgstr "Er zijn geen evenementen gepland."
 
 msgid "Mail template"
 msgstr "Mailsjabloon"
