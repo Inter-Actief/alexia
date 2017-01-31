@@ -1,9 +1,5 @@
-import pyrad.packet
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django_auth_ldap.backend import LDAPBackend
-from pyrad.client import Client
-from pyrad.dictionary import Dictionary
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 
@@ -32,19 +28,34 @@ def get_or_create_user(backend, username):
 
 class MultiLDAPBackend(LDAPBackend):
     def get_or_create_user(self, username, ldap_user):
+        try:
+            from django_auth_ldap.backend import LDAPBackend
+        except ImportError:
+            return None
+
         backend = LDAP_BACKEND_NAME
         return get_or_create_user(backend, username)
 
 
 class RadiusBackend(object):
     def authenticate(self, username=None, password=None):
+        try:
+            import pyrad.packet
+            from pyrad.client import Client, Timeout
+            from pyrad.dictionary import Dictionary
+        except ImportError:
+            return None
+
         srv = Client(server=settings.RADIUS_HOST, authport=settings.RADIUS_PORT,
                      secret=settings.RADIUS_SECRET.encode(), dict=Dictionary(settings.RADIUS_DICT))
 
         req = srv.CreateAuthPacket(code=pyrad.packet.AccessRequest, User_Name=username.encode())
         req["User-Password"] = req.PwCrypt(password)
 
-        reply = srv.SendPacket(req)
+        try:
+            reply = srv.SendPacket(req)
+        except Timeout:
+            return None
 
         if reply.code == pyrad.packet.AccessAccept:
             backend = RADIUS_BACKEND_NAME
