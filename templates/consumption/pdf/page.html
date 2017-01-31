@@ -57,7 +57,7 @@
             <td>{{ entry.flow_start|default:"&mdash;" }}</td>
             <td>{{ entry.flow_end|default:"&mdash;" }}</td>
             <th>{{ entry.total }}</th>
-            <th>{{ entry.flow_total }}</th>
+            <th>{{ entry.flow_total|default:"&mdash;" }}</th>
         </tr>
     {% endfor %}
     </table>
