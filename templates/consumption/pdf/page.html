@@ -27,7 +27,7 @@
     {% for entry in object.unitentry_set.all %}
         <tr>
             <th style="width: 30%">{{ entry.product }}</th>
-            <td stlye="width: 70%">{{ entry.amount }}</td>
+            <td style="width: 70%">{{ entry.amount }}</td>
         </tr>
     {% endfor %}
     </table>
@@ -36,13 +36,17 @@
     {% if object.weightentry_set.count %}
     <table>
         <tr>
-            <th style="width: 30%">{% trans 'Keg beer' %}</th>
-            <td style="width: 11.6667%">{% trans 'Begin' %}</td>
-            <td style="width: 11.6667%">{% trans 'End' %}</td>
-            <td style="width: 11.6667%"># {% trans 'Kegs changed' %}</td>
-            <td style="width: 11.6667%">{% trans 'Flow start' %}</td>
-            <td style="width: 11.6667%">{% trans 'Flow end' %}</td>
-            <th style="width: 11.6667%">{% trans 'Total' %}</th>
+            <th rowspan="2" style="width: 30%">{% trans 'Keg beer' %}</th>
+            <td rowspan="2" style="width: 10%">{% trans 'Begin' %}</td>
+            <td rowspan="2" style="width: 10%">{% trans 'End' %}</td>
+            <td rowspan="2" style="width: 10%"># {% trans 'Kegs changed' %}</td>
+            <td rowspan="2" style="width: 10%">{% trans 'Flow start' %}</td>
+            <td rowspan="2" style="width: 10%">{% trans 'Flow end' %}</td>
+            <th colspan="2" style="width: 20%">{% trans 'Total' %}</th>
+        </tr>
+        <tr>
+            <td>{% trans 'Weight' %}</td>
+            <td>{% trans 'Flow' %}</td>
         </tr>
     {% for entry in object.weightentry_set.all %}
         <tr>
@@ -53,6 +57,7 @@
             <td>{{ entry.flow_start|default:"&mdash;" }}</td>
             <td>{{ entry.flow_end|default:"&mdash;" }}</td>
             <th>{{ entry.total }}</th>
+            <th>{{ entry.flow_total }}</th>
         </tr>
     {% endfor %}
     </table>

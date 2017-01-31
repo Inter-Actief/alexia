@@ -150,7 +150,7 @@ class ConsumptionFormListView(ListView):
 
 
 class ConsumptionFormDetailView(DetailView):
-    model = ConsumptionForm
+    queryset = ConsumptionForm.objects.select_related()
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

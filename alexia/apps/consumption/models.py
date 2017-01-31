@@ -100,7 +100,7 @@ class ConsumptionForm(models.Model):
         return not bool(len(self._issues['errors']))
 
     def is_completed(self, user=None):
-        if user and user.is_superuser:
+        if user and (user.is_superuser or user.profile.is_foundation_manager):
             return False
         return bool(self.completed_by or self.completed_at)
 
@@ -151,6 +151,11 @@ class WeightEntry(Entry):
         total += (self.kegs_changed - 1) * (self.product.full_weight - self.product.empty_weight)
 
         return total
+
+    def flow_total(self):
+        if not self.flow_end:
+            return False
+        return self.flow_end - self.flow_start
 
     def is_doubtful(self):
         if not self.end_weight or not self.flow_end:

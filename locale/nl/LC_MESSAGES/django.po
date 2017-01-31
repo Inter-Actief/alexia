@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 23:37+0100\n"
+"POT-Creation-Date: 2017-01-31 15:04+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -15,21 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-
-msgid "AJAX-request required"
-msgstr "AJAX-request verplicht"
-
-msgid "You are not a tender of the selected organization."
-msgstr "Je bent geen tapper bij de geselecteerde organisatie!"
-
-msgid "You are not a planner of the selected organization."
-msgstr "Je bent geen planner bij de geselecteerde organisatie!"
-
-msgid "You are not a manager of the selected organization."
-msgstr "Je bent geen manager bij de geselecteerde organisatie!"
-
-msgid "You are not a foundation manager."
-msgstr "Je bent geen stichtingsmananger."
 
 msgid "Export"
 msgstr "Exporteren"
@@ -572,6 +557,21 @@ msgstr "tapperbeschikbaarheid"
 msgid "bartender availabilities"
 msgstr "tapperbeschikbaarheden"
 
+msgid "AJAX-request required"
+msgstr "AJAX-request verplicht"
+
+msgid "You are not a tender of the selected organization."
+msgstr "Je bent geen tapper bij de geselecteerde organisatie!"
+
+msgid "You are not a planner of the selected organization."
+msgstr "Je bent geen planner bij de geselecteerde organisatie!"
+
+msgid "You are not a manager of the selected organization."
+msgstr "Je bent geen manager bij de geselecteerde organisatie!"
+
+msgid "You are not a foundation manager."
+msgstr "Je bent geen stichtingsmananger."
+
 msgid "Dutch"
 msgstr "Nederlands"
 
@@ -898,17 +898,14 @@ msgstr "op"
 msgid "at"
 msgstr "om"
 
-msgid "Begin weight"
-msgstr "Begingewicht"
-
-msgid "End weight"
-msgstr "Eindgewicht"
-
 msgid "Kegs changed"
 msgstr "Fusten verwisseld"
 
 msgid "Flowmeter"
 msgstr "Flowmeter"
+
+msgid "Weight"
+msgstr "Gewicht"
 
 msgid "Has comments"
 msgstr "Heeft commentaar"
@@ -939,6 +936,12 @@ msgstr "Formulier afronden"
 
 msgid "Please check the following"
 msgstr "Graag de aandacht voor het volgende"
+
+msgid "Begin weight"
+msgstr "Begingewicht"
+
+msgid "End weight"
+msgstr "Eindgewicht"
 
 msgid "Sign form as"
 msgstr "Formulier ondertekenen als"
@@ -1005,6 +1008,9 @@ msgstr "Flow eind"
 
 msgid "Total"
 msgstr "Totaal"
+
+msgid "Flow"
+msgstr "Flow"
 
 msgid "No comments"
 msgstr "Geen commentaar"

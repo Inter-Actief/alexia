@@ -151,7 +151,7 @@ class Event(models.Model):
         """
         Returns if the given person is a tender for this event.
         """
-        if user.is_superuser:
+        if user.is_superuser or user.profile.is_foundation_manager:
             return True
 
         return user in self.get_assigned_bartenders()
