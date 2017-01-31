@@ -11,7 +11,7 @@ from alexia.apps.billing.models import (
 from alexia.apps.scheduling.models import Event
 from alexia.test import TestCase
 
-from .common import format_authorization, format_order
+from ..common import format_authorization, format_order
 
 
 class CommonTest(TestCase):

@@ -70,7 +70,7 @@ def _get_validate_event(request, event_id, safe=False):
 
 @jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
 def juliana_rfid_get(request, event_id, rfid):
-    event = _get_validate_event(request, event_id)
+    event = _get_validate_event(request, event_id, True)
 
     identifier = rfid_to_identifier(rfid=rfid)
 
@@ -161,7 +161,7 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
 
 @jsonrpc_method('juliana.user.check(Number, Number) -> Number', site=api_v1_site, safe=True, authenticated=True)
 def juliana_user_check(request, event_id, user_id):
-    event = _get_validate_event(request, event_id, safe)
+    event = _get_validate_event(request, event_id, True)
 
     try:
         user = User.objects.get(pk=user_id)

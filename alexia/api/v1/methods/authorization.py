@@ -46,7 +46,7 @@ def authorization_list(request, radius_username=None):
             user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            raise ObjectNotFoundError('User with provided radius_username does not exits')
+            raise ObjectNotFoundError('User with provided radius_username does not exists')
 
         authorizations = authorizations.filter(user=user)
 

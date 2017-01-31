@@ -4,14 +4,13 @@ import datetime
 
 from django.test.testcases import SimpleTestCase
 from django.utils import timezone
-from jsonrpc.exceptions import InvalidParamsError
 
+from alexia.api.exceptions import ForbiddenError, InvalidParamsError
 from alexia.apps.billing.models import RfidCard
 from alexia.test import APITestCase, TestCase
 
-from .common import format_authorization
-from .exceptions import ForbiddenError
-from .juliana import _get_validate_event, rfid_to_identifier
+from ..common import format_authorization
+from ..methods.juliana import _get_validate_event, rfid_to_identifier
 
 
 class JulianaRfidToIdentifierTest(SimpleTestCase):
@@ -247,10 +246,10 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=500,
-            error_code=-32602,
-            error_name='InvalidParamsError',
-            error_message='InvalidParamsError: RFID card not found',
+            status_code=404,
+            error_code=404,
+            error_name='ObjectNotFoundError',
+            error_message='ObjectNotFoundError: RFID card not found',
         )
 
     def test_rfid_get_no_authorization(self):
@@ -267,10 +266,10 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=500,
-            error_code=-32602,
-            error_name='InvalidParamsError',
-            error_message='InvalidParamsError: No authorization found for user',
+            status_code=404,
+            error_code=404,
+            error_name='ObjectNotFoundError',
+            error_message='ObjectNotFoundError: No authorization found for user',
         )
 
     def test_rfid_get_other_authorization(self):
@@ -287,10 +286,10 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=500,
-            error_code=-32602,
-            error_name='InvalidParamsError',
-            error_message='InvalidParamsError: No authorization found for user',
+            status_code=404,
+            error_code=404,
+            error_name='ObjectNotFoundError',
+            error_message='ObjectNotFoundError: No authorization found for user',
         )
 
     def test_rfid_get_invalid_event(self):
@@ -304,10 +303,10 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=500,
-            error_code=-32602,
-            error_name='InvalidParamsError',
-            error_message='InvalidParamsError: Event does not exist',
+            status_code=404,
+            error_code=404,
+            error_name='ObjectNotFoundError',
+            error_message='ObjectNotFoundError: Event does not exist',
         )
 
     def test_user_check_no_orders(self):
@@ -333,10 +332,10 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.user.check', [event_id, user_id],
-            status_code=500,
-            error_code=-32602,
-            error_name='InvalidParamsError',
-            error_message='InvalidParamsError: Event does not exist',
+            status_code=404,
+            error_code=404,
+            error_name='ObjectNotFoundError',
+            error_message='ObjectNotFoundError: Event does not exist',
         )
 
     def test_user_check_invalid_user(self):
@@ -345,8 +344,8 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.user.check', [event_id, user_id],
-            status_code=500,
-            error_code=-32602,
-            error_name='InvalidParamsError',
-            error_message='InvalidParamsError: User does not exist',
+            status_code=404,
+            error_code=404,
+            error_name='ObjectNotFoundError',
+            error_message='ObjectNotFoundError: User does not exist',
         )

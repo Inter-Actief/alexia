@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from alexia.test import APITestCase
 
-from .common import format_authorization
+from ..common import format_authorization
 
 
 class AuthorizationTest(APITestCase):
@@ -33,8 +33,9 @@ class AuthorizationTest(APITestCase):
         """
         # Invalid user
         self.send_and_compare_request_error('authorization.list', ['invalidusername'],
-                                            error_code=-32602,
-                                            error_name='InvalidParametersError',
-                                            error_message='InvalidParametersError: User with provided ' +
-                                                          'radius_username does not exits',
+                                            status_code=404,
+                                            error_code=404,
+                                            error_name='ObjectNotFoundError',
+                                            error_message='ObjectNotFoundError: User with provided ' +
+                                                          'radius_username does not exists',
                                             )

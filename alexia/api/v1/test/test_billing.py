@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from alexia.apps.billing.models import Order
 from alexia.test import APITestCase
 
-from .common import format_order
+from ..common import format_order
 
 
 class BillingTest(APITestCase):
@@ -82,7 +82,8 @@ class BillingTest(APITestCase):
         self.load_billing_order_data()
 
         self.send_and_compare_request_error('order.marksynchronized', [self.data['order1'].id*10],
-                                            error_code=404,
-                                            error_name='NotFoundError',
-                                            error_message='NotFoundError: Not Found.',
+                                            status_code=422,
+                                            error_code=-32602,
+                                            error_name='InvalidParamsError',
+                                            error_message='InvalidParamsError: Order with id not found',
                                             )
