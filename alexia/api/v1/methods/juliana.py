@@ -4,15 +4,16 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models import Sum
 from jsonrpc import jsonrpc_method
-from jsonrpc.exceptions import InvalidParamsError, OtherError
+from jsonrpc.exceptions import OtherError
 
+from alexia.api.exceptions import ForbiddenError, InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import (
     Authorization, Order, Product, Purchase, RfidCard,
 )
 from alexia.apps.scheduling.models import Event
 
-from .common import api_v1_site, format_authorization
-from .exceptions import ForbiddenError
+from ..common import format_authorization
+from ..config import api_v1_site
 
 
 def rfid_to_identifier(rfid):
@@ -41,7 +42,7 @@ def rfid_to_identifier(rfid):
     return '%s,%s' % (ia_rfid_prefix, rfid['uid'])
 
 
-def _get_validate_event(request, event_id):
+def _get_validate_event(request, event_id, safe=False):
     """
     Get and validate access to the given event id.
     :param request: Request object.
@@ -53,7 +54,10 @@ def _get_validate_event(request, event_id):
     try:
         event = Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
-        raise InvalidParamsError('Event does not exist')
+        if safe:
+            raise ObjectNotFoundError('Event does not exist')
+        else:
+            raise InvalidParamsError('Event does not exist')
 
     cur_user = request.user
     if not request.user.is_superuser and not event.is_tender(cur_user):
@@ -73,13 +77,13 @@ def juliana_rfid_get(request, event_id, rfid):
     try:
         card = RfidCard.objects.get(identifier=identifier, is_active=True)
     except RfidCard.DoesNotExist:
-        raise InvalidParamsError('RFID card not found')
+        raise ObjectNotFoundError('RFID card not found')
 
     user = card.user
     authorization = Authorization.get_for_user_event(user, event)
 
     if not authorization:
-        raise InvalidParamsError('No authorization found for user')
+        raise ObjectNotFoundError('No authorization found for user')
 
     res = {
         'user': {
@@ -157,12 +161,12 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
 
 @jsonrpc_method('juliana.user.check(Number, Number) -> Number', site=api_v1_site, safe=True, authenticated=True)
 def juliana_user_check(request, event_id, user_id):
-    event = _get_validate_event(request, event_id)
+    event = _get_validate_event(request, event_id, safe)
 
     try:
         user = User.objects.get(pk=user_id)
     except User.DoesNotExist:
-        raise InvalidParamsError('User does not exist')
+        raise ObjectNotFoundError('User does not exist')
 
     order_sum = Order.objects \
         .filter(authorization__in=user.authorizations.all(), event=event) \

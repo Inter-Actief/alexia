@@ -1,12 +1,10 @@
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
-from .common import api_v1_site
-
-API_VERSION = 1
+from ..config import api_v1_site
 
 
-@jsonrpc_method('version() -> Number', site=api_v1_site, authenticated=False, safe=True)
+@jsonrpc_method('version() -> Number', site=api_v1_site, safe=True)
 def version(request):
     """
     Returns the current API version.
@@ -19,11 +17,10 @@ def version(request):
     A client can expect to have no issues if the client uses the same API
     version. In other cases, this API does not guarantee anything.
     """
+    return 1
 
-    return API_VERSION
 
-
-@jsonrpc_method('methods() -> Array', site=api_v1_site, authenticated=False, safe=True)
+@jsonrpc_method('methods() -> Array', site=api_v1_site, safe=True)
 def methods(request):
     """
     Introspect the API and return all callable methods.
@@ -32,7 +29,6 @@ def methods(request):
 
     Returns an array with the methods.
     """
-
     result = []
 
     for proc in api_v1_site.describe(request)['procs']:
@@ -42,7 +38,7 @@ def methods(request):
 
 
 @jsonrpc_method('login(username=String, password=String) -> Boolean', site=api_v1_site)
-@transaction.atomic()
+@transaction.atomic
 def login(request, username, password):
     """
     Authenticate an user to use the API.
@@ -55,7 +51,6 @@ def login(request, username, password):
     username        -- Username of user
     password        -- Password of the user
     """
-
     from django.contrib.auth import authenticate, login
 
     user = authenticate(username=username, password=password)
@@ -68,7 +63,7 @@ def login(request, username, password):
 
 
 @jsonrpc_method('logout() -> Nil', site=api_v1_site)
-@transaction.atomic()
+@transaction.atomic
 def logout(request):
     """
     Sign out the current user, even if no one was signed in.
@@ -77,7 +72,6 @@ def logout(request):
 
     Destroys the current session.
     """
-
     from django.contrib.auth import logout
 
     logout(request)

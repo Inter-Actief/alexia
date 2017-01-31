@@ -1,9 +1,9 @@
 from jsonrpc import jsonrpc_method
 
+from alexia.api.exceptions import ObjectNotFoundError
 from alexia.apps.organization.models import Organization
 
-from .common import api_v1_site
-from .exceptions import NotFoundError
+from ..config import api_v1_site
 
 
 @jsonrpc_method('organization.current.get() -> String', site=api_v1_site, safe=True, authenticated=True)
@@ -20,9 +20,8 @@ def organization_current_get(request):
     Example return value:
     "inter-actief"
     """
-
     if request.organization:
-        return str(request.organization.slug)
+        return request.organization.slug
     else:
         return None
 
@@ -43,7 +42,6 @@ def organization_current_set(request, organization):
 
     Raises error 404 if provided organization cannot be found.
     """
-
     if not organization:
         if 'organization_pk' in request.session:
             del request.session['organization_pk']
@@ -54,7 +52,7 @@ def organization_current_set(request, organization):
         try:
             organization_pk = Organization.objects.get(slug=organization).pk
         except Organization.DoesNotExist:
-            raise NotFoundError('Organization not found.')
+            raise ObjectNotFoundError('Organization not found.')
 
         if request.session.get('organization_pk', None) != organization_pk:
             request.session['organization_pk'] = organization_pk
@@ -63,7 +61,7 @@ def organization_current_set(request, organization):
             return False
 
 
-@jsonrpc_method('organization.list() -> Array', site=api_v1_site, safe=True, authenticated=True)
+@jsonrpc_method('organization.list() -> Array', site=api_v1_site, safe=True)
 def organization_list(request):
     """
     List all public organizations.
@@ -82,5 +80,4 @@ def organization_list(request):
         "stress"
     ]
     """
-
     return [o.slug for o in Organization.object.all()]

@@ -14,9 +14,9 @@ class APIBrowserView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('f', None) == 'mochikit.js':
-            return HttpResponse(mochikit.mochikit, content_type='application/x-javascript')
+            return HttpResponse(mochikit.mochikit, content_type='application/javascript')
         if request.GET.get('f', None) == 'interpreter.js':
-            return HttpResponse(mochikit.interpreter, content_type='application/x-javascript')
+            return HttpResponse(mochikit.interpreter, content_type='application/javascript')
         return super(APIBrowserView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -73,9 +73,5 @@ class APIDocumentationView(TemplateView):
         return context
 
 
-class APIv1DocumentationView(APIDocumentationView):
-    template_name = 'api/documentation_v1.html'
-    methods = ['authorization.add', 'authorization.end', 'authorization.list', 'login', 'logout', 'order.get',
-               'order.marksynchronized', 'order.unsynchronized', 'organization.current.get',
-               'organization.current.set', 'rfid.add', 'rfid.list', 'rfid.remove', 'user.add',
-               'user.exists', 'user.get']
+class APIInfoView(TemplateView):
+    template_name = 'api/info.html'

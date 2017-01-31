@@ -3,16 +3,16 @@ from django.db import transaction
 from django.utils import timezone
 from jsonrpc import jsonrpc_method
 
+from alexia.api.decorators import manager_required
+from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import Authorization
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
-from .api_utils import manager_required
-from .common import api_v1_site, format_authorization
-from .exceptions import InvalidParametersError, NotFoundError
+from ..common import format_authorization
+from ..config import api_v1_site
 
 
-@jsonrpc_method('authorization.list(radius_username=String) -> Array',
-                site=api_v1_site, authenticated=True, safe=True)
+@jsonrpc_method('authorization.list(radius_username=String) -> Array', site=api_v1_site, authenticated=True, safe=True)
 @manager_required
 def authorization_list(request, radius_username=None):
     """
@@ -36,9 +36,8 @@ def authorization_list(request, radius_username=None):
         }
     ]
 
-    Raises error -32602 (Invalid params) if the radius_username does not exist.
+    Raises 404 if the radius_username does not exist.
     """
-
     result = []
     authorizations = Authorization.objects.filter(organization=request.organization)
 
@@ -47,7 +46,7 @@ def authorization_list(request, radius_username=None):
             user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            raise InvalidParametersError('User with provided radius_username does not exits')
+            raise ObjectNotFoundError('User with provided radius_username does not exits')
 
         authorizations = authorizations.filter(user=user)
 
@@ -59,12 +58,10 @@ def authorization_list(request, radius_username=None):
     return result
 
 
-@jsonrpc_method('authorization.get(radius_username=String) -> Array',
-                site=api_v1_site, authenticated=True, safe=True)
+@jsonrpc_method('authorization.get(radius_username=String) -> Array', site=api_v1_site, authenticated=True, safe=True)
 @manager_required
 def authorization_get(request, radius_username):
     """
-    ***DEPRECATED***
     Retrieve registered authorizations for a specified user and current selected
     organization.
 
@@ -83,7 +80,6 @@ def authorization_get(request, radius_username):
         }
     ]
     """
-
     result = []
     authorizations = Authorization.objects.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
                                                   user__authenticationdata__username=radius_username,
@@ -99,10 +95,9 @@ def authorization_get(request, radius_username):
     return result
 
 
-@jsonrpc_method('authorization.add(radius_username=String) -> Object',
-                site=api_v1_site, authenticated=True)
+@jsonrpc_method('authorization.add(radius_username=String) -> Object', site=api_v1_site, authenticated=True)
 @manager_required
-@transaction.atomic()
+@transaction.atomic
 def authorization_add(request, radius_username):
     """
     Add a new authorization to the specified user.
@@ -121,14 +116,13 @@ def authorization_add(request, radius_username):
         "user": "s0000000"
     }
 
-    Raises error -32602 (Invalid params) if the radius_username does not exist.
+    Raises 404 if the radius_username does not exist.
     """
-
     try:
         user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        raise InvalidParametersError('User with provided radius_username does not exits')
+        raise InvalidParamsError('User with provided radius_username does not exists')
 
     authorization = Authorization(user=user, organization=request.organization)
     authorization.save()
@@ -136,10 +130,10 @@ def authorization_add(request, radius_username):
     return format_authorization(authorization)
 
 
-@jsonrpc_method('authorization.end(radius_username=String, authorization_id=Number) -> Boolean',
-                site=api_v1_site, authenticated=True)
+@jsonrpc_method('authorization.end(radius_username=String, authorization_id=Number) -> Boolean', site=api_v1_site,
+                authenticated=True)
 @manager_required
-@transaction.atomic()
+@transaction.atomic
 def authorization_end(request, radius_username, authorization_id):
     """
     End an authorization from the specified user.
@@ -151,9 +145,8 @@ def authorization_end(request, radius_username, authorization_id):
     radius_username    -- RADIUS username to search for.
     identifier         -- RFID card hardware identiefier (max. 16 chars)
 
-    Raises error 404 if provided authorization cannot be found.
+    Raises error 422 if provided authorization cannot be found.
     """
-
     try:
         authorization = Authorization.objects.select_for_update() \
                                      .get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
@@ -161,7 +154,7 @@ def authorization_end(request, radius_username, authorization_id):
                                           organization=request.organization,
                                           pk=authorization_id)
     except Authorization.DoesNotExist:
-        raise NotFoundError
+        raise InvalidParamsError('Authorization with id not found')
 
     if not authorization.end_date:
         authorization.end_date = timezone.now()

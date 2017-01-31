@@ -2,18 +2,19 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
+from alexia.api.decorators import manager_required
+from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.organization.models import AuthenticationData, Profile
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
-from .api_utils import manager_required
-from .common import api_v1_site, format_user
-from .exceptions import InvalidParametersError, NotFoundError
+from ..common import format_user
+from ..config import api_v1_site
 
 
 @jsonrpc_method('user.add(radius_username=String, first_name=String, last_name=String, email=String) -> Object',
                 site=api_v1_site, authenticated=True)
 @manager_required
-@transaction.atomic()
+@transaction.atomic
 def user_add(request, radius_username, first_name, last_name, email):
     """
     Add a new user to Alexia.
@@ -38,7 +39,7 @@ def user_add(request, radius_username, first_name, last_name, email):
     """
     if User.objects.filter(username=radius_username).exists() or \
             AuthenticationData.objects.filter(backend=RADIUS_BACKEND_NAME, username__iexact=radius_username).exists():
-        raise InvalidParametersError('User with provided radius_username already exists')
+        raise InvalidParamsError('User with provided radius_username already exists')
 
     user = User(username=radius_username, first_name=first_name, last_name=last_name, email=email)
     user.save()
@@ -52,8 +53,7 @@ def user_add(request, radius_username, first_name, last_name, email):
     return format_user(user)
 
 
-@jsonrpc_method('user.exists(radius_username=String) -> Boolean',
-                site=api_v1_site, authenticated=True, safe=True)
+@jsonrpc_method('user.exists(radius_username=String) -> Boolean', site=api_v1_site, authenticated=True, safe=True)
 def user_exists(request, radius_username):
     """
     Check if a user exists by his or her RADIUS username.
@@ -62,13 +62,11 @@ def user_exists(request, radius_username):
 
     radius_username    -- RADIUS username to search for.
     """
-
     return User.objects.filter(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                authenticationdata__username=radius_username).exists()
 
 
-@jsonrpc_method('user.get(radius_username=String) -> Object',
-                site=api_v1_site, authenticated=True, safe=True)
+@jsonrpc_method('user.get(radius_username=String) -> Object', site=api_v1_site, authenticated=True, safe=True)
 def user_get(request, radius_username):
     """
     Retrieve information about a specific user.
@@ -87,12 +85,11 @@ def user_get(request, radius_username):
         "radius_username": "s0000000"
     }
     """
-
     try:
         user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        raise NotFoundError
+        raise ObjectNotFoundError
 
     return format_user(user)
 
@@ -113,10 +110,9 @@ def user_get_by_id(request, user_id):
         "radius_username": "s0000000"
     }
     """
-
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        raise NotFoundError
+        raise ObjectNotFoundError
 
     return format_user(user)

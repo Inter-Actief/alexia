@@ -1,10 +1,5 @@
-from jsonrpc.site import JSONRPCSite
-
 from alexia.apps.organization.models import AuthenticationData
 from alexia.auth.backends import RADIUS_BACKEND_NAME
-
-api_v1_site = JSONRPCSite()
-api_v1_site.name = 'Alexia API v1'
 
 
 def format_authorization(authorization):

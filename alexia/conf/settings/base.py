@@ -125,7 +125,6 @@ TEMPLATES = [
                 'alexia.template.context_processors.organization',
                 'alexia.template.context_processors.permissions',
             ],
-            'debug': DEBUG,
         },
     },
 ]

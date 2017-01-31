@@ -2,12 +2,13 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
+from alexia.api.decorators import manager_required
+from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import RfidCard
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
-from .api_utils import manager_required
-from .common import api_v1_site, format_rfidcard
-from .exceptions import InvalidParametersError, NotFoundError
+from ..common import format_rfidcard
+from ..config import api_v1_site
 
 
 @jsonrpc_method('rfid.list(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
@@ -48,7 +49,6 @@ def rfid_list(request, radius_username=None):
         }
     ]
     """
-
     result = []
     rfidcards = RfidCard.objects.filter(managed_by=request.organization)
 
@@ -68,7 +68,6 @@ def rfid_list(request, radius_username=None):
 @manager_required
 def rfid_get(request, radius_username):
     """
-    ***DEPRECATED***
     Retrieve registered RFID cards for a specified user and current selected
     organization.
 
@@ -86,7 +85,6 @@ def rfid_get(request, radius_username):
         "05,01:23:45:67:89:ab:cd"
     ]
     """
-
     result = []
     rfidcards = RfidCard.objects.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
                                         user__authenticationdata__username=radius_username,
@@ -100,7 +98,7 @@ def rfid_get(request, radius_username):
 
 @jsonrpc_method('rfid.add(radius_username=String, identifier=String) -> Object', site=api_v1_site, authenticated=True)
 @manager_required
-@transaction.atomic()
+@transaction.atomic
 def rfid_add(request, radius_username, identifier):
     """
     Add a new RFID card to the specified user.
@@ -128,13 +126,13 @@ def rfid_add(request, radius_username, identifier):
         user = User.objects.select_for_update().get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                                     authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        raise InvalidParametersError('User with provided radius_username does not exits')
+        raise InvalidParamsError('User with provided radius_username does not exits')
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
     except RfidCard.DoesNotExist:
         if RfidCard.objects.select_for_update().filter(identifier=identifier).exists():
-            raise InvalidParametersError('RFID card with provided identifier already registered by someone else')
+            raise InvalidParamsError('RFID card with provided identifier already registered by someone else')
 
         rfidcard = RfidCard(user=user, identifier=identifier, is_active=True)
         rfidcard.save()
@@ -144,13 +142,12 @@ def rfid_add(request, radius_username, identifier):
         rfidcard.save()
         return format_rfidcard(rfidcard)
     else:
-        raise InvalidParametersError('RFID card with provided identifier already exists for this person')
+        raise InvalidParamsError('RFID card with provided identifier already exists for this person')
 
 
-@jsonrpc_method('rfid.remove(radius_username=String, identifier=String) -> Nil',
-                site=api_v1_site, authenticated=True)
+@jsonrpc_method('rfid.remove(radius_username=String, identifier=String) -> Nil', site=api_v1_site, authenticated=True)
 @manager_required
-@transaction.atomic()
+@transaction.atomic
 def rfid_remove(request, radius_username, identifier):
     """
     Remove a RFID card from the specified user.
@@ -162,19 +159,18 @@ def rfid_remove(request, radius_username, identifier):
 
     Raises error 404 if provided order id cannot be found.
     """
-
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
                                                             user__authenticationdata__username=radius_username,
                                                             identifier=identifier)
     except RfidCard.DoesNotExist:
-        raise NotFoundError
+        raise InvalidParamsError('RFID card not found')
 
     managed_by = rfidcard.managed_by.all().select_for_update()
 
     if request.organization not in managed_by:
         # This RFID card does not exist in this organization
-        raise NotFoundError
+        raise InvalidParamsError('RFID card not found')
 
     if len(managed_by) == 1:
         # Only this organization left

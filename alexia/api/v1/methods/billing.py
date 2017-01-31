@@ -1,11 +1,12 @@
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
+from alexia.api.decorators import manager_required
+from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import Order
 
-from .api_utils import manager_required
-from .common import api_v1_site, format_order
-from .exceptions import NotFoundError
+from ..common import format_order
+from ..config import api_v1_site
 
 
 @jsonrpc_method('order.unsynchronized(unused=Number) -> Array', site=api_v1_site, safe=True, authenticated=True)
@@ -137,14 +138,14 @@ def order_get(request, order_id):
     try:
         order = Order.objects.get(authorization__organization=request.organization, pk=order_id)
     except Order.DoesNotExist:
-        raise NotFoundError
+        raise ObjectNotFoundError
 
     return format_order(order)
 
 
 @jsonrpc_method('order.marksynchronized(order_id=Number) -> Boolean', site=api_v1_site, authenticated=True)
 @manager_required
-@transaction.atomic()
+@transaction.atomic
 def order_marksynchronized(request, order_id):
     """
     Mark an order as synchronized.
@@ -155,12 +156,12 @@ def order_marksynchronized(request, order_id):
 
     order_id -- ID of the Order object.
 
-    Raises error 404 if provided order id cannot be found.
+    Raises error 422 if provided order id cannot be found.
     """
     try:
         order = Order.objects.select_for_update().get(authorization__organization=request.organization, pk=order_id)
     except Order.DoesNotExist:
-        raise NotFoundError
+        raise InvalidParamsError('Order with id not found')
 
     if not order.synchronized:
         order.synchronized = True

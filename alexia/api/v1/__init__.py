@@ -1,3 +1,3 @@
-from . import (  # NOQA
-    api, authorization, billing, juliana, organization, rfid, user,
-)
+from .config import *  # NOQA
+from .methods import *  # NOQA
+from .views import *  # NOQA
