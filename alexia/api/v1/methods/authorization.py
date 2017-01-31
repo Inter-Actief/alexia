@@ -95,10 +95,10 @@ def authorization_get(request, radius_username):
     return result
 
 
-@jsonrpc_method('authorization.add(radius_username=String) -> Object', site=api_v1_site, authenticated=True)
+@jsonrpc_method('authorization.add(radius_username=String, account=String) -> Object', site=api_v1_site, authenticated=True)
 @manager_required
 @transaction.atomic
-def authorization_add(request, radius_username):
+def authorization_add(request, radius_username, account):
     """
     Add a new authorization to the specified user.
 
