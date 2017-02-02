@@ -104,6 +104,20 @@ class ConsumptionForm(models.Model):
             return False
         return bool(self.completed_by or self.completed_at)
 
+    def aggregate_products(self):
+        result = {}
+        for e in self.weightentry_set.all():
+            if e.product.pk in result:
+                result[e.product.pk] += e.total()
+            else:
+                result[e.product.pk] = e.total()
+        for e in self.unitentry_set.all():
+            if e.product.pk in result:
+                result[e.product.pk] += e.amount
+            else:
+                result[e.product.pk] = e.amount
+        return result
+
 
 class Entry(models.Model):
     consumption_form = models.ForeignKey(

@@ -97,7 +97,7 @@ class ConsumptionFormConfirmationForm(forms.Form):
 
 def get_previous_month():
     now = timezone.now()
-    return 12 if now.month == 1 else now.month
+    return 12 if now.month == 1 else now.month - 1
 
 
 def get_year():
@@ -110,3 +110,7 @@ class ExportForm(AlexiaForm):
 
     month = forms.TypedChoiceField(label=_('Month'), choices=MONTHS.items(), coerce=int, initial=get_previous_month)
     year = forms.IntegerField(label=_('Year'), initial=get_year)
+    format = forms.ChoiceField(label=_('File format'), choices=[
+        ('pdf', 'PDF'),
+        ('json', 'JSON'),
+    ])

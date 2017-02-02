@@ -2,7 +2,7 @@ import calendar
 import datetime
 
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -12,6 +12,7 @@ from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.list import ListView
 from wkhtmltopdf.views import PDFTemplateResponse, PDFTemplateView
 
+from alexia.apps.organization.models import Organization
 from alexia.apps.scheduling.models import Event
 from alexia.auth.mixins import FoundationManagerRequiredMixin
 from alexia.forms import CrispyFormMixin
@@ -91,18 +92,51 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
         month = form.cleaned_data['month']
         year = form.cleaned_data['year']
         last_day = calendar.monthrange(year, month)[1]
-        from_time = datetime.datetime(year, month, 1)
-        till_time = datetime.datetime(year, month, last_day, 23, 59, 59)
+        from_time = datetime.datetime(year, month, 1, tzinfo=timezone.utc)
+        till_time = datetime.datetime(year, month, last_day, 23, 59, 59, tzinfo=timezone.utc)
         objects = ConsumptionForm.objects.filter(
             event__starts_at__gte=from_time,
             event__starts_at__lte=till_time,
         )
+        filename = 'borrels-%s%d.%s' % (from_time.strftime('%B'), year, form.cleaned_data['format'])
+
+        if form.cleaned_data['format'] == 'pdf':
+            return self.pdf(filename, objects)
+        elif form.cleaned_data['format'] == 'json':
+            return self.json(filename, objects)
+
+    def pdf(self, filename, objects):
         return PDFTemplateResponse(
             self.request,
             'consumption/dcf_pdf.html',
             context={'objects': objects},
-            filename='Verbruiksformulieren %s %d.pdf' % (from_time.strftime('%B'), year),
+            filename=filename,
         )
+
+    def json(self, filename, objects):
+        result = {}
+
+        result['drinks'] = {}
+        for organization in Organization.objects.all():
+            forms = []
+            for form in objects.filter(event__organizer=organization):
+                if not form.is_completed():
+                    continue
+                forms.append({
+                    'drink_name': form.event.name,
+                    'date': form.event.starts_at.strftime('%d-%m-%Y'),
+                    'products': form.aggregate_products(),
+                })
+            if forms:
+                result['drinks'][organization.name] = forms
+
+        result['products'] = {}
+        for product in ConsumptionProduct.objects.all():
+            result['products'][product.pk] = product.name
+
+        response = JsonResponse(result, json_dumps_params={'indent': True})
+        response['Content-Disposition'] = 'attachment; filename="%s"' % (filename)
+        return response
 
 
 class ConsumptionProductListView(FoundationManagerRequiredMixin, ListView):
