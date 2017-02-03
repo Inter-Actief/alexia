@@ -126,6 +126,7 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
                     'drink_name': form.event.name,
                     'date': form.event.starts_at.strftime('%d-%m-%Y'),
                     'products': form.aggregate_products(),
+                    'location': [l.name for l in form.event.location.all()],
                 })
             if forms:
                 result['drinks'][organization.name] = forms
