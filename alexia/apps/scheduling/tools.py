@@ -18,10 +18,11 @@ def notify_tenders(sender, instance, **kwargs):
     if mail_template:
         try:
             mt = MailTemplate.objects.get(organization=instance.organizer, name=mail_template, is_active=True)
-            bartenders = instance.organizer.membership_set.filter(is_tender=True, is_active=True)
+            bartenders = instance.organizer.membership_set.filter(is_tender=True, is_active=True) \
+                                                          .exclude(user__email='')
             recipients = [
                 ([bartender.user.email], {'addressee': bartender.user, 'event': instance})
-                for bartender in bartenders
+                for bartender in bartenders.exclude(user__email='')
             ]
             template_mass_mail(mt.subject, mt.template, recipients)
         except MailTemplate.DoesNotExist:
