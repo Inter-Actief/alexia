@@ -22,7 +22,7 @@ def notify_tenders(sender, instance, **kwargs):
                                                           .exclude(user__email='')
             recipients = [
                 ([bartender.user.email], {'addressee': bartender.user, 'event': instance})
-                for bartender in bartenders.exclude(user__email='')
+                for bartender in bartenders
             ]
             template_mass_mail(mt.subject, mt.template, recipients)
         except MailTemplate.DoesNotExist:
