@@ -1,5 +1,6 @@
 from .authorization import *  # NOQA
 from .billing import *  # NOQA
+from .event import *  # NOQA
 from .generic import *  # NOQA
 from .juliana import *  # NOQA
 from .organization import *  # NOQA
