@@ -1,5 +1,4 @@
 from django.utils import timezone
-
 from jsonrpc import jsonrpc_method
 
 from alexia.apps.scheduling.models import Event

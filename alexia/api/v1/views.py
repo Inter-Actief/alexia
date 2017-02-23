@@ -12,7 +12,7 @@ class APIv1DocumentationView(APIDocumentationView):
     site = api_v1_site
     mountpoint = 'api_v1_mountpoint'
     template_name = 'api/v1/doc.html'
-    methods = ['authorization.add', 'authorization.end', 'authorization.list', 'event.upcoming_list', 'login', 'logout', 'order.get',
-               'order.marksynchronized', 'order.unsynchronized', 'organization.current.get',
+    methods = ['authorization.add', 'authorization.end', 'authorization.list', 'event.upcoming_list', 'login',
+               'logout', 'order.get', 'order.marksynchronized', 'order.unsynchronized', 'organization.current.get',
                'organization.current.set', 'rfid.add', 'rfid.list', 'rfid.remove', 'user.add',
                'user.exists', 'user.get']
