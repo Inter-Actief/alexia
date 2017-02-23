@@ -70,7 +70,7 @@ def organization_list(request):
 
     Returns a array with zero or more organizations.
 
-    Exampel return value:
+    Example return value:
     [
         "abacus",
         "inter-actief",
@@ -80,4 +80,4 @@ def organization_list(request):
         "stress"
     ]
     """
-    return [o.slug for o in Organization.object.all()]
+    return [o.slug for o in Organization.objects.all()]
