@@ -172,7 +172,10 @@ class ConsumptionFormListView(ListView):
     paginate_by = 30
 
     def get_queryset(self):
-        profile = self.request.user.profile
+        if hasattr(self.request.user, 'profile'):
+            profile = self.request.user.profile
+        else:
+            raise PermissionDenied
 
         if self.request.user.is_superuser or profile.is_foundation_manager:
             qs = ConsumptionForm.objects.all()
