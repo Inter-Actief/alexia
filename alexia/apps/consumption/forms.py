@@ -47,7 +47,7 @@ class WeightEntryForm(forms.ModelForm):
         if hasattr(product, 'has_flowmeter') and product.has_flowmeter and not flow_start:
             self.add_error('flow_start', ValidationError(_('Flowmeter positions are required for this product.')))
 
-        if flow_start and flow_end and flow_start > flow_end:
+        if flow_start and flow_end and flow_start >= flow_end:
             self.add_error('flow_end', ValidationError(_('Flowmeter start position is bigger than end.')))
 
         return cleaned_data
