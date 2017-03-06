@@ -288,7 +288,7 @@ class Order(models.Model):
         related_name='+',
     )
     amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2)
-    rfidcard = models.ForeignKey(RfidCard, models.PROTECT, verbose_name=_('rfid card'), blank=True, null=True)
+    rfidcard = models.ForeignKey(RfidCard, models.SET_NULL, verbose_name=_('rfid card'), blank=True, null=True)
 
     class Meta:
         ordering = ['-placed_at']
