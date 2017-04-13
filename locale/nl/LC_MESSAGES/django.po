@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-02 15:21+0100\n"
+"POT-Creation-Date: 2017-04-13 13:53+0200\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -912,6 +912,15 @@ msgstr "Flowmeter"
 
 msgid "Weight"
 msgstr "Gewicht"
+
+msgid "Events without form last 30 days"
+msgstr "Evenementen zonder verbruikersformulier de afgelopen 30 dagen"
+
+msgid "Fill in"
+msgstr "Invullen"
+
+msgid "No missing forms. Hurray!"
+msgstr "Geen missende formulieren. Hulde!"
 
 msgid "Has comments"
 msgstr "Heeft commentaar"
