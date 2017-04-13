@@ -178,7 +178,7 @@ class ConsumptionFormListView(ListView):
             starts_at__gte=timezone.now() - datetime.timedelta(days=30),
             consumptionform__isnull=True,
             kegs__gt=0,
-        ).order_by('-starts_at').select_related('organizer')[:10]
+        ).order_by('-starts_at').select_related('organizer')
         return context
 
     def get_queryset(self):
