@@ -174,8 +174,8 @@ class ConsumptionFormListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ConsumptionFormListView, self).get_context_data(**kwargs)
         context['missing_dcf_list'] = Event.objects.filter(
-            starts_at__lte=timezone.now(),
-            starts_at__gte=timezone.now() - datetime.timedelta(days=30),
+            ends_at__lte=timezone.now(),
+            ends_at__gte=timezone.now() - datetime.timedelta(days=30),
             consumptionform__isnull=True,
             kegs__gt=0,
         ).order_by('-starts_at').select_related('organizer')
