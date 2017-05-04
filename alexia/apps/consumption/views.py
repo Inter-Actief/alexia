@@ -30,7 +30,8 @@ def dcf(request, pk):
     # Get event and verify rights
     event = get_object_or_404(Event, pk=pk)
 
-    if not event.is_tender(request.user):
+    if not event.is_tender(request.user) and \
+            not (event.organizer == request.organization and request.user.profile.is_manager(request.organization)):
         raise PermissionDenied(_('You are not a tender for this event.'))
 
     # Get consumption form or create one
