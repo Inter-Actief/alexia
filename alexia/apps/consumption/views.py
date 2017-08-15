@@ -143,6 +143,7 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
 
 class ConsumptionProductListView(FoundationManagerRequiredMixin, ListView):
     model = ConsumptionProduct
+    ordering = ['-is_active']
 
 
 class ConsumptionProductCreateView(FoundationManagerRequiredMixin, CrispyFormMixin, CreateView):
@@ -159,14 +160,14 @@ class WeightConsumptionProductCreateView(ConsumptionProductCreateView):
 
 class ConsumptionProductUpdateView(FoundationManagerRequiredMixin, CrispyFormMixin, UpdateView):
     model = ConsumptionProduct
-    fields = ['name']
+    fields = ['name', 'is_active']
     success_url = reverse_lazy('consumptionproduct_list')
     template_name = 'consumption/consumptionproduct_form.html'
 
 
 class WeightConsumptionProductUpdateView(ConsumptionProductUpdateView):
     model = WeightConsumptionProduct
-    fields = ['name', 'full_weight', 'empty_weight', 'has_flowmeter']
+    fields = ['name', 'full_weight', 'empty_weight', 'has_flowmeter', 'is_active']
 
 
 class ConsumptionFormListView(ListView):

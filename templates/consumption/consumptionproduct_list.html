@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         {% for consumptionproduct in consumptionproduct_list %}
-            <tr>
+            <tr{% if not consumptionproduct.is_active %} class="tr-muted"{% endif %}>
                 <td>{{ consumptionproduct.name }}</td>
                 <td>
                     {% if consumptionproduct.is_weighted %}

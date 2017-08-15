@@ -22,7 +22,6 @@ from alexia.apps.scheduling.models import (
     Availability, BartenderAvailability, Event,
 )
 
-
 # Use this once LoginView is available in Django
 #
 # class LoginView(LoginView):

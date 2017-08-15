@@ -12,6 +12,7 @@ from alexia.apps.scheduling.models import Event
 @python_2_unicode_compatible
 class ConsumptionProduct(models.Model):
     name = models.CharField(_('name'), max_length=32)
+    is_active = models.BooleanField(_('is currently active'), default=True)
 
     class Meta:
         verbose_name = _('consumption product')

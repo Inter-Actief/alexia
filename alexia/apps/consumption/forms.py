@@ -10,7 +10,10 @@ from django.utils.translation import ugettext as _
 
 from alexia.forms import AlexiaForm, EmptyInlineFormSet
 
-from .models import ConsumptionForm, ConsumptionProduct, UnitEntry, WeightEntry
+from .models import (
+    ConsumptionForm, ConsumptionProduct, UnitEntry, WeightConsumptionProduct,
+    WeightEntry,
+)
 
 
 class ConsumptionFormForm(forms.ModelForm):
@@ -29,6 +32,7 @@ class WeightEntryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(WeightEntryForm, self).__init__(*args, **kwargs)
+        self.fields['product'].queryset = WeightConsumptionProduct.objects.filter(is_active=True)
 
     def clean(self):
         cleaned_data = super(WeightEntryForm, self).clean()
@@ -69,7 +73,10 @@ class UnitEntryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UnitEntryForm, self).__init__(*args, **kwargs)
-        self.fields['product'].queryset = ConsumptionProduct.objects.filter(weightconsumptionproduct=None)
+        self.fields['product'].queryset = ConsumptionProduct.objects.filter(
+            is_active=True,
+            weightconsumptionproduct=None
+        )
 
 
 UnitEntryFormSet = inlineformset_factory(
