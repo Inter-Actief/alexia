@@ -1531,3 +1531,9 @@ msgstr "Mailsjablonen van %(organization)s"
 
 msgid "No mail templates defined."
 msgstr "Geen mailsjablonen gedefinieerd."
+
+msgid "The amount of unique debtors this event"
+msgstr "Het aantal unieke debiteuren deze activiteit"
+
+msgid "Visitors"
+msgstr "Bezoekers"

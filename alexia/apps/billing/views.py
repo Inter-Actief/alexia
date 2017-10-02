@@ -93,7 +93,11 @@ class OrderListView(ManagerRequiredMixin, ListView):
 
     def get_queryset(self):
         return Event.objects.filter(organizer=self.request.organization) \
-            .annotate(order_count=Count('orders'), revenue=Sum('orders__amount')) \
+            .annotate(
+                order_count=Count('orders'),
+                revenue=Sum('orders__amount'),
+                visitors=Count('orders__authorization', distinct=True),
+            ) \
             .filter(order_count__gt=0, ) \
             .order_by('-starts_at')
 

@@ -44,7 +44,8 @@
         <thead>
             <tr>
                 <th class="col-xs-2">{% trans 'Date' %}</th>
-                <th class="col-xs-6">{% trans 'Name' %}</th>
+                <th class="col-xs-5">{% trans 'Name' %}</th>
+                <th class="col-xs-1"><abbr title="{% trans 'The amount of unique debtors this event' %}">{% trans 'Visitors' %}</abbr></th>
                 <th class="col-xs-1">{% trans 'Transactions' %}</th>
                 <th class="col-xs-1">{% trans 'Revenue' %}</th>
                 <th class="col-xs-2">{% trans 'Price group' %}</th>
@@ -55,6 +56,7 @@
             <tr>
                 <td>{{ event.starts_at|date:"l d F" }}</td>
                 <td><a href="{% url 'event-orders' event.pk %}">{{ event.name }}</a></td>
+                <td>{{ event.visitors }}</td>
                 <td>{{ event.order_count }}</td>
                 <td>&euro; {{ event.revenue|floatformat:2 }}</td>
                 <td>{{ event.pricegroup }}</td>
