@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-13 13:53+0200\n"
+"POT-Creation-Date: 2017-10-03 14:48+0200\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -231,6 +231,9 @@ msgstr "Jaar"
 msgid "File format"
 msgstr "Bestandsformaat"
 
+msgid "is currently active"
+msgstr "is actief"
+
 msgid "consumption product"
 msgstr "voorraadproduct"
 
@@ -410,9 +413,6 @@ msgstr "mag borrels aanmaken en wijzigen"
 
 msgid "may create and modify users"
 msgstr "mag gebruikers aanmaken en wijzigen"
-
-msgid "is currently active"
-msgstr "is actief"
 
 msgid "membership"
 msgstr "lidmaatschap"
@@ -698,8 +698,11 @@ msgstr "Datum"
 msgid "Organizer"
 msgstr "Organisator"
 
-msgid "# Transactions"
-msgstr "# Transacties"
+msgid "Visitors"
+msgstr "Bezoekers"
+
+msgid "Transactions"
+msgstr "Transacties"
 
 msgid "Revenue"
 msgstr "Omzet"
@@ -742,8 +745,8 @@ msgstr "Specificatie"
 msgid "Stats"
 msgstr "Statistieken"
 
-msgid "Transactions"
-msgstr "Transacties"
+msgid "The amount of unique debtors this event"
+msgstr "Het aantal unieke debiteuren deze activiteit"
 
 msgid "Price group"
 msgstr "Prijsgroep"
@@ -939,6 +942,9 @@ msgstr "Nieuw (CE)"
 
 msgid "Type"
 msgstr "Type"
+
+msgid "Archived products"
+msgstr "Gearchiveerde producten"
 
 msgid "Consumption form"
 msgstr "Verbruiksformulier"
@@ -1531,12 +1537,3 @@ msgstr "Mailsjablonen van %(organization)s"
 
 msgid "No mail templates defined."
 msgstr "Geen mailsjablonen gedefinieerd."
-
-msgid "The amount of unique debtors this event"
-msgstr "Het aantal unieke debiteuren deze activiteit"
-
-msgid "Visitors"
-msgstr "Bezoekers"
-
-msgid "Archived products"
-msgstr "Gearchiveerde producten"
