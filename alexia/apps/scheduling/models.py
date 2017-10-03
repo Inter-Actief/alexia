@@ -168,6 +168,9 @@ class Event(models.Model):
     def needs_iva(self):
         return self.kegs > 0
 
+    def visitors(self):
+        return self.orders.values('authorization').distinct().count()
+
 
 pre_save.connect(notify_tenders, Event)
 

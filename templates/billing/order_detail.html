@@ -26,8 +26,12 @@
         <h3>{% trans 'Billing' %}</h3>
         <table class="table table-bordered">
             <tr>
-                <th class="col-xs-4">{% trans '# Transactions' %}</th>
-                <td class="col-xs-8">{{ orders|length }}</td>
+                <th class="col-xs-4">{% trans 'Visitors' %}</th>
+                <td class="col-xs-8">{{ event.visitors }}</th>
+            </tr>
+            <tr>
+                <th>{% trans 'Transactions' %}</th>
+                <td>{{ orders|length }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Revenue' %}</th>
