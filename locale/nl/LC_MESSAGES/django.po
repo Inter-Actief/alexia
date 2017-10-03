@@ -1537,3 +1537,6 @@ msgstr "Het aantal unieke debiteuren deze activiteit"
 
 msgid "Visitors"
 msgstr "Bezoekers"
+
+msgid "Archived products"
+msgstr "Gearchiveerde producten"

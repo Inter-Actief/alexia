@@ -142,8 +142,12 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
 
 
 class ConsumptionProductListView(FoundationManagerRequiredMixin, ListView):
-    model = ConsumptionProduct
-    ordering = ['-is_active']
+    queryset = ConsumptionProduct.objects.filter(is_active=True)
+
+    def get_context_data(self, **kwargs):
+        context = super(ConsumptionProductListView, self).get_context_data(**kwargs)
+        context['archived_list'] = ConsumptionProduct.objects.filter(is_active=False)
+        return context
 
 
 class ConsumptionProductCreateView(FoundationManagerRequiredMixin, CrispyFormMixin, CreateView):
