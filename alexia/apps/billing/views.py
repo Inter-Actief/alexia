@@ -161,8 +161,8 @@ class PaymentDetailView(DetailView):
         obj = super(PaymentDetailView, self).get_object(queryset)
 
         if not self.request.user.is_superuser \
-                and not self.request.user.profile.is_manager(self.request.organization) \
-                and not self.request.organization == obj.authorization.organization:
+                and not self.request.user.profile.is_manager(obj.authorization.organization) \
+                and not obj.authorization.user == self.request.user:
             raise PermissionDenied
 
         return obj
