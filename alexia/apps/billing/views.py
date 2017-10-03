@@ -364,6 +364,7 @@ class SellingPriceUpdateView(ManagerRequiredMixin, SellingPriceFilterMixin, Orga
                              UpdateView):
     model = SellingPrice
     form_class = SellingPriceForm
+    success_url = reverse_lazy('sellingprice_list')
 
 
 class SellingPriceDeleteView(ManagerRequiredMixin, SellingPriceFilterMixin, DeleteView):
