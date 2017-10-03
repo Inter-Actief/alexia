@@ -3,6 +3,7 @@
 {% block body %}
 {% for object in objects %}
 {% include 'consumption/pdf/page.html' %}
+{% if not forloop.last %}<div class="new-page">{% endif %}
 {% empty %}
 {% include 'consumption/pdf/page.html' %}
 {% endfor %}
