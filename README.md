@@ -7,9 +7,20 @@ Alexia is the management system for the drink rooms in the Zilverling at the Uni
 
 ## Table of contents
 
+- [Prerequisites](#prerequisites)
 - [Quick start](#quick-start)
 - [Project structure](#project-structure)
 - [Copyright and license](#copyright-and-license)
+
+## Prerequisites
+
+- **MySQL**
+
+  Due to raw SQL in the migrations only MySQL is supported.
+- **wkhtmltopdf**
+- **xvfb (optional)**
+
+  For servers without an X Server.
 
 ## Quick start
 

@@ -15,13 +15,11 @@ ALLOWED_HOSTS = []
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.',  # 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                       # Of pad naar sqlite3 database
-        # Hieronder negeren voor sqlite3
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '',
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',                       # Leeg voor localhost
-        'PORT': '',                       # Leeg is default
+        'HOST': '',
     }
 }
 
@@ -40,5 +38,8 @@ EMAIL_FROM = 'Alexia <alexia@localhost>'
 DEFAULT_FROM_EMAIL = EMAIL_FROM
 SERVER_EMAIL = EMAIL_FROM
 
-# Path to wkhtmltopdf (or helper script)
+# Path to wkhtmltopdf
+# wkhtmltopdf won't work without an X Server. If you don't have one, use
+# X virtual frame buffer (xvfb). Then point this path to the script you
+# can find in /bin/wkhtmltopdf.sh
 # WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
