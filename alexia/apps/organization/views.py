@@ -24,8 +24,12 @@ from .models import AuthenticationData, Membership, Profile
 
 class MembershipListView(ManagerRequiredMixin, ListView):
     def get_queryset(self):
-        return self.request.organization.membership_set.select_related('user', 'user__certificate', 'user__profile') \
-            .order_by('user__first_name')
+        return self.request.organization.membership_set.select_related(
+                'user',
+                'user__certificate',
+                'user__certificate__approved_by',
+                'user__profile',
+            ).order_by('user__first_name')
 
 
 class IvaListView(ManagerRequiredMixin, ListView):

@@ -99,7 +99,8 @@ class OrderListView(ManagerRequiredMixin, ListView):
                 visitors=Count('orders__authorization', distinct=True),
             ) \
             .filter(order_count__gt=0, ) \
-            .order_by('-starts_at')
+            .order_by('-starts_at') \
+            .select_related('pricegroup')
 
     def get_context_data(self, **kwargs):
         context = super(OrderListView, self).get_context_data(**kwargs)
@@ -284,7 +285,7 @@ class ProductRedirectView(ManagerRequiredMixin, SingleObjectMixin, RedirectView)
 
 
 class ProductListView(ManagerRequiredMixin, OrganizationFilterMixin, ListView):
-    model = PermanentProduct
+    queryset = PermanentProduct.objects.select_related('productgroup')
 
 
 class ProductDetailView(ManagerRequiredMixin, OrganizationFilterMixin, DetailView):

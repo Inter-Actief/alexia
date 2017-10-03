@@ -37,7 +37,9 @@ def dcf(request, pk):
     # Get consumption form or create one
     cf = event.consumptionform if hasattr(event, 'consumptionform') else ConsumptionForm(event=event)
 
-    if cf.is_completed(request.user):
+    if cf.is_completed(request.user) \
+            and not request.user.is_superuser \
+            and not request.user.is_foundation_manager:
         raise PermissionDenied(_('This consumption form has been completed.'))
 
     # Post or show form?
@@ -69,7 +71,9 @@ def complete_dcf(request, pk):
         raise Http404
 
     cf = event.consumptionform
-    if cf.is_completed(request.user):
+    if cf.is_completed(request.user) \
+            and not request.user.is_superuser \
+            and not request.user.is_foundation_manager:
         raise PermissionDenied(_('This consumption form has been completed.'))
 
     if request.method == 'POST':
@@ -200,11 +204,17 @@ class ConsumptionFormListView(ListView):
         else:
             raise PermissionDenied
 
-        return qs.order_by('-event__starts_at').select_related('event__organizer')
+        return qs \
+            .order_by('-event__starts_at') \
+            .prefetch_related('event__location') \
+            .select_related('event__organizer')
 
 
 class ConsumptionFormDetailView(DetailView):
-    queryset = ConsumptionForm.objects.select_related()
+    queryset = ConsumptionForm.objects.prefetch_related(
+        'weightentry_set__product',
+        'unitentry_set__product',
+    ).select_related('completed_by', 'event')
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

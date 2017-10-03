@@ -101,9 +101,7 @@ class ConsumptionForm(models.Model):
         return not bool(len(self._issues['errors']))
 
     def is_completed(self, user=None):
-        if user and (user.is_superuser or user.profile.is_foundation_manager):
-            return False
-        return bool(self.completed_by or self.completed_at)
+        return bool(self.completed_at)
 
     def aggregate_products(self):
         result = {}
