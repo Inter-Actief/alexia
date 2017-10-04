@@ -39,7 +39,7 @@ def dcf(request, pk):
 
     if cf.is_completed(request.user) \
             and not request.user.is_superuser \
-            and not request.user.is_foundation_manager:
+            and not request.user.profile.is_foundation_manager:
         raise PermissionDenied(_('This consumption form has been completed.'))
 
     # Post or show form?
@@ -73,7 +73,7 @@ def complete_dcf(request, pk):
     cf = event.consumptionform
     if cf.is_completed(request.user) \
             and not request.user.is_superuser \
-            and not request.user.is_foundation_manager:
+            and not request.user.profile.is_foundation_manager:
         raise PermissionDenied(_('This consumption form has been completed.'))
 
     if request.method == 'POST':
