@@ -9,7 +9,7 @@
 <form method="post">
     {% csrf_token %}
     <p>
-        <strong>{% blocktrans price=sellingprice %}Are you sure you want to delete {{ price }}?{% endblocktrans %}</strong>
+        <strong>{% blocktrans with price=sellingprice %}Are you sure you want to delete {{ price }}?{% endblocktrans %}</strong>
     </p>
     <div class="form-actions">
         <button type="submit" class="btn btn-danger">
