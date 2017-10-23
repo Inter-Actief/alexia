@@ -151,6 +151,10 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
 
         price = amount * product.get_price(event)
 
+        # Grolsch? Trust Juliana (variable price)
+        if product.pk == 1:
+            price = p['price'] / Decimal(100)
+
         if price != p['price'] / Decimal(100):
             raise InvalidParamsError('Price for product %s is incorrect' % p['product'])
 

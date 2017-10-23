@@ -285,6 +285,23 @@ Receipt = {
     },
     payNow: function () {
         console.log('Processing payment now.');
+
+        var numBeers = 0;
+        for (var i in this.receipt) {
+            if (this.receipt[i]===undefined) continue;
+
+            var product = this.receipt[i].product;
+            var quantity = this.receipt[i].amount;
+
+            if(product === 1) {
+                numBeers = quantity;
+            }
+        }
+
+        if (numBeers) {
+            increasePrice(numBeers);
+        }
+
         var rpcRequest = {
             jsonrpc: '2.0',
             method: 'juliana.order.save',
