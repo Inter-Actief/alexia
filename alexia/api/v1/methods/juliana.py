@@ -42,7 +42,7 @@ def rfid_to_identifier(rfid):
     elif rfid['atqa'] == "03:04" and rfid['sak'] == "28":
         # JCOP31
         ia_rfid_prefix = '06'
-    elif rfid['type'] == "iso-b":
+    elif 'type' in rfid and rfid['type'] == "iso-b":
         # ISO 14443-B
         ia_rfid_prefix = '80'
     else:
