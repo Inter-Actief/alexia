@@ -22,7 +22,7 @@ def permissions(request):
             'is_manager': membership.is_manager,
             'is_foundation_manager': request.user.profile.is_foundation_manager,
         }
-    except:
+    except Organization.DoesNotExist:
         return {
             'is_tender': False,
             'is_planner': False,
