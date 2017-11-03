@@ -15,7 +15,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from alexia.apps.organization.forms import BartenderAvailabilityForm
-from alexia.apps.organization.models import Membership, Profile
+from alexia.apps.organization.models import Location, Membership, Profile
 from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, PlannerRequiredMixin,
     TenderRequiredMixin,
