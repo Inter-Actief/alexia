@@ -141,7 +141,7 @@ class EventCalendarFetch(View):
             try:
                 location = event.location.get()
                 color = '#' + location.color if location.color else color
-            except Event.MultipleObjectsReturned:
+            except Location.MultipleObjectsReturned:
                 pass
 
             data.append({
