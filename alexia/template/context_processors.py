@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from alexia.apps.organization.models import Organization
+from alexia.apps.organization.models import Membership, Organization
 
 
 def organization(request):
@@ -30,7 +30,7 @@ def permissions(request):
                 'is_manager': False,
                 'is_foundation_manager': False,
             }
-    except Organization.DoesNotExist:
+    except Membership.DoesNotExist:
         return {
             'is_tender': False,
             'is_planner': False,
