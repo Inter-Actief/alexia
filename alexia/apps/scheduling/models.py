@@ -48,6 +48,7 @@ class MailTemplate(models.Model):
 class Event(models.Model):
     organizer = models.ForeignKey(
         'organization.Organization',
+        models.PROTECT,
         related_name='events',
         verbose_name=_('organizer'),
     )
@@ -222,8 +223,8 @@ class BartenderAvailability(models.Model):
         verbose_name=_('bartender'),
         related_name='bartender_availability_set',
     )
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='bartender_availabilities')
-    availability = models.ForeignKey(Availability, verbose_name=_('availability'))
+    event = models.ForeignKey(Event, models.CASCADE, verbose_name=_('event'), related_name='bartender_availabilities')
+    availability = models.ForeignKey(Availability, models.PROTECT, verbose_name=_('availability'))
 
     class Meta:
         verbose_name = _('bartender availability')

@@ -47,6 +47,7 @@ class AuthenticationData(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
+        models.CASCADE,
         unique=True,
         verbose_name=_('user'),
     )
