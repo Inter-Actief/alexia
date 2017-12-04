@@ -1,7 +1,7 @@
 from django.conf import settings
-from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.urls import include, path
 from django.views.generic import RedirectView, TemplateView
 
 from alexia.apps.billing.views import JulianaView
@@ -11,47 +11,52 @@ from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
     # Root
-    url(r'^$', RedirectView.as_view(pattern_name='event-list', permanent=True)),
+    path('', RedirectView.as_view(pattern_name='event-list', permanent=True)),
 
     # Short urls to 'subsystems'
-    url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),
-    url(r'^dcf/(?P<pk>\d+)/check/$', complete_dcf, name='dcf-complete'),
-    url(r'^juliana/(?P<pk>\d+)/$', JulianaView.as_view(), name='juliana'),
+    path('dcf/<int:pk>/', include([
+        path('', dcf, name='dcf'),
+        path('check/', complete_dcf, name='dcf-complete'),
+    ])),
+    path('ical/', include([
+        path('', scheduling_views.ical),
+        path('<ical_id>/', scheduling_views.personal_ical, name='ical'),
+    ])),
+    path('juliana/<int:pk>/', JulianaView.as_view(), name='juliana'),
 
     # Apps
-    url(r'^billing/', include('alexia.apps.billing.urls')),
-    url(r'^consumption/', include('alexia.apps.consumption.urls')),
-    url(r'^organization/', include('alexia.apps.organization.urls')),
-    url(r'^profile/', include('alexia.apps.profile.urls')),
-    url(r'^scheduling/', include('alexia.apps.scheduling.urls')),
-    url(r'^ical$', scheduling_views.ical),
-    url(r'^ical/(?P<ical_id>[^/]+)$', scheduling_views.personal_ical, name='ical'),
-
-    url(r'^api/', include('alexia.api.urls')),
+    path('api/', include('alexia.api.urls')),
+    path('billing/', include('alexia.apps.billing.urls')),
+    path('consumption/', include('alexia.apps.consumption.urls')),
+    path('organization/', include('alexia.apps.organization.urls')),
+    path('profile/', include('alexia.apps.profile.urls')),
+    path('scheduling/', include('alexia.apps.scheduling.urls')),
 
     # "Static" general_views
-    url(r'^about/$', general_views.AboutView.as_view(), name='about'),
-    url(r'^help/$', general_views.HelpView.as_view(), name='help'),
-    url(r'^login/$', general_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
-    url(r'^register/$', general_views.RegisterView.as_view(), name='register'),
-    url(r'^change_current_organization/(?P<slug>[-\w]+)/$',
+    path('about/', general_views.AboutView.as_view(), name='about'),
+    path('help/', general_views.HelpView.as_view(), name='help'),
+    path('login/', general_views.login, name='login'),
+    path('logout/', auth_views.logout, name='logout'),
+    path('register/', general_views.RegisterView.as_view(), name='register'),
+    path('change_current_organization/<slug:slug>/',
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
 
     # Django Admin
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    path('admin/', include([
+        path('', admin.site.urls),
+        path('doc/', include('django.contrib.admindocs.urls')),
+    ])),
 
     # Internationalization
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+    path('i18n/', include('django.conf.urls.i18n')),
 
     # Robots
-    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]
 
 # Debug toolbar
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path('__debug__/', include(debug_toolbar.urls)),
     ]
