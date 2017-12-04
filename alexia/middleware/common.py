@@ -11,7 +11,7 @@ class CommonMiddleware(object):
         return self.get_response(request)
 
     def ensure_profile(self, request):
-        if request.user.is_authenticated() and not hasattr(request.user, 'profile'):
+        if request.user.is_authenticated and not hasattr(request.user, 'profile'):
             Profile(user=request.user).save()
 
     def get_current_organization(self, request):

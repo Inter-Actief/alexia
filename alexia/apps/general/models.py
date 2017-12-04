@@ -25,7 +25,7 @@ class Auditlog(models.Model):
 
 
 def log(user, action, extra=None, obj=None, dateof=None):
-    if (user is not None and not user.is_authenticated()):
+    if user is not None and not user.is_authenticated:
         user = None
 
     if extra is None:
