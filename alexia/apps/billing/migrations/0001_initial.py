@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PermanentProduct',
             fields=[
-                ('product_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='billing.Product')),
+                ('product_ptr', models.OneToOneField(on_delete=models.CASCADE, parent_link=True, auto_created=True, primary_key=True, serialize=False, to='billing.Product')),
             ],
             options={
             },
@@ -122,7 +122,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TemporaryProduct',
             fields=[
-                ('product_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='billing.Product')),
+                ('product_ptr', models.OneToOneField(on_delete=models.CASCADE, parent_link=True, auto_created=True, primary_key=True, serialize=False, to='billing.Product')),
                 ('price', models.DecimalField(verbose_name='price', max_digits=15, decimal_places=2)),
             ],
             options={
