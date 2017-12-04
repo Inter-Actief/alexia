@@ -13,7 +13,7 @@ urlpatterns = [
     path('membership/<int:pk>/iva/', views.MembershipIvaView.as_view(), name='iva-membership'),
     path('membership/<int:pk>/iva/upload/', views.MembershipIvaUpdate.as_view(), name='upload-iva-membership'),
     path('membership/<int:pk>/iva/approve/', views.MembershipIvaApprove.as_view(),
-        name='approve-iva-membership'),
+         name='approve-iva-membership'),
     path('membership/<int:pk>/iva/decline/', views.MembershipIvaDecline.as_view(),
-        name='decline-iva-membership'),
+         name='decline-iva-membership'),
 ]

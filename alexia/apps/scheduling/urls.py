@@ -13,13 +13,13 @@ urlpatterns = [
     path('event/<int:pk>/', views.EventDetailView.as_view(), name='event'),
     path('event/<int:pk>/update/', views.EventUpdateView.as_view(), name='edit-event'),
     path('event/<int:pk>/update/bartender_availability/<int:user_pk>/',
-        views.event_edit_bartender_availability, name='edit-event-bartender-availability'),
+         views.event_edit_bartender_availability, name='edit-event-bartender-availability'),
     path('event/<int:pk>/delete/', views.EventDelete.as_view(), name='delete-event'),
 
     path('mailtemplate/', views.MailTemplateListView.as_view(), name='mailtemplate_list'),
     path('mailtemplate/<slug:name>/', views.MailTemplateDetailView.as_view(), name='mailtemplate_detail'),
     path('mailtemplate/<slug:name>/update/', views.MailTemplateUpdateView.as_view(),
-        name='mailtemplate_update'),
+         name='mailtemplate_update'),
 
     path('availability/', views.AvailabilityListView.as_view(), name='availability_list'),
     path('availability/create/', views.AvailabilityCreateView.as_view(), name='availability_create'),

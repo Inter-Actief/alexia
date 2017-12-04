@@ -39,7 +39,7 @@ urlpatterns = [
     path('logout/', auth_views.logout, name='logout'),
     path('register/', general_views.RegisterView.as_view(), name='register'),
     path('change_current_organization/<slug:slug>/',
-        general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
+         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
 
     # Django Admin
     path('admin/', include([
