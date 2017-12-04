@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('file', models.FileField(upload_to=alexia.apps.organization.models._get_certificate_path, verbose_name='certificate')),
                 ('uploaded_at', models.DateField(auto_now_add=True, verbose_name='uploaded at')),
                 ('approved_at', models.DateField(null=True, verbose_name='approved at')),
-                ('approved_by', models.ForeignKey(on_delete=models.SET_NULL, related_name='approved_certificates', verbose_name='approved by', to=settings.AUTH_USER_MODEL, null=True)),
+                ('approved_by', models.ForeignKey(on_delete=models.CASCADE, related_name='approved_certificates', verbose_name='approved by', to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
             },
