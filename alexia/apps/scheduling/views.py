@@ -76,6 +76,8 @@ def event_list_view(request):
             if data['till_time']:
                 end_time = data['till_time']
 
+            if data['meetings_only']:
+                events = events.filter(kegs=0)
     else:
         filter_form = FilterEventForm()
 
