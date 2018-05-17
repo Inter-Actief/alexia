@@ -6,3 +6,4 @@ from .juliana import *  # NOQA
 from .organization import *  # NOQA
 from .rfid import *  # NOQA
 from .user import *  # NOQA
+from .scheduling import *  # NOQA
