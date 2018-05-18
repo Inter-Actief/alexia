@@ -6,6 +6,12 @@ import django.db.models.deletion
 import django.utils.timezone
 import jsonfield.fields
 
+CREATE_STMT = '''CREATE TABLE IF NOT EXISTS `general_auditlog` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `timestamp` datetime(6) NOT NULL, `action` varchar(50) NOT NULL, `object_id` integer UNSIGNED NULL, `extra` longtext NOT NULL, `content_type_id` integer NULL, `user_id` integer NULL);
+ALTER TABLE `general_auditlog` ADD CONSTRAINT `general_audit_content_type_id_aede5bd8_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
+ALTER TABLE `general_auditlog` ADD CONSTRAINT `general_auditlog_user_id_2a7216b3_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+CREATE INDEX `general_auditlog_d7e6d55b` ON `general_auditlog` (`timestamp`);
+CREATE INDEX `general_auditlog_418c5509` ON `general_auditlog` (`action`);'''
+
 
 class Migration(migrations.Migration):
 
@@ -17,24 +23,24 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-      migrations.RunSQL(
-        "ALTER TABLE eventlog_log RENAME TO general_auditlog",
-        "ALTER TABLE general_auditlog RENAME TO eventlog_log",
-        state_operations=[
-            migrations.CreateModel(
-                name='Auditlog',
-                fields=[
-                    ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                    ('timestamp', models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
-                    ('action', models.CharField(db_index=True, max_length=50)),
-                    ('object_id', models.PositiveIntegerField(null=True)),
-                    ('extra', jsonfield.fields.JSONField()),
-                    ('content_type', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='contenttypes.ContentType')),
-                    ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ],
-                options={
-                    'ordering': ['-timestamp'],
-                },
-            ),
-        ]),
+        migrations.SeparateDatabaseAndState(
+            database_operations=[migrations.RunSQL(CREATE_STMT)],
+            state_operations=[
+                migrations.CreateModel(
+                    name='Auditlog',
+                    fields=[
+                        ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                        ('timestamp', models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
+                        ('action', models.CharField(db_index=True, max_length=50)),
+                        ('object_id', models.PositiveIntegerField(null=True)),
+                        ('extra', jsonfield.fields.JSONField()),
+                        ('content_type', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='contenttypes.ContentType')),
+                        ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                    ],
+                    options={
+                        'ordering': ['-timestamp'],
+                    },
+                ),
+            ]
+        )
     ]
