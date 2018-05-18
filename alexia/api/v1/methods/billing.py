@@ -156,7 +156,7 @@ def order_list(request, radius_username):
 
     Returns an array of orders.
 
-    radius_username -- (optional) RADUIS username to search for.
+    radius_username -- RADUIS username to search for.
 
     Example return value:
     [
