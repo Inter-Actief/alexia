@@ -146,7 +146,7 @@ def order_get(request, order_id):
 
 @jsonrpc_method('order.list(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
 @manager_required
-def order_list(request, radius_username):
+def order_list(request, radius_username=None):
     """
     Retrieve a list of orders for the currently selected organization.
 
@@ -156,7 +156,7 @@ def order_list(request, radius_username):
 
     Returns an array of orders.
 
-    radius_username -- RADUIS username to search for.
+    radius_username -- (optional) RADUIS username to search for.
 
     Example return value:
     [
