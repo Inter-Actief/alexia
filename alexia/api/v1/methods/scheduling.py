@@ -3,12 +3,17 @@ from jsonrpc import jsonrpc_method
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import ObjectNotFoundError
 from alexia.apps.scheduling.models import BartenderAvailability
-from alexia.auth.backends import User, RADIUS_BACKEND_NAME
+from alexia.auth.backends import RADIUS_BACKEND_NAME, User
 
 from ..config import api_v1_site
 
 
-@jsonrpc_method('user.get_availabilities(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@jsonrpc_method(
+    'user.get_availabilities(radius_username=String) -> Array',
+    site=api_v1_site,
+    safe=True,
+    authenticated=True
+)
 @manager_required
 def user_get_availabilities(request, radius_username):
     """

@@ -1,9 +1,8 @@
 import jsonfield
-
 from django.conf import settings
-from django.db import models
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.utils import timezone
 
 
@@ -41,7 +40,7 @@ def log(user, action, extra=None, obj=None, dateof=None):
     if dateof is None:
         dateof = timezone.now()
 
-    event = Auditlog.objects.create(
+    Auditlog.objects.create(
         user=user,
         action=action,
         extra=extra,

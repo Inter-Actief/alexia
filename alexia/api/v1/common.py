@@ -1,6 +1,6 @@
 import base64
 
-from alexia.apps.organization.models import AuthenticationData, Certificate
+from alexia.apps.organization.models import AuthenticationData
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
 

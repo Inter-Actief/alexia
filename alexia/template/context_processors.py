@@ -17,7 +17,7 @@ def permissions(request):
     try:
         if hasattr(request.user, "membership_set"):
             membership = request.user.membership_set.get(organization=request.organization)
-       	    return {
+            return {
                 'is_tender': membership.is_tender,
                 'is_planner': membership.is_planner,
                 'is_manager': membership.is_manager,

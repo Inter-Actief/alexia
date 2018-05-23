@@ -4,10 +4,12 @@ from jsonrpc import jsonrpc_method
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
-from alexia.apps.organization.models import AuthenticationData, Profile, Certificate, Membership
+from alexia.apps.organization.models import (
+    AuthenticationData, Certificate, Membership, Profile,
+)
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
-from ..common import format_user, format_certificate
+from ..common import format_certificate, format_user
 from ..config import api_v1_site
 
 
@@ -118,7 +120,12 @@ def user_get_by_id(request, user_id):
     return format_user(user)
 
 
-@jsonrpc_method('user.get_membership(radius_username=String) -> Object', site=api_v1_site, safe=True, authenticated=True)
+@jsonrpc_method(
+    'user.get_membership(radius_username=String) -> Object',
+    site=api_v1_site,
+    safe=True,
+    authenticated=True
+)
 @manager_required
 def user_get_membership(request, radius_username):
     """
@@ -128,7 +135,8 @@ def user_get_membership(request, radius_username):
 
     radius_username     -- RADIUS username to search for.
 
-    Raises error 404 if the provided username cannot be found or the user has no membership with the current organization.
+    Raises error 404 if the provided username cannot be found or the user has no membership with the current
+    organization.
 
     Example result value:
     {
@@ -166,7 +174,12 @@ def user_get_membership(request, radius_username):
     }
 
 
-@jsonrpc_method('user.get_iva_certificate(radius_username=String) -> Object', site=api_v1_site, safe=True, authenticated=True)
+@jsonrpc_method(
+    'user.get_iva_certificate(radius_username=String) -> Object',
+    site=api_v1_site,
+    safe=True,
+    authenticated=True
+)
 @manager_required
 def user_get_iva_certificate(request, radius_username):
     """
