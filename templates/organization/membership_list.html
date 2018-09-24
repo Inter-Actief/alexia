@@ -37,7 +37,12 @@
         {% for membership in membership_list %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td><a href="{% url 'membership' membership.pk %}">{{ membership.user.get_full_name }}</a></td>
+                <td>
+                    <a href="{% url 'membership' membership.pk %}">{{ membership.user.get_full_name }}</a>
+                    {% if membership.user.profile.nickname %}
+                    <small>({{ membership.user.profile.nickname }})</small>
+                    {% endif %}
+                </td>
                 <td>
                     {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
                     {% if membership.is_planner %}<span class="label label-default">{% trans 'Planner' %}</span>{% endif %}

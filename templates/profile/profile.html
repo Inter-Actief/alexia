@@ -14,6 +14,10 @@
                 <dd>{{ radius_username|default:'&mdash;' }}</dd>
                 <dt>{% trans 'Email address' %} <a href="{% url 'edit-profile' %}">({% trans 'edit' %})</a></dt>
                 <dd>{{ user.email }}</dd>
+                {% if user.profile.nickname %}
+                <dt>{% trans 'Nickname' %}</dt>
+                <dd>{{ user.profile.nickname }}</dd>
+                {% endif %}
             </dl>
         </div>
         <table class="table table-bordered">

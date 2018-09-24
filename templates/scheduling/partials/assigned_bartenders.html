@@ -2,6 +2,6 @@
     {% with organizations=bartender.organization_set.all %}
     <span title="{{ bartender.get_full_name }}{% if e.participants.count > 1 %} ({% for o in organizations %}{{ o }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}"
           {% if e.participants.count > 1 %}style="{% for o in organizations %}{% if o.color %}color: #{{ o.color }};{% endif %}{% endfor %}"{% endif %}>
-        {{ bartender.first_name }}</span>{% if not forloop.last %}, {% endif %}
+        {{ bartender.profile.get_bartender_name }}</span>{% if not forloop.last %}, {% endif %}
     {% endwith %}
 {% endfor %}

@@ -176,7 +176,10 @@ class EventMatrixView(TemplateView):
                 'bartender_availabilities',
                 queryset=BartenderAvailability.objects.select_related('user', 'event', 'availability')
             )
-        ).filter(ends_at__gte=timezone.now(), participants=self.request.organization).order_by('starts_at')
+        ).filter(
+            ends_at__gte=timezone.now(),
+            participants=self.request.organization
+        ).exclude(kegs=0).order_by('starts_at')[:12]
 
     def get_tenders(self, events):
         tenders_list = Membership.objects.select_related('user').filter(

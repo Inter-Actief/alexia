@@ -18,7 +18,7 @@ from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin
 from alexia.forms import CrispyFormMixin
 from alexia.utils import log
 
-from .forms import MembershipAddForm, UploadIvaForm
+from .forms import MembershipAddForm, MembershipUpdateForm, UploadIvaForm
 from .models import AuthenticationData, Membership, Profile
 
 
@@ -130,8 +130,16 @@ class MembershipDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, Det
 
 
 class MembershipUpdate(ManagerRequiredMixin, DenyWrongOrganizationMixin, CrispyFormMixin, UpdateView):
+    form_class = MembershipUpdateForm
     model = Membership
-    fields = ['is_active', 'is_tender', 'is_planner', 'is_manager', 'comments']
+
+    def get_initial(self):
+        return {'nickname': self.object.user.profile.nickname}
+
+    def form_valid(self, form):
+        self.object.user.profile.nickname = form.cleaned_data['nickname']
+        self.object.user.profile.save()
+        return super().form_valid(form)
 
 
 class MembershipDelete(ManagerRequiredMixin, DenyWrongOrganizationMixin, DeleteView):

@@ -15,14 +15,14 @@
                 <th>{% trans 'Tended' %}</th>
                 <th>{% trans 'Last tended' %}</th>
                 {% for e in events %}
-                <th class="diag"><div><span>{{ e.name|truncatechars:25 }}</span></div></th>
+                <th class="diag"><div><span>{{ e.starts_at|date:"j-b" }}<br>{{ e.name|truncatechars:25 }}</span></div></th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for t in tenders %}
             <tr>
-                <td><a href="{% url 'membership' t.tender.pk %}">{{ t.tender.user.get_full_name }}</a></td>
+                <td><a href="{% url 'membership' t.tender.pk %}">{{ t.tender.user.profile.get_bartender_name }}</a></td>
                 <td>{{ t.tended }}</td>
                 <td>
                     <span{% if t.last_tended %} title="{{ t.last_tended.name }}"{% endif %}>
