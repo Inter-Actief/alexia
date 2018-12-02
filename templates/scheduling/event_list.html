@@ -85,11 +85,15 @@
                 <td>{{ e.kegs|default:'&mdash;' }}</td>
                 <td>
                     {% if e.needs_iva %}
-                    {% if e.meets_iva_requirement %}
+                    {% with ivacheck=e.meets_iva_requirement %}
+                    {% if ivacheck == "YES" %}
                     <i class="icon-alexia-ok"></i>
+                    {% elif ivacheck == "MAYBE" %}
+                    <span class="text-warning glyphicon glyphicon-warning-sign" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
                     {% else %}
                     <i class="icon-alexia-notok"></i>
                     {% endif %}
+                    {% endwith %}
                     {% else %}
                     &mdash;
                     {% endif %}

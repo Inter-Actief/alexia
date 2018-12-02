@@ -157,13 +157,23 @@ class Event(models.Model):
         return user in self.get_assigned_bartenders()
 
     def meets_iva_requirement(self):
-        # Result could be cached by earlier call or prefetch
-        if not hasattr(self, 'bartender_availabilities_iva'):
-            self.bartender_availabilities_iva = self.bartender_availabilities.filter(
-                Q(availability__nature=Availability.ASSIGNED),
-                Q(user__profile__is_iva=True) | Q(user__certificate__approved_at__isnull=False)).exists()
+        yes = 0
+        no = 0
 
-        return bool(self.bartender_availabilities_iva)
+        for ba in self.bartender_availabilities.filter(
+                Q(availability__nature=Availability.ASSIGNED)):
+            if (hasattr(ba.user, 'certificate') and ba.user.certificate.approved_at) \
+                    or ba.user.profile.is_iva:
+                yes = yes + 1
+            else:
+                no = no + 1
+
+        if yes and not no:
+            return "YES"
+        elif yes and no:
+            return "MAYBE"
+        else:
+            return "NO"
 
     def needs_iva(self):
         return self.kegs > 0

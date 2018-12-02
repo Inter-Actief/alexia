@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 15:13+0100\n"
+"POT-Creation-Date: 2018-12-02 16:00+0100\n"
 "PO-Revision-Date: 2016-08-08 20:51+0200\n"
 "Last-Translator: Wouter Kobes\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
@@ -337,6 +337,9 @@ msgstr "RADIUS-gebruikersnaam"
 msgid "Student or employee account"
 msgstr "Student- of medewerkers-gebruikersnaam"
 
+msgid "Bartender nickname"
+msgstr "Tappersbijnaam"
+
 msgid "prevent conflicting events"
 msgstr "voorkom conflicterende activiteiten"
 
@@ -386,6 +389,9 @@ msgstr "huidige organisatie"
 
 msgid "iCal identifier"
 msgstr "iCal identificatie"
+
+msgid "bartender nickname"
+msgstr "tappersbijnaam"
 
 msgid "profile"
 msgstr "profiel"
@@ -1184,6 +1190,9 @@ msgstr "Er zijn geen betalingen!"
 msgid "edit"
 msgstr "wijzigen"
 
+msgid "Nickname"
+msgstr "Bijnaam"
+
 msgid "Events attended"
 msgstr "Activiteiten bijgewoond"
 
@@ -1501,6 +1510,9 @@ msgstr "Heeft tappersinstructie"
 
 msgid "Risky activity"
 msgstr "Risicoactiviteit"
+
+msgid "Some bartenders have IVA, but not everyone"
+msgstr "Sommige tappers hebben IVA, maar niet allemaal"
 
 msgid "Point of sale"
 msgstr "Kassa"
