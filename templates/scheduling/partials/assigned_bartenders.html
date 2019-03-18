@@ -1,11 +1,14 @@
 {% for bartender in e.get_assigned_bartenders %}
     {% with organizations=bartender.organization_set.all %}
     {% if is_foundation_manager %}
-    <span class="label label-{% if bartender.profile.has_iva %}success{% else %}danger{% endif %}">{{ bartender.profile.get_bartender_name }}</span>
+    <span title="{{ bartender.get_full_name }}{% if e.participants.count > 1 %} ({% for o in organizations %}{{ o }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}"
+          class="label label-{% if bartender.profile.has_iva %}success{% else %}danger{% endif %}">
+          {{ bartender.profile.get_bartender_name }}
+    </span>
     {% else %}
     <span title="{{ bartender.get_full_name }}{% if e.participants.count > 1 %} ({% for o in organizations %}{{ o }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}"
           {% if e.participants.count > 1 %}style="{% for o in organizations %}{% if o.color %}color: #{{ o.color }};{% endif %}{% endfor %}"{% endif %}>
-        {{ bartender.profile.get_bartender_name }}</span>{% if not forloop.last %}, {% endif %}
+          {{ bartender.profile.get_bartender_name }}</span>{% if not forloop.last %}, {% endif %}
     {% endif %}
     {% endwith %}
 {% endfor %}
