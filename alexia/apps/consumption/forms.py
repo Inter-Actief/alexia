@@ -33,6 +33,8 @@ class WeightEntryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WeightEntryForm, self).__init__(*args, **kwargs)
         self.fields['product'].queryset = WeightConsumptionProduct.objects.filter(is_active=True)
+        self.fields['flow_start'].widget.attrs['class'] = 'flowmeter'
+        self.fields['flow_end'].widget.attrs['class'] = 'flowmeter'
 
     def clean(self):
         cleaned_data = super(WeightEntryForm, self).clean()
