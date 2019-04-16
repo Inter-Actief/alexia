@@ -1,4 +1,4 @@
-from eventlog.models import log
+from alexia.apps.general.models import log
 
 
 def event_created(user, event):

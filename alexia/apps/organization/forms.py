@@ -6,6 +6,8 @@ from alexia.apps.scheduling.models import Availability, BartenderAvailability
 from alexia.core.validators import validate_radius_username
 from alexia.forms import AlexiaModelForm
 
+from .models import Membership
+
 
 class BartenderAvailabilityForm(AlexiaModelForm):
     availability = forms.ModelChoiceField(Availability.objects.none(), label=_('Availability'))
@@ -44,6 +46,14 @@ class MembershipAddForm(forms.Form):
         max_length=8,
         validators=[validate_radius_username],
     )
+
+
+class MembershipUpdateForm(forms.ModelForm):
+    nickname = forms.CharField(required=False, label=_('Bartender nickname'))
+
+    class Meta:
+        model = Membership
+        fields = ['is_active', 'is_tender', 'is_planner', 'is_manager', 'nickname', 'comments']
 
 
 class UploadIvaForm(forms.ModelForm):

@@ -1,3 +1,5 @@
+import base64
+
 from alexia.apps.organization.models import AuthenticationData
 from alexia.auth.backends import RADIUS_BACKEND_NAME
 
@@ -73,4 +75,18 @@ def format_user(user):
         'first_name': user.first_name,
         'last_name': user.last_name,
         'authentication_data': auth_data
+    }
+
+
+def format_certificate(certificate):
+    """
+
+    :type certificate: alexia.apps.organization.models.Certificate
+    """
+    with open(certificate.file.path, "rb") as certificate_file:
+        certificate_b64 = base64.b64encode(certificate_file.read())
+
+    return {
+        'user': certificate.owner.username,
+        'certificate_data': certificate_b64.decode("utf-8")
     }

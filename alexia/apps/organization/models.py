@@ -78,6 +78,7 @@ class Profile(models.Model):
         verbose_name=_('current organization'),
     )
     ical_id = models.CharField(_('iCal identifier'), max_length=36, null=True)
+    nickname = models.CharField(_('bartender nickname'), max_length=32, blank=True)
 
     class Meta:
         verbose_name = _('profile')
@@ -115,6 +116,9 @@ class Profile(models.Model):
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
         ).count()
+
+    def get_bartender_name(self):
+        return (self.nickname or self.user.first_name)
 
 
 @python_2_unicode_compatible

@@ -3,7 +3,14 @@
 
 {% block title %}{% trans 'Consumption form' %}{% endblock title %}
 
-{% block extrajs %}<script src="{% static 'js/dcf.js' %}"></script>{% endblock extrajs %}
+{% block extrajs %}
+{% if event.location.all|length == 1 %}
+<script>
+var location_name = '{{ event.location.all|join:""|lower }}';
+</script>
+{% endif %}
+<script src="{% static 'js/dcf.js' %}"></script>
+{% endblock extrajs %}
 
 {% block body %}
 <form method="post" class="disable-on-change">
@@ -15,6 +22,7 @@
                 <small>{{ event }}</small>
             </h1>
         </div>
+        <div class="alert alert-warning collapse" id="flowmeterWarning"></div>
         {% include 'consumption/partials/weight_consumption.html' %}
         {% include 'consumption/partials/unit_consumption.html' %}
         <div class="well" id="comments">

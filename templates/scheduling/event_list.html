@@ -85,11 +85,15 @@
                 <td>{{ e.kegs|default:'&mdash;' }}</td>
                 <td>
                     {% if e.needs_iva %}
-                    {% if e.meets_iva_requirement %}
+                    {% with ivacheck=e.meets_iva_requirement %}
+                    {% if ivacheck == "YES" %}
                     <i class="icon-alexia-ok"></i>
+                    {% elif ivacheck == "MAYBE" %}
+                    <span class="text-warning glyphicon glyphicon-warning-sign" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
                     {% else %}
                     <i class="icon-alexia-notok"></i>
                     {% endif %}
+                    {% endwith %}
                     {% else %}
                     &mdash;
                     {% endif %}
@@ -120,10 +124,12 @@
                     <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="glyphicon glyphicon-trash"></i></a>
                     {% endif %}
                     {% endif %}
-                    {% if is_tender and e.can_be_opened and e in events_tending %}
+                    {% if is_tender and e.can_be_opened %}
+                    {% if e in events_tending or request.organization == e.organizer and request.organization.assigns_tenders and is_tender %}
                     <a class="btn btn-primary" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
                     {% if not e.consumptionform.is_completed %}
                     <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
+                    {% endif %}
                     {% endif %}
                     {% endif %}
                     </div>

@@ -15,7 +15,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from alexia.apps.organization.forms import BartenderAvailabilityForm
-from alexia.apps.organization.models import Membership, Profile
+from alexia.apps.organization.models import Location, Membership, Profile
 from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, PlannerRequiredMixin,
     TenderRequiredMixin,
@@ -76,6 +76,8 @@ def event_list_view(request):
             if data['till_time']:
                 end_time = data['till_time']
 
+            if data['meetings_only']:
+                events = events.filter(kegs=0)
     else:
         filter_form = FilterEventForm()
 
@@ -141,7 +143,7 @@ class EventCalendarFetch(View):
             try:
                 location = event.location.get()
                 color = '#' + location.color if location.color else color
-            except:
+            except Location.MultipleObjectsReturned:
                 pass
 
             data.append({
@@ -174,7 +176,10 @@ class EventMatrixView(TemplateView):
                 'bartender_availabilities',
                 queryset=BartenderAvailability.objects.select_related('user', 'event', 'availability')
             )
-        ).filter(ends_at__gte=timezone.now(), participants=self.request.organization).order_by('starts_at')
+        ).filter(
+            ends_at__gte=timezone.now(),
+            participants=self.request.organization
+        ).exclude(kegs=0).order_by('starts_at')[:12]
 
     def get_tenders(self, events):
         tenders_list = Membership.objects.select_related('user').filter(

@@ -66,8 +66,9 @@ class FilterEventForm(AlexiaForm):
         required=False,
     )
     organizer = forms.ModelChoiceField(required=False, queryset=Organization.objects, label=_('Organization'))
-    from_time = forms.SplitDateTimeField(label=_('From time'), initial=timezone.now)
+    from_time = forms.SplitDateTimeField(label=_('From time'), initial=timezone.now, required=False)
     till_time = forms.SplitDateTimeField(label=_('Till time'), required=False)
+    meetings_only = forms.BooleanField(label=_('Meetings only'), required=False)
 
     def get_helper(self):
         helper = super(FilterEventForm, self).get_helper()

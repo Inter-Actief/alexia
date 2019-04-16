@@ -47,6 +47,11 @@ new Chart(document.getElementById("chart"), {
 
             <dt>{% trans 'Email address' %}</dt>
             <dd>{{ membership.user.email|default:"&mdash;" }}</dd>
+
+            {% if membership.user.profile.nickname %}
+            <dt>{% trans 'Bartender nickname' %}</dt>
+            <dd>{{ membership.user.profile.nickname }}</dd>
+            {% endif %}
         </dl>
         <div id="user-stats">
             <h3>{% trans 'Times tended last year' %}</h3>

@@ -62,4 +62,30 @@ $(function() {
         var disable = (orig != $(this).serialize());
         $('#complete').toggleClass('disabled', disable);
     });
+
+    var FLOWMETER_URL = 'https://flowmeterpi.ia.utwente.nl/data.php';
+    var timeout;
+
+    $(document).on('keypress', '.flowmeter', function() {
+        $('#flowmeterWarning').slideUp();
+
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+
+        var $input = $(this);
+
+        timeout = setTimeout(function() {
+            $.get(FLOWMETER_URL, function(data) {
+                var user = parseFloat($input.val().replace(',', '.'));
+                var live = parseFloat(data[location_name].reading);
+                var diff = Math.abs(user - live);
+                
+                if (diff > 1.0) {
+                    $('#flowmeterWarning').html('<strong>Waarschuwing:</strong> Ingevoerde flowmeterstand (' + user.toFixed(1) + ') wijkt af van live stand (' + live.toFixed(1) + ').');
+                    $('#flowmeterWarning').slideDown();
+                }
+            });
+        }, 1000);
+    });
 });

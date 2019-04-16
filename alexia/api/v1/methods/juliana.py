@@ -19,27 +19,35 @@ from ..config import api_v1_site
 
 
 def rfid_to_identifier(rfid):
-    if 'atqa' not in rfid:
-        raise InvalidParamsError('atqa value required')
-    if 'sak' not in rfid:
-        raise InvalidParamsError('sak value required')
+    if 'type' not in rfid:
+        if 'atqa' not in rfid:
+            raise InvalidParamsError('atqa value required')
+        if 'sak' not in rfid:
+            raise InvalidParamsError('sak value required')
     if 'uid' not in rfid:
         raise InvalidParamsError('uid value required')
 
-    if rfid['atqa'] == "00:04" and rfid['sak'] == "08":
-        # MIFARE Classic 1k
-        ia_rfid_prefix = '02'
-    elif rfid['atqa'] == "00:02" and rfid['sak'] == "18":
-        # MIFARE Classic 4k
-        ia_rfid_prefix = '03'
-    elif rfid['atqa'] == "03:44" and rfid['sak'] == "20":
-        # MIFARE DESFire
-        ia_rfid_prefix = '04'
-    elif rfid['atqa'] == "00:44" and rfid['sak'] == "00":
-        # MIFARE Ultralight
-        ia_rfid_prefix = '05'
+    if 'type' in rfid and rfid['type'] == "iso-b":
+        # ISO 14443-B
+        ia_rfid_prefix = '80'
     else:
-        raise InvalidParamsError('atqa/sak combination unknown')
+        if rfid['atqa'] == "00:04" and rfid['sak'] == "08":
+            # MIFARE Classic 1k
+            ia_rfid_prefix = '02'
+        elif rfid['atqa'] == "00:02" and rfid['sak'] == "18":
+            # MIFARE Classic 4k
+            ia_rfid_prefix = '03'
+        elif rfid['atqa'] == "03:44" and rfid['sak'] == "20":
+            # MIFARE DESFire
+            ia_rfid_prefix = '04'
+        elif rfid['atqa'] == "00:44" and rfid['sak'] == "00":
+            # MIFARE Ultralight
+            ia_rfid_prefix = '05'
+        elif rfid['atqa'] == "03:04" and rfid['sak'] == "28":
+            # JCOP31
+            ia_rfid_prefix = '06'
+        else:
+            raise InvalidParamsError('atqa/sak combination or type unknown')
 
     return '%s,%s' % (ia_rfid_prefix, rfid['uid'])
 

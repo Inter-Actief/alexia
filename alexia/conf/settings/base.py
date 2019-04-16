@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     'compressor',
     'crispy_forms',
     'debug_toolbar',
-    'eventlog',
     'jsonrpc',
     'sslserver',
     'wkhtmltopdf',

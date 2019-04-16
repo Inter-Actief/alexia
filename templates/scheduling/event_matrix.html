@@ -4,44 +4,84 @@
 
 {% block content %}
 <div class="page-header">
-    <h2>{% trans 'Availability matrix' %}</h2>
+    <h2>
+        {% trans 'Availability matrix' %}
+        <a href="#" class="btn btn-default" id="transpose"><span class="glyphicon glyphicon-transfer"></span></a>
+    </h2>
 </div>
 {% if events %}
+</div>
 <div class="table-responsive">
-    <table class="table table-striped table-condensed table-events">
-        <thead>
-            <tr>
-                <th>{% trans 'Bartender' %}</th>
-                <th>{% trans 'Tended' %}</th>
-                <th>{% trans 'Last tended' %}</th>
-                {% for e in events %}
-                <th class="diag"><div><span>{{ e.name|truncatechars:25 }}</span></div></th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for t in tenders %}
-            <tr>
-                <td><a href="{% url 'membership' t.tender.pk %}">{{ t.tender.user.get_full_name }}</a></td>
-                <td>{{ t.tended }}</td>
-                <td>
-                    <span{% if t.last_tended %} title="{{ t.last_tended.name }}"{% endif %}>
-                        {% if t.last_tended %}{{ t.last_tended.starts_at|date:"j b Y" }}{% else %}{% trans 'Never' %}{% endif %}
-                    </span>
-                </td>
-                {% for e in t.events %}
-                <td>
-                    <a href="{% url 'edit-event-bartender-availability' pk=e.event.pk user_pk=t.tender.user.pk %}">
-                        <span class="label label-{{ e.availability.css_class|default:'default' }}">{{ e.availability|default:_('Unknown') }}</span>
-                    </a>
-                </td>
-                {% endfor %}
-            </tr>
+    <table class="table table-striped table-condensed table-events text-center" id="matrix">
+        <tr>
+            <th class="text-center">{% trans 'Bartender' %}</th>
+            <th class="text-center">{% trans 'Tended' %}</th>
+            <th class="text-center col-xs-1">{% trans 'Last tended' %}</th>
+            {% for e in events %}
+            <th class="text-center">{{ e.starts_at|date:"j-b" }}<br><small>{{ e.name|truncatechars:25 }}</small></th>
             {% endfor %}
-        </tbody>
+        </tr>
+        {% for t in tenders %}
+        <tr>
+            <td><a href="{% url 'membership' t.tender.pk %}">{{ t.tender.user.profile.get_bartender_name }}</a></td>
+            <td>{{ t.tended }}</td>
+            <td>
+                <span{% if t.last_tended %} title="{{ t.last_tended.name }}"{% endif %}>
+                    {% if t.last_tended %}{{ t.last_tended.starts_at|date:"j b 'y" }}{% else %}{% trans 'Never' %}{% endif %}
+                </span>
+            </td>
+            {% for e in t.events %}
+            <td class="text-center">
+                <a href="{% url 'edit-event-bartender-availability' pk=e.event.pk user_pk=t.tender.user.pk %}">
+                    <span class="label label-{{ e.availability.css_class|default:'default' }}">{{ e.availability|default:'?' }}</span>
+                </a>
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
     </table>
 </div>
+<div class="container">
 {% else %}
 <p>{% trans 'No events have been planned.' %}</p>
 {% endif %}
 {% endblock content %}
+
+{% block extrajs %}
+<script>
+function transpose() {
+    var $matrix = $('#matrix');
+    var newrows = [];
+
+    $matrix.find('tr').each(function() {
+        var i = 0;
+        $(this).find('th, td').each(function() {
+            if(newrows[i] === undefined) newrows[i] = $('<tr></tr>');
+            newrows[i].append($(this));
+            i++;
+        });
+    });
+
+    $matrix.find('tr').remove();
+
+    $.each(newrows, function() {
+        $matrix.append(this);
+    });
+}
+
+$(function() {
+    $('#transpose').click(function() {
+        transpose();
+
+        if(getCookie('transpose') === '1') {
+            setCookie('transpose', '0', 365);
+        } else {
+            setCookie('transpose', '1', 365);
+        }
+    });
+
+    var transposeRemembered = getCookie('transpose');
+    if(transposeRemembered === '1') transpose();
+});
+</script>
+{% endblock extrajs %}
