@@ -1,4 +1,5 @@
-var socket = io('localhost:16729');
+var socket = io('beta.ia.utwente.nl:21382');
+socket.emit('new client', "Juliana");
 
 var pStart = Settings.products[1].price / 100;
 var pMax = 1.0;
@@ -8,7 +9,7 @@ var pMulti = 0.5;
 
 var p = pStart;
 
-var lastAdvertisedPrice = parseInt(pMax * 100);
+var lastAdvertisedPrice = parseInt(pStart * 100);
 
 function newPrice() {
   var cents = Math.round(p * 100);

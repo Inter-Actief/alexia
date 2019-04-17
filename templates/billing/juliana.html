@@ -183,7 +183,9 @@
         <script src="{% static 'js/bootstrap-3.3.7.js' %}"></script>
         {# Juliana #}
         <script src="{% static 'js/juliana.js' %}"></script>
+        {% if event.pk == 7532 %}
         <script src="{% static 'js/wallstreet.js' %}"></script>
+        {% endif %}
         {% endcompress %}
         </body>
 </html>
