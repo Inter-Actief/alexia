@@ -176,16 +176,16 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         {% compress js %}
         {# Vendor #}
         <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
         <script src="{% static 'js/bootstrap-3.3.7.js' %}"></script>
         {# Juliana #}
         <script src="{% static 'js/juliana.js' %}"></script>
+        {% endcompress %}
         {% if event.pk == 7532 %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script src="{% static 'js/wallstreet.js' %}"></script>
         {% endif %}
-        {% endcompress %}
         </body>
 </html>
