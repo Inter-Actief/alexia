@@ -12,7 +12,7 @@ cache: pip
 # We want to use MySQL
 services:
   - mysql
-# Create databases before installing amelie
+# Create databases before installing alexia
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y xmlsec1
@@ -24,7 +24,7 @@ before_install:
 # Set django settings module in environment variable
 env:
   global:
-    - DJANGO_SETTINGS_MODULE=amelie.settings.travis
+    - DJANGO_SETTINGS_MODULE=alexia.conf.settings.test
 # Install the requirements during installation step
 install:
   - pip install -r config/requirements.txt
