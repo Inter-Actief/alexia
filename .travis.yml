@@ -24,9 +24,9 @@ before_install:
 # Set django settings module in environment variable
 env:
   global:
-    - DJANGO_SETTINGS_MODULE=alexia.conf.settings.test --keepdb
+    - DJANGO_SETTINGS_MODULE=alexia.conf.settings.test
 # Install the requirements during installation step
 install:
   - pip install -r config/requirements.txt
 # command to run tests
-script: python manage.py test
+script: python manage.py test --keepdb
