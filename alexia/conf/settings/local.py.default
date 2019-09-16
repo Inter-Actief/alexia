@@ -43,3 +43,33 @@ SERVER_EMAIL = EMAIL_FROM
 # X virtual frame buffer (xvfb). Then point this path to the script you
 # can find in /bin/wkhtmltopdf.sh
 # WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
+
+# SAML SP settings
+SAML_CONFIG['debug'] = 1
+
+# SAML login configuration for UT test server.
+SAML_CONFIG['entityid'] = 'https://localhost:8000/saml2/metadata/'
+SAML_CONFIG['service']['sp']['endpoints']['assertion_consumer_service'] = [
+    ("https://localhost:8000/saml2/acs/", saml2.BINDING_HTTP_POST),
+]
+SAML_CONFIG['service']['sp']['endpoints']['single_logout_service'] = [
+    ("https://localhost:8000/saml2/ls/", saml2.BINDING_HTTP_REDIRECT),
+    ("https://localhost:8000/saml2/ls/post", saml2.BINDING_HTTP_POST),
+]
+SAML_CONFIG['service']['idp'] = {
+    'https://signon-test.utsp.utwente.nl/oamfed/idp/metadata': {
+        'single_sign_on_service': {
+            saml2.BINDING_HTTP_REDIRECT: 'https://signon-test.utsp.utwente.nl/oamfed/idp/samlv20',
+        },
+        'single_logout_service': {
+            saml2.BINDING_HTTP_REDIRECT: 'https://signon-test.utsp.utwente.nl/oamfed/idp/samlv20',
+        },
+    }
+}
+SAML_CONFIG['metadata']['local'] = [os.path.join(SAML_BASE_DIR, 'utwente_metadata_test.xml')]
+SAML_CONFIG['key_file'] = "/etc/ia/key_beta.ia.utwente.nl.pem"
+SAML_CONFIG['cert_file'] = "/etc/ia/cert_beta.ia.utwente.nl.pem"
+SAML_CONFIG['encryption_keypairs'] = [{
+    'key_file': SAML_CONFIG['key_file'],
+    'cert_file': SAML_CONFIG['cert_file'],
+}]
