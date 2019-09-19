@@ -10,8 +10,8 @@
     <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
         <div class="well">
             <dl class="dl-vertical">
-                <dt>{% trans 'RADIUS username' %}</dt>
-                <dd>{{ radius_username|default:'&mdash;' }}</dd>
+                <dt>{% trans 'SAML2 username' %}</dt>
+                <dd>{{ saml2_username|default:'&mdash;' }}</dd>
                 <dt>{% trans 'Email address' %} <a href="{% url 'edit-profile' %}">({% trans 'edit' %})</a></dt>
                 <dd>{{ user.email }}</dd>
                 {% if user.profile.nickname %}

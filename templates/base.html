@@ -27,12 +27,16 @@
                 <div class="row text-center">
                     <a href="{% url 'about' %}">{% trans "Event management system Alexia" %}</a>
                     &mdash;
-                    &copy; 2011-2017
+                    &copy; 2011-2019
                     <a href="http://www.inter-actief.net/">I.C.T.S.V. Inter-Actief</a>,
                     <a href="https://www.arago.utwente.nl/">S.V. Arago</a>, {% trans "and" %}
                     <a href="https://github.com/Inter-Actief/alexia/blob/master/CONTRIBUTORS.md">{% trans "individual contributors" %}</a>
                     &mdash;
                     <a href="https://github.com/Inter-Actief/alexia/blob/master/LICENSE.md">BSD 3-clause License</a>
+                    {% if not request.user.is_authenticated %}
+                    &mdash;
+                    <a href="{% url 'login' %}">{% trans 'Local login' %}</a>
+                    {% endif %}
                 </div>
             </div>
         </footer>

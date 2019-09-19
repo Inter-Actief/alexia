@@ -53,6 +53,9 @@ def login(request, username, password):
     """
     from django.contrib.auth import authenticate, login
 
+    # TODO: Authenticating for the API will be hard once RADIUS shuts down. As a stopgap, we can give each association
+    #       a local Alexia account to use for the API, but in due time we will probably want to move to something
+    #       better like an oAuth based API... - albertskja, 19-09-2019
     user = authenticate(username=username, password=password)
 
     if user is None or user.is_active is False:

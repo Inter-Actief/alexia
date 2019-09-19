@@ -6,7 +6,7 @@ from jsonrpc import jsonrpc_method
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import Authorization
-from alexia.auth.backends import RADIUS_BACKEND_NAME
+from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
 
 from ..common import format_authorization
 from ..config import api_v1_site
@@ -24,7 +24,7 @@ def authorization_list(request, radius_username=None):
 
     Returns an array of accounts of registered authorizations.
 
-    radius_username    -- (optional) RADIUS username to search for.
+    radius_username    -- (optional) Username to search for.
 
     Example return value:
     [
@@ -36,17 +36,21 @@ def authorization_list(request, radius_username=None):
         }
     ]
 
-    Raises 404 if the radius_username does not exist.
+    Raises error -32602 (Invalid params) if the username does not exist.
     """
     result = []
     authorizations = Authorization.objects.filter(organization=request.organization)
 
     if radius_username is not None:
         try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+            user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            raise ObjectNotFoundError('User with provided radius_username does not exists')
+            try:
+                user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                        authenticationdata__username=radius_username)
+            except User.DoesNotExist:
+                raise InvalidParamsError('User with provided username does not exits')
 
         authorizations = authorizations.filter(user=user)
 
@@ -69,7 +73,7 @@ def authorization_get(request, radius_username):
 
     Returns an array of accounts of registered authorizations.
 
-    radius_username    -- RADIUS username to search for.
+    radius_username    -- Username to search for.
 
     Example return value:
     [
@@ -79,11 +83,22 @@ def authorization_get(request, radius_username):
             "start_date": "2014-09-21T14:16:06+00:00"
         }
     ]
+
+    Raises error -32602 (Invalid params) if the username does not exist.
     """
     result = []
-    authorizations = Authorization.objects.filter(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                                  user__authenticationdata__username=radius_username,
-                                                  organization=request.organization)
+
+    try:
+        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+                                authenticationdata__username=radius_username)
+    except User.DoesNotExist:
+        try:
+            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
+        except User.DoesNotExist:
+            raise InvalidParamsError('User with provided username does not exits')
+
+    authorizations = Authorization.objects.filter(user=user, organization=request.organization)
 
     for authorization in authorizations:
         result.append({
@@ -110,7 +125,7 @@ def authorization_add(request, radius_username, account):
 
     Returns the authorization on success.
 
-    radius_username    -- RADIUS username to search for.
+    radius_username    -- Username to search for.
 
     Example return value:
     {
@@ -120,13 +135,17 @@ def authorization_add(request, radius_username, account):
         "user": "s0000000"
     }
 
-    Raises 404 if the radius_username does not exist.
+    Raises error -32602 (Invalid params) if the username does not exist.
     """
     try:
-        user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        raise InvalidParamsError('User with provided radius_username does not exists')
+        try:
+            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
+        except User.DoesNotExist:
+            raise InvalidParamsError('User with provided username does not exits')
 
     authorization = Authorization(user=user, organization=request.organization)
     authorization.save()
@@ -146,17 +165,26 @@ def authorization_end(request, radius_username, authorization_id):
 
     Returns true when successful. Returns false when the authorization was already ended.
 
-    radius_username    -- RADIUS username to search for.
-    identifier         -- RFID card hardware identiefier (max. 16 chars)
+    radius_username    -- Username to search for.
+    identifier         -- RFID card hardware identifier (max. 16 chars)
 
-    Raises error 422 if provided authorization cannot be found.
+    Raises error -32602 (Invalid params) if the username does not exist.
+    Raises error -32602 (Invalid params) if provided authorization cannot be found.
     """
     try:
-        authorization = Authorization.objects.select_for_update() \
-                                     .get(user__authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                          user__authenticationdata__username=radius_username,
-                                          organization=request.organization,
-                                          pk=authorization_id)
+        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+                                authenticationdata__username=radius_username)
+    except User.DoesNotExist:
+        try:
+            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
+        except User.DoesNotExist:
+            raise InvalidParamsError('User with provided username does not exits')
+
+    try:
+        authorization = Authorization.objects.select_for_update().get(user=user,
+                                                                      organization=request.organization,
+                                                                      pk=authorization_id)
     except Authorization.DoesNotExist:
         raise InvalidParamsError('Authorization with id not found')
 

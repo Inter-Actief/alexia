@@ -12,12 +12,12 @@ def validate_color(value):
     return color_validator(value)
 
 
-radius_username_validator = RegexValidator(
+username_validator = RegexValidator(
     r'^[dmsx][0-9]{7}$',
-    _('Enter a valid RADIUS username'),
+    _('Enter a valid username'),
     code='invalid',
 )
 
 
-def validate_radius_username(value):
-    return radius_username_validator(value)
+def validate_username(value):
+    return username_validator(value)

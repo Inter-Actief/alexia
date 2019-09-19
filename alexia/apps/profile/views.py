@@ -14,7 +14,7 @@ from django.views.generic.list import ListView
 from alexia.apps.billing.models import Order
 from alexia.apps.organization.models import AuthenticationData, Certificate
 from alexia.apps.scheduling.models import Event
-from alexia.auth.backends import RADIUS_BACKEND_NAME
+from alexia.auth.backends import SAML2_BACKEND_NAME
 from alexia.auth.mixins import TenderRequiredMixin
 from alexia.forms import CrispyFormMixin
 
@@ -32,7 +32,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                                         .filter(authorization__in=self.request.user.authorizations.all())
                                         .count(),
             'shares': self.get_shares(self.request.user),
-            'radius_username': self.get_radius_username(self.request.user),
+            'saml2_username': self.get_saml2_username(self.request.user),
         })
         return context
 
@@ -53,9 +53,9 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
         return shares
 
-    def get_radius_username(self, user):
+    def get_saml2_username(self, user):
         try:
-            return self.request.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+            return self.request.user.authenticationdata_set.get(backend=SAML2_BACKEND_NAME).username
         except AuthenticationData.DoesNotExist:
             return None
 

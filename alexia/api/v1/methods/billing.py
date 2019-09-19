@@ -1,10 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import transaction
 from jsonrpc import jsonrpc_method
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import Order
-from alexia.auth.backends import RADIUS_BACKEND_NAME
+from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
 
 from ..common import format_order
 from ..config import api_v1_site
@@ -152,11 +153,11 @@ def order_list(request, radius_username=None):
 
     Required user level: Manager
 
-    Povide radius_username to select only orders made by the provided user.
+    Povide a username to select only orders made by the provided user.
 
     Returns an array of orders.
 
-    radius_username -- (optional) RADUIS username to search for.
+    radius_username -- (optional) Username to search for.
 
     Example return value:
     [
@@ -216,8 +217,16 @@ def order_list(request, radius_username=None):
     orders = Order.objects.filter(event__organizer=request.organization)
 
     if radius_username is not None:
-        orders = orders.filter(authorization__user__authenticationdata__backend=RADIUS_BACKEND_NAME,
-                               authorization__user__authenticationdata__username=radius_username)
+        try:
+            user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                        authenticationdata__username=radius_username)
+            except User.DoesNotExist:
+                return []
+        orders = orders.filter(authorization__user=user)
 
     orders = orders.select_related('event', 'authorization')
 

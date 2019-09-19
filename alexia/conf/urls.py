@@ -33,6 +33,7 @@ urlpatterns = [
     # "Static" general_views
     url(r'^about/$', general_views.AboutView.as_view(), name='about'),
     url(r'^help/$', general_views.HelpView.as_view(), name='help'),
+    url(r'^login_complete/$', general_views.login_complete, name='login_complete'),
     url(r'^login/$', general_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^register/$', general_views.RegisterView.as_view(), name='register'),
