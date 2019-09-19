@@ -1,3 +1,4 @@
+import djangosaml2
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
@@ -38,6 +39,9 @@ urlpatterns = [
     url(r'^change_current_organization/(?P<slug>[-\w]+)/$',
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
 
+    # SAML2 SP
+    url(r'^saml2sp/', include('djangosaml2.urls')),
+
     # Django Admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
@@ -54,4 +58,6 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
+        # SAML test URLs
+        url(r'^saml2test/', djangosaml2.views.echo_attributes),
     ]
