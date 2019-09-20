@@ -50,7 +50,7 @@ def authorization_list(request, radius_username=None):
                 user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                         authenticationdata__username=radius_username)
             except User.DoesNotExist:
-                raise InvalidParamsError('User with provided username does not exits')
+                raise InvalidParamsError('User with provided username does not exist')
 
         authorizations = authorizations.filter(user=user)
 

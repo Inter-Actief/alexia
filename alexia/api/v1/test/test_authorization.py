@@ -37,5 +37,5 @@ class AuthorizationTest(APITestCase):
                                             error_code=-32602,
                                             error_name='InvalidParamsError',
                                             error_message='InvalidParamsError: User with provided ' +
-                                                          'username does not exists',
+                                                          'username does not exist',
                                             )
