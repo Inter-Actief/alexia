@@ -14,3 +14,5 @@ git+git://github.com/Inter-Actief/django-sslserver@389a4e42dba5a9b3ca1f3a4013044
 # SAML SP (requires xmlsec and libssl-dev (on Debian))
 djangosaml2>=0.16.0,<0.17
 raven==5.0.0
+# Translations -- development
+django-rosetta>=0.7.6,<0.8
