@@ -8,6 +8,18 @@
         {{ event }}
         {% if is_planner %}
         <div class="pull-right">
+            {% if event.organizer == request.organization and is_manager and event.consumptionform %}
+                <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-tint"></span>
+                    {% trans 'Consumption form' %}
+                </a>
+            {% endif %}
+            {% if event.organizer == request.organization and is_manager and event.orders.exists %}
+                <a href="{% url 'event-orders' event.pk %}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-euro"></span>
+                    {% trans 'Orders' %}
+                </a>
+            {% endif %}
             <a href="{% url 'edit-event' event.pk %}" class="btn btn-default">
                 <span class="glyphicon glyphicon-pencil"></span>
                 {% trans 'Modify' %}

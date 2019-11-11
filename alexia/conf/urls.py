@@ -61,3 +61,7 @@ if settings.DEBUG:
         # SAML test URLs
         url(r'^saml2test/', djangosaml2.views.echo_attributes),
     ]
+    # Translation application for development
+    urlpatterns += [
+        url(r'^translations/', include('rosetta.urls'), name='translations')
+    ]

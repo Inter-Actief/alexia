@@ -12,6 +12,11 @@ MANAGERS = ADMINS
 # Hostnames
 ALLOWED_HOSTS = []
 
+# Only enable rosetta in debug mode
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + ['rosetta']
+    ROSETTA_POFILE_WRAP_WIDTH = 0
+
 # Database
 DATABASES = {
     'default': {

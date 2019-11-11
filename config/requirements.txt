@@ -13,3 +13,6 @@ git+git://github.com/samuraisam/django-json-rpc@a88d744d960e828f3eb21265da0f10a6
 git+git://github.com/Inter-Actief/django-sslserver@389a4e42dba5a9b3ca1f3a4013044e07a52dc43c
 # SAML SP (requires xmlsec and libssl-dev (on Debian))
 djangosaml2>=0.16.0,<0.17
+raven==5.0.0
+# Translations -- development
+django-rosetta>=0.7.6,<0.8
