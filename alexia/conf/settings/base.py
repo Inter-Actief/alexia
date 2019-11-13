@@ -184,6 +184,9 @@ SAML_CONFIG = {
             # attributes that may be useful to have but not required
             'optional_attributes': ['eduPersonAffiliation'],
 
+            # Don't request signed responses, the UT SAML server does not do that
+            'want_response_signed': False,
+
             # in this section the list of IdPs we talk to are defined
             'idp': {
                 # we do not need a WAYF service since there is
