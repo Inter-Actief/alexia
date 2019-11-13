@@ -33,6 +33,10 @@
                     <a href="https://github.com/Inter-Actief/alexia/blob/master/CONTRIBUTORS.md">{% trans "individual contributors" %}</a>
                     &mdash;
                     <a href="https://github.com/Inter-Actief/alexia/blob/master/LICENSE.md">BSD 3-clause License</a>
+                    {% if not request.user.is_authenticated %}
+                    &mdash;
+                    <a href="{% url 'login' %}">{% trans 'Local login' %}</a>
+                    {% endif %}
                 </div>
             </div>
         </footer>

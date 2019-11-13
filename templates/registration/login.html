@@ -9,7 +9,13 @@
             <div class="well login-form">
                 <img src="{% static 'img/alexia.svg' %}" alt="Alexia" class="login-logo">
                 <h2>{% trans 'Log in' %}</h2>
-                <p>{% trans 'Log in with your student or employee account and password.' %}</p>
+                <p>{% trans 'Log in with your local Alexia account and password.' %}</p>
+                <p>
+                    {% url 'saml2_login' as saml_login_url %}
+                    {% blocktrans with saml_login_url=saml_login_url %}
+                        If you have no local Alexia account, please <a href="{{ saml_login_url }}">log in with your University account</a>.
+                    {% endblocktrans %}
+                </p>
                 <form id="form-login" method="post" action="{% url 'login' %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ next }}">

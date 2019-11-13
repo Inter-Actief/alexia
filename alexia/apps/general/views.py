@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import (
     REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
 )
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 # from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -43,6 +44,14 @@ def _get_login_redirect_url(request, redirect_to):
     if not is_safe_url(url=redirect_to, host=request.get_host()):
         return resolve_url(settings.LOGIN_REDIRECT_URL)
     return redirect_to
+
+@login_required()
+def login_complete(request):
+    # After login, check if the user's profile is complete.
+    # If it is not, send them to the page to complete the profile, else, send them to the main page.
+    if not request.user.first_name or not request.user.email:
+        return HttpResponseRedirect(resolve_url('register'))
+    return HttpResponseRedirect("/")
 
 
 @sensitive_post_parameters()

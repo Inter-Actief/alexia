@@ -10,12 +10,12 @@ BASE_DIR = os.path.normpath(os.path.join(os.path.abspath(__file__), '..', '..', 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'alexia.auth.backends.RadiusBackend',  # RADIUS logins with the UT
-    'djangosaml2.backends.Saml2Backend',  # SAML logins with the UT
+    'alexia.auth.backends.AlexiaSAML2Backend',  # SAML logins with the UT
 ]
 AUTH_USER_MODEL = 'auth.User'
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
-LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_REDIRECT_URL = '/login_complete/'
+LOGIN_URL = '/saml2sp/login/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

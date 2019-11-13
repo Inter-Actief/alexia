@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-11 20:55+0100\n"
-"PO-Revision-Date: 2019-11-11 21:03+0020\n"
+"POT-Creation-Date: 2019-11-13 13:43+0100\n"
+"PO-Revision-Date: 2019-11-13 13:44+0020\n"
 "Last-Translator: b'  <kevin@kevinalberts.nl>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -427,13 +427,13 @@ msgstr "Permissies"
 msgid "Availability"
 msgstr "Beschikbaarheid"
 
-#: alexia/apps/organization/forms.py:43 templates/profile/profile.html:13
-msgid "RADIUS username"
-msgstr "RADIUS-gebruikersnaam"
+#: alexia/apps/organization/forms.py:43
+msgid "Username"
+msgstr "Gebruikersnaam"
 
 #: alexia/apps/organization/forms.py:44
-msgid "Student or employee account"
-msgstr "Student- of medewerkers-gebruikersnaam"
+msgid "Student or employee account (e.g. s0000000 or m0000000)"
+msgstr "Student- of medewerkersaccount (bijv. s0000000 of m0000000)"
 
 #: alexia/apps/organization/forms.py:52 templates/organization/membership_detail.html:52
 msgid "Bartender nickname"
@@ -775,8 +775,8 @@ msgid "Enter a valid hexadecimal color"
 msgstr "Voer een geldige hexadecimale kleur in"
 
 #: alexia/core/validators.py:17
-msgid "Enter a valid RADIUS username"
-msgstr "Voer een geldige RADIUS-gebruikersnaam in"
+msgid "Enter a valid username"
+msgstr "Voer een geldige gebruikersnaam in"
 
 #: alexia/forms/mixins.py:22 templates/consumption/dcf.html:34 templates/registration/register.html:17
 msgid "Save"
@@ -817,6 +817,10 @@ msgstr "en"
 #: templates/base.html:33
 msgid "individual contributors"
 msgstr "individuele bijdragers"
+
+#: templates/base.html:38
+msgid "Local login"
+msgstr "Lokale login"
 
 #: templates/base_app.html:21 templates/scheduling/event_calendar.html:3 templates/scheduling/event_list.html:3 templates/scheduling/event_list.html:8
 msgid "Planning"
@@ -882,7 +886,7 @@ msgstr "Voorraadproducten"
 msgid "Consumption forms"
 msgstr "Verbruiksformulieren"
 
-#: templates/base_app.html:96 templates/registration/login.html:19
+#: templates/base_app.html:96 templates/registration/login.html:25
 msgid "Help"
 msgstr "Help"
 
@@ -898,17 +902,9 @@ msgstr "Mijn profiel"
 msgid "Log out"
 msgstr "Uitloggen"
 
-#: templates/base_app.html:132 templates/registration/login.html:3
-msgid "Login"
-msgstr "Login"
-
-#: templates/base_app.html:138
-msgid "Username"
-msgstr "Gebruikersnaam"
-
-#: templates/base_app.html:139
-msgid "Password"
-msgstr "Wachtwoord"
+#: templates/base_app.html:131
+msgid "Login with UTwente"
+msgstr "Inloggen met UTwente"
 
 #: templates/billing/order_detail.html:13 templates/consumption/dcf.html:4 templates/consumption/dcf_check.html:3 templates/consumption/dcf_finished.html:3 templates/consumption/pdf/page.html:6 templates/scheduling/event_detail.html:14
 msgid "Consumption form"
@@ -1542,6 +1538,10 @@ msgstr "Uitgegeven"
 msgid "There are no expenditures!"
 msgstr "Er zijn geen betalingen!"
 
+#: templates/profile/profile.html:13
+msgid "SAML2 username"
+msgstr "SAML2 gebruikersnaam"
+
 #: templates/profile/profile.html:15
 msgid "edit"
 msgstr "wijzigen"
@@ -1650,13 +1650,28 @@ msgstr "inzien"
 msgid "Modify profile"
 msgstr "Bewerk profiel"
 
-#: templates/registration/login.html:11 templates/registration/login.html:18
+#: templates/registration/login.html:3
+msgid "Login"
+msgstr "Login"
+
+#: templates/registration/login.html:11 templates/registration/login.html:24
 msgid "Log in"
 msgstr "Inloggen"
 
 #: templates/registration/login.html:12
-msgid "Log in with your student or employee account and password."
-msgstr "Log in met je student- of medewerkers-gebruikersnaam en wachtwoord."
+msgid "Log in with your local Alexia account and password."
+msgstr "Log in met je lokale Alexia-account en wachtwoord."
+
+#: templates/registration/login.html:15
+#, python-format
+msgid ""
+"\n"
+"                        If you have no local Alexia account, please <a href=\"%(saml_login_url)s\">log in with your University account</a>.\n"
+"                    "
+msgstr ""
+"\n"
+"                        Als je geen lokaal Alexia-account hebt, <a href=\"%(saml_login_url)s\">log dan in met je Universiteitsaccount</a>.\n"
+"                    "
 
 #: templates/registration/register.html:3 templates/registration/register.html:11
 msgid "Registration"
