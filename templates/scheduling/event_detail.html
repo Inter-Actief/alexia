@@ -6,7 +6,7 @@
 <div class="page-header">
     <h1>
         {{ event }}
-        {% if is_planner %}
+        {% if event.organizer == request.organization and is_planner %}
         <div class="pull-right">
             {% if event.organizer == request.organization and is_manager and event.consumptionform %}
                 <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-default">
@@ -29,7 +29,7 @@
     </h1>
 </div>
 <div class="row">
-    <div class="col-xs-12{% if is_planner %} col-sm-6{% endif %}">
+    <div class="col-xs-12{% if event.organizer == request.organization and is_planner %} col-sm-6{% endif %}">
         <h3>
             {% trans 'Details' %}
         </h3>
@@ -61,6 +61,7 @@
                 <td>{{ event.ends_at|date:"l d F H:i" }}</td>
             </tr>
         </table>
+        {% if event.organizer == request.organization %}
         {% if is_tender or is_planner or is_manager %}
         {% if event.tender_comments %}
         <h3>{% trans 'Tender comments' %}</h3>
@@ -118,8 +119,9 @@
             </tbody>
         </table>
         {% endif %}
+        {% endif %}
     </div>
-    {% if is_planner %}
+    {% if event.organizer == request.organization and is_planner %}
     <div class="col-xs-12 col-sm-6">
         <h3>{% trans 'Bartenders' %}</h3>
         <table class="table table-condensed">
