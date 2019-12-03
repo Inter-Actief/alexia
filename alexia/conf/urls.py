@@ -8,6 +8,7 @@ from django.views.generic import RedirectView, TemplateView
 from alexia.apps.billing.views import JulianaView
 from alexia.apps.consumption.views import complete_dcf, dcf
 from alexia.apps.general import views as general_views
+from alexia.apps.general.views import saml_acs_override
 from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
@@ -41,6 +42,8 @@ urlpatterns = [
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
 
     # SAML2 SP
+    # Wrap ACS to catch annoying UnsolicitedResponse exception and set current_organisation
+    url(r'^saml2sp/acs/$', saml_acs_override, name='saml2_acs'),
     url(r'^saml2sp/', include('djangosaml2.urls')),
 
     # Django Admin

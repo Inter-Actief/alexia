@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-13 13:43+0100\n"
-"PO-Revision-Date: 2019-11-13 13:44+0020\n"
+"POT-Creation-Date: 2019-12-03 13:59+0100\n"
+"PO-Revision-Date: 2019-12-03 13:59+0020\n"
 "Last-Translator: b'  <kevin@kevinalberts.nl>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -419,6 +419,10 @@ msgstr "Je bent geen tapper bij deze borrel."
 msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
+#: alexia/apps/general/views.py:125
+msgid "Logging in failed, please try again."
+msgstr "Het inloggen is mislukt, probeer het alsjeblieft opnieuw."
+
 #: alexia/apps/organization/admin.py:56
 msgid "Permissions"
 msgstr "Permissies"
@@ -598,7 +602,6 @@ msgid "Locations"
 msgstr "Ruimtes"
 
 #: alexia/apps/scheduling/forms.py:71
-#| msgid "Drinks"
 msgid "Drinks only"
 msgstr "Alleen borrels"
 
@@ -911,7 +914,6 @@ msgid "Consumption form"
 msgstr "Verbruiksformulier"
 
 #: templates/billing/order_detail.html:18 templates/consumption/consumptionform_detail.html:19
-#| msgid "Product information"
 msgid "Event information"
 msgstr "Evenementinformatie"
 
@@ -919,7 +921,7 @@ msgstr "Evenementinformatie"
 msgid "Event"
 msgstr "Activiteit"
 
-#: templates/billing/order_detail.html:28 templates/billing/order_export_result.html:35 templates/billing/order_list.html:47 templates/billing/permanentproduct_detail.html:27 templates/billing/permanentproduct_list.html:21 templates/billing/pricegroup_detail.html:27 templates/billing/pricegroup_list.html:20 templates/billing/productgroup_list.html:20 templates/billing/temporaryproduct_detail.html:27 templates/consumption/consumptionproduct_list.html:25 templates/consumption/consumptionproduct_list.html:65 templates/organization/membership_detail.html:45 templates/organization/membership_iva.html:15 templates/organization/membership_list.html:26 templates/scheduling/availability_list.html:20 templates/scheduling/event_bartender.html:16 templates/scheduling/event_detail.html:74 templates/scheduling/event_list.html:39 templates/scheduling/mailtemplate_detail.html:20 templates/scheduling/mailtemplate_list.html:15
+#: templates/billing/order_detail.html:28 templates/billing/order_export_result.html:35 templates/billing/order_list.html:47 templates/billing/permanentproduct_detail.html:27 templates/billing/permanentproduct_list.html:21 templates/billing/pricegroup_detail.html:27 templates/billing/pricegroup_list.html:20 templates/billing/productgroup_list.html:20 templates/billing/temporaryproduct_detail.html:27 templates/consumption/consumptionproduct_list.html:25 templates/consumption/consumptionproduct_list.html:65 templates/organization/membership_detail.html:45 templates/organization/membership_iva.html:15 templates/organization/membership_list.html:26 templates/scheduling/availability_list.html:20 templates/scheduling/event_bartender.html:16 templates/scheduling/event_detail.html:75 templates/scheduling/event_list.html:39 templates/scheduling/mailtemplate_detail.html:20 templates/scheduling/mailtemplate_list.html:15
 msgid "Name"
 msgstr "Naam"
 
@@ -1022,7 +1024,7 @@ msgstr "Afgehandeld door"
 msgid "Items"
 msgstr "Specificatie"
 
-#: templates/billing/payment_detail.html:41 templates/billing/pricegroup_detail.html:43 templates/billing/productgroup_detail.html:72 templates/billing/temporaryproduct_detail.html:35 templates/scheduling/event_detail.html:75
+#: templates/billing/payment_detail.html:41 templates/billing/pricegroup_detail.html:43 templates/billing/productgroup_detail.html:72 templates/billing/temporaryproduct_detail.html:35 templates/scheduling/event_detail.html:76
 msgid "Price"
 msgstr "Prijs"
 
@@ -1035,11 +1037,11 @@ msgstr "Product verwijderen"
 msgid "Are you sure you want to delete %(product)s from %(productgroup)s?"
 msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(productgroup)s?"
 
-#: templates/billing/permanentproduct_confirm_delete.html:20 templates/billing/permanentproduct_detail.html:17 templates/billing/permanentproduct_list.html:44 templates/billing/pricegroup_confirm_delete.html:21 templates/billing/pricegroup_detail.html:17 templates/billing/pricegroup_detail.html:59 templates/billing/pricegroup_list.html:35 templates/billing/productgroup_confirm_delete.html:19 templates/billing/productgroup_detail.html:17 templates/billing/productgroup_detail.html:44 templates/billing/productgroup_detail.html:88 templates/billing/productgroup_list.html:35 templates/billing/sellingprice_confirm_delete.html:17 templates/billing/temporaryproduct_confirm_delete.html:14 templates/billing/temporaryproduct_detail.html:17 templates/consumption/partials/unit_consumption.html:15 templates/consumption/partials/weight_consumption.html:19 templates/organization/membership_confirm_delete.html:20 templates/organization/membership_list.html:89 templates/scheduling/event_detail.html:98
+#: templates/billing/permanentproduct_confirm_delete.html:20 templates/billing/permanentproduct_detail.html:17 templates/billing/permanentproduct_list.html:44 templates/billing/pricegroup_confirm_delete.html:21 templates/billing/pricegroup_detail.html:17 templates/billing/pricegroup_detail.html:59 templates/billing/pricegroup_list.html:35 templates/billing/productgroup_confirm_delete.html:19 templates/billing/productgroup_detail.html:17 templates/billing/productgroup_detail.html:44 templates/billing/productgroup_detail.html:88 templates/billing/productgroup_list.html:35 templates/billing/sellingprice_confirm_delete.html:17 templates/billing/temporaryproduct_confirm_delete.html:14 templates/billing/temporaryproduct_detail.html:17 templates/consumption/partials/unit_consumption.html:15 templates/consumption/partials/weight_consumption.html:19 templates/organization/membership_confirm_delete.html:20 templates/organization/membership_list.html:89 templates/scheduling/event_detail.html:99
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: templates/billing/permanentproduct_detail.html:13 templates/billing/permanentproduct_list.html:40 templates/billing/pricegroup_detail.html:13 templates/billing/pricegroup_detail.html:55 templates/billing/pricegroup_list.html:31 templates/billing/productgroup_detail.html:13 templates/billing/productgroup_detail.html:40 templates/billing/productgroup_detail.html:84 templates/billing/productgroup_list.html:31 templates/billing/temporaryproduct_detail.html:13 templates/consumption/consumptionform_detail.html:24 templates/consumption/consumptionproduct_list.html:47 templates/consumption/consumptionproduct_list.html:87 templates/organization/membership_list.html:85 templates/scheduling/availability_list.html:33 templates/scheduling/event_detail.html:25 templates/scheduling/event_detail.html:94 templates/scheduling/mailtemplate_detail.html:13 templates/scheduling/mailtemplate_list.html:30
+#: templates/billing/permanentproduct_detail.html:13 templates/billing/permanentproduct_list.html:40 templates/billing/pricegroup_detail.html:13 templates/billing/pricegroup_detail.html:55 templates/billing/pricegroup_list.html:31 templates/billing/productgroup_detail.html:13 templates/billing/productgroup_detail.html:40 templates/billing/productgroup_detail.html:84 templates/billing/productgroup_list.html:31 templates/billing/temporaryproduct_detail.html:13 templates/consumption/consumptionform_detail.html:24 templates/consumption/consumptionproduct_list.html:47 templates/consumption/consumptionproduct_list.html:87 templates/organization/membership_list.html:85 templates/scheduling/availability_list.html:33 templates/scheduling/event_detail.html:25 templates/scheduling/event_detail.html:95 templates/scheduling/mailtemplate_detail.html:13 templates/scheduling/mailtemplate_list.html:30
 msgid "Modify"
 msgstr "Wijzigen"
 
@@ -1071,11 +1073,11 @@ msgstr "Wijzig product"
 msgid "New product"
 msgstr "Nieuw product"
 
-#: templates/billing/permanentproduct_list.html:12 templates/billing/pricegroup_detail.html:72 templates/billing/pricegroup_list.html:12 templates/billing/productgroup_detail.html:57 templates/billing/productgroup_detail.html:101 templates/billing/productgroup_list.html:12 templates/scheduling/availability_list.html:12 templates/scheduling/event_detail.html:113
+#: templates/billing/permanentproduct_list.html:12 templates/billing/pricegroup_detail.html:72 templates/billing/pricegroup_list.html:12 templates/billing/productgroup_detail.html:57 templates/billing/productgroup_detail.html:101 templates/billing/productgroup_list.html:12 templates/scheduling/availability_list.html:12 templates/scheduling/event_detail.html:114
 msgid "Add"
 msgstr "Toevoegen"
 
-#: templates/billing/permanentproduct_list.html:24 templates/billing/pricegroup_detail.html:44 templates/billing/pricegroup_list.html:21 templates/billing/productgroup_detail.html:30 templates/billing/productgroup_detail.html:73 templates/billing/productgroup_list.html:21 templates/consumption/consumptionproduct_list.html:27 templates/consumption/consumptionproduct_list.html:67 templates/scheduling/availability_list.html:22 templates/scheduling/event_detail.html:77 templates/scheduling/mailtemplate_list.html:18
+#: templates/billing/permanentproduct_list.html:24 templates/billing/pricegroup_detail.html:44 templates/billing/pricegroup_list.html:21 templates/billing/productgroup_detail.html:30 templates/billing/productgroup_detail.html:73 templates/billing/productgroup_list.html:21 templates/consumption/consumptionproduct_list.html:27 templates/consumption/consumptionproduct_list.html:67 templates/scheduling/availability_list.html:22 templates/scheduling/event_detail.html:78 templates/scheduling/mailtemplate_list.html:18
 msgid "Actions"
 msgstr "Acties"
 
@@ -1222,7 +1224,6 @@ msgid "No missing forms. Hurray!"
 msgstr "Geen missende formulieren. Hulde!"
 
 #: templates/consumption/consumptionform_list.html:96
-#| msgid "Has comments"
 msgid "Has comments:"
 msgstr "Heeft commentaar:"
 
@@ -1485,7 +1486,7 @@ msgstr "Actief"
 msgid "Tended"
 msgstr "Getapt"
 
-#: templates/organization/membership_list.html:31 templates/scheduling/event_detail.html:129 templates/scheduling/event_detail.html:135 templates/scheduling/event_matrix.html:19
+#: templates/organization/membership_list.html:31 templates/scheduling/event_detail.html:131 templates/scheduling/event_detail.html:137 templates/scheduling/event_matrix.html:19
 msgid "Last tended"
 msgstr "Laatst getapt"
 
@@ -1706,7 +1707,7 @@ msgstr "Geen beschikbaarheden gedefinieerd."
 msgid "Time"
 msgstr "Tijd"
 
-#: templates/scheduling/event_bartender.html:17 templates/scheduling/event_calendar.html:27 templates/scheduling/event_detail.html:124 templates/scheduling/event_list.html:42
+#: templates/scheduling/event_bartender.html:17 templates/scheduling/event_calendar.html:27 templates/scheduling/event_detail.html:126 templates/scheduling/event_list.html:42
 msgid "Bartenders"
 msgstr "Tappers"
 
@@ -1931,27 +1932,27 @@ msgstr "Deelnemers"
 msgid "Start"
 msgstr "Begin"
 
-#: templates/scheduling/event_detail.html:66
+#: templates/scheduling/event_detail.html:67
 msgid "Tender comments"
 msgstr "Tappersinstructie"
 
-#: templates/scheduling/event_detail.html:69
+#: templates/scheduling/event_detail.html:70
 msgid "Temporary products"
 msgstr "Tijdelijke producten"
 
-#: templates/scheduling/event_detail.html:70
+#: templates/scheduling/event_detail.html:71
 msgid "Temporary products can only be created or modified by managers."
 msgstr "Tijdelijke producten kunnen alleen aangemaakt of gewijzigd worden door managers."
 
-#: templates/scheduling/event_detail.html:105
+#: templates/scheduling/event_detail.html:106
 msgid "No temporary products defined."
 msgstr "Geen tijdelijke producten gedefinieerd."
 
-#: templates/scheduling/event_detail.html:129 templates/scheduling/event_detail.html:135 templates/scheduling/event_matrix.html:30
+#: templates/scheduling/event_detail.html:131 templates/scheduling/event_detail.html:137 templates/scheduling/event_matrix.html:30
 msgid "Never"
 msgstr "Nooit"
 
-#: templates/scheduling/event_detail.html:136
+#: templates/scheduling/event_detail.html:138
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -1968,7 +1969,6 @@ msgid "Kegs"
 msgstr "Fusten"
 
 #: templates/scheduling/event_list.html:78 templates/scheduling/event_list.html:79
-#| msgid "Has tender comments"
 msgid "Has tender comment:"
 msgstr "Heeft tappersinstructie:"
 

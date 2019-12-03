@@ -7,16 +7,21 @@ from django.contrib.auth.forms import AuthenticationForm
 # from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.http import require_POST
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
+from djangosaml2.views import assertion_consumer_service
+from saml2.response import UnsolicitedResponse
+from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Membership, Organization
 from alexia.apps.scheduling.models import (
@@ -102,6 +107,22 @@ def login(request, template_name='registration/login.html',
         context.update(extra_context)
 
     return TemplateResponse(request, template_name, context)
+
+# The SAML login page throws a very annoying error when a timed-out response arrives,
+# so we need to wrap it and ignore the error to stop it from showing up in our Sentry logs.
+# Also, we need to inject the current onrganisation right after login.
+@require_POST
+@csrf_exempt
+def saml_acs_override(request, *args, **kwargs):
+    try:
+        res = assertion_consumer_service(request, *args, **kwargs)
+        if request.user:
+            # Set current organisation
+            if hasattr(request.user, 'profile') and request.user.profile.current_organization:
+                request.session['organization_pk'] = request.user.profile.current_organization.pk
+        return res
+    except UnsolicitedResponse:
+        raise PermissionDenied(_("Logging in failed, please try again."))
 
 
 class RegisterView(LoginRequiredMixin, UpdateView):
