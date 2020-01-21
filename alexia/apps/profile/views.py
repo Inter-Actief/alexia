@@ -95,7 +95,7 @@ class IvaUpdate(LoginRequiredMixin, CrispyFormMixin, CreateView):
 
 class IvaView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        if not request.user.certificate:
+        if not request.user.certificate or not request.user.certificate.file:
             raise Http404
 
         iva_file = request.user.certificate.file
