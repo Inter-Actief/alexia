@@ -28,6 +28,6 @@ env:
     - DJANGO_SETTINGS_MODULE=alexia.conf.settings.test
 # Install the requirements during installation step
 install:
-  - pip install -r config/requirements.txt
+  - pip install -r requirements.txt
 # command to run tests
 script: python manage.py test --keepdb
