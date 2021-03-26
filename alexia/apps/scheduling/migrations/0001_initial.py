@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=32, verbose_name='name')),
                 ('nature', models.CharField(max_length=1, verbose_name='nature', choices=[(b'Y', 'Yes'), (b'M', 'Maybe'), (b'N', 'No')])),
-                ('organization', models.ForeignKey(related_name='availabilities', verbose_name='organization', to='organization.Organization')),
+                ('organization', models.ForeignKey(related_name='availabilities', verbose_name='organization', to='organization.Organization', on_delete=models.SET_NULL)),
             ],
             options={
                 'ordering': ('organization', 'name'),
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             name='BartenderAvailability',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('availability', models.ForeignKey(verbose_name='availability', to='scheduling.Availability')),
+                ('availability', models.ForeignKey(verbose_name='availability', to='scheduling.Availability', on_delete=models.SET_NULL)),
             ],
             options={
                 'verbose_name': 'bartender availability',
@@ -57,9 +57,9 @@ class Migration(migrations.Migration):
                 ('tender_comments', models.TextField(verbose_name='Tender comments', blank=True)),
                 ('bartenders', models.ManyToManyField(to=settings.AUTH_USER_MODEL, null=True, verbose_name='bartenders', through='scheduling.BartenderAvailability', blank=True)),
                 ('location', models.ManyToManyField(related_name='events', verbose_name='location', to='organization.Location')),
-                ('organizer', models.ForeignKey(related_name='events', verbose_name='organizer', to='organization.Organization')),
+                ('organizer', models.ForeignKey(related_name='events', verbose_name='organizer', to='organization.Organization', on_delete=models.SET_NULL)),
                 ('participants', models.ManyToManyField(related_name='participates', verbose_name='participants', to='organization.Organization')),
-                ('pricegroup', models.ForeignKey(related_name='events', verbose_name='pricegroup', to='billing.PriceGroup')),
+                ('pricegroup', models.ForeignKey(related_name='events', verbose_name='pricegroup', to='billing.PriceGroup', on_delete=models.SET_NULL)),
             ],
             options={
                 'ordering': ('-starts_at',),
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
                 ('template', models.TextField(verbose_name='template')),
                 ('is_active', models.BooleanField(default=False, verbose_name='is active')),
                 ('send_at', models.PositiveIntegerField(null=True, verbose_name='send at', blank=True)),
-                ('organization', models.ForeignKey(verbose_name='organization', to='organization.Organization')),
+                ('organization', models.ForeignKey(verbose_name='organization', to='organization.Organization', on_delete=models.SET_NULL)),
             ],
             options={
                 'ordering': ('organization', 'name'),
@@ -94,8 +94,8 @@ class Migration(migrations.Migration):
                 ('start_time', models.TimeField(default=datetime.time(16, 0), verbose_name='start time')),
                 ('end_day', models.PositiveSmallIntegerField(verbose_name='end day', choices=[(1, 'Monday'), (2, 'Tuesday'), (3, 'Wednesday'), (4, 'Thursday'), (5, 'Friday'), (6, 'Saturday'), (7, 'Sunday')])),
                 ('end_time', models.TimeField(default=datetime.time(23, 59, 59), verbose_name='end time')),
-                ('location', models.ForeignKey(verbose_name='location', to='organization.Location')),
-                ('organization', models.ForeignKey(verbose_name='organization', to='organization.Organization')),
+                ('location', models.ForeignKey(verbose_name='location', to='organization.Location', on_delete=models.SET_NULL)),
+                ('organization', models.ForeignKey(verbose_name='organization', to='organization.Organization', on_delete=models.SET_NULL)),
             ],
             options={
                 'verbose_name': 'standard reservation',
@@ -110,13 +110,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bartenderavailability',
             name='event',
-            field=models.ForeignKey(related_name='bartender_availabilities', verbose_name='event', to='scheduling.Event'),
+            field=models.ForeignKey(related_name='bartender_availabilities', verbose_name='event', to='scheduling.Event', on_delete=models.SET_NULL),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='bartenderavailability',
             name='user',
-            field=models.ForeignKey(related_name='bartender_availability_set', verbose_name='bartender', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='bartender_availability_set', verbose_name='bartender', to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

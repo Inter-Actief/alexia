@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('file', models.FileField(upload_to=alexia.apps.organization.models._get_certificate_path, verbose_name='certificate')),
                 ('uploaded_at', models.DateField(auto_now_add=True, verbose_name='uploaded at')),
                 ('approved_at', models.DateField(null=True, verbose_name='approved at')),
-                ('approved_by', models.ForeignKey(related_name='approved_certificates', verbose_name='approved by', to=settings.AUTH_USER_MODEL, null=True)),
+                ('approved_by', models.ForeignKey(related_name='approved_certificates', verbose_name='approved by', to=settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)),
             ],
             options={
             },
@@ -82,9 +82,9 @@ class Migration(migrations.Migration):
                 ('is_iva', models.BooleanField(default=False, verbose_name='has IVA-certificate')),
                 ('is_bhv', models.BooleanField(default=False, verbose_name='has BHV-certificate')),
                 ('ical_id', models.CharField(max_length=32, null=True, verbose_name='iCal identifier')),
-                ('certificate', models.OneToOneField(null=True, verbose_name='certificate', to='organization.Certificate')),
-                ('current_organization', models.ForeignKey(verbose_name='current organization', to='organization.Organization', null=True)),
-                ('user', models.OneToOneField(verbose_name='user', to=settings.AUTH_USER_MODEL)),
+                ('certificate', models.OneToOneField(null=True, verbose_name='certificate', to='organization.Certificate', on_delete=models.SET_NULL)),
+                ('current_organization', models.ForeignKey(verbose_name='current organization', to='organization.Organization', null=True, on_delete=models.SET_NULL)),
+                ('user', models.OneToOneField(verbose_name='user', to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)),
             ],
             options={
                 'ordering': ['user'],
@@ -96,13 +96,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='membership',
             name='organization',
-            field=models.ForeignKey(verbose_name='organization', to='organization.Organization'),
+            field=models.ForeignKey(verbose_name='organization', to='organization.Organization', on_delete=models.SET_NULL),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='membership',
             name='user',
-            field=models.ForeignKey(verbose_name='user', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(verbose_name='user', to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='order',
             name='rfidcard',
-            field=models.ForeignKey(verbose_name='rfid card', blank=True, to='billing.RfidCard', null=True),
+            field=models.ForeignKey(verbose_name='rfid card', blank=True, to='billing.RfidCard', null=True, on_delete=models.SET_NULL),
         ),
     ]

@@ -9,12 +9,12 @@ from django.utils import timezone
 class Auditlog(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.SET_NULL,
+        on_delete=models.SET_NULL,
         null=True,
     )
     timestamp = models.DateTimeField(default=timezone.now, db_index=True)
     action = models.CharField(max_length=50, db_index=True)
-    content_type = models.ForeignKey(ContentType, models.SET_NULL, null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
     object_id = models.PositiveIntegerField(null=True)
     obj = GenericForeignKey("content_type", "object_id")
     extra = jsonfield.JSONField()
@@ -24,7 +24,7 @@ class Auditlog(models.Model):
 
 
 def log(user, action, extra=None, obj=None, dateof=None):
-    if (user is not None and not user.is_authenticated()):
+    if (user is not None and not user.is_authenticated):
         user = None
 
     if extra is None:
