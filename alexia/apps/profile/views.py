@@ -4,6 +4,7 @@ import uuid
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import Http404, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.views.generic.base import RedirectView, TemplateView, View
@@ -95,13 +96,13 @@ class IvaUpdate(LoginRequiredMixin, CrispyFormMixin, CreateView):
 
 class IvaView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        if not request.user.certificate or not request.user.certificate.file:
+        try:
+            iva_file = request.user.certificate.file
+            content_type, encoding = mimetypes.guess_type(iva_file.url)
+            content_type = content_type or 'application/octet-stream'
+            return HttpResponse(iva_file, content_type=content_type)
+        except ObjectDoesNotExist:
             raise Http404
-
-        iva_file = request.user.certificate.file
-        content_type, encoding = mimetypes.guess_type(iva_file.url)
-        content_type = content_type or 'application/octet-stream'
-        return HttpResponse(iva_file, content_type=content_type)
 
 
 class ExpenditureListView(LoginRequiredMixin, ListView):

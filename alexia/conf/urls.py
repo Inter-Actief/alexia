@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^help/$', general_views.HelpView.as_view(), name='help'),
     url(r'^login_complete/$', general_views.login_complete, name='login_complete'),
     url(r'^login/$', general_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     url(r'^register/$', general_views.RegisterView.as_view(), name='register'),
     url(r'^change_current_organization/(?P<slug>[-\w]+)/$',
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
@@ -48,7 +48,7 @@ urlpatterns = [
 
     # Django Admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 
     # Internationalization
     url(r'^i18n/', include('django.conf.urls.i18n')),

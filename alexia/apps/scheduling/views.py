@@ -91,14 +91,14 @@ def event_list_view(request):
     # Dubbele resultaten weghalen
     events = events.distinct()
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         events_tending = events.filter(
             bartender_availabilities__availability__nature=Availability.ASSIGNED,
             bartender_availabilities__user=request.user,
         ).select_related(None).prefetch_related(None).order_by()
 
     # Beschikbaarheden in een lijstje stoppen
-    if not request.user.is_authenticated() or not request.organization:
+    if not request.user.is_authenticated or not request.organization:
         availabilities = []
     elif request.user.is_superuser \
             or request.user.profile.is_planner(request.organization) \
@@ -279,7 +279,7 @@ class EventUpdateView(PlannerRequiredMixin, OrganizationFormMixin, DenyWrongOrga
 
 @login_required
 def event_edit_bartender_availability(request, pk, user_pk):
-    if not request.user.is_authenticated() or not request.user.is_superuser and (
+    if not request.user.is_authenticated or not request.user.is_superuser and (
             not request.organization or not request.user.profile.is_planner(request.organization)):
         raise PermissionDenied
 

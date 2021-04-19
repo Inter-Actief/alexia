@@ -19,9 +19,9 @@ from alexia.core.validators import validate_color
 class ProductGroup(models.Model):
     organization = models.ForeignKey(
         Organization,
-        models.CASCADE,
         related_name='productgroups',
         verbose_name=_('organization'),
+        on_delete=models.CASCADE,
     )
     name = models.CharField(_('name'), max_length=32)
 
@@ -41,9 +41,9 @@ class ProductGroup(models.Model):
 class PriceGroup(models.Model):
     organization = models.ForeignKey(
         Organization,
-        models.CASCADE,
         related_name='pricegroups',
         verbose_name=_('organization'),
+        on_delete=models.CASCADE,
     )
     name = models.CharField(_('name'), max_length=32)
     productgroups = models.ManyToManyField(
@@ -67,8 +67,8 @@ class PriceGroup(models.Model):
 
 @python_2_unicode_compatible
 class SellingPrice(models.Model):
-    pricegroup = models.ForeignKey(PriceGroup, models.CASCADE, verbose_name=_('price group'))
-    productgroup = models.ForeignKey(ProductGroup, models.CASCADE, verbose_name=_('product group'))
+    pricegroup = models.ForeignKey(PriceGroup, verbose_name=_('price group'), on_delete=models.CASCADE)
+    productgroup = models.ForeignKey(ProductGroup, verbose_name=_('product group'), on_delete=models.CASCADE)
     price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)
 
     class Meta:
@@ -131,10 +131,10 @@ class Product(models.Model):
 
 
 class PermanentProduct(Product):
-    productgroup = models.ForeignKey(ProductGroup, models.CASCADE, verbose_name=_('product group'))
+    productgroup = models.ForeignKey(ProductGroup, verbose_name=_('product group'), on_delete=models.CASCADE)
     organization = models.ForeignKey(
         Organization,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='products',
         verbose_name=_('organization'),
     )
@@ -168,7 +168,7 @@ class PermanentProduct(Product):
 class TemporaryProduct(Product):
     event = models.ForeignKey(
         Event,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         null=True,
         related_name='temporaryproducts',
         verbose_name=_('event'),
@@ -197,7 +197,7 @@ class RfidCard(models.Model):
     identifier = models.CharField(_('identifier'), unique=True, max_length=50)
     is_active = models.BooleanField(_('is active'), default=False)
     registered_at = models.DateTimeField(_('registered at'), default=timezone.now)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, verbose_name=_('user'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
     managed_by = models.ManyToManyField(Organization, verbose_name=_('managed by'))
 
     class Meta:
@@ -216,13 +216,13 @@ class RfidCard(models.Model):
 class Authorization(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='authorizations',
         verbose_name=_('user'),
     )
     organization = models.ForeignKey(
         Organization,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='authorizations',
         verbose_name=_('organization'),
     )
@@ -266,10 +266,10 @@ class Authorization(models.Model):
 
 @python_2_unicode_compatible
 class Order(models.Model):
-    event = models.ForeignKey(Event, models.PROTECT, related_name='orders', verbose_name=_('event'))
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, related_name='orders', verbose_name=_('event'))
     authorization = models.ForeignKey(
         Authorization,
-        models.PROTECT,
+        on_delete=models.PROTECT,
         related_name='orders',
         verbose_name=_('authorization'),
     )
@@ -283,7 +283,7 @@ class Order(models.Model):
     )
     added_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.PROTECT,
+        on_delete=models.PROTECT,
         verbose_name=_('added by'),
         related_name='+',
     )
@@ -319,7 +319,7 @@ class Order(models.Model):
 
 @python_2_unicode_compatible
 class Purchase(models.Model):
-    order = models.ForeignKey(Order, models.CASCADE, related_name='purchases', verbose_name=_('order'))
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='purchases', verbose_name=_('order'))
     product = models.CharField(_('product'), max_length=32)
     amount = models.PositiveSmallIntegerField(_('amount'))
     price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)

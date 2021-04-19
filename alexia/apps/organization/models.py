@@ -32,7 +32,7 @@ class Location(models.Model):
 class AuthenticationData(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('user'),
     )
     backend = models.CharField(_('authentication backend'), max_length=50)
@@ -49,6 +49,7 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL,
         unique=True,
         verbose_name=_('user'),
+        on_delete=models.CASCADE,
     )
     is_iva = models.BooleanField(
         _('has IVA-certificate'),
@@ -73,7 +74,7 @@ class Profile(models.Model):
     )
     current_organization = models.ForeignKey(
         'Organization',
-        models.SET_NULL,
+        on_delete=models.SET_NULL,
         null=True,
         verbose_name=_('current organization'),
     )
@@ -151,12 +152,12 @@ class Organization(models.Model):
 class Membership(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('user'),
     )
     organization = models.ForeignKey(
         Organization,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('organization')
     )
     comments = models.TextField(_('comments'), blank=True)
@@ -215,7 +216,7 @@ class Certificate(models.Model):
     uploaded_at = models.DateField(auto_now_add=True, verbose_name=_('uploaded at'))
     approved_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='approved_certificates',
         null=True,
         verbose_name=_('approved by'),
@@ -223,7 +224,7 @@ class Certificate(models.Model):
     approved_at = models.DateField(_('approved at'), null=True)
     owner = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('certificate'),
     )
 
