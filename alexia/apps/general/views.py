@@ -46,7 +46,7 @@ from alexia.apps.scheduling.models import (
 
 def _get_login_redirect_url(request, redirect_to):
     # Ensure the user-originating redirection URL is safe.
-    if not is_safe_url(url=redirect_to, host=request.get_host()):
+    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
         return resolve_url(settings.LOGIN_REDIRECT_URL)
     return redirect_to
 
