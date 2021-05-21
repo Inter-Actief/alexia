@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'alexia.middleware.common.CommonMiddleware',
+    'djangosaml2.middleware.SamlSessionMiddleware',
 ]
 
 # Models
@@ -182,7 +183,7 @@ SAML_CONFIG = {
             'required_attributes': ['uid'],
 
             # attributes that may be useful to have but not required
-            'optional_attributes': ['eduPersonAffiliation'],
+            'optional_attributes': ['department'],
 
             # Don't request signed responses, the UT SAML server does not do that
             'want_response_signed': False,
