@@ -4,7 +4,6 @@ from django.contrib.auth import (
 )
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-# from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
@@ -108,21 +107,22 @@ def login(request, template_name='registration/login.html',
 
     return TemplateResponse(request, template_name, context)
 
+
 # The SAML login page throws a very annoying error when a timed-out response arrives,
 # so we need to wrap it and ignore the error to stop it from showing up in our Sentry logs.
 # Also, we need to inject the current onrganisation right after login.
-@require_POST
-@csrf_exempt
-def saml_acs_override(request, *args, **kwargs):
-    try:
-        res = assertion_consumer_service(request, *args, **kwargs)
-        if request.user:
-            # Set current organisation
-            if hasattr(request.user, 'profile') and request.user.profile.current_organization:
-                request.session['organization_pk'] = request.user.profile.current_organization.pk
-        return res
-    except UnsolicitedResponse:
-        raise PermissionDenied(_("Logging in failed, please try again."))
+class SAMLACSOverrideView(AssertionConsumerServiceView):
+    @method_decorator(csrf_exempt)
+    def post(self, *args, **kwargs):
+        try:
+            res = super(SAMLACSOverrideView, self).post(*args, **kwargs)
+            if request.user:
+                # Set current organisation
+                if hasattr(request.user, 'profile') and request.user.profile.current_organization:
+                    request.session['organization_pk'] = request.user.profile.current_organization.pk
+            return res
+        except UnsolicitedResponse:
+            raise PermissionDenied(_("Logging in failed, please try again."))
 
 
 class RegisterView(LoginRequiredMixin, UpdateView):
