@@ -117,10 +117,10 @@ class SAMLACSOverrideView(AssertionConsumerServiceView):
     def post(self, *args, **kwargs):
         try:
             res = super(SAMLACSOverrideView, self).post(*args, **kwargs)
-            if request.user:
+            if self.request.user:
                 # Set current organisation
-                if hasattr(request.user, 'profile') and request.user.profile.current_organization:
-                    request.session['organization_pk'] = request.user.profile.current_organization.pk
+                if hasattr(self.request.user, 'profile') and self.request.user.profile.current_organization:
+                    self.request.session['organization_pk'] = self.request.user.profile.current_organization.pk
             return res
         except UnsolicitedResponse:
             raise PermissionDenied(_("Logging in failed, please try again."))
