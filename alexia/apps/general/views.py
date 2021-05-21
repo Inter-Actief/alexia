@@ -19,6 +19,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
 from djangosaml2.views import AssertionConsumerServiceView
+from django.utils.decorators import method_decorator
 from saml2.response import UnsolicitedResponse
 from django.utils.translation import ugettext_lazy as _
 
