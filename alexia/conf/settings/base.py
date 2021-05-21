@@ -194,12 +194,13 @@ SAML_CONFIG = {
                 # present in our metadata
 
                 # the keys of this dictionary are entity ids
-                'https://signon-test.utsp.utwente.nl/oamfed/idp/metadata': {
+                'https://login.microsoftonline.com/f1ec8743-cb11-40ae-982a-45e321af98b4/federationmetadata/2007-06/federationmetadata.xml?appid=3805dc19-54c8-4b3f-aaf3-e8a04975c495': {
                     'single_sign_on_service': {
-                        saml2.BINDING_HTTP_REDIRECT: 'https://signon-test.utsp.utwente.nl/oamfed/idp/samlv20',
+                        saml2.BINDING_HTTP_REDIRECT: 'https://login.microsoftonline.com/f1ec8743-cb11-40ae-982a-45e321af98b4/saml2',
+                        saml2.BINDING_HTTP_POST: 'https://login.microsoftonline.com/f1ec8743-cb11-40ae-982a-45e321af98b4/saml2',
                     },
                     'single_logout_service': {
-                        saml2.BINDING_HTTP_REDIRECT: 'https://signon-test.utsp.utwente.nl/oamfed/idp/samlv20',
+                        saml2.BINDING_HTTP_REDIRECT: 'https://login.microsoftonline.com/f1ec8743-cb11-40ae-982a-45e321af98b4/saml2',
                     },
                 },
             },
