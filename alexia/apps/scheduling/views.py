@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.views.generic.base import TemplateView, View
@@ -467,7 +467,13 @@ class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, Cris
     model = Availability
     fields = ['name', 'nature']
 
+    def get_success_url(self):
+        return reverse('availability_list')
+
 
 class AvailabilityUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, UpdateView):
     model = Availability
     fields = ['name', 'nature']
+
+    def get_success_url(self):
+        return reverse('availability_list')
