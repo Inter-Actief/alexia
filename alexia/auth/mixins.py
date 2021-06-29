@@ -95,7 +95,7 @@ class FoundationManagerRequiredMixin(PassesTestMixin):
     reason = _('You are not a foundation manager.')
 
     def test_requirement(self, request):
-        return request.user.is_authenticated and (
+        return request.user.is_authenticated and request.organization and (
             request.user.is_superuser or request.user.profile.is_foundation_manager)
 
 

@@ -1,6 +1,7 @@
 import calendar
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -26,6 +27,7 @@ from .models import (
 )
 
 
+@login_required()
 def dcf(request, pk):
     # Get event and verify rights
     event = get_object_or_404(Event, pk=pk)
@@ -60,6 +62,7 @@ def dcf(request, pk):
     return render(request, 'consumption/dcf.html', locals())
 
 
+@login_required()
 def complete_dcf(request, pk):
     # Get event and verify rights
     event = get_object_or_404(Event, pk=pk)

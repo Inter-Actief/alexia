@@ -15,7 +15,6 @@ from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.decorators.http import require_POST
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
 from djangosaml2.views import AssertionConsumerServiceView
@@ -49,6 +48,7 @@ def _get_login_redirect_url(request, redirect_to):
     if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
         return resolve_url(settings.LOGIN_REDIRECT_URL)
     return redirect_to
+
 
 @login_required()
 def login_complete(request):
