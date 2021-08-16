@@ -58,6 +58,10 @@
                     <span{% if permanentproduct.text_color %} style="color: #{{ permanentproduct.text_color }}"{% endif %}>{{ permanentproduct.name }}</span>
                 </td>
             </tr>
+            <tr>
+                <th>{% trans 'Shortcut' %}</th>
+                <td>{{ object.shortcut }}</td>
+            </tr>
         </table>
     </div>
 </div>

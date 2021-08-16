@@ -67,6 +67,7 @@ class JulianaView(TenderRequiredMixin, DetailView):
                 products.append({
                     'id': product.pk,
                     'name': product.name,
+                    'shortcut': product.shortcut.upper(),
                     'text_color': product.text_color,
                     'background_color': product.background_color,
                     'price': int(sellingprice.price * 100),
@@ -79,6 +80,7 @@ class JulianaView(TenderRequiredMixin, DetailView):
             products.append({
                 'id': product.pk,
                 'name': product.name,
+                'shortcut': product.shortcut.upper(),
                 'text_color': product.text_color,
                 'background_color': product.background_color,
                 'price': int(product.price * 100),
