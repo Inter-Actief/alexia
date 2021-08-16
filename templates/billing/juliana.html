@@ -23,11 +23,7 @@
                 shortcuts: {
                     {% for product in products %}
                         {% if product.shortcut %}
-                            "{{ product.shortcut|escapejs }}": {
-                                id: {{ product.id }},
-                                name: "{{ product.name|escapejs }}",
-                                price: {{ product.price }}
-                            },
+                            "{{ product.shortcut|escapejs }}": {{ product.id }},
                         {% endif %}
                     {% endfor %}
                 },

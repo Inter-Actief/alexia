@@ -436,7 +436,7 @@ $(function () {
             // 48 is the keycode for 0, 57 for 9
             Input.stroke((event.which - 48).toString());
         } else if(Settings.shortcuts[String.fromCharCode(event.which)] !== undefined) {
-            Sales.add(Settings.shortcuts[String.fromCharCode(event.which)].id, Input.read());
+            Sales.add(Settings.shortcuts[String.fromCharCode(event.which)], Input.read());
             Input.reset();
         }
     });
