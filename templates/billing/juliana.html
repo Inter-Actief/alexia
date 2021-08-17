@@ -11,8 +11,21 @@
             Settings = {
                 api_url: "{% url 'api_v1_mountpoint' %}",
                 event_id: {{ event.pk }},
-                products: {{% for product in products %}
-                    {{ product.id }}: {name: "{{ product.name|escapejs }}", price: {{ product.price }}},{% endfor %}
+                products: {
+                {% for product in products %}
+                    {{ product.id }}: {
+                        name: "{{ product.name|escapejs }}",
+                        price: {{ product.price }},
+                        {% if product.shortcut %} shortcut: "{{ product.shortcut|escapejs }}", {% endif %}
+                    },
+                {% endfor %}
+                },
+                shortcuts: {
+                    {% for product in products %}
+                        {% if product.shortcut %}
+                            "{{ product.shortcut|escapejs }}": {{ product.id }},
+                        {% endif %}
+                    {% endfor %}
                 },
                 androidapp: {{ androidapp|yesno:"true,false" }},
                 countdown: {{ countdown }},
@@ -73,6 +86,9 @@
                                                {% if product.background_color %}style="background-color: #{{ product.background_color }}; border-color: #{{ product.background_color }};"{% endif %}
                                                data-command="sales" data-product="{{ product.id }}">
                                                 <span {% if product.text_color %}style="color: #{{ product.text_color }};"{% endif %}>{{ product.name }}</span>
+                                                {% if product.shortcut %}
+                                                    <span class="shortcut">{{ product.shortcut }}</span>
+                                                {% endif %}
                                             </a>
                                         </div>
                                     {% endfor %}
