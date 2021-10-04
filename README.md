@@ -1,8 +1,5 @@
 # [Alexia](https://alex.ia.utwente.nl)
 
-[![Build Status](https://travis-ci.org/Inter-Actief/alexia.svg?branch=master)](https://travis-ci.org/Inter-Actief/alexia)
-[![Requirements Status](https://requires.io/github/Inter-Actief/alexia/requirements.svg?branch=master)](https://requires.io/github/Inter-Actief/alexia/requirements/?branch=master)
-
 Alexia is the management system for the drink rooms in the Zilverling at the University of Twente, the Abscint and MBasement.
 
 ## Table of contents
