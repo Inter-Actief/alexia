@@ -78,6 +78,6 @@ class AvailabilityInline(admin.TabularInline):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    fields = [('name', 'assigns_tenders'), 'color']
+    fields = [('name', 'assigns_tenders'), 'is_active', 'color']
     inlines = [AvailabilityInline]
     list_display = ['name']

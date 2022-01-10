@@ -20,4 +20,5 @@ class Command(BaseCommand):
                 missing_events = events.exclude(pk__in=bartender.user.event_set.values_list('id', flat=True))
                 context = {'addressee': bartender.user, 'missing_events': missing_events, 'now': now}
                 recipients.append(([bartender.user.email], context))
-            template_mass_mail(mailtemplate.subject, mailtemplate.template, recipients)
+            if organization.is_active:
+                template_mass_mail(mailtemplate.subject, mailtemplate.template, recipients)

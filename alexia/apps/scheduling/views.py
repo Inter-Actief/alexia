@@ -59,7 +59,7 @@ def event_list_view(request):
 
     # Filterformulier maken, al dan niet met huidige waarden
     if request.GET:
-        filter_form = FilterEventForm(request.GET)
+        filter_form = FilterEventForm(request.GET, request=request)
 
         if filter_form.is_valid():
             data = filter_form.cleaned_data
@@ -82,7 +82,7 @@ def event_list_view(request):
             if data['meetings_only']:
                 events = events.filter(kegs=0)
     else:
-        filter_form = FilterEventForm()
+        filter_form = FilterEventForm(request=request)
 
     events = events.filter(ends_at__gte=from_time)
     if end_time:
