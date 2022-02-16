@@ -166,7 +166,8 @@ class EventMatrixView(TemplateView):
     template_name = 'scheduling/event_matrix.html'
 
     def get_context_data(self, **kwargs):
-        if hasattr(self.request.user, 'profile') and self.request.user.profile.is_tender(self.request.organization):
+        if hasattr(self.request.user, 'profile') and (self.request.user.profile.is_tender(self.request.organization)
+                                                      or self.request.user.profile.is_manager(self.request.organization)):
             events = self.get_events()
             context = super(EventMatrixView, self).get_context_data(**kwargs)
             context['events'] = events
