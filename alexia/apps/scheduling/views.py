@@ -18,7 +18,7 @@ from alexia.apps.organization.forms import BartenderAvailabilityForm
 from alexia.apps.organization.models import Location, Membership, Profile
 from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, PlannerRequiredMixin,
-    TenderRequiredMixin,
+    TenderRequiredMixin, TenderOrManagerRequiredMixin,
 )
 from alexia.forms import CrispyFormMixin
 from alexia.http import IcalResponse
@@ -162,19 +162,15 @@ class EventCalendarFetch(View):
         return JsonResponse(data, safe=False)
 
 
-class EventMatrixView(TemplateView):
+class EventMatrixView(TenderOrManagerRequiredMixin, TemplateView):
     template_name = 'scheduling/event_matrix.html'
 
     def get_context_data(self, **kwargs):
-        if hasattr(self.request.user, 'profile') and (self.request.user.profile.is_tender(self.request.organization)
-                                                      or self.request.user.profile.is_manager(self.request.organization)):
-            events = self.get_events()
-            context = super(EventMatrixView, self).get_context_data(**kwargs)
-            context['events'] = events
-            context['tenders'] = self.get_tenders(events)
-            return context
-        else:
-            raise PermissionDenied()
+        events = self.get_events()
+        context = super(EventMatrixView, self).get_context_data(**kwargs)
+        context['events'] = events
+        context['tenders'] = self.get_tenders(events)
+        return context
 
     def get_events(self):
         return Event.objects.select_related().prefetch_related(
