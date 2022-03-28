@@ -86,6 +86,19 @@ class ManagerRequiredMixin(PassesTestMixin):
             request.user.is_superuser or (
                 request.organization and request.user.profile.is_manager(request.organization)))
 
+class TenderOrManagerRequiredMixin(PassesTestMixin):
+    """
+    Mixin to require the current user to be a bartender or manager of the selected organization.
+    """
+    needs_login = True
+    reason = _('You are not a bartender or manager of the selected organization.')
+
+    def test_requirement(self, request):
+        return request.user.is_authenticated and (
+            request.user.is_superuser or (
+                request.organization and (request.user.profile.is_tender(request.organization) or
+                                          request.user.profile.is_manager(request.organization))))
+
 
 class FoundationManagerRequiredMixin(PassesTestMixin):
     """
