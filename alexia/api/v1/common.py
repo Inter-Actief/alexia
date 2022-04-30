@@ -1,7 +1,7 @@
 import base64
 
 from alexia.apps.organization.models import AuthenticationData
-from alexia.auth.backends import RADIUS_BACKEND_NAME
+from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
 
 
 def format_authorization(authorization):
@@ -60,9 +60,15 @@ def format_user(user):
     :type user: django.contrib.auth.models.User
     """
     try:
-        user_name = user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+        user_name = user.authenticationdata_set.get(backend=SAML2_BACKEND_NAME).username
     except AuthenticationData.DoesNotExist:
         user_name = None
+
+    if user_name is None:
+        try:
+            user_name = user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+        except AuthenticationData.DoesNotExist:
+            user_name = None
 
     auth_data = [{
         'backend': u.backend,
@@ -74,7 +80,8 @@ def format_user(user):
         'radius_username': user_name,
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'authentication_data': auth_data
+        'authentication_data': auth_data,
+        'email_address': user.email
     }
 
 

@@ -75,7 +75,7 @@
         <tbody>
         {% for consumptionform in consumptionform_list %}
             <tr>
-                <td>{{ consumptionform.event.starts_at|date:"l j F" }}</td>
+                <td>{{ consumptionform.event.starts_at|date:"l j F 'y" }}</td>
                 <td>{{ consumptionform.event.organizer }}</td>
                 <td>{{ consumptionform.event.location.all|join:", " }}</td>
                 <td>
@@ -93,8 +93,8 @@
                     </a>
                     {% endif %}
                     {% if consumptionform.comments %}
-                    <abbr title="{% trans 'Has comments' %}">
-                        <span class="glyphicon glyphicon-comment"><span>
+                    <abbr title="{% trans 'Has comments:' %} {{ consumptionform.comments|escape }}">
+                        <span class="glyphicon glyphicon-comment"></span>
                     </abbr>
                     {% endif %}
                 </td>

@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('backend', models.CharField(max_length=50, verbose_name='Authentication backend')),
                 ('username', models.CharField(max_length=50, verbose_name='Username')),
                 ('additional_data', models.TextField(null=True, verbose_name='Additional data')),
-                ('user', models.ForeignKey(verbose_name='user', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(verbose_name='user', to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)),
             ],
         ),
     ]

@@ -30,12 +30,20 @@ body {
 	line-height:90px;
 	padding:0;
     font-size:20px;
+    position: relative;
 }
 
 .tab-sale .btn > span {
 	display:inline-block;
 	vertical-align:middle;
 	line-height:normal;
+}
+
+.tab-sale .btn > .shortcut {
+    position: absolute;
+    font-size: 16px;
+    right: 0.2em;
+    bottom: 0.2em;
 }
 
 #keypad .row {

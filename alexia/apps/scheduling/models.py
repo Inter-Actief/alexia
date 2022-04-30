@@ -25,7 +25,7 @@ class MailTemplate(models.Model):
         (REMINDER, _('Weekly reminder')),
     )
 
-    organization = models.ForeignKey('organization.Organization', models.CASCADE, verbose_name=_('organization'))
+    organization = models.ForeignKey('organization.Organization', on_delete=models.CASCADE, verbose_name=_('organization'))
     name = models.CharField(_('name'), max_length=32, choices=NAME_CHOICES)
     subject = models.CharField(_('subject'), max_length=255)
     template = models.TextField(_('template'))
@@ -50,6 +50,7 @@ class Event(models.Model):
         'organization.Organization',
         related_name='events',
         verbose_name=_('organizer'),
+        on_delete=models.CASCADE,
     )
     participants = models.ManyToManyField(
         'organization.Organization',
@@ -80,7 +81,7 @@ class Event(models.Model):
     )
     pricegroup = models.ForeignKey(
         'billing.PriceGroup',
-        models.PROTECT,
+        on_delete=models.PROTECT,
         null=True,
         verbose_name=_('pricegroup'),
     )
@@ -200,7 +201,7 @@ class Availability(models.Model):
 
     organization = models.ForeignKey(
         'organization.Organization',
-        models.CASCADE,
+        on_delete=models.CASCADE,
         related_name='availabilities',
         verbose_name=_('organization'),
     )
@@ -228,12 +229,21 @@ class Availability(models.Model):
 class BartenderAvailability(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('bartender'),
         related_name='bartender_availability_set',
     )
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='bartender_availabilities')
-    availability = models.ForeignKey(Availability, verbose_name=_('availability'))
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='bartender_availabilities',
+        on_delete=models.CASCADE,
+    )
+    availability = models.ForeignKey(
+        Availability,
+        verbose_name=_('availability'),
+        on_delete=models.CASCADE,
+    )
 
     class Meta:
         verbose_name = _('bartender availability')

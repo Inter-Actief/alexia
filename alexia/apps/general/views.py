@@ -2,20 +2,25 @@ from django.conf import settings
 from django.contrib.auth import (
     REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
 )
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-# from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
+from djangosaml2.views import AssertionConsumerServiceView
+from django.utils.decorators import method_decorator
+from saml2.response import UnsolicitedResponse
+from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Membership, Organization
 from alexia.apps.scheduling.models import (
@@ -40,9 +45,18 @@ from alexia.apps.scheduling.models import (
 
 def _get_login_redirect_url(request, redirect_to):
     # Ensure the user-originating redirection URL is safe.
-    if not is_safe_url(url=redirect_to, host=request.get_host()):
+    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
         return resolve_url(settings.LOGIN_REDIRECT_URL)
     return redirect_to
+
+
+@login_required()
+def login_complete(request):
+    # After login, check if the user's profile is complete.
+    # If it is not, send them to the page to complete the profile, else, send them to the main page.
+    if not request.user.first_name or not request.user.email:
+        return HttpResponseRedirect(resolve_url('register'))
+    return HttpResponseRedirect("/")
 
 
 @sensitive_post_parameters()
@@ -93,6 +107,23 @@ def login(request, template_name='registration/login.html',
         context.update(extra_context)
 
     return TemplateResponse(request, template_name, context)
+
+
+# The SAML login page throws a very annoying error when a timed-out response arrives,
+# so we need to wrap it and ignore the error to stop it from showing up in our Sentry logs.
+# Also, we need to inject the current onrganisation right after login.
+class SAMLACSOverrideView(AssertionConsumerServiceView):
+    @method_decorator(csrf_exempt)
+    def post(self, *args, **kwargs):
+        try:
+            res = super(SAMLACSOverrideView, self).post(*args, **kwargs)
+            if self.request.user:
+                # Set current organisation
+                if hasattr(self.request.user, 'profile') and self.request.user.profile.current_organization:
+                    self.request.session['organization_pk'] = self.request.user.profile.current_organization.pk
+            return res
+        except UnsolicitedResponse:
+            raise PermissionDenied(_("Logging in failed, please try again."))
 
 
 class RegisterView(LoginRequiredMixin, UpdateView):

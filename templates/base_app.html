@@ -26,6 +26,8 @@
                         <li><a href="{% url 'calendar-schedule' %}">{% trans 'Calendar' %}</a></li>
                         {% if is_tender %}
                         <li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>
+                        {% endif %}
+                        {% if is_tender or is_manager %}
                         <li><a href="{% url 'event_matrix' %}">{% trans 'Availability matrix' %}</a></li>
                         {% endif %}
                         {% if is_manager %}
@@ -127,19 +129,8 @@
                     </ul>
                 {% endmenuitem %}
                 {% else %}
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                        {% trans 'Login' %}
-                        <span class="caret"></span>
-                    </a>
-                    <div id="alexia-navbar-login" class="dropdown-menu">
-                        <form method="post" action="{% url 'login' %}">
-                            {% csrf_token %}
-                            <input class="form-control" name="username" placeholder="{% trans 'Username' %}" type="text">
-                            <input class="form-control" name="password" placeholder="{% trans 'Password' %}" type="password">
-                            <input value="Login" class="btn btn-primary btn-block form-control" type="submit">
-                        </form>
-                    </div>
+                <li>
+                    <a href="{% url 'saml2_login' %}">{% trans 'Login with UTwente' %}</a>
                 </li>
                 {% endif %}
             </ul>

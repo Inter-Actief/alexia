@@ -1,9 +1,9 @@
 from jsonrpc import jsonrpc_method
 
 from alexia.api.decorators import manager_required
-from alexia.api.exceptions import ObjectNotFoundError
+from alexia.api.exceptions import InvalidParamsError
 from alexia.apps.scheduling.models import BartenderAvailability
-from alexia.auth.backends import RADIUS_BACKEND_NAME, User
+from alexia.auth.backends import RADIUS_BACKEND_NAME, User, SAML2_BACKEND_NAME
 
 from ..config import api_v1_site
 
@@ -21,9 +21,9 @@ def user_get_availabilities(request, radius_username):
 
     Required user level: Manager
 
-    radius_username     -- RADIUS username to search for.
+    radius_username     -- Username to search for.
 
-    Raises error 404 if the specified user does not exist.
+    Raises error -32602 (Invalid params) if the username does not exist.
 
     Example result value:
     [
@@ -46,10 +46,14 @@ def user_get_availabilities(request, radius_username):
     ]
     """
     try:
-        user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        raise ObjectNotFoundError
+        try:
+            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
+        except User.DoesNotExist:
+            raise InvalidParamsError('User with provided username does not exits')
 
     availabilities = BartenderAvailability.objects.filter(user=user, event__organizer=request.organization)
 

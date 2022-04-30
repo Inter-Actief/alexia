@@ -1,0 +1,18 @@
+Django>=1.11,<2.3
+django-auth-ldap<2.2
+django-compressor==2.4
+django-crispy-forms>=1.6,<1.11.3
+django-debug-toolbar<3.0.0
+django-wkhtmltopdf==3.3.0
+mysqlclient<2.0.4
+eventlog==0.11.0
+icalendar==4.0.7
+jsonfield<3.1.0
+pyrad==2.4
+git+https://github.com/samuraisam/django-json-rpc@a88d744d960e828f3eb21265da0f10a694b8ebcf
+git+https://github.com/Inter-Actief/django-sslserver@389a4e42dba5a9b3ca1f3a4013044e07a52dc43c
+# SAML SP (requires xmlsec and libssl-dev (on Debian))
+djangosaml2>=0.50.0,<0.51
+raven==6.10.0
+# Translations -- development
+django-rosetta>=0.7.6,<0.9.7

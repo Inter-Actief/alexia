@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
@@ -67,6 +68,7 @@ class JulianaView(TenderRequiredMixin, DetailView):
                 products.append({
                     'id': product.pk,
                     'name': product.name,
+                    'shortcut': product.shortcut.upper(),
                     'text_color': product.text_color,
                     'background_color': product.background_color,
                     'price': int(sellingprice.price * 100),
@@ -79,6 +81,7 @@ class JulianaView(TenderRequiredMixin, DetailView):
             products.append({
                 'id': product.pk,
                 'name': product.name,
+                'shortcut': product.shortcut.upper(),
                 'text_color': product.text_color,
                 'background_color': product.background_color,
                 'price': int(product.price * 100),
@@ -154,7 +157,7 @@ class OrderExportView(ManagerRequiredMixin, FormView):
         return render(self.request, 'billing/order_export_result.html', locals())
 
 
-class PaymentDetailView(DetailView):
+class PaymentDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'billing/payment_detail.html'
 

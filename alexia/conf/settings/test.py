@@ -4,8 +4,10 @@ from .base import *  # NOQA
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',
         'NAME': 'alexia_test',
-        'USER': 'root',
+        'USER': 'travis',
+        'PASSWORD': '',
     }
 }
 

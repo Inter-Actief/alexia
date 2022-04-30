@@ -4,7 +4,21 @@
 
 {% block content %}
 <div class="page-header">
-    <h2>{% trans 'Orders' %}: {{ event }}</h2>
+    <h2>
+        {% trans 'Orders' %}: {{ event }}
+        <div class="pull-right">
+            {% if event.organizer == request.organization and is_manager and event.consumptionform %}
+                <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-tint"></span>
+                    {% trans 'Consumption form' %}
+                </a>
+            {% endif %}
+            <a href="{% url 'event' event.pk %}" class="btn btn-default">
+                <span class="glyphicon glyphicon-calendar"></span>
+                {% trans 'Event information' %}
+            </a>
+        </div>
+    </h2>
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-6">

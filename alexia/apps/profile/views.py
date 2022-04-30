@@ -4,6 +4,7 @@ import uuid
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.http import Http404, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.views.generic.base import RedirectView, TemplateView, View
@@ -14,7 +15,7 @@ from django.views.generic.list import ListView
 from alexia.apps.billing.models import Order
 from alexia.apps.organization.models import AuthenticationData, Certificate
 from alexia.apps.scheduling.models import Event
-from alexia.auth.backends import RADIUS_BACKEND_NAME
+from alexia.auth.backends import SAML2_BACKEND_NAME
 from alexia.auth.mixins import TenderRequiredMixin
 from alexia.forms import CrispyFormMixin
 
@@ -32,7 +33,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                                         .filter(authorization__in=self.request.user.authorizations.all())
                                         .count(),
             'shares': self.get_shares(self.request.user),
-            'radius_username': self.get_radius_username(self.request.user),
+            'saml2_username': self.get_saml2_username(self.request.user),
         })
         return context
 
@@ -53,9 +54,9 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
         return shares
 
-    def get_radius_username(self, user):
+    def get_saml2_username(self, user):
         try:
-            return self.request.user.authenticationdata_set.get(backend=RADIUS_BACKEND_NAME).username
+            return self.request.user.authenticationdata_set.get(backend=SAML2_BACKEND_NAME).username
         except AuthenticationData.DoesNotExist:
             return None
 
@@ -95,13 +96,13 @@ class IvaUpdate(LoginRequiredMixin, CrispyFormMixin, CreateView):
 
 class IvaView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        if not request.user.certificate:
+        try:
+            iva_file = request.user.certificate.file
+            content_type, encoding = mimetypes.guess_type(iva_file.url)
+            content_type = content_type or 'application/octet-stream'
+            return HttpResponse(iva_file, content_type=content_type)
+        except ObjectDoesNotExist:
             raise Http404
-
-        iva_file = request.user.certificate.file
-        content_type, encoding = mimetypes.guess_type(iva_file.url)
-        content_type = content_type or 'application/octet-stream'
-        return HttpResponse(iva_file, content_type=content_type)
 
 
 class ExpenditureListView(LoginRequiredMixin, ListView):

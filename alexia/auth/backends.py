@@ -1,12 +1,14 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django_auth_ldap.backend import LDAPBackend
+from djangosaml2.backends import Saml2Backend
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 
 User = get_user_model()
 LDAP_BACKEND_NAME = 'utils.auth.backends.ldap.MultiLDAPBackend'
 RADIUS_BACKEND_NAME = 'utils.auth.backends.radius.RadiusBackend'
+SAML2_BACKEND_NAME = 'utils.auth.backends.saml2.SAML2Backend'
 
 
 def get_or_create_user(backend, username):
@@ -65,3 +67,25 @@ class RadiusBackend(object):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
+
+
+class AlexiaSAML2Backend(Saml2Backend):
+    def configure_user(self, user, attributes, attribute_mapping):
+        self._update_authentication_data(user)
+        return super(AlexiaSAML2Backend, self).configure_user(user, attributes, attribute_mapping)
+    
+    def update_user(self, user, attributes, attribute_mapping,
+                    force_save=False):
+        self._update_authentication_data(user)
+        return super(AlexiaSAML2Backend, self).update_user(user, attributes, attribute_mapping, force_save)
+
+    def _update_authentication_data(self, user):
+        try:
+            authentication_data = AuthenticationData.objects.get(backend=SAML2_BACKEND_NAME, username=user.username)
+            return authentication_data.user, False
+        except AuthenticationData.DoesNotExist:
+            data = AuthenticationData(user=user, backend=SAML2_BACKEND_NAME, username=user.username.lower())
+            data.save()
+
+        # Check if a profile exists
+        Profile.objects.get_or_create(user=user)

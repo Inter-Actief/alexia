@@ -75,8 +75,8 @@
                     </a>
                     {% if e.tender_comments and e in events_tending %}
                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"
-                                title="{% trans 'Has tender comments' %}"></span>
-                        <span class="sr-only">{% trans 'Has tender comments' %}</span>
+                                title="{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}"></span>
+                        <span class="sr-only">{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}</span>
                     {% endif %}
                     {% if e.is_risky %}
                         <span class="glyphicon glyphicon-warning-sign" title="{% trans 'Risky activity' %}"></span>

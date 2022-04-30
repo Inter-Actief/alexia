@@ -1,6 +1,8 @@
 import calendar
 import datetime
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -26,11 +28,12 @@ from .models import (
 )
 
 
+@login_required()
 def dcf(request, pk):
     # Get event and verify rights
     event = get_object_or_404(Event, pk=pk)
 
-    if not event.is_tender(request.user) and \
+    if not event.is_tender(request.user) and request.organization is not None and \
             not (request.organization.assigns_tenders and request.user.profile.is_tender(request.organization)):
         raise PermissionDenied(_('You are not a tender for this event.'))
 
@@ -60,6 +63,7 @@ def dcf(request, pk):
     return render(request, 'consumption/dcf.html', locals())
 
 
+@login_required()
 def complete_dcf(request, pk):
     # Get event and verify rights
     event = get_object_or_404(Event, pk=pk)
@@ -120,7 +124,7 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
         )
 
     def json(self, filename, objects):
-        result = {}
+        result = dict()
 
         result['drinks'] = {}
         for organization in Organization.objects.all():
@@ -132,7 +136,7 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
                     'drink_name': form.event.name,
                     'date': form.event.starts_at.strftime('%d-%m-%Y'),
                     'products': form.aggregate_products(),
-                    'location': [l.name for l in form.event.location.all()],
+                    'location': [loc.name for loc in form.event.location.all()],
                 })
             if forms:
                 result['drinks'][organization.name] = forms
@@ -142,7 +146,7 @@ class ConsumptionFormExportView(FoundationManagerRequiredMixin, FormView):
             result['products'][product.pk] = product.name
 
         response = JsonResponse(result, json_dumps_params={'indent': True})
-        response['Content-Disposition'] = 'attachment; filename="%s"' % (filename)
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
 
 
@@ -179,7 +183,7 @@ class WeightConsumptionProductUpdateView(ConsumptionProductUpdateView):
     fields = ['name', 'full_weight', 'empty_weight', 'has_flowmeter', 'is_active']
 
 
-class ConsumptionFormListView(ListView):
+class ConsumptionFormListView(LoginRequiredMixin, ListView):
     paginate_by = 30
 
     def get_context_data(self, **kwargs):
@@ -211,7 +215,7 @@ class ConsumptionFormListView(ListView):
             .select_related('event__organizer')
 
 
-class ConsumptionFormDetailView(DetailView):
+class ConsumptionFormDetailView(LoginRequiredMixin, DetailView):
     queryset = ConsumptionForm.objects.prefetch_related(
         'weightentry_set__product',
         'unitentry_set__product',
@@ -228,7 +232,7 @@ class ConsumptionFormDetailView(DetailView):
         return self.render_to_response(context)
 
 
-class ConsumptionFormPDFView(PDFTemplateView):
+class ConsumptionFormPDFView(LoginRequiredMixin, PDFTemplateView):
     template_name = 'consumption/dcf_pdf.html'
 
     def get(self, request, *args, **kwargs):

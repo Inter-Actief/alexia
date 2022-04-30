@@ -46,12 +46,12 @@ class WeightConsumptionProduct(ConsumptionProduct):
 class ConsumptionForm(models.Model):
     event = models.OneToOneField(
         Event,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('event'),
     )
     completed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        models.SET_NULL,
+        on_delete=models.SET_NULL,
         null=True,
         verbose_name=_('completed by'),
     )
@@ -121,7 +121,7 @@ class ConsumptionForm(models.Model):
 class Entry(models.Model):
     consumption_form = models.ForeignKey(
         ConsumptionForm,
-        models.CASCADE,
+        on_delete=models.CASCADE,
         verbose_name=_('consumption_form'),
     )
 
@@ -133,7 +133,7 @@ class Entry(models.Model):
 class WeightEntry(Entry):
     product = models.ForeignKey(
         WeightConsumptionProduct,
-        models.PROTECT,
+        on_delete=models.PROTECT,
         verbose_name=_('product'),
     )
     start_weight = models.DecimalField(_('starting weight'), max_digits=4, decimal_places=1)
@@ -185,7 +185,7 @@ class WeightEntry(Entry):
 class UnitEntry(Entry):
     product = models.ForeignKey(
         ConsumptionProduct,
-        models.PROTECT,
+        on_delete=models.PROTECT,
         verbose_name=_('product'),
     )
     amount = models.PositiveSmallIntegerField(_('amount'), validators=[MinValueValidator(1)])

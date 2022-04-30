@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from django.views.generic.base import TemplateView, View
@@ -18,7 +18,7 @@ from alexia.apps.organization.forms import BartenderAvailabilityForm
 from alexia.apps.organization.models import Location, Membership, Profile
 from alexia.auth.mixins import (
     DenyWrongOrganizationMixin, ManagerRequiredMixin, PlannerRequiredMixin,
-    TenderRequiredMixin,
+    TenderRequiredMixin, TenderOrManagerRequiredMixin,
 )
 from alexia.forms import CrispyFormMixin
 from alexia.http import IcalResponse
@@ -76,6 +76,9 @@ def event_list_view(request):
             if data['till_time']:
                 end_time = data['till_time']
 
+            if data['drinks_only']:
+                events = events.filter(kegs__gt=0)
+
             if data['meetings_only']:
                 events = events.filter(kegs=0)
     else:
@@ -88,14 +91,14 @@ def event_list_view(request):
     # Dubbele resultaten weghalen
     events = events.distinct()
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         events_tending = events.filter(
             bartender_availabilities__availability__nature=Availability.ASSIGNED,
             bartender_availabilities__user=request.user,
         ).select_related(None).prefetch_related(None).order_by()
 
     # Beschikbaarheden in een lijstje stoppen
-    if not request.user.is_authenticated() or not request.organization:
+    if not request.user.is_authenticated or not request.organization:
         availabilities = []
     elif request.user.is_superuser \
             or request.user.profile.is_planner(request.organization) \
@@ -159,12 +162,11 @@ class EventCalendarFetch(View):
         return JsonResponse(data, safe=False)
 
 
-class EventMatrixView(TemplateView):
+class EventMatrixView(TenderOrManagerRequiredMixin, TemplateView):
     template_name = 'scheduling/event_matrix.html'
 
     def get_context_data(self, **kwargs):
         events = self.get_events()
-
         context = super(EventMatrixView, self).get_context_data(**kwargs)
         context['events'] = events
         context['tenders'] = self.get_tenders(events)
@@ -276,7 +278,7 @@ class EventUpdateView(PlannerRequiredMixin, OrganizationFormMixin, DenyWrongOrga
 
 @login_required
 def event_edit_bartender_availability(request, pk, user_pk):
-    if not request.user.is_authenticated() or not request.user.is_superuser and (
+    if not request.user.is_authenticated or not request.user.is_superuser and (
             not request.organization or not request.user.profile.is_planner(request.organization)):
         raise PermissionDenied
 
@@ -464,7 +466,13 @@ class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, Cris
     model = Availability
     fields = ['name', 'nature']
 
+    def get_success_url(self):
+        return reverse('availability_list')
+
 
 class AvailabilityUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, UpdateView):
     model = Availability
     fields = ['name', 'nature']
+
+    def get_success_url(self):
+        return reverse('availability_list')

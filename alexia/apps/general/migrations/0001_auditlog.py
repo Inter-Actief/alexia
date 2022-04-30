@@ -6,7 +6,7 @@ import jsonfield.fields
 from django.conf import settings
 from django.db import migrations, models
 
-CREATE_STMT = '''CREATE TABLE IF NOT EXISTS `general_auditlog` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `timestamp` datetime(6) NOT NULL, `action` varchar(50) NOT NULL, `object_id` integer UNSIGNED NULL, `extra` longtext NOT NULL, `content_type_id` integer NULL, `user_id` integer NULL);
+CREATE_STMT = '''CREATE TABLE IF NOT EXISTS `general_auditlog` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `timestamp` DATETIME NOT NULL, `action` varchar(50) NOT NULL, `object_id` integer UNSIGNED NULL, `extra` longtext NOT NULL, `content_type_id` integer NULL, `user_id` integer NULL);
 ALTER TABLE `general_auditlog` ADD CONSTRAINT `general_audit_content_type_id_aede5bd8_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
 ALTER TABLE `general_auditlog` ADD CONSTRAINT `general_auditlog_user_id_2a7216b3_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 CREATE INDEX `general_auditlog_d7e6d55b` ON `general_auditlog` (`timestamp`);

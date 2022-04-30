@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Certificate
 from alexia.apps.scheduling.models import Availability, BartenderAvailability
-from alexia.core.validators import validate_radius_username
+from alexia.core.validators import validate_username
 from alexia.forms import AlexiaModelForm
 
 from .models import Membership
@@ -40,11 +40,11 @@ class BartenderAvailabilityForm(AlexiaModelForm):
 
 class MembershipAddForm(forms.Form):
     username = forms.CharField(
-        label=_('RADIUS username'),
-        help_text=_('Student or employee account'),
+        label=_('Username'),
+        help_text=_('Student or employee account (e.g. s0000000 or m0000000)'),
         min_length=8,
         max_length=8,
-        validators=[validate_radius_username],
+        validators=[validate_username],
     )
 
 

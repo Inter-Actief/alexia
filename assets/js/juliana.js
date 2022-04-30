@@ -209,7 +209,7 @@ Receipt = {
 
             var product = this.receipt[i].product;
             var quantity = this.receipt[i].amount;
-            var desc = $('.tab-sale a[data-product="' + product + '"]').text();
+            var desc = Settings.products[this.receipt[i].product].name;
             if (quantity !== 1) desc += ' &times; ' + quantity;
 
             var price = ((quantity * Settings.products[product].price) / 100).toFixed(2);
@@ -449,8 +449,13 @@ $(function () {
     });
 
     $(document).keydown(function (event) {
-        if(event.which >= 48 && event.which <= 57) // 48 is the keycode for 0, 57 for 9
+        if(event.which >= 48 && event.which <= 57) {
+            // 48 is the keycode for 0, 57 for 9
             Input.stroke((event.which - 48).toString());
+        } else if(Settings.shortcuts[String.fromCharCode(event.which)] !== undefined) {
+            Sales.add(Settings.shortcuts[String.fromCharCode(event.which)], Input.read());
+            Input.reset();
+        }
     });
 
     $('.command').click(function () {
