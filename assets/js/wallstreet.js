@@ -2,8 +2,8 @@ var socket = io('beta.ia.utwente.nl:21382');
 socket.emit('new client', "Juliana");
 
 var pStart = Settings.products[1].price / 100;
-var pMax = 1.0;
-var pMin = 0.25;
+var pMax = 0.80;
+var pMin = 0.20;
 var pDelta = 0.05;
 var pMulti = 0.5;
 
