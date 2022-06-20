@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-03 13:59+0100\n"
-"PO-Revision-Date: 2019-12-03 13:59+0020\n"
-"Last-Translator: b'  <kevin@kevinalberts.nl>'\n"
+"POT-Creation-Date: 2022-06-20 11:16+0200\n"
+"PO-Revision-Date: 2022-06-20 11:17+0020\n"
+"Last-Translator: b'Bram van Dartel <b.vandartel@student.utwente.nl>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Translated-Using: django-rosetta 0.7.14\n"
+"X-Translated-Using: django-rosetta 0.9.6\n"
 
 #: alexia/apps/billing/forms.py:51 alexia/apps/consumption/forms.py:118 templates/billing/order_list.html:12 templates/consumption/consumptionform_list.html:13
 msgid "Export"
@@ -33,15 +33,15 @@ msgstr "Eindtijd"
 msgid "New price group"
 msgstr "Nieuwe prijsgroep"
 
-#: alexia/apps/billing/models.py:24 alexia/apps/billing/models.py:46 alexia/apps/billing/models.py:139 alexia/apps/billing/models.py:227 alexia/apps/organization/models.py:139 alexia/apps/organization/models.py:160 alexia/apps/scheduling/models.py:28 alexia/apps/scheduling/models.py:205
+#: alexia/apps/billing/models.py:23 alexia/apps/billing/models.py:45 alexia/apps/billing/models.py:140 alexia/apps/billing/models.py:228 alexia/apps/organization/models.py:140 alexia/apps/organization/models.py:161 alexia/apps/scheduling/models.py:28 alexia/apps/scheduling/models.py:206
 msgid "organization"
 msgstr "organisatie"
 
-#: alexia/apps/billing/models.py:26 alexia/apps/billing/models.py:48 alexia/apps/billing/models.py:91 alexia/apps/consumption/models.py:14 alexia/apps/organization/models.py:19 alexia/apps/organization/models.py:126 alexia/apps/scheduling/models.py:29 alexia/apps/scheduling/models.py:59 alexia/apps/scheduling/models.py:207
+#: alexia/apps/billing/models.py:26 alexia/apps/billing/models.py:48 alexia/apps/billing/models.py:91 alexia/apps/consumption/models.py:14 alexia/apps/organization/models.py:19 alexia/apps/organization/models.py:127 alexia/apps/scheduling/models.py:29 alexia/apps/scheduling/models.py:60 alexia/apps/scheduling/models.py:208
 msgid "name"
 msgstr "naam"
 
-#: alexia/apps/billing/models.py:30 alexia/apps/billing/models.py:71 alexia/apps/billing/models.py:134
+#: alexia/apps/billing/models.py:30 alexia/apps/billing/models.py:71 alexia/apps/billing/models.py:135
 msgid "product group"
 msgstr "productgroep"
 
@@ -57,7 +57,7 @@ msgstr "prijsgroep"
 msgid "price groups"
 msgstr "prijsgroepen"
 
-#: alexia/apps/billing/models.py:72 alexia/apps/billing/models.py:176 alexia/apps/billing/models.py:325
+#: alexia/apps/billing/models.py:72 alexia/apps/billing/models.py:177 alexia/apps/billing/models.py:326
 msgid "price"
 msgstr "prijs"
 
@@ -74,161 +74,165 @@ msgstr "verkoopprijzen"
 msgid "{product} for {price}"
 msgstr "{product} voor {price}"
 
-#: alexia/apps/billing/models.py:93 templates/billing/permanentproduct_detail.html:48 templates/billing/temporaryproduct_detail.html:44
+#: alexia/apps/billing/models.py:92
+msgid "shortcut"
+msgstr "shortcut"
+
+#: alexia/apps/billing/models.py:94 templates/billing/permanentproduct_detail.html:48 templates/billing/temporaryproduct_detail.html:44
 msgid "Text color"
 msgstr "Tekstkleur"
 
-#: alexia/apps/billing/models.py:95
+#: alexia/apps/billing/models.py:96
 msgid "Text color for Juliana"
 msgstr "Tekstkleur voor Juliana"
 
-#: alexia/apps/billing/models.py:100 templates/billing/permanentproduct_detail.html:52 templates/billing/temporaryproduct_detail.html:48
+#: alexia/apps/billing/models.py:101 templates/billing/permanentproduct_detail.html:52 templates/billing/temporaryproduct_detail.html:48
 msgid "Background color"
 msgstr "Achtergrondkleur"
 
-#: alexia/apps/billing/models.py:102
+#: alexia/apps/billing/models.py:103
 msgid "Background color for Juliana"
 msgstr "Achtergrondkleur voor Juliana"
 
-#: alexia/apps/billing/models.py:141
+#: alexia/apps/billing/models.py:142 alexia/apps/scheduling/models.py:210
 msgid "position"
 msgstr "positie"
 
-#: alexia/apps/billing/models.py:145 alexia/apps/billing/models.py:323 alexia/apps/consumption/models.py:137 alexia/apps/consumption/models.py:189
+#: alexia/apps/billing/models.py:146 alexia/apps/billing/models.py:324 alexia/apps/consumption/models.py:137 alexia/apps/consumption/models.py:189
 msgid "product"
 msgstr "product"
 
-#: alexia/apps/billing/models.py:146
+#: alexia/apps/billing/models.py:147
 msgid "products"
 msgstr "producten"
 
-#: alexia/apps/billing/models.py:174 alexia/apps/billing/models.py:269 alexia/apps/consumption/models.py:50 alexia/apps/scheduling/models.py:106 alexia/apps/scheduling/models.py:235
+#: alexia/apps/billing/models.py:175 alexia/apps/billing/models.py:270 alexia/apps/consumption/models.py:50 alexia/apps/scheduling/models.py:107 alexia/apps/scheduling/models.py:240
 msgid "event"
 msgstr "activiteit"
 
-#: alexia/apps/billing/models.py:179
+#: alexia/apps/billing/models.py:180
 msgid "temporary product"
 msgstr "tijdelijk product"
 
-#: alexia/apps/billing/models.py:180
+#: alexia/apps/billing/models.py:181
 msgid "temporary products"
 msgstr "tijdelijke producten"
 
-#: alexia/apps/billing/models.py:197
+#: alexia/apps/billing/models.py:198
 msgid "identifier"
 msgstr "identifier"
 
-#: alexia/apps/billing/models.py:198 alexia/apps/scheduling/models.py:32
+#: alexia/apps/billing/models.py:199 alexia/apps/scheduling/models.py:32
 msgid "is active"
 msgstr "is actief"
 
-#: alexia/apps/billing/models.py:199
+#: alexia/apps/billing/models.py:200
 msgid "registered at"
 msgstr "geregistreerd op"
 
-#: alexia/apps/billing/models.py:200 alexia/apps/billing/models.py:221 alexia/apps/organization/models.py:36 alexia/apps/organization/models.py:51 alexia/apps/organization/models.py:155
+#: alexia/apps/billing/models.py:201 alexia/apps/billing/models.py:222 alexia/apps/organization/models.py:36 alexia/apps/organization/models.py:51 alexia/apps/organization/models.py:156
 msgid "user"
 msgstr "gebruiker"
 
-#: alexia/apps/billing/models.py:201
+#: alexia/apps/billing/models.py:202
 msgid "managed by"
 msgstr "beheerd door"
 
-#: alexia/apps/billing/models.py:204
+#: alexia/apps/billing/models.py:205
 msgid "RFID card"
 msgstr "RFID-kaart"
 
-#: alexia/apps/billing/models.py:205 templates/profile/profile.html:86
+#: alexia/apps/billing/models.py:206 templates/profile/profile.html:86
 msgid "RFID cards"
 msgstr "RFID-kaarten"
 
-#: alexia/apps/billing/models.py:212 alexia/apps/billing/models.py:244
+#: alexia/apps/billing/models.py:213 alexia/apps/billing/models.py:245
 msgid "owner"
 msgstr "eigenaar"
 
-#: alexia/apps/billing/models.py:229
+#: alexia/apps/billing/models.py:230
 msgid "start date"
 msgstr "begindatum"
 
-#: alexia/apps/billing/models.py:230
+#: alexia/apps/billing/models.py:231
 msgid "end date"
 msgstr "einddatum"
 
-#: alexia/apps/billing/models.py:233 alexia/apps/billing/models.py:274
+#: alexia/apps/billing/models.py:234 alexia/apps/billing/models.py:275
 msgid "authorization"
 msgstr "autorisatie"
 
-#: alexia/apps/billing/models.py:234
+#: alexia/apps/billing/models.py:235
 msgid "authorizations"
 msgstr "autorisaties"
 
-#: alexia/apps/billing/models.py:237
+#: alexia/apps/billing/models.py:238
 #, python-brace-format
 msgid "{user} of {organization}"
 msgstr "{user} van {organization}"
 
-#: alexia/apps/billing/models.py:276
+#: alexia/apps/billing/models.py:277
 msgid "placed at"
 msgstr "geplaatst op"
 
-#: alexia/apps/billing/models.py:278
+#: alexia/apps/billing/models.py:279
 msgid "synchronized"
 msgstr "gesynchroniseerd"
 
-#: alexia/apps/billing/models.py:281
+#: alexia/apps/billing/models.py:282
 msgid "Designates whether this transaction is imported by the organization."
 msgstr "Geeft aan of deze transactie al is gesynchroniseerd."
 
-#: alexia/apps/billing/models.py:287
+#: alexia/apps/billing/models.py:288
 msgid "added by"
 msgstr "toegevoegd door"
 
-#: alexia/apps/billing/models.py:290 alexia/apps/billing/models.py:324 alexia/apps/consumption/models.py:191
+#: alexia/apps/billing/models.py:291 alexia/apps/billing/models.py:325 alexia/apps/consumption/models.py:191
 msgid "amount"
 msgstr "aantal"
 
-#: alexia/apps/billing/models.py:291
+#: alexia/apps/billing/models.py:292
 msgid "rfid card"
 msgstr "RFID-kaart"
 
-#: alexia/apps/billing/models.py:295 alexia/apps/billing/models.py:322
+#: alexia/apps/billing/models.py:296 alexia/apps/billing/models.py:323
 msgid "order"
 msgstr "transactie"
 
-#: alexia/apps/billing/models.py:296
+#: alexia/apps/billing/models.py:297
 msgid "orders"
 msgstr "transacties"
 
-#: alexia/apps/billing/models.py:299
+#: alexia/apps/billing/models.py:300
 #, python-brace-format
 msgid "{user} at {time} on {event}"
 msgstr "{user} om {time} bij {event}"
 
-#: alexia/apps/billing/models.py:317
+#: alexia/apps/billing/models.py:318
 msgid "debtor"
 msgstr "debiteur"
 
-#: alexia/apps/billing/models.py:328
+#: alexia/apps/billing/models.py:329
 msgid "purchase"
 msgstr "aankoop"
 
-#: alexia/apps/billing/models.py:329
+#: alexia/apps/billing/models.py:330
 msgid "purchases"
 msgstr "aankopen"
 
-#: alexia/apps/billing/views.py:46 alexia/apps/consumption/views.py:69
+#: alexia/apps/billing/views.py:47 alexia/apps/consumption/views.py:73
 msgid "You are not a tender for this event"
 msgstr "Je bent geen tapper bij deze borrel!"
 
-#: alexia/apps/billing/views.py:48
+#: alexia/apps/billing/views.py:49
 msgid "This event is not open"
 msgstr "Deze borrel begint nog niet!"
 
-#: alexia/apps/config.py:9 templates/base_app.html:46 templates/billing/order_detail.html:40 templates/profile/profile.html:49
+#: alexia/apps/config.py:9 templates/base_app.html:48 templates/billing/order_detail.html:40 templates/profile/profile.html:49
 msgid "Billing"
 msgstr "Financiën"
 
-#: alexia/apps/config.py:14 templates/base_app.html:60 templates/consumption/consumptionform_detail.html:86 templates/consumption/consumptionform_detail.html:88 templates/consumption/dcf_check.html:68 templates/consumption/pdf/page.html:23
+#: alexia/apps/config.py:14 templates/base_app.html:62 templates/consumption/consumptionform_detail.html:86 templates/consumption/consumptionform_detail.html:88 templates/consumption/dcf_check.html:68 templates/consumption/pdf/page.html:23
 msgid "Consumption"
 msgstr "Verbruik"
 
@@ -296,7 +300,7 @@ msgstr "Jaar"
 msgid "File format"
 msgstr "Bestandsformaat"
 
-#: alexia/apps/consumption/models.py:15 alexia/apps/organization/models.py:166
+#: alexia/apps/consumption/models.py:15 alexia/apps/organization/models.py:167
 msgid "is currently active"
 msgstr "is actief"
 
@@ -340,7 +344,7 @@ msgstr "afgerond door"
 msgid "completed at"
 msgstr "afgerond op"
 
-#: alexia/apps/consumption/models.py:59 alexia/apps/organization/models.py:162
+#: alexia/apps/consumption/models.py:59 alexia/apps/organization/models.py:163
 msgid "comments"
 msgstr "commentaar"
 
@@ -411,15 +415,15 @@ msgstr "invoer op eenheid"
 msgid "unit entries"
 msgstr "invoer op eenheid"
 
-#: alexia/apps/consumption/views.py:35
+#: alexia/apps/consumption/views.py:38
 msgid "You are not a tender for this event."
 msgstr "Je bent geen tapper bij deze borrel."
 
-#: alexia/apps/consumption/views.py:43 alexia/apps/consumption/views.py:78
+#: alexia/apps/consumption/views.py:46 alexia/apps/consumption/views.py:82
 msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
-#: alexia/apps/general/views.py:125
+#: alexia/apps/general/views.py:126
 msgid "Logging in failed, please try again."
 msgstr "Het inloggen is mislukt, probeer het alsjeblieft opnieuw."
 
@@ -447,11 +451,11 @@ msgstr "Tappersbijnaam"
 msgid "prevent conflicting events"
 msgstr "voorkom conflicterende activiteiten"
 
-#: alexia/apps/organization/models.py:21 alexia/apps/organization/models.py:128
+#: alexia/apps/organization/models.py:21 alexia/apps/organization/models.py:129
 msgid "color"
 msgstr "kleur"
 
-#: alexia/apps/organization/models.py:25 alexia/apps/scheduling/models.py:66
+#: alexia/apps/organization/models.py:25 alexia/apps/scheduling/models.py:67
 msgid "location"
 msgstr "locatie"
 
@@ -471,108 +475,108 @@ msgstr "gebruikersnaam"
 msgid "additional data"
 msgstr "aanvullende gegevens"
 
-#: alexia/apps/organization/models.py:54
+#: alexia/apps/organization/models.py:55
 msgid "has IVA-certificate"
 msgstr "heeft IVA-certificaat"
 
-#: alexia/apps/organization/models.py:57
+#: alexia/apps/organization/models.py:58
 msgid "Override for an user to indicate IVA rights without uploading a certificate."
 msgstr "Override voor een gebruiker om IVA-rechten te hebben zonder certificaat."
 
-#: alexia/apps/organization/models.py:61
+#: alexia/apps/organization/models.py:62
 msgid "has BHV-certificate"
 msgstr "heeft BHV-diploma"
 
-#: alexia/apps/organization/models.py:64
+#: alexia/apps/organization/models.py:65
 msgid "Designates that this user has a valid, non-expired BHV (Emergency Response Officer) certificate."
 msgstr "Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
 
-#: alexia/apps/organization/models.py:68
+#: alexia/apps/organization/models.py:69
 msgid "is foundation manager"
 msgstr "is stichtingsmananger"
 
-#: alexia/apps/organization/models.py:71
+#: alexia/apps/organization/models.py:72
 msgid "Designates that this user is manager of the purchasing foundation."
 msgstr "Geeft aan dat deze gebruiker manager is van de inkoopstichting."
 
-#: alexia/apps/organization/models.py:78
+#: alexia/apps/organization/models.py:79
 msgid "current organization"
 msgstr "huidige organisatie"
 
-#: alexia/apps/organization/models.py:80
+#: alexia/apps/organization/models.py:81
 msgid "iCal identifier"
 msgstr "iCal identificatie"
 
-#: alexia/apps/organization/models.py:81
+#: alexia/apps/organization/models.py:82
 msgid "bartender nickname"
 msgstr "tappersbijnaam"
 
-#: alexia/apps/organization/models.py:84
+#: alexia/apps/organization/models.py:85
 msgid "profile"
 msgstr "profiel"
 
-#: alexia/apps/organization/models.py:85
+#: alexia/apps/organization/models.py:86
 msgid "profiles"
 msgstr "profielen"
 
-#: alexia/apps/organization/models.py:127
+#: alexia/apps/organization/models.py:128
 msgid "slug"
 msgstr "slug"
 
-#: alexia/apps/organization/models.py:129
+#: alexia/apps/organization/models.py:130
 msgid "assigns tenders"
 msgstr "wijst tappers aan"
 
-#: alexia/apps/organization/models.py:133
+#: alexia/apps/organization/models.py:134
 msgid "users"
 msgstr "gebruikers"
 
-#: alexia/apps/organization/models.py:140
+#: alexia/apps/organization/models.py:141
 msgid "organizations"
 msgstr "organisatie"
 
-#: alexia/apps/organization/models.py:163
+#: alexia/apps/organization/models.py:164
 msgid "may tend on events"
 msgstr "mag op borrels tappen"
 
-#: alexia/apps/organization/models.py:164
+#: alexia/apps/organization/models.py:165
 msgid "may create and modify events"
 msgstr "mag borrels aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:165
+#: alexia/apps/organization/models.py:166
 msgid "may create and modify users"
 msgstr "mag gebruikers aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:170
+#: alexia/apps/organization/models.py:171
 msgid "membership"
 msgstr "lidmaatschap"
 
-#: alexia/apps/organization/models.py:171
+#: alexia/apps/organization/models.py:172
 msgid "memberships"
 msgstr "lidmaatschappen"
 
-#: alexia/apps/organization/models.py:174
+#: alexia/apps/organization/models.py:175
 #, python-format
 msgid "%(user)s of %(organization)s"
 msgstr "%(user)s van %(organization)s"
 
-#: alexia/apps/organization/models.py:214 alexia/apps/organization/models.py:227
+#: alexia/apps/organization/models.py:215 alexia/apps/organization/models.py:228
 msgid "certificate"
 msgstr "certificaat"
 
-#: alexia/apps/organization/models.py:215
+#: alexia/apps/organization/models.py:216
 msgid "uploaded at"
 msgstr "geüpload op"
 
-#: alexia/apps/organization/models.py:221
+#: alexia/apps/organization/models.py:222
 msgid "approved by"
 msgstr "goedgekeurd door"
 
-#: alexia/apps/organization/models.py:223
+#: alexia/apps/organization/models.py:224
 msgid "approved at"
 msgstr "goedgekeurd op"
 
-#: alexia/apps/organization/models.py:232
+#: alexia/apps/organization/models.py:233
 msgid "IVA certificate of"
 msgstr "IVA certificaat van"
 
@@ -641,107 +645,107 @@ msgstr "mailsjabonen"
 msgid "organizer"
 msgstr "organisator"
 
-#: alexia/apps/scheduling/models.py:57
+#: alexia/apps/scheduling/models.py:58
 msgid "participants"
 msgstr "deelnemers"
 
-#: alexia/apps/scheduling/models.py:60
+#: alexia/apps/scheduling/models.py:61
 msgid "description"
 msgstr "omschrijving"
 
-#: alexia/apps/scheduling/models.py:61
+#: alexia/apps/scheduling/models.py:62
 msgid "starts at"
 msgstr "begin"
 
-#: alexia/apps/scheduling/models.py:62
+#: alexia/apps/scheduling/models.py:63
 msgid "ends at"
 msgstr "einde"
 
-#: alexia/apps/scheduling/models.py:69
+#: alexia/apps/scheduling/models.py:70
 msgid "tender enrollment closed"
 msgstr "tappersinschrijving gesloten"
 
-#: alexia/apps/scheduling/models.py:72
+#: alexia/apps/scheduling/models.py:73
 msgid "Designates if tenders can sign up for this event."
 msgstr "Geeft aan of tappers zich kunnen inschrijven voor deze activiteit."
 
-#: alexia/apps/scheduling/models.py:79
+#: alexia/apps/scheduling/models.py:80
 msgid "bartenders"
 msgstr "tappers"
 
-#: alexia/apps/scheduling/models.py:85
+#: alexia/apps/scheduling/models.py:86
 msgid "pricegroup"
 msgstr "prijsgroep"
 
-#: alexia/apps/scheduling/models.py:87
+#: alexia/apps/scheduling/models.py:88
 msgid "number of kegs"
 msgstr "aantal fusten"
 
-#: alexia/apps/scheduling/models.py:89
+#: alexia/apps/scheduling/models.py:90
 msgid "option"
 msgstr "optie"
 
-#: alexia/apps/scheduling/models.py:92
+#: alexia/apps/scheduling/models.py:93
 msgid "Designates that this event is not definitive yet."
 msgstr "Geeft aan dat deze activiteit nog niet definitief is."
 
-#: alexia/apps/scheduling/models.py:95
+#: alexia/apps/scheduling/models.py:96
 msgid "tender comments"
 msgstr "tappersinstructie"
 
-#: alexia/apps/scheduling/models.py:97
+#: alexia/apps/scheduling/models.py:98
 msgid "risky"
 msgstr "risicoactiviteit"
 
-#: alexia/apps/scheduling/models.py:100
+#: alexia/apps/scheduling/models.py:101
 msgid "Designates that this event should be marked as risky."
 msgstr "Geeft aan of dit een risicoactiviteit betreft."
 
-#: alexia/apps/scheduling/models.py:107
+#: alexia/apps/scheduling/models.py:108
 msgid "events"
 msgstr "activiteiten"
 
-#: alexia/apps/scheduling/models.py:195
+#: alexia/apps/scheduling/models.py:196
 msgid "Assigned"
 msgstr "Toegewezen"
 
-#: alexia/apps/scheduling/models.py:196
+#: alexia/apps/scheduling/models.py:197
 msgid "Yes"
 msgstr "Ja"
 
-#: alexia/apps/scheduling/models.py:197
+#: alexia/apps/scheduling/models.py:198
 msgid "Maybe"
 msgstr "Misschien"
 
-#: alexia/apps/scheduling/models.py:198
+#: alexia/apps/scheduling/models.py:199
 msgid "No"
 msgstr "Nee"
 
-#: alexia/apps/scheduling/models.py:208
+#: alexia/apps/scheduling/models.py:209
 msgid "nature"
 msgstr "soort"
 
-#: alexia/apps/scheduling/models.py:212
+#: alexia/apps/scheduling/models.py:214
 msgid "availability type"
 msgstr "beschikbaarheidstype"
 
-#: alexia/apps/scheduling/models.py:213
+#: alexia/apps/scheduling/models.py:215
 msgid "availability types"
 msgstr "beschikbaarheidstypen"
 
-#: alexia/apps/scheduling/models.py:232
+#: alexia/apps/scheduling/models.py:235
 msgid "bartender"
 msgstr "tapper"
 
-#: alexia/apps/scheduling/models.py:236
+#: alexia/apps/scheduling/models.py:246
 msgid "availability"
 msgstr "beschikbaarheid"
 
-#: alexia/apps/scheduling/models.py:239
+#: alexia/apps/scheduling/models.py:251
 msgid "bartender availability"
 msgstr "tapperbeschikbaarheid"
 
-#: alexia/apps/scheduling/models.py:240
+#: alexia/apps/scheduling/models.py:252
 msgid "bartender availabilities"
 msgstr "tapperbeschikbaarheden"
 
@@ -761,7 +765,12 @@ msgstr "Je bent geen planner bij de geselecteerde organisatie!"
 msgid "You are not a manager of the selected organization."
 msgstr "Je bent geen manager bij de geselecteerde organisatie!"
 
-#: alexia/auth/mixins.py:95
+#: alexia/auth/mixins.py:94
+#| msgid "You are not a manager of the selected organization."
+msgid "You are not a bartender or manager of the selected organization."
+msgstr "Je bent geen tapper of manager bij de geselecteerde organisatie!"
+
+#: alexia/auth/mixins.py:108
 msgid "You are not a foundation manager."
 msgstr "Je bent geen stichtingsmananger."
 
@@ -841,71 +850,71 @@ msgstr "Kalender"
 msgid "Personal schedule"
 msgstr "Tappersrooster"
 
-#: templates/base_app.html:29 templates/scheduling/event_matrix.html:3 templates/scheduling/event_matrix.html:8
+#: templates/base_app.html:31 templates/scheduling/event_matrix.html:3 templates/scheduling/event_matrix.html:8
 msgid "Availability matrix"
 msgstr "Beschikbaarheidsmatrix"
 
-#: templates/base_app.html:33
+#: templates/base_app.html:35
 msgid "Availabilities"
 msgstr "Beschikbaarheden"
 
-#: templates/base_app.html:34
+#: templates/base_app.html:36
 msgid "Mail templates"
 msgstr "Mailsjabonen"
 
-#: templates/base_app.html:41
+#: templates/base_app.html:43
 msgid "Users"
 msgstr "Gebruikers"
 
-#: templates/base_app.html:50 templates/billing/productgroup_list.html:3 templates/billing/productgroup_list.html:8
+#: templates/base_app.html:52 templates/billing/productgroup_list.html:3 templates/billing/productgroup_list.html:8
 msgid "Product groups"
 msgstr "Productgroepen"
 
-#: templates/base_app.html:51 templates/billing/pricegroup_list.html:3 templates/billing/pricegroup_list.html:8
+#: templates/base_app.html:53 templates/billing/pricegroup_list.html:3 templates/billing/pricegroup_list.html:8
 msgid "Price groups"
 msgstr "Prijsgroepen"
 
-#: templates/base_app.html:52 templates/billing/permanentproduct_list.html:3 templates/billing/permanentproduct_list.html:8 templates/billing/productgroup_detail.html:24
+#: templates/base_app.html:54 templates/billing/permanentproduct_list.html:3 templates/billing/permanentproduct_list.html:8 templates/billing/productgroup_detail.html:24
 msgid "Products"
 msgstr "Producten"
 
-#: templates/base_app.html:53 templates/billing/sellingprice_list.html:3 templates/billing/sellingprice_list.html:7
+#: templates/base_app.html:55 templates/billing/sellingprice_list.html:3 templates/billing/sellingprice_list.html:7
 msgid "Price matrix"
 msgstr "Prijsmatrix"
 
-#: templates/base_app.html:55 templates/billing/order_detail.html:3 templates/billing/order_detail.html:8 templates/billing/order_detail.html:81 templates/consumption/consumptionform_detail.html:14 templates/scheduling/event_detail.html:20
+#: templates/base_app.html:57 templates/billing/order_detail.html:3 templates/billing/order_detail.html:8 templates/billing/order_detail.html:81 templates/consumption/consumptionform_detail.html:14 templates/scheduling/event_detail.html:20
 msgid "Orders"
 msgstr "Transacties"
 
-#: templates/base_app.html:67
+#: templates/base_app.html:69
 msgid "Management"
 msgstr "Beheer"
 
-#: templates/base_app.html:71 templates/consumption/consumptionproduct_list.html:3 templates/consumption/consumptionproduct_list.html:8
+#: templates/base_app.html:73 templates/consumption/consumptionproduct_list.html:3 templates/consumption/consumptionproduct_list.html:8
 msgid "Consumption products"
 msgstr "Voorraadproducten"
 
-#: templates/base_app.html:72 templates/consumption/consumptionform_list.html:3 templates/consumption/consumptionform_list.html:8
+#: templates/base_app.html:74 templates/consumption/consumptionform_list.html:3 templates/consumption/consumptionform_list.html:8
 msgid "Consumption forms"
 msgstr "Verbruiksformulieren"
 
-#: templates/base_app.html:96 templates/registration/login.html:25
+#: templates/base_app.html:98 templates/registration/login.html:25
 msgid "Help"
 msgstr "Help"
 
-#: templates/base_app.html:102
+#: templates/base_app.html:104
 msgid "No organization"
 msgstr "Geen organisatie"
 
-#: templates/base_app.html:121
+#: templates/base_app.html:123
 msgid "My profile"
 msgstr "Mijn profiel"
 
-#: templates/base_app.html:125
+#: templates/base_app.html:127
 msgid "Log out"
 msgstr "Uitloggen"
 
-#: templates/base_app.html:131
+#: templates/base_app.html:133
 msgid "Login with UTwente"
 msgstr "Inloggen met UTwente"
 
@@ -1041,7 +1050,7 @@ msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(productgroup)s?"
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: templates/billing/permanentproduct_detail.html:13 templates/billing/permanentproduct_list.html:40 templates/billing/pricegroup_detail.html:13 templates/billing/pricegroup_detail.html:55 templates/billing/pricegroup_list.html:31 templates/billing/productgroup_detail.html:13 templates/billing/productgroup_detail.html:40 templates/billing/productgroup_detail.html:84 templates/billing/productgroup_list.html:31 templates/billing/temporaryproduct_detail.html:13 templates/consumption/consumptionform_detail.html:24 templates/consumption/consumptionproduct_list.html:47 templates/consumption/consumptionproduct_list.html:87 templates/organization/membership_list.html:85 templates/scheduling/availability_list.html:33 templates/scheduling/event_detail.html:25 templates/scheduling/event_detail.html:95 templates/scheduling/mailtemplate_detail.html:13 templates/scheduling/mailtemplate_list.html:30
+#: templates/billing/permanentproduct_detail.html:13 templates/billing/permanentproduct_list.html:40 templates/billing/pricegroup_detail.html:13 templates/billing/pricegroup_detail.html:55 templates/billing/pricegroup_list.html:31 templates/billing/productgroup_detail.html:13 templates/billing/productgroup_detail.html:40 templates/billing/productgroup_detail.html:84 templates/billing/productgroup_list.html:31 templates/billing/temporaryproduct_detail.html:13 templates/consumption/consumptionform_detail.html:24 templates/consumption/consumptionproduct_list.html:47 templates/consumption/consumptionproduct_list.html:87 templates/organization/membership_list.html:85 templates/scheduling/availability_list.html:35 templates/scheduling/event_detail.html:25 templates/scheduling/event_detail.html:95 templates/scheduling/mailtemplate_detail.html:13 templates/scheduling/mailtemplate_list.html:30
 msgid "Modify"
 msgstr "Wijzigen"
 
@@ -1057,13 +1066,17 @@ msgstr "Productgroep"
 msgid "Juliana settings"
 msgstr "Juliana-instellingen"
 
-#: templates/billing/permanentproduct_detail.html:44 templates/billing/permanentproduct_list.html:23
+#: templates/billing/permanentproduct_detail.html:44 templates/billing/permanentproduct_list.html:23 templates/scheduling/availability_list.html:22
 msgid "Position"
 msgstr "Positie"
 
 #: templates/billing/permanentproduct_detail.html:56 templates/billing/temporaryproduct_detail.html:52
 msgid "Color example"
 msgstr "Kleurvoorbeeld"
+
+#: templates/billing/permanentproduct_detail.html:62
+msgid "Shortcut"
+msgstr "Shortcut"
 
 #: templates/billing/permanentproduct_form.html:5 templates/billing/permanentproduct_form.html:15
 msgid "Edit product"
@@ -1077,7 +1090,7 @@ msgstr "Nieuw product"
 msgid "Add"
 msgstr "Toevoegen"
 
-#: templates/billing/permanentproduct_list.html:24 templates/billing/pricegroup_detail.html:44 templates/billing/pricegroup_list.html:21 templates/billing/productgroup_detail.html:30 templates/billing/productgroup_detail.html:73 templates/billing/productgroup_list.html:21 templates/consumption/consumptionproduct_list.html:27 templates/consumption/consumptionproduct_list.html:67 templates/scheduling/availability_list.html:22 templates/scheduling/event_detail.html:78 templates/scheduling/mailtemplate_list.html:18
+#: templates/billing/permanentproduct_list.html:24 templates/billing/pricegroup_detail.html:44 templates/billing/pricegroup_list.html:21 templates/billing/productgroup_detail.html:30 templates/billing/productgroup_detail.html:73 templates/billing/productgroup_list.html:21 templates/consumption/consumptionproduct_list.html:27 templates/consumption/consumptionproduct_list.html:67 templates/scheduling/availability_list.html:23 templates/scheduling/event_detail.html:78 templates/scheduling/mailtemplate_list.html:18
 msgid "Actions"
 msgstr "Acties"
 
@@ -1699,7 +1712,7 @@ msgstr "Beschikbaarheden van %(organization)s"
 msgid "Nature"
 msgstr "Soort"
 
-#: templates/scheduling/availability_list.html:39
+#: templates/scheduling/availability_list.html:41
 msgid "No availabilities defined."
 msgstr "Geen beschikbaarheden gedefinieerd."
 
