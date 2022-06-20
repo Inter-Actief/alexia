@@ -472,7 +472,7 @@ class AvailabilityCreateView(ManagerRequiredMixin, OrganizationFilterMixin, Cris
 
 class AvailabilityUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, CrispyFormMixin, UpdateView):
     model = Availability
-    fields = ['name', 'nature']
+    fields = ['name', 'nature', 'position']
 
     def get_success_url(self):
         return reverse('availability_list')
