@@ -99,7 +99,7 @@ def rfid_get(request, radius_username):
     Raises error -32602 (Invalid params) if the username does not exist.
     """
     result = []
-    get_user_by_username(radius_username)
+    user = get_user_by_username(radius_username)
 
     rfidcards = RfidCard.objects.filter(user=user, managed_by=request.organization)
 
@@ -135,7 +135,7 @@ def rfid_add(request, radius_username, identifier):
     Raises error -32602 (Invalid params) if the RFID card is already registered by someone else.
     """
 
-    get_user_by_username(radius_username)
+    user = get_user_by_username(radius_username)
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
