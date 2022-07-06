@@ -225,7 +225,10 @@ def order_list(request, radius_username=None):
                 user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                         authenticationdata__username=radius_username)
             except User.DoesNotExist:
-                return []
+                try:
+                    user = User.objects.get(username=radius_username)
+                except User.DoesNotExist:
+                    return []
         orders = orders.filter(authorization__user=user)
 
     orders = orders.select_related('event', 'authorization')
