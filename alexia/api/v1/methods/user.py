@@ -98,8 +98,11 @@ def user_get(request, radius_username):
         try:
             user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
-        except:
-            raise ObjectNotFoundError
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(username=radius_username)
+            except:
+                raise ObjectNotFoundError
 
     return format_user(user)
 
@@ -164,8 +167,11 @@ def user_get_membership(request, radius_username):
         try:
             user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
-        except:
-            raise ObjectNotFoundError
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(username=radius_username)
+            except:
+                raise ObjectNotFoundError
 
     try:
         membership = Membership.objects.get(
@@ -216,8 +222,11 @@ def user_get_iva_certificate(request, radius_username):
         try:
             user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
-        except:
-            raise ObjectNotFoundError
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(username=radius_username)
+            except:
+                raise ObjectNotFoundError
 
     try:
         certificate = Certificate.objects.get(owner=user)
