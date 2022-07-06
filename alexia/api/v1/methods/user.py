@@ -69,7 +69,7 @@ def user_exists(request, radius_username):
                                authenticationdata__username=radius_username).exists() or \
            User.objects.filter(authenticationdata__backend=SAML2_BACKEND_NAME,
                                authenticationdata__username=radius_username).exists() or \
-            User.objects.filter(username=radius_username)
+            User.objects.filter(username=radius_username).exists()
 
 
 @jsonrpc_method('user.get(radius_username=String) -> Object', site=api_v1_site, authenticated=True, safe=True)
