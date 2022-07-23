@@ -12,13 +12,13 @@ class Command(BaseCommand):
         for mailtemplate in MailTemplate.objects.filter(name=MailTemplate.REMINDER, is_active=True):
             now = timezone.now()
             organization = mailtemplate.organization
-            bartenders = organization.membership_set.filter(is_tender=True, is_active=True, user__email__isnull=False)
-            events = organization.participates.filter(starts_at__gte=now, is_closed=False).order_by('starts_at')
-
-            recipients = []
-            for bartender in bartenders:
-                missing_events = events.exclude(pk__in=bartender.user.event_set.values_list('id', flat=True))
-                context = {'addressee': bartender.user, 'missing_events': missing_events, 'now': now}
-                recipients.append(([bartender.user.email], context))
             if organization.is_active:
+                bartenders = organization.membership_set.filter(is_tender=True, is_active=True, user__email__isnull=False)
+                events = organization.participates.filter(starts_at__gte=now, is_closed=False).order_by('starts_at')
+
+                recipients = []
+                for bartender in bartenders:
+                    missing_events = events.exclude(pk__in=bartender.user.event_set.values_list('id', flat=True))
+                    context = {'addressee': bartender.user, 'missing_events': missing_events, 'now': now}
+                    recipients.append(([bartender.user.email], context))
                 template_mass_mail(mailtemplate.subject, mailtemplate.template, recipients)
