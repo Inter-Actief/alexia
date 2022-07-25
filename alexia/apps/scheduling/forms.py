@@ -25,6 +25,7 @@ class EventForm(AlexiaModelForm):
     def __init__(self, organization, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         self.fields['pricegroup'].queryset = organization.pricegroups
+        self.fields['participants'].queryset = Organization.objects.filter(is_active=True)
 
     def clean_ends_at(self):
         starts_at = self.cleaned_data.get('starts_at')
@@ -56,6 +57,10 @@ class EventForm(AlexiaModelForm):
 
 
 class FilterEventForm(AlexiaForm):
+    def __init__(self, *args, request=None, **kwargs):
+        super(FilterEventForm, self).__init__(*args, **kwargs)
+        self.fields['organizer'].queryset = Organization.objects.filter_active(request)
+
     submit_text = _('Filter')
 
     location = forms.ModelMultipleChoiceField(

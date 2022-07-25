@@ -138,10 +138,13 @@ class RegisterView(LoginRequiredMixin, UpdateView):
 class ChangeCurrentOrganizationView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         organization = get_object_or_404(Organization, slug=kwargs['slug'])
-        self.request.session['organization_pk'] = organization.pk
-        self.request.user.profile.current_organization = organization
-        self.request.user.profile.save()
-        return self.request.POST.get(REDIRECT_FIELD_NAME, self.request.GET.get(REDIRECT_FIELD_NAME, ''))
+        if organization.is_active or self.request.user.profile.is_foundation_manager or self.request.user.is_superuser:
+            self.request.session['organization_pk'] = organization.pk
+            self.request.user.profile.current_organization = organization
+            self.request.user.profile.save()
+            return self.request.POST.get(REDIRECT_FIELD_NAME, self.request.GET.get(REDIRECT_FIELD_NAME, ''))
+        else:
+            raise PermissionDenied(_("This organization is inactive."))
 
 
 class AboutView(TemplateView):
