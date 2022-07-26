@@ -63,7 +63,7 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
         # SAML test URLs
-        url(r'^saml2test/', djangosaml2.views.echo_attributes),
+        url(r'^saml2test/', djangosaml2.views.EchoAttributesView.as_view()),
     ]
     # Translation application for development
     urlpatterns += [
