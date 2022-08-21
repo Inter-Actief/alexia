@@ -110,15 +110,7 @@ State = {
 Scanner = {
     init: function () {
         var scanner = this;
-        var socket;
-
-        if (Settings.androidapp) {
-            // Juliana app on Android will not connect if a protocol is specified
-            socket = new WebSocket('ws://localhost:3000');
-        } else {
-            // JulianaNFC_C application on Windows will not connect without nfc protocol
-            socket = new WebSocket('ws://localhost:3000', 'nfc');
-        }
+        var socket = new WebSocket('ws://localhost:3000');
 
         socket.onopen = function (event) {
             console.log('Connected with websocket!');
