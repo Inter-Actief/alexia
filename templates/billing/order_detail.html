@@ -17,6 +17,10 @@
                 <span class="glyphicon glyphicon-calendar"></span>
                 {% trans 'Event information' %}
             </a>
+            <a href="{% url 'random_order' event.pk %}" class="btn btn-default">
+                <span class="glyphicon glyphicon-tree-deciduous"></span>
+                {% trans 'Pick random transaction of the last hour' %}
+            </a>
         </div>
     </h2>
 </div>

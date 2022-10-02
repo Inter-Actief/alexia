@@ -1,0 +1,20 @@
+{% extends 'base_app.html' %}
+
+{% block title %}{% trans 'Winner' %}: {{ winner.first_name }}{% endblock title %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>
+            {% trans 'Winner' %}: {{ winner.first_name }} {{ winner.last_name }}
+        </h2>
+        <p>Number of participants in the last hour: {{ participants }}</p>
+        <p>Number of orders in the last hour: {{ orders }}</p>
+        <p>Total participants: {{ event.visitors }}</p>
+    </div>
+    <div class="pull-right">
+        <a href="{% url 'event-orders' event.pk %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-euro"></span>
+            {% trans 'Go back' %}
+        </a>
+    </div>
+{% endblock content %}

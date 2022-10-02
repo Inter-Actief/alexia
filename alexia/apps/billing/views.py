@@ -1,14 +1,20 @@
+import datetime
+
+import pytz
+import random
+
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView, TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import (
     CreateView, DeleteView, FormMixin, FormView, UpdateView,
@@ -408,3 +414,19 @@ class SellingPriceListView(ManagerRequiredMixin, TemplateView):
         context['pricegroups'] = pricegroups
         context['productgroups'] = data
         return context
+
+class RandomOrderView(ManagerRequiredMixin, TemplateView):
+    template_name = "billing/lottery.html"
+
+    def get_context_data(self, pk, *args):
+        kwargs = super(RandomOrderView, self).get_context_data()
+        now = datetime.datetime.now(tz=pytz.utc)
+        since = now - datetime.timedelta(hours=1)
+        orders = Order.objects.filter(placed_at__gte=since, placed_at__lte=now, event__pk=pk)
+        tickets = set(x.authorization.user for x in orders)
+        winner = random.sample(tickets, 1)
+        kwargs['winner'] = winner[0]
+        kwargs['participants'] = len(tickets)
+        kwargs['orders'] = orders.count()
+        kwargs['event'] = get_object_or_404(Event, pk=pk)
+        return kwargs
