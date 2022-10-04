@@ -65,7 +65,7 @@
         {% if is_tender or is_planner or is_manager %}
         {% if event.tender_comments %}
         <h3>{% trans 'Tender comments' %}</h3>
-        <div class="well well-sm">{{ event.tender_comments }}</div>
+        <div class="well well-sm">{{ event.tender_comments|escape|linebreaksbr }}</div>
         {% endif %}
         <h3>{% trans 'Temporary products' %}</h3>
         <p>{% trans 'Temporary products can only be created or modified by managers.' %}</p>
