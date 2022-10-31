@@ -53,7 +53,10 @@ def user_get_availabilities(request, radius_username):
             user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+            try:
+                user = User.objects.get(username=radius_username)
+            except User.DoesNotExist:
+                raise InvalidParamsError('User with provided username does not exits')
 
     availabilities = BartenderAvailability.objects.filter(user=user, event__organizer=request.organization)
 

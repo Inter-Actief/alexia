@@ -61,7 +61,10 @@ def rfid_list(request, radius_username=None):
                 user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
                                         authenticationdata__username=radius_username)
             except User.DoesNotExist:
-                return []
+                try:
+                    user = User.objects.get(username=radius_username)
+                except User.DoesNotExist:
+                    return []
         rfidcards = rfidcards.filter(user=user)
 
     rfidcards = rfidcards.select_related('user')
@@ -96,15 +99,7 @@ def rfid_get(request, radius_username):
     Raises error -32602 (Invalid params) if the username does not exist.
     """
     result = []
-    try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
-                                authenticationdata__username=radius_username)
-    except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+    user = get_user_by_username(radius_username)
 
     rfidcards = RfidCard.objects.filter(user=user, managed_by=request.organization)
 
@@ -140,15 +135,7 @@ def rfid_add(request, radius_username, identifier):
     Raises error -32602 (Invalid params) if the RFID card is already registered by someone else.
     """
 
-    try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
-                                authenticationdata__username=radius_username)
-    except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+    user = get_user_by_username(radius_username)
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
@@ -182,15 +169,7 @@ def rfid_remove(request, radius_username, identifier):
     Raises error -32602 (Invalid params) if the username does not exist.
     Raises error -32602 (Invalid params) if the RFID card does not exist for this person/organization.
     """
-    try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
-                                authenticationdata__username=radius_username)
-    except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+    user = get_user_by_username(radius_username)
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
@@ -208,3 +187,19 @@ def rfid_remove(request, radius_username, identifier):
         rfidcard.delete()
     else:
         rfidcard.managed_by.remove(request.organization)
+
+
+def get_user_by_username(radius_username):
+    try:
+        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+                                authenticationdata__username=radius_username)
+    except User.DoesNotExist:
+        try:
+            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
+                                    authenticationdata__username=radius_username)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(username=radius_username)
+            except User.DoesNotExist:
+                raise InvalidParamsError('User with provided username does not exits')
+    return user
