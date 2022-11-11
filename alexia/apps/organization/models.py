@@ -4,6 +4,7 @@ import os
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
@@ -113,6 +114,8 @@ class Profile(models.Model):
 
     def tended_count(self):
         return BartenderAvailability.objects.filter(
+            Q(event__kegs__gt=0) | Q(event__consumptionform__isnull=False) | Q(event__orders=True) |
+                Q(event__ends_at__lte=timezone.datetime(2016, 12, 13)),  # Date of first consumption form
             user=self.user,
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
