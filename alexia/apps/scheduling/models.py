@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from datetime import timedelta
 
 from django.conf import settings
@@ -8,13 +6,11 @@ from django.db.models import Q
 from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from .tools import notify_tenders
 
 
-@python_2_unicode_compatible
 class MailTemplate(models.Model):
     ENROLL_OPEN = 'enrollopen'
     ENROLL_CLOSED = 'enrollclosed'
@@ -44,7 +40,6 @@ class MailTemplate(models.Model):
         return reverse('mailtemplate_detail', args=[self.name])
 
 
-@python_2_unicode_compatible
 class Event(models.Model):
     organizer = models.ForeignKey(
         'organization.Organization',
@@ -186,7 +181,6 @@ class Event(models.Model):
 pre_save.connect(notify_tenders, Event)
 
 
-@python_2_unicode_compatible
 class Availability(models.Model):
     ASSIGNED = 'A'
     YES = 'Y'

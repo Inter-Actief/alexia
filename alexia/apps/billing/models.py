@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from decimal import Decimal
 
 from django.conf import settings
@@ -7,7 +5,6 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Organization
@@ -15,7 +12,6 @@ from alexia.apps.scheduling.models import Event
 from alexia.core.validators import validate_color
 
 
-@python_2_unicode_compatible
 class ProductGroup(models.Model):
     organization = models.ForeignKey(
         Organization,
@@ -37,7 +33,6 @@ class ProductGroup(models.Model):
         return reverse('productgroup_detail', args=[self.pk])
 
 
-@python_2_unicode_compatible
 class PriceGroup(models.Model):
     organization = models.ForeignKey(
         Organization,
@@ -65,7 +60,6 @@ class PriceGroup(models.Model):
         return reverse('pricegroup_detail', args=[self.pk])
 
 
-@python_2_unicode_compatible
 class SellingPrice(models.Model):
     pricegroup = models.ForeignKey(PriceGroup, verbose_name=_('price group'), on_delete=models.CASCADE)
     productgroup = models.ForeignKey(ProductGroup, verbose_name=_('product group'), on_delete=models.CASCADE)
@@ -86,7 +80,6 @@ class SellingPrice(models.Model):
         return self.pricegroup.get_absolute_url()
 
 
-@python_2_unicode_compatible
 class Product(models.Model):
     name = models.CharField(_('name'), max_length=32)
     shortcut = models.CharField(_('shortcut'), max_length=1, null=False, blank=True)
@@ -193,7 +186,6 @@ class TemporaryProduct(Product):
         return self.temporaryproduct.price
 
 
-@python_2_unicode_compatible
 class RfidCard(models.Model):
     identifier = models.CharField(_('identifier'), unique=True, max_length=50)
     is_active = models.BooleanField(_('is active'), default=False)
@@ -213,7 +205,6 @@ class RfidCard(models.Model):
     owner.short_description = _('owner')
 
 
-@python_2_unicode_compatible
 class Authorization(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -265,7 +256,6 @@ class Authorization(models.Model):
             return self.start_date <= timezone.now() <= self.end_date
 
 
-@python_2_unicode_compatible
 class Order(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT, related_name='orders', verbose_name=_('event'))
     authorization = models.ForeignKey(
@@ -318,7 +308,6 @@ class Order(models.Model):
     debtor.short_description = _('debtor')
 
 
-@python_2_unicode_compatible
 class Purchase(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='purchases', verbose_name=_('order'))
     product = models.CharField(_('product'), max_length=32)

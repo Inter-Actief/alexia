@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from alexia.apps.organization.models import Membership, Organization
 
 

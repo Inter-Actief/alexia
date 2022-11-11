@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 import json
 
@@ -7,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.serializers.json import DjangoJSONEncoder
 from django.test import Client, testcases
 from django.urls import reverse
-from django.utils import six, timezone
+from django.utils import timezone
 
 from alexia.apps.billing.models import (
     Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
@@ -27,7 +25,7 @@ class SimpleTestCase(testcases.SimpleTestCase):
     maxDiff = None
 
     def assertJSONEqual(self, raw, expected_data, msg=None):
-        if not isinstance(expected_data, six.string_types):
+        if not isinstance(expected_data, str):
             # Encode non-string input as JSON to fix a bug timestamps not comparing equal.
             expected_data = json.dumps(expected_data, cls=DjangoJSONEncoder)
 

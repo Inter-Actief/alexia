@@ -119,7 +119,7 @@ TEMPLATES = [
         'OPTIONS': {
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
-                'django.contrib.staticfiles.templatetags.staticfiles',
+                'django.templatetags.static',
                 'django.templatetags.i18n',
             ],
             'context_processors': [

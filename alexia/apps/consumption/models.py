@@ -1,15 +1,11 @@
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.scheduling.models import Event
 
 
-@python_2_unicode_compatible
 class ConsumptionProduct(models.Model):
     name = models.CharField(_('name'), max_length=32)
     is_active = models.BooleanField(_('is currently active'), default=True)
@@ -42,7 +38,6 @@ class WeightConsumptionProduct(ConsumptionProduct):
         verbose_name_plural = _('consumption products by weight')
 
 
-@python_2_unicode_compatible
 class ConsumptionForm(models.Model):
     event = models.OneToOneField(
         Event,
@@ -129,7 +124,6 @@ class Entry(models.Model):
         abstract = True
 
 
-@python_2_unicode_compatible
 class WeightEntry(Entry):
     product = models.ForeignKey(
         WeightConsumptionProduct,
@@ -181,7 +175,6 @@ class WeightEntry(Entry):
         return bool(change_percentage >= 25)
 
 
-@python_2_unicode_compatible
 class UnitEntry(Entry):
     product = models.ForeignKey(
         ConsumptionProduct,
