@@ -45,7 +45,7 @@ class PriceGroup(models.Model):
         verbose_name=_('organization'),
         on_delete=models.CASCADE,
     )
-    name = models.CharField(_('name'), max_length=32)
+    name = models.CharField(_('name'), max_length=64)
     productgroups = models.ManyToManyField(
         ProductGroup,
         through='SellingPrice',
