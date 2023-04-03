@@ -16,3 +16,5 @@ djangosaml2>=0.50.0,<0.51
 raven==6.10.0
 # Translations -- development
 django-rosetta>=0.7.6,<0.9.7
+# Single Sign On - OIDC Client
+mozilla-django-oidc

@@ -51,3 +51,6 @@ SERVER_EMAIL = EMAIL_FROM
 
 # SAML SP settings
 SAML_CONFIG = None
+
+# Single Sign On
+OIDC_RP_CLIENT_SECRET = ""

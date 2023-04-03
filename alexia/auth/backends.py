@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django_auth_ldap.backend import LDAPBackend
 from djangosaml2.backends import Saml2Backend
+from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 
@@ -9,6 +10,7 @@ User = get_user_model()
 LDAP_BACKEND_NAME = 'utils.auth.backends.ldap.MultiLDAPBackend'
 RADIUS_BACKEND_NAME = 'utils.auth.backends.radius.RadiusBackend'
 SAML2_BACKEND_NAME = 'utils.auth.backends.saml2.SAML2Backend'
+OIDC_BACKEND_NAME = 'utils.auth.backends.saml2.OIDCBackend'
 
 
 def get_or_create_user(backend, username):
@@ -89,3 +91,16 @@ class AlexiaSAML2Backend(Saml2Backend):
 
         # Check if a profile exists
         Profile.objects.get_or_create(user=user)
+
+class IAOIDCAuthenticationBackend(OIDCAuthenticationBackend):
+    def verify_claims(self, claims):
+        """Block login if the OIDC claims do not give a value for the Inter-Actief account username"""
+        verified = super(IAOIDCAuthenticationBackend, self).verify_claims(claims)
+        has_username = claims.get('preferred_username', None) is not None
+        return verified and has_username
+    
+    def filter_users_by_claims(self, claims):
+        username = claims.get('preferred_username')
+        backend = OIDC_BACKEND_NAME
+        user, created = get_or_create_user(backend, username)
+        return [user]

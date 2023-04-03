@@ -9,8 +9,7 @@ BASE_DIR = os.path.normpath(os.path.join(os.path.abspath(__file__), '..', '..', 
 # Auth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'alexia.auth.backends.RadiusBackend',  # RADIUS logins with the UT
-    'alexia.auth.backends.AlexiaSAML2Backend',  # SAML logins with the UT
+    'alexia.auth.backends.IAOIDCAuthenticationBackend', # Logins via OIDC / auth.ia
 ]
 AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/login_complete/'
@@ -59,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'alexia.middleware.common.CommonMiddleware',
-    'djangosaml2.middleware.SamlSessionMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh', # Verify OIDC session tokens
 ]
 
 # Models
@@ -245,3 +244,17 @@ SAML_CONFIG = {
     },
     'valid_for': 24,  # how long is our metadata valid
 }
+
+# Single Sign On via https://auth.ia.utwente.nl/
+OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/auth"
+OIDC_OP_TOKEN_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/userinfo"
+OIDC_RP_CLIENT_ID = "alexia-beta"
+OIDC_RP_CLIENT_SECRET = "secret"
+# Our custom Auth Backend will take care of creating users
+OIDC_CREATE_USER = False
+# Allows logout via GET request insitead of just POST
+ALLOW_LOGOUT_GET_METHOD = True
+# Keycloak uses RS256 sigining, so we need to specify that and provide the JWKS endpoint for key verification
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_OP_JWKS_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/certs"
