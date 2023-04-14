@@ -7,7 +7,7 @@ from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.organization.models import (
     AuthenticationData, Certificate, Membership, Profile,
 )
-from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
+from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_certificate, format_user
 from ..config import api_v1_site
@@ -40,14 +40,13 @@ def user_add(request, radius_username, first_name, last_name, email):
     Raises error -32602 (Invalid params) if the username already exists.
     """
     if User.objects.filter(username=radius_username).exists() or \
-            AuthenticationData.objects.filter(backend=RADIUS_BACKEND_NAME, username__iexact=radius_username).exists() \
-            or AuthenticationData.objects.filter(backend=SAML2_BACKEND_NAME, username__iexact=radius_username).exists():
+            AuthenticationData.objects.filter(backend=OIDC_BACKEND_NAME, username__iexact=radius_username).exists():
         raise InvalidParamsError('User with provided username already exists')
 
     user = User(username=radius_username, first_name=first_name, last_name=last_name, email=email)
     user.save()
 
-    data = AuthenticationData(user=user, backend=SAML2_BACKEND_NAME, username=radius_username.lower())
+    data = AuthenticationData(user=user, backend=OIDC_BACKEND_NAME, username=radius_username.lower())
     data.save()
 
     user.profile = Profile()
@@ -65,9 +64,7 @@ def user_exists(request, radius_username):
 
     radius_username    -- Username to search for.
     """
-    return User.objects.filter(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                               authenticationdata__username=radius_username).exists() or \
-           User.objects.filter(authenticationdata__backend=SAML2_BACKEND_NAME,
+    return User.objects.filter(authenticationdata__backend=OIDC_BACKEND_NAME,
                                authenticationdata__username=radius_username).exists()
 
 
@@ -91,14 +88,10 @@ def user_get(request, radius_username):
     }
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except:
-            raise ObjectNotFoundError
+        raise ObjectNotFoundError
 
     return format_user(user)
 
@@ -157,14 +150,10 @@ def user_get_membership(request, radius_username):
     }
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except:
-            raise ObjectNotFoundError
+        raise ObjectNotFoundError
 
     try:
         membership = Membership.objects.get(
@@ -209,14 +198,10 @@ def user_get_iva_certificate(request, radius_username):
     }
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except:
-            raise ObjectNotFoundError
+        raise ObjectNotFoundError
 
     try:
         certificate = Certificate.objects.get(owner=user)

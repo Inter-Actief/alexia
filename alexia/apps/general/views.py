@@ -13,13 +13,10 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
-from djangosaml2.views import AssertionConsumerServiceView
-from django.utils.decorators import method_decorator
-from saml2.response import UnsolicitedResponse
 from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Membership, Organization
@@ -107,23 +104,6 @@ def login(request, template_name='registration/login.html',
         context.update(extra_context)
 
     return TemplateResponse(request, template_name, context)
-
-
-# The SAML login page throws a very annoying error when a timed-out response arrives,
-# so we need to wrap it and ignore the error to stop it from showing up in our Sentry logs.
-# Also, we need to inject the current onrganisation right after login.
-class SAMLACSOverrideView(AssertionConsumerServiceView):
-    @method_decorator(csrf_exempt)
-    def post(self, *args, **kwargs):
-        try:
-            res = super(SAMLACSOverrideView, self).post(*args, **kwargs)
-            if self.request.user:
-                # Set current organisation
-                if hasattr(self.request.user, 'profile') and self.request.user.profile.current_organization:
-                    self.request.session['organization_pk'] = self.request.user.profile.current_organization.pk
-            return res
-        except UnsolicitedResponse:
-            raise PermissionDenied(_("Logging in failed, please try again."))
 
 
 class RegisterView(LoginRequiredMixin, UpdateView):

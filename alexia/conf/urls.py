@@ -1,14 +1,14 @@
-import djangosaml2
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.urls import re_path
 from django.views.generic import RedirectView, TemplateView
+from django.views.static import serve
 
 from alexia.apps.billing.views import JulianaView
 from alexia.apps.consumption.views import complete_dcf, dcf
 from alexia.apps.general import views as general_views
-from alexia.apps.general.views import SAMLACSOverrideView
 from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
@@ -40,12 +40,7 @@ urlpatterns = [
     url(r'^register/$', general_views.RegisterView.as_view(), name='register'),
     url(r'^change_current_organization/(?P<slug>[-\w]+)/$',
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
-    url(r'^oidc/', include('mozilla_django_oidc.urls')),    
-
-    # SAML2 SP
-    # Wrap ACS to catch annoying UnsolicitedResponse exception and set current_organisation
-    url(r'^saml2sp/acs/$', SAMLACSOverrideView.as_view(), name='saml2_acs'),
-    url(r'^saml2sp/', include('djangosaml2.urls')),
+    url(r'^oidc/', include('mozilla_django_oidc.urls')),
 
     # Django Admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -63,10 +58,15 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
-        # SAML test URLs
-        url(r'^saml2test/', djangosaml2.views.echo_attributes),
     ]
     # Translation application for development
     urlpatterns += [
         url(r'^translations/', include('rosetta.urls'), name='translations')
+    ]
+    # Static and media files in development mode
+    urlpatterns += [
+        re_path(r'^%s(?P<path>.*)$' % (settings.MEDIA_URL[1:]), serve, {'document_root': settings.MEDIA_ROOT},
+                name='media'),
+        re_path(r'^%s(?P<path>.*)$' % (settings.STATIC_URL[1:]), serve, {'document_root': settings.STATIC_ROOT},
+                name='static'),
     ]

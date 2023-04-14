@@ -1,16 +1,16 @@
+import logging
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django_auth_ldap.backend import LDAPBackend
-from djangosaml2.backends import Saml2Backend
+from django.urls import reverse
+from django.utils.http import urlencode
+
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 from alexia.apps.organization.models import AuthenticationData, Profile
 
 User = get_user_model()
-LDAP_BACKEND_NAME = 'utils.auth.backends.ldap.MultiLDAPBackend'
-RADIUS_BACKEND_NAME = 'utils.auth.backends.radius.RadiusBackend'
-SAML2_BACKEND_NAME = 'utils.auth.backends.saml2.SAML2Backend'
-OIDC_BACKEND_NAME = 'utils.auth.backends.saml2.OIDCBackend'
+OIDC_BACKEND_NAME = 'utils.auth.backends.oidc.OIDCBackend'
 
 
 def get_or_create_user(backend, username):
@@ -18,89 +18,81 @@ def get_or_create_user(backend, username):
         authentication_data = AuthenticationData.objects.get(backend=backend, username=username)
         return authentication_data.user, False
     except AuthenticationData.DoesNotExist:
-        user = User(username=username)
-        user.set_unusable_password()
-        user.save()
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = User(username=username)
+            user.set_unusable_password()
+            user.save()
 
         data = AuthenticationData(user=user, backend=backend, username=username.lower())
         data.save()
 
-        profile = Profile(user=user)
-        profile.save()
+        if not user.profile:
+            profile = Profile(user=user)
+            profile.save()
 
         return user, True
 
 
-class MultiLDAPBackend(LDAPBackend):
-    def get_or_create_user(self, username, ldap_user):
-        backend = LDAP_BACKEND_NAME
-        return get_or_create_user(backend, username)
-
-
-class RadiusBackend(object):
-    def authenticate(self, username=None, password=None):
-        try:
-            import pyrad.packet
-            from pyrad.client import Client, Timeout
-            from pyrad.dictionary import Dictionary
-        except ImportError:
-            return None
-
-        srv = Client(server=settings.RADIUS_HOST, authport=settings.RADIUS_PORT,
-                     secret=settings.RADIUS_SECRET.encode(), dict=Dictionary(settings.RADIUS_DICT))
-
-        req = srv.CreateAuthPacket(code=pyrad.packet.AccessRequest, User_Name=username.encode())
-        req["User-Password"] = req.PwCrypt(password)
-
-        try:
-            reply = srv.SendPacket(req)
-        except Timeout:
-            return None
-
-        if reply.code == pyrad.packet.AccessAccept:
-            backend = RADIUS_BACKEND_NAME
-            user, created = get_or_create_user(backend, username)
-            return user
-
-        return None
-
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None
-
-
-class AlexiaSAML2Backend(Saml2Backend):
-    def configure_user(self, user, attributes, attribute_mapping):
-        self._update_authentication_data(user)
-        return super(AlexiaSAML2Backend, self).configure_user(user, attributes, attribute_mapping)
-    
-    def update_user(self, user, attributes, attribute_mapping,
-                    force_save=False):
-        self._update_authentication_data(user)
-        return super(AlexiaSAML2Backend, self).update_user(user, attributes, attribute_mapping, force_save)
-
-    def _update_authentication_data(self, user):
-        try:
-            authentication_data = AuthenticationData.objects.get(backend=SAML2_BACKEND_NAME, username=user.username)
-            return authentication_data.user, False
-        except AuthenticationData.DoesNotExist:
-            data = AuthenticationData(user=user, backend=SAML2_BACKEND_NAME, username=user.username.lower())
-            data.save()
-
-        # Check if a profile exists
-        Profile.objects.get_or_create(user=user)
-
 class IAOIDCAuthenticationBackend(OIDCAuthenticationBackend):
+    def __init__(self, *args, **kwargs):
+        self.log = logging.getLogger(self.__class__.__name__)
+        super().__init__(*args, **kwargs)
+
     def verify_claims(self, claims):
-        """Block login if the OIDC claims do not give a value for the Inter-Actief account username"""
-        verified = super(IAOIDCAuthenticationBackend, self).verify_claims(claims)
-        has_username = claims.get('preferred_username', None) is not None
-        return verified and has_username
-    
+        """Block login if the OIDC claims do not give a value for a UT username we support"""
+        # UT Student number
+        has_student_number = claims.get('studentNumber', None) is not None
+        # UT Employee number
+        has_employee_number = claims.get('employeeNumber', None) is not None
+        # UT X-account username
+        has_ut_xaccount = claims.get('externalUsername', None) is not None
+
+        can_continue = has_student_number or has_employee_number or \
+            has_ut_xaccount
+        self.log.debug(f"User login claims verification can continue: {can_continue}, with claims: {claims}")
+        return can_continue
+
     def filter_users_by_claims(self, claims):
-        username = claims.get('preferred_username')
-        backend = OIDC_BACKEND_NAME
-        user, created = get_or_create_user(backend, username)
-        return [user]
+        # UT Student number
+        student_username = claims.get('studentNumber', None)
+        student_username = student_username.lower() if student_username else None
+        # UT Employee number
+        employee_username = claims.get('employeeNumber', None)
+        employee_username = employee_username.lower() if employee_username else None
+        # UT X-account username
+        ut_xaccount = claims.get('externalUsername', None)
+        ut_xaccount = ut_xaccount.lower() if ut_xaccount else None
+
+        # Try to find person by Student number
+        if student_username is not None:
+            user, created = get_or_create_user(OIDC_BACKEND_NAME, student_username)
+            self.log.info(f"User login to {'new' if created else 'existing'} user {user.username} with S-number {student_username} allowed.")
+            return [user]
+
+        # Try to find person by Employee number
+        if employee_username is not None:
+            user, created = get_or_create_user(OIDC_BACKEND_NAME, employee_username)
+            self.log.info(f"User login to {'new' if created else 'existing'} user {user.username} with M-number {employee_username} allowed.")
+            return [user]
+
+        # Try to find person by X-account username
+        if ut_xaccount is not None:
+            user, created = get_or_create_user(OIDC_BACKEND_NAME, ut_xaccount)
+            self.log.info(f"User login to {'new' if created else 'existing'} user {user.username} with X-number {ut_xaccount} allowed.")
+            return [user]
+
+        # No cigar.
+        self.log.info(f"User login failed, no username found to match against.")
+        return self.UserModel.objects.none()
+
+
+def get_oidc_logout_url(request):
+    # After logout, we need to redirect to the OIDC Single Sign Out
+    # endpoint (OIDC_LOGOUT_URL) with a redirect back to the main page
+    params = urlencode({
+        'id_token_hint': request.session.get("oidc_id_token", ""),
+        'post_logout_redirect_uri': request.build_absolute_uri(reverse("event-list"))
+    })
+    return f"{settings.OIDC_LOGOUT_URL}?{params}"
