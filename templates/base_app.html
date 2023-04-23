@@ -126,13 +126,13 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="{% url 'logout' %}">{% trans 'Log out' %}</a>
+                            <a href="{% url 'oidc_logout' %}">{% trans 'Log out' %}</a>
                         </li>
                     </ul>
                 {% endmenuitem %}
                 {% else %}
                 <li>
-                    <a href="{% url 'saml2_login' %}">{% trans 'Login with UTwente' %}</a>
+                    <a href="{% url 'oidc_authentication_init' %}">{% trans 'Login with UTwente' %}</a>
                 </li>
                 {% endif %}
             </ul>

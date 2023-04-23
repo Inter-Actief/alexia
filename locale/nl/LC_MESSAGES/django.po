@@ -1553,8 +1553,8 @@ msgid "There are no expenditures!"
 msgstr "Er zijn geen betalingen!"
 
 #: templates/profile/profile.html:13
-msgid "SAML2 username"
-msgstr "SAML2 gebruikersnaam"
+msgid "OIDC username"
+msgstr "OIDC gebruikersnaam"
 
 #: templates/profile/profile.html:15
 msgid "edit"
@@ -1680,11 +1680,11 @@ msgstr "Log in met je lokale Alexia-account en wachtwoord."
 #, python-format
 msgid ""
 "\n"
-"                        If you have no local Alexia account, please <a href=\"%(saml_login_url)s\">log in with your University account</a>.\n"
+"                        If you have no local Alexia account, please <a href=\"%(oidc_login_url)s\">log in with your University account</a>.\n"
 "                    "
 msgstr ""
 "\n"
-"                        Als je geen lokaal Alexia-account hebt, <a href=\"%(saml_login_url)s\">log dan in met je Universiteitsaccount</a>.\n"
+"                        Als je geen lokaal Alexia-account hebt, <a href=\"%(oidc_login_url)s\">log dan in met je Universiteitsaccount</a>.\n"
 "                    "
 
 #: templates/registration/register.html:3 templates/registration/register.html:11

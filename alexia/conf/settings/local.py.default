@@ -49,5 +49,5 @@ SERVER_EMAIL = EMAIL_FROM
 # can find in /bin/wkhtmltopdf.sh
 # WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
 
-# SAML SP settings
-SAML_CONFIG = None
+# Single Sign On
+OIDC_RP_CLIENT_SECRET = ""

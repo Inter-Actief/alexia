@@ -11,9 +11,9 @@
                 <h2>{% trans 'Log in' %}</h2>
                 <p>{% trans 'Log in with your local Alexia account and password.' %}</p>
                 <p>
-                    {% url 'saml2_login' as saml_login_url %}
-                    {% blocktrans with saml_login_url=saml_login_url %}
-                        If you have no local Alexia account, please <a href="{{ saml_login_url }}">log in with your University account</a>.
+                    {% url 'oidc_authentication_init' as oidc_login_url %}
+                    {% blocktrans with oidc_login_url=oidc_login_url %}
+                        If you have no local Alexia account, please <a href="{{ oidc_login_url }}">log in with your University account</a>.
                     {% endblocktrans %}
                 </p>
                 <form id="form-login" method="post" action="{% url 'login' %}">

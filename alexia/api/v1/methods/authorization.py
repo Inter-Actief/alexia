@@ -4,9 +4,9 @@ from django.utils import timezone
 from jsonrpc import jsonrpc_method
 
 from alexia.api.decorators import manager_required
-from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
+from alexia.api.exceptions import InvalidParamsError
 from alexia.apps.billing.models import Authorization
-from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
+from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_authorization
 from ..config import api_v1_site
@@ -43,14 +43,10 @@ def authorization_list(request, radius_username=None):
 
     if radius_username is not None:
         try:
-            user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+            user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            try:
-                user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                        authenticationdata__username=radius_username)
-            except User.DoesNotExist:
-                raise InvalidParamsError('User with provided username does not exist')
+            raise InvalidParamsError('User with provided username does not exist')
 
         authorizations = authorizations.filter(user=user)
 
@@ -89,14 +85,10 @@ def authorization_get(request, radius_username):
     result = []
 
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     authorizations = Authorization.objects.filter(user=user, organization=request.organization)
 
@@ -138,14 +130,10 @@ def authorization_add(request, radius_username, account):
     Raises error -32602 (Invalid params) if the username does not exist.
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     authorization = Authorization(user=user, organization=request.organization)
     authorization.save()
@@ -172,14 +160,10 @@ def authorization_end(request, radius_username, authorization_id):
     Raises error -32602 (Invalid params) if provided authorization cannot be found.
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     try:
         authorization = Authorization.objects.select_for_update().get(user=user,
