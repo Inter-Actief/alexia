@@ -15,4 +15,4 @@ raven==6.10.0
 # Translations -- development
 django-rosetta>=0.7.6,<0.9.7
 # Single Sign On - OIDC Client
-mozilla-django-oidc
+mozilla-django-oidc==2.0.0
