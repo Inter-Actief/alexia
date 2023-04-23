@@ -54,7 +54,7 @@ def login_complete(request):
     if not request.user.first_name or not request.user.email:
         return HttpResponseRedirect(resolve_url('register'))
     if hasattr(request.user, 'profile') and request.user.profile.current_organization:
-        self.request.session['organization_pk'] = request.user.profile.current_organization.pk
+        request.session['organization_pk'] = request.user.profile.current_organization.pk
     return HttpResponseRedirect("/")
 
 
