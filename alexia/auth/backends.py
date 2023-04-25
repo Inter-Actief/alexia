@@ -48,9 +48,11 @@ class IAOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         has_employee_number = claims.get('employeeNumber', None) is not None
         # UT X-account username
         has_ut_xaccount = claims.get('externalUsername', None) is not None
+        # Generic UT username
+        has_ut_username = claims.get('utUsername', None) is not None
 
         can_continue = has_student_number or has_employee_number or \
-            has_ut_xaccount
+            has_ut_xaccount or has_ut_username
         self.log.debug(f"User login claims verification can continue: {can_continue}, with claims: {claims}")
         return can_continue
 
@@ -64,6 +66,9 @@ class IAOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         # UT X-account username
         ut_xaccount = claims.get('externalUsername', None)
         ut_xaccount = ut_xaccount.lower() if ut_xaccount else None
+        # Generic UT username
+        ut_username = claims.get('utUsername', None)
+        ut_username = ut_username.lower() if ut_username else None
 
         # Try to find person by Student number
         if student_username is not None:
@@ -81,6 +86,12 @@ class IAOIDCAuthenticationBackend(OIDCAuthenticationBackend):
         if ut_xaccount is not None:
             user, created = get_or_create_user(OIDC_BACKEND_NAME, ut_xaccount)
             self.log.info(f"User login to {'new' if created else 'existing'} user {user.username} with X-number {ut_xaccount} allowed.")
+            return [user]
+
+        # Try to find person by generic UT username
+        if ut_username is not None:
+            user, created = get_or_create_user(OIDC_BACKEND_NAME, ut_username)
+            self.log.info(f"User login to {'new' if created else 'existing'} user {user.username} with UT account {ut_username} allowed.")
             return [user]
 
         # No cigar.
