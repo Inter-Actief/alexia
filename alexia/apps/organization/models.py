@@ -119,7 +119,7 @@ class Profile(models.Model):
             user=self.user,
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
-        ).count()
+        ).distinct().count()
 
     def get_bartender_name(self):
         return (self.nickname or self.user.first_name)
