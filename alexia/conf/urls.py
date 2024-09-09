@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^api/', include('alexia.api.urls')),
 
     # "Static" general_views
+    url(r'^healthz/$', general_views.healthz_view, name='healthz_simple'),
     url(r'^about/$', general_views.AboutView.as_view(), name='about'),
     url(r'^help/$', general_views.HelpView.as_view(), name='help'),
     url(r'^login_complete/$', general_views.login_complete, name='login_complete'),

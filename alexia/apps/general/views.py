@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -154,3 +154,7 @@ class AboutView(TemplateView):
 
 class HelpView(TemplateView):
     template_name = 'general/help.html'
+
+
+def healthz_view(request):
+    return HttpResponse('ok', content_type="text/plain")
