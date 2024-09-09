@@ -187,7 +187,9 @@ if DJANGO_SENTRY_DSN:
 
 # Django authentication backends
 # Login settings -- only allow login using specified backends
-AUTHENTICATION_BACKENDS = env.list("DJANGO_AUTHENTICATION_BACKENDS", default=["django.contrib.auth.backends.ModelBackend"])
+AUTHENTICATION_BACKENDS = env.list("DJANGO_AUTHENTICATION_BACKENDS", default=[
+    "django.contrib.auth.backends.ModelBackend", "alexia.auth.backends.IAOIDCAuthenticationBackend"
+])
 
 # OIDC Single sign-on configuration
 OIDC_RP_CLIENT_ID = env("OIDC_RP_CLIENT_ID", default="alexia")
