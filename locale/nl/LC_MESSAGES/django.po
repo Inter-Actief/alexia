@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-20 11:16+0200\n"
-"PO-Revision-Date: 2022-06-20 11:17+0020\n"
-"Last-Translator: b'Bram van Dartel <b.vandartel@student.utwente.nl>'\n"
+"POT-Creation-Date: 2024-09-16 22:34+0200\n"
+"PO-Revision-Date: 2024-09-16 22:50+0018\n"
+"Last-Translator: b'  <jonkerdd@inter-actief.net>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Export"
 msgstr "Exporteren"
 
-#: alexia/apps/billing/forms.py:53 alexia/apps/scheduling/forms.py:69
+#: alexia/apps/billing/forms.py:53 alexia/apps/scheduling/forms.py:74
 msgid "From time"
 msgstr "Begintijd"
 
-#: alexia/apps/billing/forms.py:54 alexia/apps/scheduling/forms.py:70
+#: alexia/apps/billing/forms.py:54 alexia/apps/scheduling/forms.py:75
 msgid "Till time"
 msgstr "Eindtijd"
 
@@ -33,11 +33,11 @@ msgstr "Eindtijd"
 msgid "New price group"
 msgstr "Nieuwe prijsgroep"
 
-#: alexia/apps/billing/models.py:23 alexia/apps/billing/models.py:45 alexia/apps/billing/models.py:140 alexia/apps/billing/models.py:228 alexia/apps/organization/models.py:140 alexia/apps/organization/models.py:161 alexia/apps/scheduling/models.py:28 alexia/apps/scheduling/models.py:206
+#: alexia/apps/billing/models.py:23 alexia/apps/billing/models.py:45 alexia/apps/billing/models.py:140 alexia/apps/billing/models.py:228 alexia/apps/billing/models.py:343 alexia/apps/organization/models.py:146 alexia/apps/organization/models.py:167 alexia/apps/scheduling/models.py:28 alexia/apps/scheduling/models.py:206
 msgid "organization"
 msgstr "organisatie"
 
-#: alexia/apps/billing/models.py:26 alexia/apps/billing/models.py:48 alexia/apps/billing/models.py:91 alexia/apps/consumption/models.py:14 alexia/apps/organization/models.py:19 alexia/apps/organization/models.py:127 alexia/apps/scheduling/models.py:29 alexia/apps/scheduling/models.py:60 alexia/apps/scheduling/models.py:208
+#: alexia/apps/billing/models.py:26 alexia/apps/billing/models.py:48 alexia/apps/billing/models.py:91 alexia/apps/billing/models.py:337 alexia/apps/consumption/models.py:14 alexia/apps/organization/models.py:21 alexia/apps/organization/models.py:131 alexia/apps/scheduling/models.py:29 alexia/apps/scheduling/models.py:60 alexia/apps/scheduling/models.py:208
 msgid "name"
 msgstr "naam"
 
@@ -57,7 +57,7 @@ msgstr "prijsgroep"
 msgid "price groups"
 msgstr "prijsgroepen"
 
-#: alexia/apps/billing/models.py:72 alexia/apps/billing/models.py:177 alexia/apps/billing/models.py:326
+#: alexia/apps/billing/models.py:72 alexia/apps/billing/models.py:177 alexia/apps/billing/models.py:326 alexia/apps/billing/models.py:385
 msgid "price"
 msgstr "prijs"
 
@@ -98,7 +98,7 @@ msgstr "Achtergrondkleur voor Juliana"
 msgid "position"
 msgstr "positie"
 
-#: alexia/apps/billing/models.py:146 alexia/apps/billing/models.py:324 alexia/apps/consumption/models.py:137 alexia/apps/consumption/models.py:189
+#: alexia/apps/billing/models.py:146 alexia/apps/billing/models.py:324 alexia/apps/billing/models.py:383 alexia/apps/consumption/models.py:137 alexia/apps/consumption/models.py:189
 msgid "product"
 msgstr "product"
 
@@ -106,7 +106,7 @@ msgstr "product"
 msgid "products"
 msgstr "producten"
 
-#: alexia/apps/billing/models.py:175 alexia/apps/billing/models.py:270 alexia/apps/consumption/models.py:50 alexia/apps/scheduling/models.py:107 alexia/apps/scheduling/models.py:240
+#: alexia/apps/billing/models.py:175 alexia/apps/billing/models.py:270 alexia/apps/billing/models.py:348 alexia/apps/consumption/models.py:50 alexia/apps/scheduling/models.py:107 alexia/apps/scheduling/models.py:240
 msgid "event"
 msgstr "activiteit"
 
@@ -122,7 +122,7 @@ msgstr "tijdelijke producten"
 msgid "identifier"
 msgstr "identifier"
 
-#: alexia/apps/billing/models.py:199 alexia/apps/scheduling/models.py:32
+#: alexia/apps/billing/models.py:199 alexia/apps/organization/models.py:135 alexia/apps/scheduling/models.py:32
 msgid "is active"
 msgstr "is actief"
 
@@ -130,7 +130,7 @@ msgstr "is actief"
 msgid "registered at"
 msgstr "geregistreerd op"
 
-#: alexia/apps/billing/models.py:201 alexia/apps/billing/models.py:222 alexia/apps/organization/models.py:36 alexia/apps/organization/models.py:51 alexia/apps/organization/models.py:156
+#: alexia/apps/billing/models.py:201 alexia/apps/billing/models.py:222 alexia/apps/organization/models.py:38 alexia/apps/organization/models.py:53 alexia/apps/organization/models.py:162
 msgid "user"
 msgstr "gebruiker"
 
@@ -171,7 +171,7 @@ msgstr "autorisaties"
 msgid "{user} of {organization}"
 msgstr "{user} van {organization}"
 
-#: alexia/apps/billing/models.py:277
+#: alexia/apps/billing/models.py:277 alexia/apps/billing/models.py:349
 msgid "placed at"
 msgstr "geplaatst op"
 
@@ -183,11 +183,11 @@ msgstr "gesynchroniseerd"
 msgid "Designates whether this transaction is imported by the organization."
 msgstr "Geeft aan of deze transactie al is gesynchroniseerd."
 
-#: alexia/apps/billing/models.py:288
+#: alexia/apps/billing/models.py:288 alexia/apps/billing/models.py:353
 msgid "added by"
 msgstr "toegevoegd door"
 
-#: alexia/apps/billing/models.py:291 alexia/apps/billing/models.py:325 alexia/apps/consumption/models.py:191
+#: alexia/apps/billing/models.py:291 alexia/apps/billing/models.py:325 alexia/apps/billing/models.py:356 alexia/apps/billing/models.py:384 alexia/apps/consumption/models.py:191
 msgid "amount"
 msgstr "aantal"
 
@@ -195,11 +195,11 @@ msgstr "aantal"
 msgid "rfid card"
 msgstr "RFID-kaart"
 
-#: alexia/apps/billing/models.py:296 alexia/apps/billing/models.py:323
+#: alexia/apps/billing/models.py:296 alexia/apps/billing/models.py:323 alexia/apps/billing/models.py:360 alexia/apps/billing/models.py:382
 msgid "order"
 msgstr "transactie"
 
-#: alexia/apps/billing/models.py:297
+#: alexia/apps/billing/models.py:297 alexia/apps/billing/models.py:361
 msgid "orders"
 msgstr "transacties"
 
@@ -212,13 +212,33 @@ msgstr "{user} om {time} bij {event}"
 msgid "debtor"
 msgstr "debiteur"
 
-#: alexia/apps/billing/models.py:329
+#: alexia/apps/billing/models.py:329 alexia/apps/billing/models.py:393
 msgid "purchase"
 msgstr "aankoop"
 
-#: alexia/apps/billing/models.py:330
+#: alexia/apps/billing/models.py:330 alexia/apps/billing/models.py:394
 msgid "purchases"
 msgstr "aankopen"
+
+#: alexia/apps/billing/models.py:338
+#, fuzzy
+#| msgid "description"
+msgid "short description"
+msgstr "omschrijving"
+
+#: alexia/apps/billing/models.py:339 alexia/apps/organization/models.py:23 alexia/apps/organization/models.py:133
+msgid "color"
+msgstr "kleur"
+
+#: alexia/apps/billing/models.py:364
+#, fuzzy, python-brace-format
+#| msgid "{user} at {time} on {event}"
+msgid "{time} on {event}"
+msgstr "{user} om {time} bij {event}"
+
+#: alexia/apps/billing/models.py:389
+msgid "writeoff category"
+msgstr "Afschrijf categorie"
 
 #: alexia/apps/billing/views.py:47 alexia/apps/consumption/views.py:73
 msgid "You are not a tender for this event"
@@ -240,7 +260,7 @@ msgstr "Verbruik"
 msgid "General"
 msgstr "Generiek"
 
-#: alexia/apps/config.py:24 alexia/apps/scheduling/forms.py:68 templates/billing/permanentproduct_detail.html:31 templates/billing/pricegroup_detail.html:31 templates/consumption/consumptionform_list.html:31 templates/consumption/consumptionform_list.html:68 templates/consumption/pdf/page.html:9 templates/general/about.html:40 templates/organization/certificate_form.html:27 templates/profile/profile.html:121 templates/profile/profile.html:146 templates/scheduling/event_calendar.html:26 templates/scheduling/event_list.html:37 templates/scheduling/mailtemplate_detail.html:24
+#: alexia/apps/config.py:24 alexia/apps/scheduling/forms.py:73 templates/billing/permanentproduct_detail.html:31 templates/billing/pricegroup_detail.html:31 templates/consumption/consumptionform_list.html:31 templates/consumption/consumptionform_list.html:68 templates/consumption/pdf/page.html:9 templates/general/about.html:40 templates/organization/certificate_form.html:27 templates/profile/profile.html:121 templates/profile/profile.html:146 templates/scheduling/event_calendar.html:26 templates/scheduling/event_list.html:37 templates/scheduling/mailtemplate_detail.html:24
 msgid "Organization"
 msgstr "Organisatie"
 
@@ -300,7 +320,7 @@ msgstr "Jaar"
 msgid "File format"
 msgstr "Bestandsformaat"
 
-#: alexia/apps/consumption/models.py:15 alexia/apps/organization/models.py:167
+#: alexia/apps/consumption/models.py:15 alexia/apps/organization/models.py:173
 msgid "is currently active"
 msgstr "is actief"
 
@@ -344,7 +364,7 @@ msgstr "afgerond door"
 msgid "completed at"
 msgstr "afgerond op"
 
-#: alexia/apps/consumption/models.py:59 alexia/apps/organization/models.py:163
+#: alexia/apps/consumption/models.py:59 alexia/apps/organization/models.py:169
 msgid "comments"
 msgstr "commentaar"
 
@@ -423,9 +443,11 @@ msgstr "Je bent geen tapper bij deze borrel."
 msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
-#: alexia/apps/general/views.py:126
-msgid "Logging in failed, please try again."
-msgstr "Het inloggen is mislukt, probeer het alsjeblieft opnieuw."
+#: alexia/apps/general/views.py:129
+#, fuzzy
+#| msgid "organizations"
+msgid "This organization is inactive."
+msgstr "organisatie"
 
 #: alexia/apps/organization/admin.py:56
 msgid "Permissions"
@@ -447,136 +469,136 @@ msgstr "Student- of medewerkersaccount (bijv. s0000000 of m0000000)"
 msgid "Bartender nickname"
 msgstr "Tappersbijnaam"
 
-#: alexia/apps/organization/models.py:20
+#: alexia/apps/organization/models.py:22
 msgid "prevent conflicting events"
 msgstr "voorkom conflicterende activiteiten"
 
-#: alexia/apps/organization/models.py:21 alexia/apps/organization/models.py:129
-msgid "color"
-msgstr "kleur"
-
-#: alexia/apps/organization/models.py:25 alexia/apps/scheduling/models.py:67
+#: alexia/apps/organization/models.py:27 alexia/apps/scheduling/models.py:67
 msgid "location"
 msgstr "locatie"
 
-#: alexia/apps/organization/models.py:26
+#: alexia/apps/organization/models.py:28
 msgid "locations"
 msgstr "locaties"
 
-#: alexia/apps/organization/models.py:38
+#: alexia/apps/organization/models.py:40
 msgid "authentication backend"
 msgstr "authenticatiesysteem"
 
-#: alexia/apps/organization/models.py:39
+#: alexia/apps/organization/models.py:41
 msgid "username"
 msgstr "gebruikersnaam"
 
-#: alexia/apps/organization/models.py:40
+#: alexia/apps/organization/models.py:42
 msgid "additional data"
 msgstr "aanvullende gegevens"
 
-#: alexia/apps/organization/models.py:55
+#: alexia/apps/organization/models.py:57
 msgid "has IVA-certificate"
 msgstr "heeft IVA-certificaat"
 
-#: alexia/apps/organization/models.py:58
+#: alexia/apps/organization/models.py:60
 msgid "Override for an user to indicate IVA rights without uploading a certificate."
 msgstr "Override voor een gebruiker om IVA-rechten te hebben zonder certificaat."
 
-#: alexia/apps/organization/models.py:62
+#: alexia/apps/organization/models.py:64
 msgid "has BHV-certificate"
 msgstr "heeft BHV-diploma"
 
-#: alexia/apps/organization/models.py:65
+#: alexia/apps/organization/models.py:67
 msgid "Designates that this user has a valid, non-expired BHV (Emergency Response Officer) certificate."
 msgstr "Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
 
-#: alexia/apps/organization/models.py:69
+#: alexia/apps/organization/models.py:71
 msgid "is foundation manager"
 msgstr "is stichtingsmananger"
 
-#: alexia/apps/organization/models.py:72
+#: alexia/apps/organization/models.py:74
 msgid "Designates that this user is manager of the purchasing foundation."
 msgstr "Geeft aan dat deze gebruiker manager is van de inkoopstichting."
 
-#: alexia/apps/organization/models.py:79
+#: alexia/apps/organization/models.py:81
 msgid "current organization"
 msgstr "huidige organisatie"
 
-#: alexia/apps/organization/models.py:81
+#: alexia/apps/organization/models.py:83
 msgid "iCal identifier"
 msgstr "iCal identificatie"
 
-#: alexia/apps/organization/models.py:82
+#: alexia/apps/organization/models.py:84
 msgid "bartender nickname"
 msgstr "tappersbijnaam"
 
-#: alexia/apps/organization/models.py:85
+#: alexia/apps/organization/models.py:87
 msgid "profile"
 msgstr "profiel"
 
-#: alexia/apps/organization/models.py:86
+#: alexia/apps/organization/models.py:88
 msgid "profiles"
 msgstr "profielen"
 
-#: alexia/apps/organization/models.py:128
+#: alexia/apps/organization/models.py:132
 msgid "slug"
 msgstr "slug"
 
-#: alexia/apps/organization/models.py:130
+#: alexia/apps/organization/models.py:134
 msgid "assigns tenders"
 msgstr "wijst tappers aan"
 
-#: alexia/apps/organization/models.py:134
+#: alexia/apps/organization/models.py:136
+msgid "writeoff enabled"
+msgstr "Afschrijven ingeschakeld"
+
+#: alexia/apps/organization/models.py:140
 msgid "users"
 msgstr "gebruikers"
 
-#: alexia/apps/organization/models.py:141
+#: alexia/apps/organization/models.py:147
 msgid "organizations"
 msgstr "organisatie"
 
-#: alexia/apps/organization/models.py:164
+#: alexia/apps/organization/models.py:170
 msgid "may tend on events"
 msgstr "mag op borrels tappen"
 
-#: alexia/apps/organization/models.py:165
+#: alexia/apps/organization/models.py:171
 msgid "may create and modify events"
 msgstr "mag borrels aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:166
+#: alexia/apps/organization/models.py:172
 msgid "may create and modify users"
 msgstr "mag gebruikers aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:171
+#: alexia/apps/organization/models.py:177
 msgid "membership"
 msgstr "lidmaatschap"
 
-#: alexia/apps/organization/models.py:172
+#: alexia/apps/organization/models.py:178
 msgid "memberships"
 msgstr "lidmaatschappen"
 
-#: alexia/apps/organization/models.py:175
+#: alexia/apps/organization/models.py:181
 #, python-format
 msgid "%(user)s of %(organization)s"
 msgstr "%(user)s van %(organization)s"
 
-#: alexia/apps/organization/models.py:215 alexia/apps/organization/models.py:228
+#: alexia/apps/organization/models.py:221 alexia/apps/organization/models.py:234
 msgid "certificate"
 msgstr "certificaat"
 
-#: alexia/apps/organization/models.py:216
+#: alexia/apps/organization/models.py:222
 msgid "uploaded at"
 msgstr "geüpload op"
 
-#: alexia/apps/organization/models.py:222
+#: alexia/apps/organization/models.py:228
 msgid "approved by"
 msgstr "goedgekeurd door"
 
-#: alexia/apps/organization/models.py:224
+#: alexia/apps/organization/models.py:230
 msgid "approved at"
 msgstr "goedgekeurd op"
 
-#: alexia/apps/organization/models.py:233
+#: alexia/apps/organization/models.py:239
 msgid "IVA certificate of"
 msgstr "IVA certificaat van"
 
@@ -588,28 +610,28 @@ msgstr "Indicatoren"
 msgid "Comments"
 msgstr "Commentaar"
 
-#: alexia/apps/scheduling/forms.py:34
+#: alexia/apps/scheduling/forms.py:35
 msgid "The end time is earlier than the start time."
 msgstr "De einddtijd is eerder dan de begintijd."
 
-#: alexia/apps/scheduling/forms.py:51
+#: alexia/apps/scheduling/forms.py:52
 #, python-format
 msgid "There is already an event in %(location)s."
 msgstr "Er is al een activiteit in %(location)s."
 
-#: alexia/apps/scheduling/forms.py:59
+#: alexia/apps/scheduling/forms.py:64
 msgid "Filter"
 msgstr "Filter"
 
-#: alexia/apps/scheduling/forms.py:65
+#: alexia/apps/scheduling/forms.py:70
 msgid "Locations"
 msgstr "Ruimtes"
 
-#: alexia/apps/scheduling/forms.py:71
+#: alexia/apps/scheduling/forms.py:76
 msgid "Drinks only"
 msgstr "Alleen borrels"
 
-#: alexia/apps/scheduling/forms.py:72
+#: alexia/apps/scheduling/forms.py:77
 msgid "Meetings only"
 msgstr "Alleen vergaderingen"
 
@@ -709,7 +731,7 @@ msgstr "activiteiten"
 msgid "Assigned"
 msgstr "Toegewezen"
 
-#: alexia/apps/scheduling/models.py:197
+#: alexia/apps/scheduling/models.py:197 env/lib/python3.9/site-packages/django/forms/widgets.py:712
 msgid "Yes"
 msgstr "Ja"
 
@@ -717,7 +739,7 @@ msgstr "Ja"
 msgid "Maybe"
 msgstr "Misschien"
 
-#: alexia/apps/scheduling/models.py:199
+#: alexia/apps/scheduling/models.py:199 env/lib/python3.9/site-packages/django/forms/widgets.py:713
 msgid "No"
 msgstr "Nee"
 
@@ -766,7 +788,6 @@ msgid "You are not a manager of the selected organization."
 msgstr "Je bent geen manager bij de geselecteerde organisatie!"
 
 #: alexia/auth/mixins.py:94
-#| msgid "You are not a manager of the selected organization."
 msgid "You are not a bartender or manager of the selected organization."
 msgstr "Je bent geen tapper of manager bij de geselecteerde organisatie!"
 
@@ -774,11 +795,11 @@ msgstr "Je bent geen tapper of manager bij de geselecteerde organisatie!"
 msgid "You are not a foundation manager."
 msgstr "Je bent geen stichtingsmananger."
 
-#: alexia/conf/settings/base.py:38
+#: alexia/conf/settings/base.py:35
 msgid "Dutch"
 msgstr "Nederlands"
 
-#: alexia/conf/settings/base.py:39
+#: alexia/conf/settings/base.py:36
 msgid "English"
 msgstr "Engels"
 
@@ -793,6 +814,1246 @@ msgstr "Voer een geldige gebruikersnaam in"
 #: alexia/forms/mixins.py:22 templates/consumption/dcf.html:34 templates/registration/register.html:17
 msgid "Save"
 msgstr "Opslaan"
+
+#: env/lib/python3.9/site-packages/crispy_forms/tests/test_form_helper.py:129 env/lib/python3.9/site-packages/crispy_forms/tests/test_form_helper.py:139 env/lib/python3.9/site-packages/django/forms/fields.py:53
+msgid "This field is required."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/crispy_forms/tests/test_layout.py:391
+msgid "i18n text"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/crispy_forms/tests/test_layout.py:393
+msgid "i18n legend"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/crispy_forms/tests/test_layout_objects.py:134 env/lib/python3.9/site-packages/django/core/validators.py:31
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid value."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/contrib/messages/apps.py:7
+msgid "Messages"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/contrib/sitemaps/apps.py:7
+msgid "Site Maps"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/contrib/staticfiles/apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/contrib/syndication/apps.py:7
+#, fuzzy
+#| msgid "Specification"
+msgid "Syndication"
+msgstr "Specificatie"
+
+#: env/lib/python3.9/site-packages/django/core/paginator.py:45
+msgid "That page number is not an integer"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/paginator.py:47
+msgid "That page number is less than 1"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/paginator.py:52
+msgid "That page contains no results"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:102 env/lib/python3.9/site-packages/django/forms/fields.py:658
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid URL."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:154
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid integer."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:165
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid email address."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: env/lib/python3.9/site-packages/django/core/validators.py:239
+msgid "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:246
+msgid "Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or hyphens."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:255 env/lib/python3.9/site-packages/django/core/validators.py:275
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid IPv4 address."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:260 env/lib/python3.9/site-packages/django/core/validators.py:276
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid IPv6 address."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:270 env/lib/python3.9/site-packages/django/core/validators.py:274
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:304
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:310
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:342
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:351
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:361
+#, python-format
+msgid "Ensure this value has at least %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at least %(limit_value)d characters (it has %(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:376
+#, python-format
+msgid "Ensure this value has at most %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at most %(limit_value)d characters (it has %(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:395 env/lib/python3.9/site-packages/django/forms/fields.py:290 env/lib/python3.9/site-packages/django/forms/fields.py:325
+msgid "Enter a number."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:397
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:402
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:407
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural "Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:469
+#, python-format
+msgid "File extension '%(extension)s' is not allowed. Allowed extensions are: '%(allowed_extensions)s'."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/core/validators.py:521
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/base.py:1162 env/lib/python3.9/site-packages/django/forms/models.py:756 templates/base.html:32 templates/general/about.html:23 templates/general/about.html:34
+msgid "and"
+msgstr "en"
+
+#: env/lib/python3.9/site-packages/django/db/models/base.py:1164
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:104
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:105
+msgid "This field cannot be null."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:106
+msgid "This field cannot be blank."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:107
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:111
+#, python-format
+msgid "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:128
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:899 env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1766
+msgid "Integer"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:903 env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1764
+#, python-format
+msgid "'%(value)s' value must be an integer."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:978 env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1832
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:990
+#, python-format
+msgid "'%(value)s' value must be either True or False."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:991
+#, python-format
+msgid "'%(value)s' value must be either True, False, or None."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:993
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1034
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1098
+msgid "Comma-separated integers"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1147
+#, python-format
+msgid "'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD format."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1149 env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1292
+#, python-format
+msgid "'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid date."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1152
+msgid "Date (without time)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1290
+#, python-format
+msgid "'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1294
+#, python-format
+msgid "'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1298
+msgid "Date (with time)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1446
+#, python-format
+msgid "'%(value)s' value must be a decimal number."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1448
+#, fuzzy
+#| msgid "ID number"
+msgid "Decimal number"
+msgstr "Identificatienr."
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1587
+#, python-format
+msgid "'%(value)s' value has an invalid format. It must be in [DD] [HH:[MM:]]ss[.uuuuuu] format."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1590
+#, fuzzy
+#| msgid "Autorization"
+msgid "Duration"
+msgstr "Autorisatie"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1640 templates/organization/membership_detail.html:48 templates/profile/profile.html:15
+msgid "Email address"
+msgstr "E-mailadres"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1663
+#, fuzzy
+#| msgid "File format"
+msgid "File path"
+msgstr "Bestandsformaat"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1729
+#, python-format
+msgid "'%(value)s' value must be a float."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1731
+msgid "Floating point number"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1848
+#, fuzzy
+#| msgid "Email address"
+msgid "IPv4 address"
+msgstr "E-mailadres"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1879
+#, fuzzy
+#| msgid "Email address"
+msgid "IP address"
+msgstr "E-mailadres"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1959 env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1960
+#, python-format
+msgid "'%(value)s' value must be either None, True or False."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1962
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1997
+msgid "Positive integer"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2010
+msgid "Positive small integer"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2024
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2056
+msgid "Small integer"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2063
+msgid "Text"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2091
+#, python-format
+msgid "'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] format."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2093
+#, python-format
+msgid "'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an invalid time."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2096 templates/scheduling/event_bartender.html:14 templates/scheduling/event_list.html:36
+msgid "Time"
+msgstr "Tijd"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2222
+msgid "URL"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2244
+#, fuzzy
+#| msgid "additional data"
+msgid "Raw binary data"
+msgstr "aanvullende gegevens"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2294
+#, python-format
+msgid "'%(value)s' is not a valid UUID."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2296
+#, fuzzy
+#| msgid "iCal identifier"
+msgid "Universally unique identifier"
+msgstr "iCal identificatie"
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/files.py:221
+msgid "File"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/files.py:360
+msgid "Image"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:778
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:780
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1007
+msgid "One-to-one relationship"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1057
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1058
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1100
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: env/lib/python3.9/site-packages/django/forms/boundfield.py:146
+msgid ":?.!"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:245
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a whole number."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:396 env/lib/python3.9/site-packages/django/forms/fields.py:1126
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid date."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:420 env/lib/python3.9/site-packages/django/forms/fields.py:1127
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid time."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:442
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid date/time."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:471
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid duration."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:472
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:532
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:533
+msgid "No file was submitted."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:534
+msgid "The submitted file is empty."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:536
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural "Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:539
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:600
+msgid "Upload a valid image. The file you uploaded was either not an image or a corrupted image."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:762 env/lib/python3.9/site-packages/django/forms/fields.py:852 env/lib/python3.9/site-packages/django/forms/models.py:1270
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:853 env/lib/python3.9/site-packages/django/forms/fields.py:968 env/lib/python3.9/site-packages/django/forms/models.py:1269
+msgid "Enter a list of values."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:969
+msgid "Enter a complete value."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/fields.py:1185
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter a valid UUID."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#. Translators: This is the default suffix added to form field labels
+#: env/lib/python3.9/site-packages/django/forms/forms.py:86
+msgid ":"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/forms.py:212
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/formsets.py:91
+msgid "ManagementForm data is missing or has been tampered with"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/formsets.py:338
+#, python-format
+msgid "Please submit %d or fewer forms."
+msgid_plural "Please submit %d or fewer forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/forms/formsets.py:345
+#, python-format
+msgid "Please submit %d or more forms."
+msgid_plural "Please submit %d or more forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/forms/formsets.py:371 env/lib/python3.9/site-packages/django/forms/formsets.py:373
+#, fuzzy
+#| msgid "Orders"
+msgid "Order"
+msgstr "Transacties"
+
+#: env/lib/python3.9/site-packages/django/forms/formsets.py:375 templates/billing/permanentproduct_confirm_delete.html:20 templates/billing/permanentproduct_detail.html:17 templates/billing/permanentproduct_list.html:44 templates/billing/pricegroup_confirm_delete.html:21 templates/billing/pricegroup_detail.html:17 templates/billing/pricegroup_detail.html:59 templates/billing/pricegroup_list.html:35 templates/billing/productgroup_confirm_delete.html:19 templates/billing/productgroup_detail.html:17 templates/billing/productgroup_detail.html:44 templates/billing/productgroup_detail.html:88 templates/billing/productgroup_list.html:35 templates/billing/sellingprice_confirm_delete.html:17 templates/billing/temporaryproduct_confirm_delete.html:14 templates/billing/temporaryproduct_detail.html:17 templates/consumption/partials/unit_consumption.html:15 templates/consumption/partials/weight_consumption.html:19 templates/organization/membership_confirm_delete.html:20 templates/organization/membership_list.html:89 templates/scheduling/event_detail.html:99
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:751
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:755
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:761
+#, python-format
+msgid "Please correct the duplicate data for %(field_name)s which must be unique for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:770
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:1091
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:1158
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/models.py:1272
+#, python-format
+msgid "\"%(pk)s\" is not a valid value."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/utils.py:162
+#, python-format
+msgid "%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it may be ambiguous or it may not exist."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/widgets.py:395
+msgid "Clear"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/widgets.py:396
+msgid "Currently"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/widgets.py:397
+msgid "Change"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/forms/widgets.py:711 templates/scheduling/event_detail.html:138
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:788
+msgid "yes,no,maybe"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:817 env/lib/python3.9/site-packages/django/template/defaultfilters.py:834
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:836
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:838
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:840
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:842
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:844
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dateformat.py:62
+msgid "p.m."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dateformat.py:63
+msgid "a.m."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dateformat.py:68
+msgid "PM"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dateformat.py:69
+msgid "AM"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dateformat.py:150
+#, fuzzy
+#| msgid "Begin weight"
+msgid "midnight"
+msgstr "Begingewicht"
+
+#: env/lib/python3.9/site-packages/django/utils/dateformat.py:152
+msgid "noon"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:6 templates/scheduling/event_calendar.html:81
+msgid "Monday"
+msgstr "maandag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:6 templates/scheduling/event_calendar.html:81
+msgid "Tuesday"
+msgstr "dinsdag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:6 templates/scheduling/event_calendar.html:81
+msgid "Wednesday"
+msgstr "woensdag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:6 templates/scheduling/event_calendar.html:82
+msgid "Thursday"
+msgstr "donderdag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:6 templates/scheduling/event_calendar.html:82
+msgid "Friday"
+msgstr "vrijdag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:7 templates/scheduling/event_calendar.html:82
+msgid "Saturday"
+msgstr "zaterdag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:7 templates/scheduling/event_calendar.html:81
+msgid "Sunday"
+msgstr "zondag"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:10 templates/scheduling/event_calendar.html:83
+msgid "Mon"
+msgstr "ma"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:10 templates/scheduling/event_calendar.html:83
+msgid "Tue"
+msgstr "di"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:10 templates/scheduling/event_calendar.html:83
+msgid "Wed"
+msgstr "wo"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:10 templates/scheduling/event_calendar.html:84
+msgid "Thu"
+msgstr "do"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:10 templates/scheduling/event_calendar.html:84
+msgid "Fri"
+msgstr "vr"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:11 templates/scheduling/event_calendar.html:84
+msgid "Sat"
+msgstr "za"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:11 templates/scheduling/event_calendar.html:83
+msgid "Sun"
+msgstr "zo"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:14 templates/scheduling/event_calendar.html:75
+msgid "January"
+msgstr "januari"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:14 templates/scheduling/event_calendar.html:75
+msgid "February"
+msgstr "februari"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:14 templates/scheduling/event_calendar.html:75
+msgid "March"
+msgstr "maart"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:14 templates/scheduling/event_calendar.html:75
+msgid "April"
+msgstr "april"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:14 templates/scheduling/event_calendar.html:76 templates/scheduling/event_calendar.html:79
+msgid "May"
+msgstr "mei"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:14 templates/scheduling/event_calendar.html:76
+msgid "June"
+msgstr "juni"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:15 templates/scheduling/event_calendar.html:76
+msgid "July"
+msgstr "juli"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:15 templates/scheduling/event_calendar.html:76
+msgid "August"
+msgstr "augustus"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:15 templates/scheduling/event_calendar.html:77
+msgid "September"
+msgstr "september"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:15 templates/scheduling/event_calendar.html:77
+msgid "October"
+msgstr "oktober"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:15 templates/scheduling/event_calendar.html:77
+msgid "November"
+msgstr "november"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:16 templates/scheduling/event_calendar.html:77
+msgid "December"
+msgstr "december"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:19
+#, fuzzy
+#| msgid "and"
+msgid "jan"
+msgstr "en"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:19
+msgid "feb"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:19
+#, fuzzy
+#| msgid "Summary"
+msgid "mar"
+msgstr "Samenvatting"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:19
+msgid "apr"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:19
+#, fuzzy
+#| msgid "May"
+msgid "may"
+msgstr "mei"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:19
+#, fuzzy
+#| msgid "Sun"
+msgid "jun"
+msgstr "zo"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:20
+msgid "jul"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:20
+msgid "aug"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:20
+msgid "sep"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:20
+#, fuzzy
+#| msgid "product"
+msgid "oct"
+msgstr "product"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:20
+msgid "nov"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:20
+msgid "dec"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:23
+#, fuzzy
+#| msgid "Jan."
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr "jan"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:24
+#, fuzzy
+#| msgid "Feb."
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr "feb"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:25
+#, fuzzy
+#| msgid "March"
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "maart"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:26
+#, fuzzy
+#| msgid "April"
+msgctxt "abbrev. month"
+msgid "April"
+msgstr "april"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:27
+#, fuzzy
+#| msgid "May"
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "mei"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:28
+#, fuzzy
+#| msgid "June"
+msgctxt "abbrev. month"
+msgid "June"
+msgstr "juni"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:29
+#, fuzzy
+#| msgid "July"
+msgctxt "abbrev. month"
+msgid "July"
+msgstr "juli"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:30
+#, fuzzy
+#| msgid "Aug."
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr "aug"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:32
+#, fuzzy
+#| msgid "Oct."
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr "oct"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:33
+#, fuzzy
+#| msgid "Nov."
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr "nov"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:34
+#, fuzzy
+#| msgid "Dec."
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr "dec"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:37
+#, fuzzy
+#| msgid "January"
+msgctxt "alt. month"
+msgid "January"
+msgstr "januari"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:38
+#, fuzzy
+#| msgid "February"
+msgctxt "alt. month"
+msgid "February"
+msgstr "februari"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:39
+#, fuzzy
+#| msgid "March"
+msgctxt "alt. month"
+msgid "March"
+msgstr "maart"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:40
+#, fuzzy
+#| msgid "April"
+msgctxt "alt. month"
+msgid "April"
+msgstr "april"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:41
+#, fuzzy
+#| msgid "May"
+msgctxt "alt. month"
+msgid "May"
+msgstr "mei"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:42
+#, fuzzy
+#| msgid "June"
+msgctxt "alt. month"
+msgid "June"
+msgstr "juni"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:43
+#, fuzzy
+#| msgid "July"
+msgctxt "alt. month"
+msgid "July"
+msgstr "juli"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:44
+#, fuzzy
+#| msgid "August"
+msgctxt "alt. month"
+msgid "August"
+msgstr "augustus"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:45
+#, fuzzy
+#| msgid "September"
+msgctxt "alt. month"
+msgid "September"
+msgstr "september"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:46
+#, fuzzy
+#| msgid "October"
+msgctxt "alt. month"
+msgid "October"
+msgstr "oktober"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:47
+#, fuzzy
+#| msgid "November"
+msgctxt "alt. month"
+msgid "November"
+msgstr "november"
+
+#: env/lib/python3.9/site-packages/django/utils/dates.py:48
+#, fuzzy
+#| msgid "December"
+msgctxt "alt. month"
+msgid "December"
+msgstr "december"
+
+#: env/lib/python3.9/site-packages/django/utils/ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/text.py:67
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/text.py:233
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: env/lib/python3.9/site-packages/django/utils/text.py:252 env/lib/python3.9/site-packages/django/utils/timesince.py:83
+msgid ", "
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:10
+#, fuzzy, python-format
+#| msgid "month"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "maand"
+msgstr[1] "maand"
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:11
+#, fuzzy, python-format
+#| msgid "week"
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "week"
+msgstr[1] "week"
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:14
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: env/lib/python3.9/site-packages/django/utils/timesince.py:72
+msgid "0 minutes"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:110
+msgid "Forbidden"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:115
+msgid "You are seeing this message because this HTTPS site requires a 'Referer header' to be sent by your Web browser, but none was sent. This header is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:120
+msgid "If you have configured your browser to disable 'Referer' headers, please re-enable them, at least for this site, or for HTTPS connections, or for 'same-origin' requests."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:124
+msgid "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or including the 'Referrer-Policy: no-referrer' header, please remove them. The CSRF protection requires the 'Referer' header to do strict referer checking. If you're concerned about privacy, use alternatives like <a rel=\"noreferrer\" ...> for links to third-party sites."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:132
+msgid "You are seeing this message because this site requires a CSRF cookie when submitting forms. This cookie is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:137
+msgid "If you have configured your browser to disable cookies, please re-enable them, at least for this site, or for 'same-origin' requests."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:41
+msgid "No year specified"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:61 env/lib/python3.9/site-packages/django/views/generic/dates.py:111 env/lib/python3.9/site-packages/django/views/generic/dates.py:208
+msgid "Date out of range"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:90
+msgid "No month specified"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:142
+msgid "No day specified"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:188
+msgid "No week specified"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:338 env/lib/python3.9/site-packages/django/views/generic/dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:589
+#, python-format
+msgid "Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/dates.py:623
+#, python-format
+msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/list.py:67
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/generic/list.py:154
+#, python-format
+msgid "Empty list and '%(class_name)s.allow_empty' is False."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/static.py:42
+#, python-format
+msgid "\"%(path)s\" does not exist"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:345
+#, python-format
+msgid "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:368
+#, python-format
+msgid "You are seeing this page because <a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not configured any URLs."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:383
+msgid "Django Documentation"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Get started with Django"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:407
+msgid "Django Community"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonfield/fields.py:42 env/lib/python3.9/site-packages/jsonfield/forms.py:22
+#, fuzzy
+#| msgid "Enter a valid username"
+msgid "Enter valid JSON."
+msgstr "Voer een geldige gebruikersnaam in"
+
+#: env/lib/python3.9/site-packages/jsonfield/forms.py:15
+#, python-format
+msgid "\"%(value)s\" value must be valid JSON."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:3
+msgid "You're lazy..."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:61
+msgid "Parse error."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:67
+msgid "Invalid Request."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:74
+#, fuzzy
+#| msgid "Not found"
+msgid "Method not found."
+msgstr "Niet gevonden"
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:81
+msgid "Invalid params."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:87
+msgid "Internal error."
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:96
+msgid "JSON-RPC requests must be POST"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:102
+msgid "Invalid login credentials"
+msgstr ""
+
+#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:109
+msgid "Error missed by other exceptions"
+msgstr ""
 
 #: templates/403.html:3 templates/403.html:7
 msgid "Access denied"
@@ -821,10 +2082,6 @@ msgstr "Maak gebruiker"
 #: templates/base.html:28
 msgid "Event management system Alexia"
 msgstr "Borrelbeheersysteem Alexia"
-
-#: templates/base.html:32 templates/general/about.html:23 templates/general/about.html:34
-msgid "and"
-msgstr "en"
 
 #: templates/base.html:33
 msgid "individual contributors"
@@ -906,15 +2163,15 @@ msgstr "Help"
 msgid "No organization"
 msgstr "Geen organisatie"
 
-#: templates/base_app.html:123
+#: templates/base_app.html:125
 msgid "My profile"
 msgstr "Mijn profiel"
 
-#: templates/base_app.html:127
+#: templates/base_app.html:129
 msgid "Log out"
 msgstr "Uitloggen"
 
-#: templates/base_app.html:133
+#: templates/base_app.html:135
 msgid "Login with UTwente"
 msgstr "Inloggen met UTwente"
 
@@ -1045,10 +2302,6 @@ msgstr "Product verwijderen"
 #, python-format
 msgid "Are you sure you want to delete %(product)s from %(productgroup)s?"
 msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(productgroup)s?"
-
-#: templates/billing/permanentproduct_confirm_delete.html:20 templates/billing/permanentproduct_detail.html:17 templates/billing/permanentproduct_list.html:44 templates/billing/pricegroup_confirm_delete.html:21 templates/billing/pricegroup_detail.html:17 templates/billing/pricegroup_detail.html:59 templates/billing/pricegroup_list.html:35 templates/billing/productgroup_confirm_delete.html:19 templates/billing/productgroup_detail.html:17 templates/billing/productgroup_detail.html:44 templates/billing/productgroup_detail.html:88 templates/billing/productgroup_list.html:35 templates/billing/sellingprice_confirm_delete.html:17 templates/billing/temporaryproduct_confirm_delete.html:14 templates/billing/temporaryproduct_detail.html:17 templates/consumption/partials/unit_consumption.html:15 templates/consumption/partials/weight_consumption.html:19 templates/organization/membership_confirm_delete.html:20 templates/organization/membership_list.html:89 templates/scheduling/event_detail.html:99
-msgid "Delete"
-msgstr "Verwijderen"
 
 #: templates/billing/permanentproduct_detail.html:13 templates/billing/permanentproduct_list.html:40 templates/billing/pricegroup_detail.html:13 templates/billing/pricegroup_detail.html:55 templates/billing/pricegroup_list.html:31 templates/billing/productgroup_detail.html:13 templates/billing/productgroup_detail.html:40 templates/billing/productgroup_detail.html:84 templates/billing/productgroup_list.html:31 templates/billing/temporaryproduct_detail.html:13 templates/consumption/consumptionform_detail.html:24 templates/consumption/consumptionproduct_list.html:47 templates/consumption/consumptionproduct_list.html:87 templates/organization/membership_list.html:85 templates/scheduling/availability_list.html:35 templates/scheduling/event_detail.html:25 templates/scheduling/event_detail.html:95 templates/scheduling/mailtemplate_detail.html:13 templates/scheduling/mailtemplate_list.html:30
 msgid "Modify"
@@ -1437,10 +2690,6 @@ msgstr "Aantal keer getapt"
 msgid "User details"
 msgstr "Gebruikersgegevens"
 
-#: templates/organization/membership_detail.html:48 templates/profile/profile.html:15
-msgid "Email address"
-msgstr "E-mailadres"
-
 #: templates/organization/membership_detail.html:57
 msgid "Times tended last year"
 msgstr "Getapt afgelopen jaar"
@@ -1716,10 +2965,6 @@ msgstr "Soort"
 msgid "No availabilities defined."
 msgstr "Geen beschikbaarheden gedefinieerd."
 
-#: templates/scheduling/event_bartender.html:14 templates/scheduling/event_list.html:36
-msgid "Time"
-msgstr "Tijd"
-
 #: templates/scheduling/event_bartender.html:17 templates/scheduling/event_calendar.html:27 templates/scheduling/event_detail.html:126 templates/scheduling/event_list.html:42
 msgid "Bartenders"
 msgstr "Tappers"
@@ -1759,54 +3004,6 @@ msgstr "maand"
 #: templates/scheduling/event_calendar.html:73
 msgid "week"
 msgstr "week"
-
-#: templates/scheduling/event_calendar.html:75
-msgid "January"
-msgstr "januari"
-
-#: templates/scheduling/event_calendar.html:75
-msgid "February"
-msgstr "februari"
-
-#: templates/scheduling/event_calendar.html:75
-msgid "March"
-msgstr "maart"
-
-#: templates/scheduling/event_calendar.html:75
-msgid "April"
-msgstr "april"
-
-#: templates/scheduling/event_calendar.html:76 templates/scheduling/event_calendar.html:79
-msgid "May"
-msgstr "mei"
-
-#: templates/scheduling/event_calendar.html:76
-msgid "June"
-msgstr "juni"
-
-#: templates/scheduling/event_calendar.html:76
-msgid "July"
-msgstr "juli"
-
-#: templates/scheduling/event_calendar.html:76
-msgid "August"
-msgstr "augustus"
-
-#: templates/scheduling/event_calendar.html:77
-msgid "September"
-msgstr "september"
-
-#: templates/scheduling/event_calendar.html:77
-msgid "October"
-msgstr "oktober"
-
-#: templates/scheduling/event_calendar.html:77
-msgid "November"
-msgstr "november"
-
-#: templates/scheduling/event_calendar.html:77
-msgid "December"
-msgstr "december"
 
 #: templates/scheduling/event_calendar.html:78
 msgid "Jan."
@@ -1851,62 +3048,6 @@ msgstr "nov"
 #: templates/scheduling/event_calendar.html:80
 msgid "Dec."
 msgstr "dec"
-
-#: templates/scheduling/event_calendar.html:81
-msgid "Sunday"
-msgstr "zondag"
-
-#: templates/scheduling/event_calendar.html:81
-msgid "Monday"
-msgstr "maandag"
-
-#: templates/scheduling/event_calendar.html:81
-msgid "Tuesday"
-msgstr "dinsdag"
-
-#: templates/scheduling/event_calendar.html:81
-msgid "Wednesday"
-msgstr "woensdag"
-
-#: templates/scheduling/event_calendar.html:82
-msgid "Thursday"
-msgstr "donderdag"
-
-#: templates/scheduling/event_calendar.html:82
-msgid "Friday"
-msgstr "vrijdag"
-
-#: templates/scheduling/event_calendar.html:82
-msgid "Saturday"
-msgstr "zaterdag"
-
-#: templates/scheduling/event_calendar.html:83
-msgid "Sun"
-msgstr "zo"
-
-#: templates/scheduling/event_calendar.html:83
-msgid "Mon"
-msgstr "ma"
-
-#: templates/scheduling/event_calendar.html:83
-msgid "Tue"
-msgstr "di"
-
-#: templates/scheduling/event_calendar.html:83
-msgid "Wed"
-msgstr "wo"
-
-#: templates/scheduling/event_calendar.html:84
-msgid "Thu"
-msgstr "do"
-
-#: templates/scheduling/event_calendar.html:84
-msgid "Fri"
-msgstr "vr"
-
-#: templates/scheduling/event_calendar.html:84
-msgid "Sat"
-msgstr "za"
 
 #: templates/scheduling/event_calendar.html:85
 msgid "Week"
@@ -1964,10 +3105,6 @@ msgstr "Geen tijdelijke producten gedefinieerd."
 #: templates/scheduling/event_detail.html:131 templates/scheduling/event_detail.html:137 templates/scheduling/event_matrix.html:30
 msgid "Never"
 msgstr "Nooit"
-
-#: templates/scheduling/event_detail.html:138
-msgid "Unknown"
-msgstr "Onbekend"
 
 #: templates/scheduling/event_form.html:5 templates/scheduling/event_form.html:15
 msgid "Edit event"
@@ -2043,3 +3180,6 @@ msgstr "Mailsjablonen van %(organization)s"
 #: templates/scheduling/mailtemplate_list.html:36
 msgid "No mail templates defined."
 msgstr "Geen mailsjablonen gedefinieerd."
+
+#~ msgid "Logging in failed, please try again."
+#~ msgstr "Het inloggen is mislukt, probeer het alsjeblieft opnieuw."

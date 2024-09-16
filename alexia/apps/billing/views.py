@@ -57,6 +57,7 @@ class JulianaView(TenderRequiredMixin, DetailView):
             'products': self.get_product_list(),
             'countdown': settings.JULIANA_COUNTDOWN if hasattr(settings, 'JULIANA_COUNTDOWN') else 5,
             'androidapp': self.request.META.get('HTTP_X_REQUESTED_WITH') == 'net.inter_actief.juliananfc',
+            'writeoff': self.object.organizer.writeoff_enabled
         })
         return context
 

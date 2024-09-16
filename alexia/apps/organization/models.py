@@ -133,6 +133,7 @@ class Organization(models.Model):
     color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     is_active = models.BooleanField(_('is active'), default=True)
+    writeoff_enabled = models.BooleanField(_('writeoff enabled'), default=False)
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='Membership',

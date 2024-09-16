@@ -30,6 +30,7 @@ State = {
     ERROR: 2,
     CHECK: 3,
     MESSAGE: 4,
+	WRITEOFF: 5,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -87,6 +88,14 @@ State = {
                 $('#current-message').html(argument);
                 $('#message-screen').show();
                 break;
+			case this.WRITEOFF:
+				this.current = this.WRITEOFF;
+				this._hideAllScreens();
+				console.log('Changing to WRITEOFF');
+
+				// HTML Magic and rendering
+				// argument is the Receipt object
+				break;
             default:
                 console.log('Error: no known state');
                 break;
@@ -302,7 +311,10 @@ Receipt = {
         var sum = Receipt.updateTotalAmount();
         var amount = Math.ceil(sum / 10) * 10;
         State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
-    }
+    },
+	writeoff: () => {
+		State.toggleTo(State.WRITEOFF, this);
+	}
 };
 
 /*
@@ -467,6 +479,9 @@ $(function () {
                 break;
             case 'ok':
                 State.toggleTo(State.SALES);
+                break;
+			case 'writeoff':
+                alert("TODO");
                 break;
             default:
                 Display.set('ongeimplementeerde functie');

@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
-    RfidCard, SellingPrice,
+    RfidCard, SellingPrice, WriteoffCategory,
 )
 
 

@@ -29,6 +29,7 @@
                 },
                 androidapp: {{ androidapp|yesno:"true,false" }},
                 countdown: {{ countdown }},
+				writeoff: {{ writeoff|yesno:"true,false" }}
             };
         </script>
     </head>
@@ -72,8 +73,13 @@
                                                       data-command="cancel">Annuleer</a></div>
                             <div class="col-xs-12"><a href="#" class="btn btn-block btn-info btn-specialpad command"
                                                       data-command="check">Saldo controleren</a></div>
+                            {% if writeoff %}
+                            <div class="col-xs-12"><a href="#" class="btn btn-block btn-primary btn-specialpad command"
+                                                      data-command="writeoff">Afschrijven</a></div>
+                            {% else %}
                             <div class="col-xs-12"><a href="#" class="btn btn-block btn-primary btn-specialpad command"
                                                       data-command="cash">Contant</a></div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-xs-5">
@@ -191,6 +197,10 @@
                     </div>
                 </div>
             </div>
+            {% if writeoff %}
+            <div id="writeoff-screen">
+            </div>
+            {% endif %}
         </div>
         {% compress js %}
         {# Vendor #}
