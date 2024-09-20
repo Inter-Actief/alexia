@@ -17,6 +17,9 @@ if DEBUG:
     INSTALLED_APPS = INSTALLED_APPS + ['rosetta']
     ROSETTA_POFILE_WRAP_WIDTH = 0
 
+    # Enable django-extensions in debug mode (runserver_plus cmd)
+    INSTALLED_APPS = INSTALLED_APPS + ['django_extensions']
+
 # Database
 DATABASES = {
     'default': {
