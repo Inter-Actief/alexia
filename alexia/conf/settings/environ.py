@@ -45,6 +45,16 @@ IGNORE_REQUIRE_SECURE = False
 PYDEV_DEBUGGER        = False
 PYDEV_DEBUGGER_IP     = None
 
+
+# Only enable rosetta and runserver_plus in debug mode
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + ['rosetta']
+    ROSETTA_POFILE_WRAP_WIDTH = 0
+
+    # Enable django-extensions in debug mode (runserver_plus cmd)
+    INSTALLED_APPS = INSTALLED_APPS + ['django_extensions']
+
+
 # Do not redirect to HTTPS, because the nginx proxy container only listens on HTTP
 SECURE_SSL_REDIRECT   = False
 

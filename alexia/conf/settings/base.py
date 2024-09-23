@@ -74,7 +74,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'debug_toolbar',
     'jsonrpc',
-    'sslserver',
     'wkhtmltopdf',
 
     # OIDC Client (authentication via auth.ia)
