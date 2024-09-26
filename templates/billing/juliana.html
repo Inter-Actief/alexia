@@ -29,7 +29,15 @@
                 },
                 androidapp: {{ androidapp|yesno:"true,false" }},
                 countdown: {{ countdown }},
-				writeoff: {{ writeoff|yesno:"true,false" }}
+				writeoff: {{ writeoff|yesno:"true,false" }},
+                writeoffCategories: {
+                {% for category in writeoff_categories %}
+                    {{ category.id }}: {
+                        name: "{{ category.name|escapejs }}",
+                        id: {{ category.id }},
+                    },
+                {% endfor %}
+                },
             };
         </script>
     </head>
@@ -82,7 +90,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="col-xs-5">
+                    <div class="col-xs-5" id="products">
                         <div class="tab tab-sale">
                             <div class="well">
                                 <div class="row">
@@ -102,6 +110,30 @@
                             </div>
                         </div>
                     </div>
+                    {% if writeoff %}
+                    <div id="writeoff-screen">
+                        <div class="col-xs-9">
+                            <div class="tab tab-sale">
+                                <div class="well">
+                                    <div class="row">
+                                        {% for category in writeoff_categories %}
+                                            <div class="col-xs-4">
+                                                <a href="#" class="btn btn-block btn-info command"
+                                                   {% if category.color %}style="background-color: #{{ category.color }}; border-color: #{{ category.color }};"{% endif %}
+                                                   data-command="writeoffCategory" data-category="{{ category.id }}">
+                                                    <span style="color: #ffffff">{{ category.name }}</span>
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-cs-4">
+                            {% comment %} Insert to be withdrawn {% endcomment %}
+                        </div>
+                    </div>
+                    {% endif %}
                     <div class="col-xs-3 receipt-container">
                         <h3>Rekening</h3>
                         <div class="well" id="receipt">
@@ -197,10 +229,6 @@
                     </div>
                 </div>
             </div>
-            {% if writeoff %}
-            <div id="writeoff-screen">
-            </div>
-            {% endif %}
         </div>
         {% compress js %}
         {# Vendor #}

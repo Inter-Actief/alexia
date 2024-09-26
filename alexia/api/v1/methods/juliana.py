@@ -10,7 +10,7 @@ from alexia.api.exceptions import (
     ForbiddenError, InvalidParamsError, ObjectNotFoundError,
 )
 from alexia.apps.billing.models import (
-    Authorization, Order, Product, Purchase, RfidCard,
+    Authorization, Order, Product, Purchase, RfidCard, WriteoffCategory, WriteOffOrder, WriteOffPurchase
 )
 from alexia.apps.scheduling.models import Event
 
@@ -186,3 +186,51 @@ def juliana_user_check(request, event_id, user_id):
         return int(order_sum * 100)
     else:
         return 0
+
+@jsonrpc_method('juliana.writeoff.save(Number,Number,Array) -> Nil', site=api_v1_site, authenticated=True)
+@transaction.atomic
+def juliana_writeoff_save(request, event_id, writeoff_id, purchases):
+    """Saves a writeoff order in the Database"""
+    event = _get_validate_event(request, event_id)
+    
+    try:
+        writeoff_cat = WriteoffCategory.objects.get(id=writeoff_id)
+    except WriteoffCategory.DoesNotExist:
+        raise InvalidParamsError('Writeoff Category %s not found' % writeoff_id)
+
+    order = WriteOffOrder(event=event, added_by=request.user, writeoff_category=writeoff_cat)
+    order.save()
+
+    for p in purchases:
+        try:
+            product = Product.objects.get(pk=p['product'])
+        except Product.DoesNotExist:
+            raise InvalidParamsError('Product %s not found' % p['product'])
+
+        if product.is_permanent:
+            product = product.permanentproduct
+            if product.organization != event.organizer \
+                    or product.productgroup not in event.pricegroup.productgroups.all():
+                raise InvalidParamsError('Product %s is not available for this event' % p['product'])
+        elif product.is_temporary:
+            product = product.temporaryproduct
+            if event != product.event:
+                raise InvalidParamsError('Product %s is not available for this event' % p['product'])
+        else:
+            raise OtherError('Product %s is broken' % p['product'])
+
+        amount = p['amount']
+
+        if p['amount'] <= 0:
+            raise InvalidParamsError('Zero or negative amount not allowed')
+
+        price = amount * product.get_price(event)
+
+        if price != p['price'] / Decimal(100):
+            raise InvalidParamsError('Price for product %s is incorrect' % p['product'])
+        
+        purchase = WriteOffPurchase(order=order, product=product.name, amount=amount, price=price)
+        purchase.save()
+
+    order.save(force_update=True)  # ensure order.amount is correct
+    return True

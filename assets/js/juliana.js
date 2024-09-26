@@ -30,7 +30,7 @@ State = {
     ERROR: 2,
     CHECK: 3,
     MESSAGE: 4,
-	WRITEOFF: 5,
+    WRITEOFF: 5,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -88,14 +88,18 @@ State = {
                 $('#current-message').html(argument);
                 $('#message-screen').show();
                 break;
-			case this.WRITEOFF:
-				this.current = this.WRITEOFF;
-				this._hideAllScreens();
-				console.log('Changing to WRITEOFF');
+            case this.WRITEOFF:
+                this.current = this.WRITEOFF;
 
-				// HTML Magic and rendering
-				// argument is the Receipt object
-				break;
+                // Do not hide all screens, since we want to show the total
+                // (to know how much we're writing off)
+                $("#keypad").hide();
+                $("#products").hide();
+                
+                // HTML Magic and rendering
+                // argument is the Receipt object
+                $('#writeoff-screen').show();
+                break;
             default:
                 console.log('Error: no known state');
                 break;
@@ -110,6 +114,11 @@ State = {
         $('#cashier-screen').hide();
         $('#error-screen').hide();
         $('#message-screen').hide();
+        $('#writeoff-screen').hide();
+
+        // Show possible hidden screens in case of writeoff
+        $("#keypad").show();
+        $("#products").show();
     }
 };
 
@@ -295,7 +304,6 @@ Receipt = {
 
         clearInterval(Receipt.counterInterval);
         Receipt.confirmPay(rpcRequest);
-
     },
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
@@ -312,9 +320,27 @@ Receipt = {
         var amount = Math.ceil(sum / 10) * 10;
         State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
     },
-	writeoff: () => {
-		State.toggleTo(State.WRITEOFF, this);
-	}
+    writeoffNow: function (categoryId) {
+        let rpcRequest = {
+            jsonrpc: '2.0',
+            method: 'juliana.writeoff.save',
+            params: {
+                event_id: Settings.event_id,
+                writeoff_id: categoryId,
+                purchases: Receipt.receipt,
+            },
+            id: 2 // id used for?
+        }
+        
+        // writing off
+        IAjax.request(rpcRequest, function (result) {
+            if (result.error) {
+                State.toggleTo(State.ERROR, 'Error with writeoff: ' + result.error);
+            } else {
+                State.toggleTo(State.SALES);
+            }
+        })
+    }
 };
 
 /*
@@ -480,8 +506,12 @@ $(function () {
             case 'ok':
                 State.toggleTo(State.SALES);
                 break;
-			case 'writeoff':
-                alert("TODO");
+            case 'writeoff':
+                State.toggleTo(State.WRITEOFF);
+                break;
+            case 'writeoffCategory':
+                // writeoff category with id:
+                Receipt.writeoffNow($(this).data('category'))
                 break;
             default:
                 Display.set('ongeimplementeerde functie');

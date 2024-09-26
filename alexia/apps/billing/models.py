@@ -356,10 +356,16 @@ class WriteOffOrder(models.Model):
     )
     amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2)
 
+    writeoff_category = models.ForeignKey(
+        WriteoffCategory,
+        on_delete=models.PROTECT, # We cannot delete purchases
+        verbose_name=_('writeoff category')
+    )
+    
     class Meta:
         ordering = ['-placed_at']
-        verbose_name = _('order')
-        verbose_name_plural = _('orders')
+        verbose_name = _('writeoff order')
+        verbose_name_plural = _('writeoff orders')
 
     def __str__(self):
         return _('{time} on {event}').format(
@@ -373,7 +379,7 @@ class WriteOffOrder(models.Model):
 
     def get_price(self):
         amount = Decimal('0.0')
-        for purchase in self.purchases.all():
+        for purchase in self.writeoff_purchases.all():
             amount += purchase.price
         return amount
 
@@ -384,11 +390,6 @@ class WriteOffPurchase(models.Model):
     product = models.CharField(_('product'), max_length=32)
     amount = models.PositiveSmallIntegerField(_('amount'))
     price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)
-    writeoff_category = models.ForeignKey(
-        WriteoffCategory,
-        on_delete=models.PROTECT, # We cannot delete purchases
-		verbose_name=_('writeoff category')
-	)
 
     class Meta:
         verbose_name = _('purchase')

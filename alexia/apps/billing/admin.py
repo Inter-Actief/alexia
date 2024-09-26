@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Authorization, Order, PermanentProduct, PriceGroup, ProductGroup, Purchase,
-    RfidCard, SellingPrice, WriteoffCategory,
+    RfidCard, SellingPrice, WriteOffOrder,
 )
 
 
@@ -40,6 +40,23 @@ class OrderAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if obj and obj.synchronized:
             return self.readonly_fields + self.fields
+        return self.readonly_fields
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def save_formset(self, request, form, formset, change):
+        formset.save()
+        form.instance.save()  # Updates Order.amount
+        
+@admin.register(WriteOffOrder)
+class WriteoffOrderAdmin(admin.ModelAdmin):
+    date_hierarchy = 'placed_at'
+    list_display = ['event', 'placed_at', 'amount']
+    raw_id_fields = ['added_by', 'event']
+    readonly_fields = ['placed_at']
+
+    def get_readonly_fields(self, request, obj=None):
         return self.readonly_fields
 
     def has_delete_permission(self, request, obj=None):
