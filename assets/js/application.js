@@ -43,6 +43,32 @@ $.ajaxSetup({
     }
 });
 
+function resetCommentPrompts() {
+    $('.bartender_availability_comment').click(function () {
+        let event_id = $(this).data('event-id');
+        let comment = prompt('Enter a comment');
+
+        if (comment == null || comment == '') {
+            return;
+        }
+
+        if (comment.length > 100) {
+            alert('Comment is too long. Maximum 100 characters allowed.');
+            return;
+        }
+
+        const $this = $(this);
+
+        $.post('/scheduling/ajax/bartender_availability/comment/', {
+            event_id,
+            comment
+        }, function (data) {
+            $this.replaceWith(data);
+            resetCommentPrompts();
+        }, "text");
+    });
+}
+
 $(function () {
 
     $('.bartender_availability').change(function () {
@@ -55,6 +81,8 @@ $(function () {
             $('#assigned_bartenders_' + event_id).html(data).effect("highlight");
         }, "text");
     });
+
+    resetCommentPrompts();
 
     $('.dateinput').datepicker({
         autoclose: true,
