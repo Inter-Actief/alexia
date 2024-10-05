@@ -31,7 +31,7 @@
                 </span>
             </td>
             {% for e in t.events %}
-            <td title="{{e.bartender_availability.comment}}" class="text-center"  style="display: flex; height: 100%; align-items: center; justify-content: center">
+            <td title="{{e.bartender_availability.comment}}" class="text-center">
                 <a href="{% url 'edit-event-bartender-availability' pk=e.event.pk user_pk=t.tender.user.pk %}">
                     <span style="border-width: thick" class="label label-{{ e.bartender_availability.availability.css_class|default:'default' }}">{{ e.bartender_availability.availability|default:'?' }}</span>
                 </a>
