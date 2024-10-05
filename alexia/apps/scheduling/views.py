@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.db.models import Prefetch, Q
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -108,7 +108,9 @@ def event_list_view(request):
         availabilities = list(request.organization.availabilities.exclude(nature=Availability.ASSIGNED))
     # Net als onze BartenderAvailabilities
     bartender_availabilities = BartenderAvailability.objects.filter(
-        user_id=request.user.pk).values('event_id', 'availability_id')
+        user_id=request.user.pk).values('event_id', 'availability_id', 'comment')
+    
+    bartender_availabilities = {ba['event_id']: ba for ba in bartender_availabilities}
 
     return render(request, 'scheduling/event_list.html', locals())
 
@@ -193,11 +195,11 @@ class EventMatrixView(TenderOrManagerRequiredMixin, TemplateView):
         tenders = []
         for tender in tenders_list:
             tender_availabilities = [
-                next((a.availability for a in e.bartender_availabilities.all() if a.user == tender.user), None)
+                next((a for a in e.bartender_availabilities.all() if a.user == tender.user), None)
                 for e in events
             ]
             tender_events = [
-                {'event': event, 'availability': availability}
+                {'event': event, 'bartender_availability': availability}
                 for event, availability in zip(events, tender_availabilities)
             ]
             tended = [
@@ -235,13 +237,13 @@ class EventDetailView(DetailView):
         tender_list = []
         for tender in tenders:
             try:
-                availability = bas[tender.user].availability
+                availability = bas[tender.user]
             except KeyError:
                 availability = None
 
             tender_list.append({
                 'tender': tender,
-                'availability': availability,
+                'bartender_availability': availability,
                 'last_tended': tender.last_tended()
             })
         return {'tender_list': tender_list}
@@ -326,6 +328,28 @@ class EventDelete(PlannerRequiredMixin, DenyWrongOrganizationMixin, DeleteView):
     def get_success_url(self):
         log.event_deleted(self.request.user, self.object)
         return super(EventDelete, self).get_success_url()
+
+
+@login_required
+def set_bartender_availability_comment(request):
+    event = get_object_or_404(Event, pk=request.POST.get('event_id'))
+
+    if (request.organization not in event.participants.all()) or \
+            not request.user.profile.is_tender(request.organization):
+        raise PermissionDenied
+    
+    if not (request.method == 'POST' and request.is_ajax()):
+        return HttpResponseBadRequest("NOTOK")
+    
+    comment = request.POST.get('comment')
+    if len(comment) > 100:
+        return HttpResponseBadRequest("TOOLONG")
+    availability = get_object_or_404(BartenderAvailability, event=event, user=request.user)
+    availability.comment = comment
+    availability.save()
+
+
+    return render(request, 'scheduling/partials/availability_comment.html', {'e': event, 'ba': availability})
 
 
 @login_required
