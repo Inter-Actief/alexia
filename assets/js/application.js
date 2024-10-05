@@ -78,7 +78,8 @@ $(function () {
             event_id: event_id,
             availability_id: $(this).val()
         }, function (data) {
-            $('#assigned_bartenders_' + event_id).html(data).effect("highlight");
+            $('#assigned_bartenders_' + event_id).html(data);
+            $('#bartender_availability_comment_' + event_id).css('visibility', 'visible');
         }, "text");
     });
 

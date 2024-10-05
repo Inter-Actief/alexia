@@ -109,6 +109,8 @@ def event_list_view(request):
     # Net als onze BartenderAvailabilities
     bartender_availabilities = BartenderAvailability.objects.filter(
         user_id=request.user.pk).values('event_id', 'availability_id', 'comment')
+    
+    bartender_availabilities = {ba['event_id']: ba for ba in bartender_availabilities}
 
     return render(request, 'scheduling/event_list.html', locals())
 
@@ -340,7 +342,7 @@ def set_bartender_availability_comment(request):
         return HttpResponseBadRequest("NOTOK")
     
     comment = request.POST.get('comment')
-    if len(comment) > BartenderAvailability.comment.max_length:
+    if len(comment) > 100:
         return HttpResponseBadRequest("TOOLONG")
     availability = get_object_or_404(BartenderAvailability, event=event, user=request.user)
     availability.comment = comment
