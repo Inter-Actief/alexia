@@ -14,11 +14,14 @@
                     {% trans 'Consumption form' %}
                 </a>
             {% endif %}
-            {% if event.organizer == request.organization and is_manager and event.orders.exists %}
-                <a href="{% url 'event-orders' event.pk %}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-euro"></span>
-                    {% trans 'Orders' %}
-                </a>
+            {% if event.organizer == request.organization and is_manager %}
+				{% comment %} Nested if because using brackets creates a TemplateSyntaxError {% endcomment %}
+				{% if event.orders.exists or event.writeoff_orders.exists %}
+                	<a href="{% url 'event-orders' event.pk %}" class="btn btn-default">
+                	    <span class="glyphicon glyphicon-euro"></span>
+                	    {% trans 'Orders' %}
+                	</a>
+				{% endif %}
             {% endif %}
             <a href="{% url 'edit-event' event.pk %}" class="btn btn-default">
                 <span class="glyphicon glyphicon-pencil"></span>
