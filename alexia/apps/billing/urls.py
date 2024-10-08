@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     url(r'^order/$', views.OrderListView.as_view(), name='orders'),
     url(r'^order/(?P<pk>[0-9]+)/$', views.OrderDetailView.as_view(), name='event-orders'),
+    url(r'^order/writeoff/(?P<pk>[0-9]+)/$', views.WriteOffExportView.as_view(), name='writeoff_export'),
     url(r'^order/export/$', views.OrderExportView.as_view(), name='export-orders'),
     url(r'^stats/(?P<year>[0-9]{4})/$', views.OrderYearView.as_view(), name='year-orders'),
     url(r'^stats/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.OrderMonthView.as_view(), name='month-orders'),
