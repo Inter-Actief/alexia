@@ -99,7 +99,10 @@
                     {% for category, data in grouped_writeoff_data.items %}
                         <!-- Section Header for each Category -->
                         <tr>
-                            <th colspan="3">{{ category }}</th>
+                            <th colspan="3">
+                                {% if data.description %}<abbr title="{{ data.description }}">{{ category }}</abbr>
+                                {% else %}{{ category }}{% endif %}
+                            </th>
                         </tr>
 
                         <!-- Products for the current category -->
@@ -154,4 +157,34 @@
         </div>
     </div>
 </div>
+{% if writeoff_exists %}
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <h3>{% trans 'Written off orders' %}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'ID' %}</th>
+                        <th>{% trans 'Amount' %}</th>
+                        <th>{% trans 'Category' %}</th>
+                        <th>{% trans 'Timestamp' %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in writeoff_orders %}
+                    <tr{% if order.amount < 0 %} class="tr-muted"{% endif %}>
+                        <td><a href="{% url 'writeoff-order' order.pk %}">{{ order.pk }}</a></td>
+                        <td>&euro; {{ order.amount|floatformat:2 }}</td>
+                        <td>{{ order.writeoff_category.name }}</td>
+                        <td>{{ order.placed_at }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock content %}

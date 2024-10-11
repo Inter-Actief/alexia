@@ -31,6 +31,7 @@ State = {
     CHECK: 3,
     MESSAGE: 4,
     WRITEOFF: 5,
+    WRITEOFF_TIMER: 6,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -42,6 +43,7 @@ State = {
                 clearInterval(Receipt.counterInterval);
                 Receipt.clear();
                 $('#payment-receipt').html('');
+                $('#writeoff-receipt').html('');
                 $('#countdownbox').show();
 
                 this._hideAllScreens();
@@ -71,6 +73,27 @@ State = {
                 $('#payment-receipt').html(receiptHTML);
 
                 $('#rfid-screen').show();
+                break;
+            case this.WRITEOFF_TIMER:
+                console.log('Changing to WRITEOFF_TIMER...');
+                this.current = this.WRITEOFF_TIMER;
+                this._hideAllScreens();
+
+                var receipt = Receipt.receipt;
+                var receiptHTML = '';
+                var total = 0;
+                for (var i = 0; i < receipt.length; i++) {
+                    receiptHTML += '<tr>';
+                    receiptHTML += '<td>' + Settings.products[receipt[i].product].name + '</td>';
+                    receiptHTML += '<td>' + receipt[i].amount + '</td>';
+                    receiptHTML += '<td>&euro;' + (receipt[i].price / 100).toFixed(2) + '</td>';
+                    receiptHTML += '</tr>';
+                    total += receipt[i].price;
+                }
+                receiptHTML += '<tr class="active"><td><strong>Total:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
+                $('#writeoff-receipt').html(receiptHTML);
+
+                $('#writeoff-timer-screen').show();
                 break;
             case this.ERROR:
                 this.current = this.ERROR;
@@ -115,6 +138,7 @@ State = {
         $('#error-screen').hide();
         $('#message-screen').hide();
         $('#writeoff-screen').hide();
+        $('#writeoff-timer-screen').hide();
 
         // Show possible hidden screens in case of writeoff
         $("#keypad").show();
@@ -320,15 +344,37 @@ Receipt = {
         var amount = Math.ceil(sum / 10) * 10;
         State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
     },
-    writeoffNow: function (categoryId) {
+    writeoff: function(categoryId) {
+        if (Receipt.receipt.length > 0) {
+            console.log('Proceeding to countdown.');
+            State.toggleTo(State.WRITEOFF_TIMER);
+
+            Receipt.payData = {
+                event_id: Settings.event_id,
+                writeoff_id: categoryId,
+                purchases: Receipt.receipt
+            };
+
+            var countdown = Settings.countdown - 1;
+            $('#writeoff-countdown').text(countdown + 1);
+            Receipt.counterInterval = setInterval(function () {
+                $('#writeoff-countdown').text(countdown);
+                if (countdown === 0) {
+                    Receipt.writeoffNow();
+                }
+                countdown--;
+            }, 1000);
+        } else {
+            console.log('Info: receipt empty');
+            Display.set('Please select products!');
+            State.toggleTo(State.ERROR, 'Error: Geen producten geselecteerd!');
+        }
+    },
+    writeoffNow: function () {
         let rpcRequest = {
             jsonrpc: '2.0',
             method: 'juliana.writeoff.save',
-            params: {
-                event_id: Settings.event_id,
-                writeoff_id: categoryId,
-                purchases: Receipt.receipt,
-            },
+            params: Receipt.payData,
             id: 2 // id used for?
         }
         
@@ -503,6 +549,9 @@ $(function () {
             case 'payNow':
                 Receipt.payNow();
                 break;
+            case 'writeoffNow':
+                Receipt.writeoffNow();
+                break;
             case 'ok':
                 State.toggleTo(State.SALES);
                 break;
@@ -511,7 +560,10 @@ $(function () {
                 break;
             case 'writeoffCategory':
                 // writeoff category with id:
-                Receipt.writeoffNow($(this).data('category'))
+                Receipt.writeoff($(this).data('category'))
+                break;
+            case 'cancelWriteoff':
+                State.toggleTo(State.SALES);
                 break;
             default:
                 Display.set('ongeimplementeerde functie');

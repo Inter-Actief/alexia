@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from collections import defaultdict
 from decimal import Decimal
 
 from django.conf import settings
@@ -335,7 +336,7 @@ class Purchase(models.Model):
 @python_2_unicode_compatible
 class WriteoffCategory(models.Model):
     name = models.CharField(_('name'), max_length=20)
-    description = models.CharField(_('short description'), max_length=50)
+    description = models.CharField(_('short description'), max_length=80)
     color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
     organization = models.ForeignKey(
         Organization,
@@ -343,6 +344,12 @@ class WriteoffCategory(models.Model):
         verbose_name=_('organization')
     )
     is_active = models.BooleanField(_('active'), default=False)
+
+    def __str__(self):
+        return _('{name} for {organization}').format(
+            name=self.name,
+            organization=self.organization
+        )
 
 @python_2_unicode_compatible
 class WriteOffOrder(models.Model):
@@ -397,3 +404,24 @@ class WriteOffPurchase(models.Model):
 
     def __str__(self):
         return '%s x %s' % (self.amount, self.product)
+
+    @classmethod
+    def get_writeoff_products(cls, event):
+        writeoff_products = WriteOffPurchase.objects.filter(order__event=event) \
+            .values('order__writeoff_category__name', 'order__writeoff_category__description', 'product') \
+            .annotate(total_amount=models.Sum('amount'), total_price=models.Sum('price')) \
+            .order_by('order__writeoff_category__name', 'product')
+
+        # Group writeoffs by category
+        grouped_writeoff_products = defaultdict(lambda: {'products': [], 'total_amount': 0, 'total_price': 0, 'description': ''})
+
+        # calculate total product amount and total price per category
+        for product in writeoff_products:
+            category_name = product['order__writeoff_category__name']
+            grouped_writeoff_products[category_name]['description'] = product['order__writeoff_category__description']
+            grouped_writeoff_products[category_name]['products'].append(product)
+            grouped_writeoff_products[category_name]['total_amount'] += product['total_amount']
+            grouped_writeoff_products[category_name]['total_price'] += product['total_price']
+
+        # Convert defaultdict to a regular dict for easier template use
+        return dict(grouped_writeoff_products)

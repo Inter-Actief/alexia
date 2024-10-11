@@ -35,8 +35,7 @@ from alexia.views import (
     OrganizationFilterMixin, OrganizationFormMixin,
 )
 
-from .models import Order, Purchase, WriteOffPurchase, WriteoffCategory
-from alexia.utils.writeoff import get_writeoff_products
+from .models import Order, Purchase, WriteOffOrder, WriteOffPurchase, WriteoffCategory
 import json
 
 class JulianaView(TenderRequiredMixin, DetailView):
@@ -133,12 +132,16 @@ class OrderDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailVi
 
         writeoff_exists = self.object.writeoff_orders.exists
         
+        grouped_writeoff_products = None
+        writeoff_orders = None
         if writeoff_exists:
-            grouped_writeoff_products = get_writeoff_products(self.object, WriteOffPurchase.objects)
+            grouped_writeoff_products = WriteOffPurchase.get_writeoff_products(event=self.object)
+            writeoff_orders = WriteOffOrder.objects.filter(event=self.object).order_by('-placed_at')
 
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         context.update({
             'orders': self.object.orders.select_related('authorization__user').order_by('-placed_at'),
+            'writeoff_orders': writeoff_orders,
             'products': products,
             'revenue': products.aggregate(Sum('price'))['price__sum'],
             'writeoff_exists': writeoff_exists,
@@ -146,6 +149,22 @@ class OrderDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailVi
         })
 
         return context
+
+
+class WriteOffDetailView(LoginRequiredMixin, DetailView):
+    model = WriteOffOrder
+    template_name = 'billing/writeoff_order_detail.html'
+
+    def get_object(self, queryset=None):
+        obj = super(WriteOffDetailView, self).get_object(queryset)
+
+        if not self.request.user.is_superuser \
+                and not self.request.user.profile.is_manager(obj.authorization.organization) \
+                and not obj.authorization.user == self.request.user:
+            raise PermissionDenied
+
+        return obj
+
 
 class WriteOffExportView(ManagerRequiredMixin, DenyWrongOrganizationMixin, View):
     organization_field = 'organizer'
@@ -160,9 +179,10 @@ class WriteOffExportView(ManagerRequiredMixin, DenyWrongOrganizationMixin, View)
         if not writeoff_exists:
             raise Http404
         
-        grouped_writeoff_products = get_writeoff_products(event, WriteOffPurchase.objects)
+        grouped_writeoff_products = WriteOffPurchase.get_writeoff_products(event=event)
         
         return JsonResponse(grouped_writeoff_products)
+
 
 class OrderExportView(ManagerRequiredMixin, FormView):
     template_name = 'billing/order_export_form.html'

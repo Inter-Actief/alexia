@@ -113,24 +113,32 @@
                     {% if writeoff %}
                     <div id="writeoff-screen">
                         <div class="col-xs-9">
-                            <div class="tab tab-sale">
+                            <div class="tab tab-sale tab-writeoff">
                                 <div class="well">
                                     <div class="row">
                                         {% for category in writeoff_categories %}
                                             <div class="col-xs-4">
-                                                <a href="#" class="btn btn-block btn-info command"
+                                                <a href="#" class="btn btn-block btn-info btn-writeoff command"
                                                    {% if category.color %}style="background-color: #{{ category.color }}; border-color: #{{ category.color }};"{% endif %}
                                                    data-command="writeoffCategory" data-category="{{ category.id }}">
-                                                    <span style="color: #ffffff">{{ category.name }}</span>
+                                                    <span style="color: #ffffff">
+                                                        {{ category.name }}<br />
+                                                        <small style="color: #ffffff"><em>{{ category.description }}</em></small>
+                                                    </span>
                                                 </a>
                                             </div>
                                         {% endfor %}
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="" id="cancel-writeoff-buttons">
+                                            <a class="btn btn-block btn-danger btn-specialpad command" data-command="cancelWriteoff"
+                                            id="cancel-writeoff">Annuleer</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-cs-4">
-                            {% comment %} Insert to be withdrawn {% endcomment %}
                         </div>
                     </div>
                     {% endif %}
@@ -179,6 +187,39 @@
                                     <a class="btn btn-lg btn-danger command" data-command="cancelPayment"
                                        id="cancel-payment">Annuleren</a>
                                     <a class="btn btn-lg btn-success pull-right command" data-command="payNow" id="pay-now">Ok</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="writeoff-timer-screen">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <span class="glyphicon glyphicon-ok" style="font-size: 128px"></span>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-xs-12" id="countdownbox-writeoff">
+                                <div class="alert alert-info">
+                                    <span id="writeoff-in">Write off in:</span>
+                                    <span id="writeoff-countdown">{{ countdown }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="writeoff-receipt" class="table">
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="" id="writeoff-buttons">
+                                    <a class="btn btn-lg btn-danger command" data-command="cancelPayment"
+                                       id="cancel-writeoff">Cancel</a>
+                                    <a class="btn btn-lg btn-success pull-right command" data-command="writeoffNow" id="writeoff-now">Ok</a>
                                 </div>
                             </div>
                         </div>

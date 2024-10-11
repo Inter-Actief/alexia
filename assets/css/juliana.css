@@ -13,6 +13,12 @@ body {
 	padding:10px;
 }
 
+.tab-sale.tab-writeoff > div.well {
+	height:750px !important;
+	margin-bottom:0;
+	padding:10px;
+}
+
 .tab-sale .row {
 	padding-left:10px;
 	padding-right:10px;
@@ -44,6 +50,20 @@ body {
     font-size: 16px;
     right: 0.2em;
     bottom: 0.2em;
+}
+
+.tab-sale .btn-writeoff {
+    line-height: inherit !important;
+    padding-top: 10px;
+	height: 120px !important;
+}
+
+.tab-sale .btn-writeoff > span {
+    display: block !important;
+}
+
+.tab-sale .btn-writeoff > small {
+    display: block !important;
 }
 
 #keypad .row {
@@ -158,17 +178,17 @@ body {
 
 
 /*Payment/RFID screen*/
-#rfid-screen {
+#rfid-screen, #writeoff-timer-screen {
     height:860px;
     padding-top:130px;
     padding-bottom:130px;
 }
 
-#payment-in {
+#payment-in, #writeoff-in {
     font-size:28px;
 }
 
-#payment-countdown {
+#payment-countdown, #writeoff-countdown {
     font-size:28px;
     padding:10px 18px;
     background:#888;
@@ -177,17 +197,24 @@ body {
     font-weight:bold;
 }
 
-#payment-receipt {
+#payment-receipt, #writeoff-receipt {
     font-size:20px;
 }
 
-#payment-receipt tr td:last-child, #payment-receipt tr td:nth-child(2) {
+#payment-receipt tr td:last-child, #payment-receipt tr td:nth-child(2),
+#writeoff-receipt tr td:last-child, #writeoff-receipt tr td:nth-child(2) {
     text-align:right;
 }
 
-#payment-buttons .btn {
+#payment-buttons .btn, #writeoff-buttons .btn {
     font-size:28px;
     padding:20px 32px;
+}
+
+#cancel-writeoff-buttons .btn {
+    font-size:28px;
+    padding: 8px 32px;
+    margin-top: 10px;
 }
 
 /*Error screen*/
