@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 16:17+0200\n"
-"PO-Revision-Date: 2024-10-08 16:17+0018\n"
-"Last-Translator: b'Daniel Jonker <jonkerdd@inter-actief.net>'\n"
+"POT-Creation-Date: 2024-10-11 12:32+0200\n"
+"PO-Revision-Date: 2024-10-11 12:35+0018\n"
+"Last-Translator: b'Kevin Alberts <kevin.alberts@inter-actief.net>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Translated-Using: django-rosetta 0.9.6\n"
 
-#: alexia/apps/billing/forms.py:51 alexia/apps/consumption/forms.py:118
-#: templates/billing/order_detail.html:122 templates/billing/order_list.html:12
-#: templates/consumption/consumptionform_list.html:13
+#: alexia/apps/billing/forms.py:51 alexia/apps/consumption/forms.py:118 templates/billing/order_detail.html:125 templates/billing/order_list.html:12 templates/consumption/consumptionform_list.html:13
 msgid "Export"
 msgstr "Exporteren"
 
@@ -31,275 +29,248 @@ msgstr "Begintijd"
 msgid "Till time"
 msgstr "Eindtijd"
 
-#: alexia/apps/billing/forms.py:63 templates/billing/pricegroup_form.html:7
-#: templates/billing/pricegroup_form.html:17
+#: alexia/apps/billing/forms.py:63 templates/billing/pricegroup_form.html:7 templates/billing/pricegroup_form.html:17
 msgid "New price group"
 msgstr "Nieuwe prijsgroep"
 
-#: alexia/apps/billing/models.py:23 alexia/apps/billing/models.py:45
-#: alexia/apps/billing/models.py:140 alexia/apps/billing/models.py:228
-#: alexia/apps/billing/models.py:343 alexia/apps/organization/models.py:146
-#: alexia/apps/organization/models.py:167 alexia/apps/scheduling/models.py:28
-#: alexia/apps/scheduling/models.py:206
+#: alexia/apps/billing/models.py:24 alexia/apps/billing/models.py:46 alexia/apps/billing/models.py:141 alexia/apps/billing/models.py:229 alexia/apps/billing/models.py:344 alexia/apps/organization/models.py:146 alexia/apps/organization/models.py:167 alexia/apps/scheduling/models.py:28 alexia/apps/scheduling/models.py:206
 msgid "organization"
 msgstr "organisatie"
 
-#: alexia/apps/billing/models.py:26 alexia/apps/billing/models.py:48
-#: alexia/apps/billing/models.py:91 alexia/apps/billing/models.py:337
-#: alexia/apps/consumption/models.py:14 alexia/apps/organization/models.py:21
-#: alexia/apps/organization/models.py:131 alexia/apps/scheduling/models.py:29
-#: alexia/apps/scheduling/models.py:60 alexia/apps/scheduling/models.py:208
+#: alexia/apps/billing/models.py:27 alexia/apps/billing/models.py:49 alexia/apps/billing/models.py:92 alexia/apps/billing/models.py:338 alexia/apps/consumption/models.py:14 alexia/apps/organization/models.py:21 alexia/apps/organization/models.py:131 alexia/apps/scheduling/models.py:29 alexia/apps/scheduling/models.py:60 alexia/apps/scheduling/models.py:208
 msgid "name"
 msgstr "naam"
 
-#: alexia/apps/billing/models.py:30 alexia/apps/billing/models.py:71
-#: alexia/apps/billing/models.py:135
+#: alexia/apps/billing/models.py:31 alexia/apps/billing/models.py:72 alexia/apps/billing/models.py:136
 msgid "product group"
 msgstr "productgroep"
 
-#: alexia/apps/billing/models.py:31 alexia/apps/billing/models.py:53
+#: alexia/apps/billing/models.py:32 alexia/apps/billing/models.py:54
 msgid "product groups"
 msgstr "productgroepen"
 
-#: alexia/apps/billing/models.py:58 alexia/apps/billing/models.py:70
+#: alexia/apps/billing/models.py:59 alexia/apps/billing/models.py:71
 msgid "price group"
 msgstr "prijsgroep"
 
-#: alexia/apps/billing/models.py:59
+#: alexia/apps/billing/models.py:60
 msgid "price groups"
 msgstr "prijsgroepen"
 
-#: alexia/apps/billing/models.py:72 alexia/apps/billing/models.py:177
-#: alexia/apps/billing/models.py:326 alexia/apps/billing/models.py:392
+#: alexia/apps/billing/models.py:73 alexia/apps/billing/models.py:178 alexia/apps/billing/models.py:327 alexia/apps/billing/models.py:399
 msgid "price"
 msgstr "prijs"
 
-#: alexia/apps/billing/models.py:76
+#: alexia/apps/billing/models.py:77
 msgid "selling price"
 msgstr "verkoopprijs"
 
-#: alexia/apps/billing/models.py:77
+#: alexia/apps/billing/models.py:78
 msgid "selling prices"
 msgstr "verkoopprijzen"
 
-#: alexia/apps/billing/models.py:80
+#: alexia/apps/billing/models.py:81
 #, python-brace-format
 msgid "{product} for {price}"
 msgstr "{product} voor {price}"
 
-#: alexia/apps/billing/models.py:92
+#: alexia/apps/billing/models.py:93
 msgid "shortcut"
 msgstr "shortcut"
 
-#: alexia/apps/billing/models.py:94
-#: templates/billing/permanentproduct_detail.html:48
-#: templates/billing/temporaryproduct_detail.html:44
+#: alexia/apps/billing/models.py:95 templates/billing/permanentproduct_detail.html:48 templates/billing/temporaryproduct_detail.html:44
 msgid "Text color"
 msgstr "Tekstkleur"
 
-#: alexia/apps/billing/models.py:96
+#: alexia/apps/billing/models.py:97
 msgid "Text color for Juliana"
 msgstr "Tekstkleur voor Juliana"
 
-#: alexia/apps/billing/models.py:101
-#: templates/billing/permanentproduct_detail.html:52
-#: templates/billing/temporaryproduct_detail.html:48
+#: alexia/apps/billing/models.py:102 templates/billing/permanentproduct_detail.html:52 templates/billing/temporaryproduct_detail.html:48
 msgid "Background color"
 msgstr "Achtergrondkleur"
 
-#: alexia/apps/billing/models.py:103
+#: alexia/apps/billing/models.py:104
 msgid "Background color for Juliana"
 msgstr "Achtergrondkleur voor Juliana"
 
-#: alexia/apps/billing/models.py:142 alexia/apps/scheduling/models.py:210
+#: alexia/apps/billing/models.py:143 alexia/apps/scheduling/models.py:210
 msgid "position"
 msgstr "positie"
 
-#: alexia/apps/billing/models.py:146 alexia/apps/billing/models.py:324
-#: alexia/apps/billing/models.py:390 alexia/apps/consumption/models.py:137
-#: alexia/apps/consumption/models.py:189
+#: alexia/apps/billing/models.py:147 alexia/apps/billing/models.py:325 alexia/apps/billing/models.py:397 alexia/apps/consumption/models.py:137 alexia/apps/consumption/models.py:189
 msgid "product"
 msgstr "product"
 
-#: alexia/apps/billing/models.py:147
+#: alexia/apps/billing/models.py:148
 msgid "products"
 msgstr "producten"
 
-#: alexia/apps/billing/models.py:175 alexia/apps/billing/models.py:270
-#: alexia/apps/billing/models.py:349 alexia/apps/consumption/models.py:50
-#: alexia/apps/scheduling/models.py:107 alexia/apps/scheduling/models.py:240
+#: alexia/apps/billing/models.py:176 alexia/apps/billing/models.py:271 alexia/apps/billing/models.py:356 alexia/apps/consumption/models.py:50 alexia/apps/scheduling/models.py:107 alexia/apps/scheduling/models.py:240
 msgid "event"
 msgstr "activiteit"
 
-#: alexia/apps/billing/models.py:180
+#: alexia/apps/billing/models.py:181
 msgid "temporary product"
 msgstr "tijdelijk product"
 
-#: alexia/apps/billing/models.py:181
+#: alexia/apps/billing/models.py:182
 msgid "temporary products"
 msgstr "tijdelijke producten"
 
-#: alexia/apps/billing/models.py:198
+#: alexia/apps/billing/models.py:199
 msgid "identifier"
 msgstr "identifier"
 
-#: alexia/apps/billing/models.py:199 alexia/apps/organization/models.py:135
-#: alexia/apps/scheduling/models.py:32
+#: alexia/apps/billing/models.py:200 alexia/apps/organization/models.py:135 alexia/apps/scheduling/models.py:32
 msgid "is active"
 msgstr "is actief"
 
-#: alexia/apps/billing/models.py:200
+#: alexia/apps/billing/models.py:201
 msgid "registered at"
 msgstr "geregistreerd op"
 
-#: alexia/apps/billing/models.py:201 alexia/apps/billing/models.py:222
-#: alexia/apps/organization/models.py:38 alexia/apps/organization/models.py:53
-#: alexia/apps/organization/models.py:162
+#: alexia/apps/billing/models.py:202 alexia/apps/billing/models.py:223 alexia/apps/organization/models.py:38 alexia/apps/organization/models.py:53 alexia/apps/organization/models.py:162
 msgid "user"
 msgstr "gebruiker"
 
-#: alexia/apps/billing/models.py:202
+#: alexia/apps/billing/models.py:203
 msgid "managed by"
 msgstr "beheerd door"
 
-#: alexia/apps/billing/models.py:205
+#: alexia/apps/billing/models.py:206
 msgid "RFID card"
 msgstr "RFID-kaart"
 
-#: alexia/apps/billing/models.py:206 templates/profile/profile.html:86
+#: alexia/apps/billing/models.py:207 templates/profile/profile.html:86
 msgid "RFID cards"
 msgstr "RFID-kaarten"
 
-#: alexia/apps/billing/models.py:213 alexia/apps/billing/models.py:245
+#: alexia/apps/billing/models.py:214 alexia/apps/billing/models.py:246
 msgid "owner"
 msgstr "eigenaar"
 
-#: alexia/apps/billing/models.py:230
+#: alexia/apps/billing/models.py:231
 msgid "start date"
 msgstr "begindatum"
 
-#: alexia/apps/billing/models.py:231
+#: alexia/apps/billing/models.py:232
 msgid "end date"
 msgstr "einddatum"
 
-#: alexia/apps/billing/models.py:234 alexia/apps/billing/models.py:275
+#: alexia/apps/billing/models.py:235 alexia/apps/billing/models.py:276
 msgid "authorization"
 msgstr "autorisatie"
 
-#: alexia/apps/billing/models.py:235
+#: alexia/apps/billing/models.py:236
 msgid "authorizations"
 msgstr "autorisaties"
 
-#: alexia/apps/billing/models.py:238
+#: alexia/apps/billing/models.py:239
 #, python-brace-format
 msgid "{user} of {organization}"
 msgstr "{user} van {organization}"
 
-#: alexia/apps/billing/models.py:277 alexia/apps/billing/models.py:350
+#: alexia/apps/billing/models.py:278 alexia/apps/billing/models.py:357
 msgid "placed at"
 msgstr "geplaatst op"
 
-#: alexia/apps/billing/models.py:279
+#: alexia/apps/billing/models.py:280
 msgid "synchronized"
 msgstr "gesynchroniseerd"
 
-#: alexia/apps/billing/models.py:282
+#: alexia/apps/billing/models.py:283
 msgid "Designates whether this transaction is imported by the organization."
 msgstr "Geeft aan of deze transactie al is gesynchroniseerd."
 
-#: alexia/apps/billing/models.py:288 alexia/apps/billing/models.py:354
+#: alexia/apps/billing/models.py:289 alexia/apps/billing/models.py:361
 msgid "added by"
 msgstr "toegevoegd door"
 
-#: alexia/apps/billing/models.py:291 alexia/apps/billing/models.py:325
-#: alexia/apps/billing/models.py:357 alexia/apps/billing/models.py:391
-#: alexia/apps/consumption/models.py:191
+#: alexia/apps/billing/models.py:292 alexia/apps/billing/models.py:326 alexia/apps/billing/models.py:364 alexia/apps/billing/models.py:398 alexia/apps/consumption/models.py:191
 msgid "amount"
 msgstr "aantal"
 
-#: alexia/apps/billing/models.py:292
+#: alexia/apps/billing/models.py:293
 msgid "rfid card"
 msgstr "RFID-kaart"
 
-#: alexia/apps/billing/models.py:296 alexia/apps/billing/models.py:323
-#: alexia/apps/billing/models.py:389
+#: alexia/apps/billing/models.py:297 alexia/apps/billing/models.py:324 alexia/apps/billing/models.py:396
 msgid "order"
 msgstr "transactie"
 
-#: alexia/apps/billing/models.py:297
+#: alexia/apps/billing/models.py:298
 msgid "orders"
 msgstr "transacties"
 
-#: alexia/apps/billing/models.py:300
+#: alexia/apps/billing/models.py:301
 #, python-brace-format
 msgid "{user} at {time} on {event}"
 msgstr "{user} om {time} bij {event}"
 
-#: alexia/apps/billing/models.py:318
+#: alexia/apps/billing/models.py:319
 msgid "debtor"
 msgstr "debiteur"
 
-#: alexia/apps/billing/models.py:329 alexia/apps/billing/models.py:395
+#: alexia/apps/billing/models.py:330 alexia/apps/billing/models.py:402
 msgid "purchase"
 msgstr "aankoop"
 
-#: alexia/apps/billing/models.py:330 alexia/apps/billing/models.py:396
+#: alexia/apps/billing/models.py:331 alexia/apps/billing/models.py:403
 msgid "purchases"
 msgstr "aankopen"
 
-#: alexia/apps/billing/models.py:338
-#, fuzzy
+#: alexia/apps/billing/models.py:339
 #| msgid "description"
 msgid "short description"
-msgstr "omschrijving"
+msgstr "korte omschrijving"
 
-#: alexia/apps/billing/models.py:339 alexia/apps/organization/models.py:23
-#: alexia/apps/organization/models.py:133
+#: alexia/apps/billing/models.py:340 alexia/apps/organization/models.py:23 alexia/apps/organization/models.py:133
 msgid "color"
 msgstr "kleur"
 
-#: alexia/apps/billing/models.py:345
-#, fuzzy
+#: alexia/apps/billing/models.py:346
 #| msgid "Active"
 msgid "active"
-msgstr "Actief"
+msgstr "actief"
 
-#: alexia/apps/billing/models.py:362
+#: alexia/apps/billing/models.py:349
+#, python-brace-format
+#| msgid "{user} of {organization}"
+msgid "{name} for {organization}"
+msgstr "{name} van {organization}"
+
+#: alexia/apps/billing/models.py:369
 msgid "writeoff category"
-msgstr "Afschrijf categorie"
+msgstr "Afschrijvingscategorie"
 
-#: alexia/apps/billing/models.py:367
+#: alexia/apps/billing/models.py:374
 msgid "writeoff order"
-msgstr "Afschrijf product"
+msgstr "Afschrijvingstransactie"
 
-#: alexia/apps/billing/models.py:368
+#: alexia/apps/billing/models.py:375
 msgid "writeoff orders"
-msgstr "Afschrijf producten"
+msgstr "Afschrijvingstransacties"
 
-#: alexia/apps/billing/models.py:371
-#, fuzzy, python-brace-format
+#: alexia/apps/billing/models.py:378
+#, python-brace-format
 #| msgid "{user} at {time} on {event}"
 msgid "{time} on {event}"
-msgstr "{user} om {time} bij {event}"
+msgstr "{time} bij {event}"
 
-#: alexia/apps/billing/views.py:50 alexia/apps/consumption/views.py:73
+#: alexia/apps/billing/views.py:49 alexia/apps/consumption/views.py:73
 msgid "You are not a tender for this event"
 msgstr "Je bent geen tapper bij deze borrel!"
 
-#: alexia/apps/billing/views.py:52
+#: alexia/apps/billing/views.py:51
 msgid "This event is not open"
 msgstr "Deze borrel begint nog niet!"
 
-#: alexia/apps/config.py:9 templates/base_app.html:48
-#: templates/billing/order_detail.html:40 templates/profile/profile.html:49
+#: alexia/apps/config.py:9 templates/base_app.html:48 templates/billing/order_detail.html:40 templates/profile/profile.html:49
 msgid "Billing"
 msgstr "Financiën"
 
-#: alexia/apps/config.py:14 templates/base_app.html:62
-#: templates/consumption/consumptionform_detail.html:90
-#: templates/consumption/consumptionform_detail.html:92
-#: templates/consumption/dcf_check.html:68
-#: templates/consumption/pdf/page.html:23
+#: alexia/apps/config.py:14 templates/base_app.html:62 templates/consumption/consumptionform_detail.html:90 templates/consumption/consumptionform_detail.html:92 templates/consumption/dcf_check.html:68 templates/consumption/pdf/page.html:23
 msgid "Consumption"
 msgstr "Verbruik"
 
@@ -307,17 +278,7 @@ msgstr "Verbruik"
 msgid "General"
 msgstr "Generiek"
 
-#: alexia/apps/config.py:24 alexia/apps/scheduling/forms.py:73
-#: templates/billing/permanentproduct_detail.html:31
-#: templates/billing/pricegroup_detail.html:31
-#: templates/consumption/consumptionform_list.html:31
-#: templates/consumption/consumptionform_list.html:68
-#: templates/consumption/pdf/page.html:9 templates/general/about.html:40
-#: templates/organization/certificate_form.html:27
-#: templates/profile/profile.html:121 templates/profile/profile.html:146
-#: templates/scheduling/event_calendar.html:26
-#: templates/scheduling/event_list.html:37
-#: templates/scheduling/mailtemplate_detail.html:24
+#: alexia/apps/config.py:24 alexia/apps/scheduling/forms.py:73 templates/billing/permanentproduct_detail.html:31 templates/billing/pricegroup_detail.html:31 templates/consumption/consumptionform_list.html:31 templates/consumption/consumptionform_list.html:68 templates/consumption/pdf/page.html:9 templates/general/about.html:40 templates/organization/certificate_form.html:27 templates/profile/profile.html:121 templates/profile/profile.html:146 templates/scheduling/event_calendar.html:26 templates/scheduling/event_list.html:37 templates/scheduling/mailtemplate_detail.html:24
 msgid "Organization"
 msgstr "Organisatie"
 
@@ -354,25 +315,18 @@ msgid "I declare that I have cleaned the rooms"
 msgstr "Ik verklaar dat de ruimtes schoongemaakt zijn"
 
 #: alexia/apps/consumption/forms.py:96
-msgid ""
-"After each event the rooms have to cleaned according to the cleaning "
-"checklist."
-msgstr ""
-"Na elk evenement moeten de ruimtes schoongemaakt worden aan de hand van de "
-"schoonmaakchecklist."
+msgid "After each event the rooms have to cleaned according to the cleaning checklist."
+msgstr "Na elk evenement moeten de ruimtes schoongemaakt worden aan de hand van de schoonmaakchecklist."
 
 #: alexia/apps/consumption/forms.py:99
 msgid "I declare that this form has been filled in truthfully"
 msgstr "Ik verklaar dat dit formulier naar waarheid is ingevuld"
 
 #: alexia/apps/consumption/forms.py:100
-msgid ""
-"I am sure that the values above are filled in correct and has been verified."
+msgid "I am sure that the values above are filled in correct and has been verified."
 msgstr "Ik weet zeker dat bovenstaande gegevens gecheckt zijn en kloppen."
 
-#: alexia/apps/consumption/forms.py:120
-#: templates/billing/order_export_result.html:17
-#: templates/billing/order_year.html:15
+#: alexia/apps/consumption/forms.py:120 templates/billing/order_export_result.html:17 templates/billing/order_year.html:15
 msgid "Month"
 msgstr "Maand"
 
@@ -409,8 +363,7 @@ msgid "has flowmeter"
 msgstr "heeft flowmeter"
 
 #: alexia/apps/consumption/models.py:37
-msgid ""
-"Designates wheter apart from weight, this product also uses a flowmeter."
+msgid "Designates wheter apart from weight, this product also uses a flowmeter."
 msgstr "Geeft aan dat naast gewicht, dit product ook flowmeters gebruikt."
 
 #: alexia/apps/consumption/models.py:41
@@ -433,8 +386,7 @@ msgstr "afgerond op"
 msgid "comments"
 msgstr "commentaar"
 
-#: alexia/apps/consumption/models.py:62
-#: templates/consumption/consumptionform_detail.html:3
+#: alexia/apps/consumption/models.py:62 templates/consumption/consumptionform_detail.html:3
 msgid "consumption form"
 msgstr "verbruiksformulier"
 
@@ -510,10 +462,9 @@ msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
 #: alexia/apps/general/views.py:129
-#, fuzzy
 #| msgid "organizations"
 msgid "This organization is inactive."
-msgstr "organisatie"
+msgstr "Deze organisatie is inactief."
 
 #: alexia/apps/organization/admin.py:56
 msgid "Permissions"
@@ -531,8 +482,7 @@ msgstr "Gebruikersnaam"
 msgid "Student or employee account (e.g. s0000000 or m0000000)"
 msgstr "Student- of medewerkersaccount (bijv. s0000000 of m0000000)"
 
-#: alexia/apps/organization/forms.py:52
-#: templates/organization/membership_detail.html:52
+#: alexia/apps/organization/forms.py:52 templates/organization/membership_detail.html:52
 msgid "Bartender nickname"
 msgstr "Tappersbijnaam"
 
@@ -565,21 +515,16 @@ msgid "has IVA-certificate"
 msgstr "heeft IVA-certificaat"
 
 #: alexia/apps/organization/models.py:60
-msgid ""
-"Override for an user to indicate IVA rights without uploading a certificate."
-msgstr ""
-"Override voor een gebruiker om IVA-rechten te hebben zonder certificaat."
+msgid "Override for an user to indicate IVA rights without uploading a certificate."
+msgstr "Override voor een gebruiker om IVA-rechten te hebben zonder certificaat."
 
 #: alexia/apps/organization/models.py:64
 msgid "has BHV-certificate"
 msgstr "heeft BHV-diploma"
 
 #: alexia/apps/organization/models.py:67
-msgid ""
-"Designates that this user has a valid, non-expired BHV (Emergency Response "
-"Officer) certificate."
-msgstr ""
-"Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
+msgid "Designates that this user has a valid, non-expired BHV (Emergency Response Officer) certificate."
+msgstr "Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
 
 #: alexia/apps/organization/models.py:71
 msgid "is foundation manager"
@@ -619,7 +564,7 @@ msgstr "wijst tappers aan"
 
 #: alexia/apps/organization/models.py:136
 msgid "writeoff enabled"
-msgstr "Afschrijven ingeschakeld"
+msgstr "Afschrijvingen ingeschakeld"
 
 #: alexia/apps/organization/models.py:140
 msgid "users"
@@ -654,8 +599,7 @@ msgstr "lidmaatschappen"
 msgid "%(user)s of %(organization)s"
 msgstr "%(user)s van %(organization)s"
 
-#: alexia/apps/organization/models.py:221
-#: alexia/apps/organization/models.py:234
+#: alexia/apps/organization/models.py:221 alexia/apps/organization/models.py:234
 msgid "certificate"
 msgstr "certificaat"
 
@@ -679,10 +623,7 @@ msgstr "IVA certificaat van"
 msgid "Flags"
 msgstr "Indicatoren"
 
-#: alexia/apps/scheduling/admin.py:22
-#: templates/consumption/consumptionform_detail.html:77
-#: templates/consumption/dcf_check.html:93
-#: templates/consumption/pdf/page.html:64
+#: alexia/apps/scheduling/admin.py:22 templates/consumption/consumptionform_detail.html:77 templates/consumption/dcf_check.html:93 templates/consumption/pdf/page.html:64
 msgid "Comments"
 msgstr "Commentaar"
 
@@ -808,7 +749,6 @@ msgid "Assigned"
 msgstr "Toegewezen"
 
 #: alexia/apps/scheduling/models.py:197
-#: env/lib/python3.9/site-packages/django/forms/widgets.py:712
 msgid "Yes"
 msgstr "Ja"
 
@@ -817,7 +757,6 @@ msgid "Maybe"
 msgstr "Misschien"
 
 #: alexia/apps/scheduling/models.py:199
-#: env/lib/python3.9/site-packages/django/forms/widgets.py:713
 msgid "No"
 msgstr "Nee"
 
@@ -889,1394 +828,9 @@ msgstr "Voer een geldige hexadecimale kleur in"
 msgid "Enter a valid username"
 msgstr "Voer een geldige gebruikersnaam in"
 
-#: alexia/forms/mixins.py:22 templates/consumption/dcf.html:34
-#: templates/registration/register.html:17
+#: alexia/forms/mixins.py:22 templates/consumption/dcf.html:34 templates/registration/register.html:17
 msgid "Save"
 msgstr "Opslaan"
-
-#: env/lib/python3.9/site-packages/crispy_forms/tests/test_form_helper.py:129
-#: env/lib/python3.9/site-packages/crispy_forms/tests/test_form_helper.py:139
-#: env/lib/python3.9/site-packages/django/forms/fields.py:53
-msgid "This field is required."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/crispy_forms/tests/test_layout.py:391
-msgid "i18n text"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/crispy_forms/tests/test_layout.py:393
-msgid "i18n legend"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/crispy_forms/tests/test_layout_objects.py:134
-#: env/lib/python3.9/site-packages/django/core/validators.py:31
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid value."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/contrib/messages/apps.py:7
-msgid "Messages"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/contrib/sitemaps/apps.py:7
-msgid "Site Maps"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/contrib/staticfiles/apps.py:9
-msgid "Static Files"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/contrib/syndication/apps.py:7
-#, fuzzy
-#| msgid "Specification"
-msgid "Syndication"
-msgstr "Specificatie"
-
-#: env/lib/python3.9/site-packages/django/core/paginator.py:45
-msgid "That page number is not an integer"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/paginator.py:47
-msgid "That page number is less than 1"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/paginator.py:52
-msgid "That page contains no results"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:102
-#: env/lib/python3.9/site-packages/django/forms/fields.py:658
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid URL."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:154
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid integer."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:165
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid email address."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#. Translators: "letters" means latin letters: a-z and A-Z.
-#: env/lib/python3.9/site-packages/django/core/validators.py:239
-msgid ""
-"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:246
-msgid ""
-"Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:255
-#: env/lib/python3.9/site-packages/django/core/validators.py:275
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid IPv4 address."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:260
-#: env/lib/python3.9/site-packages/django/core/validators.py:276
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid IPv6 address."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:270
-#: env/lib/python3.9/site-packages/django/core/validators.py:274
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:304
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:310
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:342
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:351
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:361
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:376
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:395
-#: env/lib/python3.9/site-packages/django/forms/fields.py:290
-#: env/lib/python3.9/site-packages/django/forms/fields.py:325
-msgid "Enter a number."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:397
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:402
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:407
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:469
-#, python-format
-msgid ""
-"File extension '%(extension)s' is not allowed. Allowed extensions are: "
-"'%(allowed_extensions)s'."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/core/validators.py:521
-msgid "Null characters are not allowed."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/base.py:1162
-#: env/lib/python3.9/site-packages/django/forms/models.py:756
-#: templates/base.html:32 templates/general/about.html:23
-#: templates/general/about.html:34
-msgid "and"
-msgstr "en"
-
-#: env/lib/python3.9/site-packages/django/db/models/base.py:1164
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:104
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:105
-msgid "This field cannot be null."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:106
-msgid "This field cannot be blank."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:107
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:111
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:128
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:899
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1766
-msgid "Integer"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:903
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1764
-#, python-format
-msgid "'%(value)s' value must be an integer."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:978
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1832
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:990
-#, python-format
-msgid "'%(value)s' value must be either True or False."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:991
-#, python-format
-msgid "'%(value)s' value must be either True, False, or None."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:993
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1034
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1098
-msgid "Comma-separated integers"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1147
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1149
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1292
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1152
-msgid "Date (without time)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1290
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1294
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1298
-msgid "Date (with time)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1446
-#, python-format
-msgid "'%(value)s' value must be a decimal number."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1448
-#, fuzzy
-#| msgid "ID number"
-msgid "Decimal number"
-msgstr "Identificatienr."
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1587
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in [DD] [HH:[MM:]]ss[."
-"uuuuuu] format."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1590
-#, fuzzy
-#| msgid "Autorization"
-msgid "Duration"
-msgstr "Autorisatie"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1640
-#: templates/organization/membership_detail.html:48
-#: templates/profile/profile.html:15
-msgid "Email address"
-msgstr "E-mailadres"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1663
-#, fuzzy
-#| msgid "File format"
-msgid "File path"
-msgstr "Bestandsformaat"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1729
-#, python-format
-msgid "'%(value)s' value must be a float."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1731
-msgid "Floating point number"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1848
-#, fuzzy
-#| msgid "Email address"
-msgid "IPv4 address"
-msgstr "E-mailadres"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1879
-#, fuzzy
-#| msgid "Email address"
-msgid "IP address"
-msgstr "E-mailadres"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1959
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1960
-#, python-format
-msgid "'%(value)s' value must be either None, True or False."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1962
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:1997
-msgid "Positive integer"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2010
-msgid "Positive small integer"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2024
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2056
-msgid "Small integer"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2063
-msgid "Text"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2091
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2093
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2096
-#: templates/scheduling/event_bartender.html:14
-#: templates/scheduling/event_list.html:36
-msgid "Time"
-msgstr "Tijd"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2222
-msgid "URL"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2244
-#, fuzzy
-#| msgid "additional data"
-msgid "Raw binary data"
-msgstr "aanvullende gegevens"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2294
-#, python-format
-msgid "'%(value)s' is not a valid UUID."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/__init__.py:2296
-#, fuzzy
-#| msgid "iCal identifier"
-msgid "Universally unique identifier"
-msgstr "iCal identificatie"
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/files.py:221
-msgid "File"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/files.py:360
-msgid "Image"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:778
-#, python-format
-msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:780
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1007
-msgid "One-to-one relationship"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1057
-#, python-format
-msgid "%(from)s-%(to)s relationship"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1058
-#, python-format
-msgid "%(from)s-%(to)s relationships"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/db/models/fields/related.py:1100
-msgid "Many-to-many relationship"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: env/lib/python3.9/site-packages/django/forms/boundfield.py:146
-msgid ":?.!"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:245
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a whole number."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:396
-#: env/lib/python3.9/site-packages/django/forms/fields.py:1126
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid date."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:420
-#: env/lib/python3.9/site-packages/django/forms/fields.py:1127
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid time."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:442
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid date/time."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:471
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid duration."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:472
-#, python-brace-format
-msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:532
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:533
-msgid "No file was submitted."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:534
-msgid "The submitted file is empty."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:536
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:539
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:600
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:762
-#: env/lib/python3.9/site-packages/django/forms/fields.py:852
-#: env/lib/python3.9/site-packages/django/forms/models.py:1270
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:853
-#: env/lib/python3.9/site-packages/django/forms/fields.py:968
-#: env/lib/python3.9/site-packages/django/forms/models.py:1269
-msgid "Enter a list of values."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:969
-msgid "Enter a complete value."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/fields.py:1185
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter a valid UUID."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#. Translators: This is the default suffix added to form field labels
-#: env/lib/python3.9/site-packages/django/forms/forms.py:86
-msgid ":"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/forms.py:212
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/formsets.py:91
-msgid "ManagementForm data is missing or has been tampered with"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/formsets.py:338
-#, python-format
-msgid "Please submit %d or fewer forms."
-msgid_plural "Please submit %d or fewer forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/forms/formsets.py:345
-#, python-format
-msgid "Please submit %d or more forms."
-msgid_plural "Please submit %d or more forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/forms/formsets.py:371
-#: env/lib/python3.9/site-packages/django/forms/formsets.py:373
-#, fuzzy
-#| msgid "Orders"
-msgid "Order"
-msgstr "Transacties"
-
-#: env/lib/python3.9/site-packages/django/forms/formsets.py:375
-#: templates/billing/permanentproduct_confirm_delete.html:20
-#: templates/billing/permanentproduct_detail.html:17
-#: templates/billing/permanentproduct_list.html:44
-#: templates/billing/pricegroup_confirm_delete.html:21
-#: templates/billing/pricegroup_detail.html:17
-#: templates/billing/pricegroup_detail.html:59
-#: templates/billing/pricegroup_list.html:35
-#: templates/billing/productgroup_confirm_delete.html:19
-#: templates/billing/productgroup_detail.html:17
-#: templates/billing/productgroup_detail.html:44
-#: templates/billing/productgroup_detail.html:88
-#: templates/billing/productgroup_list.html:35
-#: templates/billing/sellingprice_confirm_delete.html:17
-#: templates/billing/temporaryproduct_confirm_delete.html:14
-#: templates/billing/temporaryproduct_detail.html:17
-#: templates/consumption/partials/unit_consumption.html:15
-#: templates/consumption/partials/weight_consumption.html:19
-#: templates/organization/membership_confirm_delete.html:20
-#: templates/organization/membership_list.html:89
-#: templates/scheduling/event_detail.html:103
-msgid "Delete"
-msgstr "Verwijderen"
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:751
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:755
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:761
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:770
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:1091
-msgid "The inline value did not match the parent instance."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:1158
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/models.py:1272
-#, python-format
-msgid "\"%(pk)s\" is not a valid value."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/utils.py:162
-#, python-format
-msgid ""
-"%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/widgets.py:395
-msgid "Clear"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/widgets.py:396
-msgid "Currently"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/widgets.py:397
-msgid "Change"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/forms/widgets.py:711
-#: templates/scheduling/event_detail.html:142
-msgid "Unknown"
-msgstr "Onbekend"
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:788
-msgid "yes,no,maybe"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:817
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:834
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:836
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:838
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:840
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:842
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/template/defaultfilters.py:844
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dateformat.py:62
-msgid "p.m."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dateformat.py:63
-msgid "a.m."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dateformat.py:68
-msgid "PM"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dateformat.py:69
-msgid "AM"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dateformat.py:150
-#, fuzzy
-#| msgid "Begin weight"
-msgid "midnight"
-msgstr "Begingewicht"
-
-#: env/lib/python3.9/site-packages/django/utils/dateformat.py:152
-msgid "noon"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:6
-#: templates/scheduling/event_calendar.html:81
-msgid "Monday"
-msgstr "maandag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:6
-#: templates/scheduling/event_calendar.html:81
-msgid "Tuesday"
-msgstr "dinsdag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:6
-#: templates/scheduling/event_calendar.html:81
-msgid "Wednesday"
-msgstr "woensdag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:6
-#: templates/scheduling/event_calendar.html:82
-msgid "Thursday"
-msgstr "donderdag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:6
-#: templates/scheduling/event_calendar.html:82
-msgid "Friday"
-msgstr "vrijdag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:7
-#: templates/scheduling/event_calendar.html:82
-msgid "Saturday"
-msgstr "zaterdag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:7
-#: templates/scheduling/event_calendar.html:81
-msgid "Sunday"
-msgstr "zondag"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:10
-#: templates/scheduling/event_calendar.html:83
-msgid "Mon"
-msgstr "ma"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:10
-#: templates/scheduling/event_calendar.html:83
-msgid "Tue"
-msgstr "di"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:10
-#: templates/scheduling/event_calendar.html:83
-msgid "Wed"
-msgstr "wo"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:10
-#: templates/scheduling/event_calendar.html:84
-msgid "Thu"
-msgstr "do"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:10
-#: templates/scheduling/event_calendar.html:84
-msgid "Fri"
-msgstr "vr"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:11
-#: templates/scheduling/event_calendar.html:84
-msgid "Sat"
-msgstr "za"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:11
-#: templates/scheduling/event_calendar.html:83
-msgid "Sun"
-msgstr "zo"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:14
-#: templates/scheduling/event_calendar.html:75
-msgid "January"
-msgstr "januari"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:14
-#: templates/scheduling/event_calendar.html:75
-msgid "February"
-msgstr "februari"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:14
-#: templates/scheduling/event_calendar.html:75
-msgid "March"
-msgstr "maart"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:14
-#: templates/scheduling/event_calendar.html:75
-msgid "April"
-msgstr "april"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:14
-#: templates/scheduling/event_calendar.html:76
-#: templates/scheduling/event_calendar.html:79
-msgid "May"
-msgstr "mei"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:14
-#: templates/scheduling/event_calendar.html:76
-msgid "June"
-msgstr "juni"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:15
-#: templates/scheduling/event_calendar.html:76
-msgid "July"
-msgstr "juli"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:15
-#: templates/scheduling/event_calendar.html:76
-msgid "August"
-msgstr "augustus"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:15
-#: templates/scheduling/event_calendar.html:77
-msgid "September"
-msgstr "september"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:15
-#: templates/scheduling/event_calendar.html:77
-msgid "October"
-msgstr "oktober"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:15
-#: templates/scheduling/event_calendar.html:77
-msgid "November"
-msgstr "november"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:16
-#: templates/scheduling/event_calendar.html:77
-msgid "December"
-msgstr "december"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:19
-#, fuzzy
-#| msgid "and"
-msgid "jan"
-msgstr "en"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:19
-msgid "feb"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:19
-#, fuzzy
-#| msgid "Summary"
-msgid "mar"
-msgstr "Samenvatting"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:19
-msgid "apr"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:19
-#, fuzzy
-#| msgid "May"
-msgid "may"
-msgstr "mei"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:19
-#, fuzzy
-#| msgid "Sun"
-msgid "jun"
-msgstr "zo"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:20
-msgid "jul"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:20
-msgid "aug"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:20
-msgid "sep"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:20
-#, fuzzy
-#| msgid "product"
-msgid "oct"
-msgstr "product"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:20
-msgid "nov"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:20
-msgid "dec"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:23
-#, fuzzy
-#| msgid "Jan."
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr "jan"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:24
-#, fuzzy
-#| msgid "Feb."
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr "feb"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:25
-#, fuzzy
-#| msgid "March"
-msgctxt "abbrev. month"
-msgid "March"
-msgstr "maart"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:26
-#, fuzzy
-#| msgid "April"
-msgctxt "abbrev. month"
-msgid "April"
-msgstr "april"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:27
-#, fuzzy
-#| msgid "May"
-msgctxt "abbrev. month"
-msgid "May"
-msgstr "mei"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:28
-#, fuzzy
-#| msgid "June"
-msgctxt "abbrev. month"
-msgid "June"
-msgstr "juni"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:29
-#, fuzzy
-#| msgid "July"
-msgctxt "abbrev. month"
-msgid "July"
-msgstr "juli"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:30
-#, fuzzy
-#| msgid "Aug."
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr "aug"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:31
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:32
-#, fuzzy
-#| msgid "Oct."
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr "oct"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:33
-#, fuzzy
-#| msgid "Nov."
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr "nov"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:34
-#, fuzzy
-#| msgid "Dec."
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr "dec"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:37
-#, fuzzy
-#| msgid "January"
-msgctxt "alt. month"
-msgid "January"
-msgstr "januari"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:38
-#, fuzzy
-#| msgid "February"
-msgctxt "alt. month"
-msgid "February"
-msgstr "februari"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:39
-#, fuzzy
-#| msgid "March"
-msgctxt "alt. month"
-msgid "March"
-msgstr "maart"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:40
-#, fuzzy
-#| msgid "April"
-msgctxt "alt. month"
-msgid "April"
-msgstr "april"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:41
-#, fuzzy
-#| msgid "May"
-msgctxt "alt. month"
-msgid "May"
-msgstr "mei"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:42
-#, fuzzy
-#| msgid "June"
-msgctxt "alt. month"
-msgid "June"
-msgstr "juni"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:43
-#, fuzzy
-#| msgid "July"
-msgctxt "alt. month"
-msgid "July"
-msgstr "juli"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:44
-#, fuzzy
-#| msgid "August"
-msgctxt "alt. month"
-msgid "August"
-msgstr "augustus"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:45
-#, fuzzy
-#| msgid "September"
-msgctxt "alt. month"
-msgid "September"
-msgstr "september"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:46
-#, fuzzy
-#| msgid "October"
-msgctxt "alt. month"
-msgid "October"
-msgstr "oktober"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:47
-#, fuzzy
-#| msgid "November"
-msgctxt "alt. month"
-msgid "November"
-msgstr "november"
-
-#: env/lib/python3.9/site-packages/django/utils/dates.py:48
-#, fuzzy
-#| msgid "December"
-msgctxt "alt. month"
-msgid "December"
-msgstr "december"
-
-#: env/lib/python3.9/site-packages/django/utils/ipv6.py:8
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/text.py:67
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s…"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/text.py:233
-msgid "or"
-msgstr ""
-
-#. Translators: This string is used as a separator between list elements
-#: env/lib/python3.9/site-packages/django/utils/text.py:252
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:83
-msgid ", "
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:9
-#, python-format
-msgid "%d year"
-msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:10
-#, fuzzy, python-format
-#| msgid "month"
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] "maand"
-msgstr[1] "maand"
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:11
-#, fuzzy, python-format
-#| msgid "week"
-msgid "%d week"
-msgid_plural "%d weeks"
-msgstr[0] "week"
-msgstr[1] "week"
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:12
-#, python-format
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:13
-#, python-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:14
-#, python-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.9/site-packages/django/utils/timesince.py:72
-msgid "0 minutes"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:110
-msgid "Forbidden"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:111
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:115
-msgid ""
-"You are seeing this message because this HTTPS site requires a 'Referer "
-"header' to be sent by your Web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:120
-msgid ""
-"If you have configured your browser to disable 'Referer' headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for 'same-"
-"origin' requests."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:124
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the 'Referrer-Policy: no-referrer' header, please remove them. The "
-"CSRF protection requires the 'Referer' header to do strict referer checking. "
-"If you're concerned about privacy, use alternatives like <a "
-"rel=\"noreferrer\" ...> for links to third-party sites."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:132
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:137
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for 'same-origin' requests."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/csrf.py:142
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:41
-msgid "No year specified"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:61
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:111
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:208
-msgid "Date out of range"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:90
-msgid "No month specified"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:142
-msgid "No day specified"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:188
-msgid "No week specified"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:338
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:367
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:589
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/dates.py:623
-#, python-format
-msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/detail.py:54
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/list.py:67
-msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/list.py:72
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/generic/list.py:154
-#, python-format
-msgid "Empty list and '%(class_name)s.allow_empty' is False."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/static.py:40
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/static.py:42
-#, python-format
-msgid "\"%(path)s\" does not exist"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/static.py:80
-#, python-format
-msgid "Index of %(directory)s"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:6
-msgid "Django: the Web framework for perfectionists with deadlines."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:345
-#, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:367
-msgid "The install worked successfully! Congratulations!"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:368
-#, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" "
-"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
-"configured any URLs."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:383
-msgid "Django Documentation"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:384
-msgid "Topics, references, &amp; how-to's"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:395
-msgid "Tutorial: A Polling App"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:396
-msgid "Get started with Django"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:407
-msgid "Django Community"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/django/views/templates/default_urlconf.html:408
-msgid "Connect, get help, or contribute"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonfield/fields.py:42
-#: env/lib/python3.9/site-packages/jsonfield/forms.py:22
-#, fuzzy
-#| msgid "Enter a valid username"
-msgid "Enter valid JSON."
-msgstr "Voer een geldige gebruikersnaam in"
-
-#: env/lib/python3.9/site-packages/jsonfield/forms.py:15
-#, python-format
-msgid "\"%(value)s\" value must be valid JSON."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:3
-msgid "You're lazy..."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:61
-msgid "Parse error."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:67
-msgid "Invalid Request."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:74
-#, fuzzy
-#| msgid "Not found"
-msgid "Method not found."
-msgstr "Niet gevonden"
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:81
-msgid "Invalid params."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:87
-msgid "Internal error."
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:96
-msgid "JSON-RPC requests must be POST"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:102
-msgid "Invalid login credentials"
-msgstr ""
-
-#: env/lib/python3.9/site-packages/jsonrpc/exceptions.py:109
-msgid "Error missed by other exceptions"
-msgstr ""
 
 #: templates/403.html:3 templates/403.html:7
 msgid "Access denied"
@@ -2306,6 +860,10 @@ msgstr "Maak gebruiker"
 msgid "Event management system Alexia"
 msgstr "Borrelbeheersysteem Alexia"
 
+#: templates/base.html:32 templates/general/about.html:23 templates/general/about.html:34
+msgid "and"
+msgstr "en"
+
 #: templates/base.html:33
 msgid "individual contributors"
 msgstr "individuele bijdragers"
@@ -2314,9 +872,7 @@ msgstr "individuele bijdragers"
 msgid "Local login"
 msgstr "Lokale login"
 
-#: templates/base_app.html:21 templates/scheduling/event_calendar.html:3
-#: templates/scheduling/event_list.html:3
-#: templates/scheduling/event_list.html:8
+#: templates/base_app.html:21 templates/scheduling/event_calendar.html:3 templates/scheduling/event_list.html:3 templates/scheduling/event_list.html:8
 msgid "Planning"
 msgstr "Planning"
 
@@ -2332,8 +888,7 @@ msgstr "Kalender"
 msgid "Personal schedule"
 msgstr "Tappersrooster"
 
-#: templates/base_app.html:31 templates/scheduling/event_matrix.html:3
-#: templates/scheduling/event_matrix.html:8
+#: templates/base_app.html:31 templates/scheduling/event_matrix.html:3 templates/scheduling/event_matrix.html:8
 msgid "Availability matrix"
 msgstr "Beschikbaarheidsmatrix"
 
@@ -2349,32 +904,23 @@ msgstr "Mailsjabonen"
 msgid "Users"
 msgstr "Gebruikers"
 
-#: templates/base_app.html:52 templates/billing/productgroup_list.html:3
-#: templates/billing/productgroup_list.html:8
+#: templates/base_app.html:52 templates/billing/productgroup_list.html:3 templates/billing/productgroup_list.html:8
 msgid "Product groups"
 msgstr "Productgroepen"
 
-#: templates/base_app.html:53 templates/billing/pricegroup_list.html:3
-#: templates/billing/pricegroup_list.html:8
+#: templates/base_app.html:53 templates/billing/pricegroup_list.html:3 templates/billing/pricegroup_list.html:8
 msgid "Price groups"
 msgstr "Prijsgroepen"
 
-#: templates/base_app.html:54 templates/billing/permanentproduct_list.html:3
-#: templates/billing/permanentproduct_list.html:8
-#: templates/billing/productgroup_detail.html:24
+#: templates/base_app.html:54 templates/billing/permanentproduct_list.html:3 templates/billing/permanentproduct_list.html:8 templates/billing/productgroup_detail.html:24
 msgid "Products"
 msgstr "Producten"
 
-#: templates/base_app.html:55 templates/billing/sellingprice_list.html:3
-#: templates/billing/sellingprice_list.html:7
+#: templates/base_app.html:55 templates/billing/sellingprice_list.html:3 templates/billing/sellingprice_list.html:7
 msgid "Price matrix"
 msgstr "Prijsmatrix"
 
-#: templates/base_app.html:57 templates/billing/order_detail.html:3
-#: templates/billing/order_detail.html:8 templates/billing/order_detail.html:60
-#: templates/billing/order_detail.html:130
-#: templates/consumption/consumptionform_detail.html:17
-#: templates/scheduling/event_detail.html:23
+#: templates/base_app.html:57 templates/billing/order_detail.html:3 templates/billing/order_detail.html:8 templates/billing/order_detail.html:60 templates/billing/order_detail.html:133 templates/consumption/consumptionform_detail.html:17 templates/scheduling/event_detail.html:23
 msgid "Orders"
 msgstr "Transacties"
 
@@ -2382,14 +928,11 @@ msgstr "Transacties"
 msgid "Management"
 msgstr "Beheer"
 
-#: templates/base_app.html:73
-#: templates/consumption/consumptionproduct_list.html:3
-#: templates/consumption/consumptionproduct_list.html:8
+#: templates/base_app.html:73 templates/consumption/consumptionproduct_list.html:3 templates/consumption/consumptionproduct_list.html:8
 msgid "Consumption products"
 msgstr "Voorraadproducten"
 
-#: templates/base_app.html:74 templates/consumption/consumptionform_list.html:3
-#: templates/consumption/consumptionform_list.html:8
+#: templates/base_app.html:74 templates/consumption/consumptionform_list.html:3 templates/consumption/consumptionform_list.html:8
 msgid "Consumption forms"
 msgstr "Verbruiksformulieren"
 
@@ -2413,74 +956,27 @@ msgstr "Uitloggen"
 msgid "Login with UTwente"
 msgstr "Inloggen met UTwente"
 
-#: templates/billing/order_detail.html:13 templates/consumption/dcf.html:4
-#: templates/consumption/dcf_check.html:3
-#: templates/consumption/dcf_finished.html:3
-#: templates/consumption/pdf/page.html:6
-#: templates/scheduling/event_detail.html:14
+#: templates/billing/order_detail.html:13 templates/consumption/dcf.html:4 templates/consumption/dcf_check.html:3 templates/consumption/dcf_finished.html:3 templates/consumption/pdf/page.html:6 templates/scheduling/event_detail.html:14
 msgid "Consumption form"
 msgstr "Verbruiksformulier"
 
-#: templates/billing/order_detail.html:18
-#: templates/consumption/consumptionform_detail.html:23
+#: templates/billing/order_detail.html:18 templates/consumption/consumptionform_detail.html:23
 msgid "Event information"
 msgstr "Evenementinformatie"
 
-#: templates/billing/order_detail.html:25 templates/billing/order_month.html:16
-#: templates/billing/payment_detail.html:22
-#: templates/billing/temporaryproduct_detail.html:31
-#: templates/consumption/consumptionform_list.html:33
-#: templates/consumption/consumptionform_list.html:70
-#: templates/consumption/pdf/page.html:19
-#: templates/organization/membership_detail.html:67
-#: templates/profile/expenditure_list.html:16 templates/profile/profile.html:69
-#: templates/scheduling/event_bartender_availability_form.html:12
+#: templates/billing/order_detail.html:25 templates/billing/order_month.html:16 templates/billing/payment_detail.html:22 templates/billing/temporaryproduct_detail.html:31 templates/billing/writeoff_order_detail.html:25 templates/consumption/consumptionform_list.html:33 templates/consumption/consumptionform_list.html:70 templates/consumption/pdf/page.html:19 templates/organization/membership_detail.html:67 templates/profile/expenditure_list.html:16 templates/profile/profile.html:69 templates/scheduling/event_bartender_availability_form.html:12
 msgid "Event"
 msgstr "Activiteit"
 
-#: templates/billing/order_detail.html:28
-#: templates/billing/order_export_result.html:35
-#: templates/billing/order_list.html:47
-#: templates/billing/permanentproduct_detail.html:27
-#: templates/billing/permanentproduct_list.html:21
-#: templates/billing/pricegroup_detail.html:27
-#: templates/billing/pricegroup_list.html:20
-#: templates/billing/productgroup_list.html:20
-#: templates/billing/temporaryproduct_detail.html:27
-#: templates/consumption/consumptionproduct_list.html:25
-#: templates/consumption/consumptionproduct_list.html:65
-#: templates/organization/membership_detail.html:45
-#: templates/organization/membership_iva.html:15
-#: templates/organization/membership_list.html:26
-#: templates/scheduling/availability_list.html:20
-#: templates/scheduling/event_bartender.html:16
-#: templates/scheduling/event_detail.html:79
-#: templates/scheduling/event_list.html:39
-#: templates/scheduling/mailtemplate_detail.html:20
-#: templates/scheduling/mailtemplate_list.html:15
+#: templates/billing/order_detail.html:28 templates/billing/order_export_result.html:35 templates/billing/order_list.html:47 templates/billing/permanentproduct_detail.html:27 templates/billing/permanentproduct_list.html:21 templates/billing/pricegroup_detail.html:27 templates/billing/pricegroup_list.html:20 templates/billing/productgroup_list.html:20 templates/billing/temporaryproduct_detail.html:27 templates/consumption/consumptionproduct_list.html:25 templates/consumption/consumptionproduct_list.html:65 templates/organization/membership_detail.html:45 templates/organization/membership_iva.html:15 templates/organization/membership_list.html:26 templates/scheduling/availability_list.html:20 templates/scheduling/event_bartender.html:16 templates/scheduling/event_detail.html:79 templates/scheduling/event_list.html:39 templates/scheduling/mailtemplate_detail.html:20 templates/scheduling/mailtemplate_list.html:15
 msgid "Name"
 msgstr "Naam"
 
-#: templates/billing/order_detail.html:32
-#: templates/billing/order_export_result.html:34
-#: templates/billing/order_list.html:46 templates/billing/order_month.html:15
-#: templates/consumption/consumptionform_detail.html:43
-#: templates/consumption/consumptionform_list.html:30
-#: templates/consumption/consumptionform_list.html:67
-#: templates/consumption/dcf_check.html:30
-#: templates/consumption/pdf/page.html:15
-#: templates/organization/membership_detail.html:66
-#: templates/profile/expenditure_list.html:15
-#: templates/scheduling/event_bartender.html:13
-#: templates/scheduling/event_list.html:35
+#: templates/billing/order_detail.html:32 templates/billing/order_export_result.html:34 templates/billing/order_list.html:46 templates/billing/order_month.html:15 templates/consumption/consumptionform_detail.html:43 templates/consumption/consumptionform_list.html:30 templates/consumption/consumptionform_list.html:67 templates/consumption/dcf_check.html:30 templates/consumption/pdf/page.html:15 templates/organization/membership_detail.html:66 templates/profile/expenditure_list.html:15 templates/scheduling/event_bartender.html:13 templates/scheduling/event_list.html:35
 msgid "Date"
 msgstr "Datum"
 
-#: templates/billing/order_detail.html:36
-#: templates/consumption/consumptionform_detail.html:51
-#: templates/consumption/dcf_check.html:38
-#: templates/scheduling/event_detail.html:48
-#: templates/scheduling/event_form.html:23
+#: templates/billing/order_detail.html:36 templates/consumption/consumptionform_detail.html:51 templates/consumption/dcf_check.html:38 templates/scheduling/event_detail.html:48 templates/scheduling/event_form.html:23
 msgid "Organizer"
 msgstr "Organisator"
 
@@ -2488,17 +984,11 @@ msgstr "Organisator"
 msgid "Visitors"
 msgstr "Bezoekers"
 
-#: templates/billing/order_detail.html:47 templates/billing/order_list.html:49
-#: templates/profile/profile.html:29
+#: templates/billing/order_detail.html:47 templates/billing/order_list.html:49 templates/profile/profile.html:29
 msgid "Transactions"
 msgstr "Transacties"
 
-#: templates/billing/order_detail.html:51
-#: templates/billing/order_detail.html:75
-#: templates/billing/order_export_result.html:18
-#: templates/billing/order_export_result.html:36
-#: templates/billing/order_list.html:27 templates/billing/order_list.html:50
-#: templates/billing/order_month.html:17 templates/billing/order_year.html:16
+#: templates/billing/order_detail.html:51 templates/billing/order_detail.html:75 templates/billing/order_export_result.html:18 templates/billing/order_export_result.html:36 templates/billing/order_list.html:27 templates/billing/order_list.html:50 templates/billing/order_month.html:17 templates/billing/order_year.html:16
 msgid "Revenue"
 msgstr "Omzet"
 
@@ -2506,56 +996,49 @@ msgstr "Omzet"
 msgid "Sales"
 msgstr "Verkopen"
 
-#: templates/billing/order_detail.html:64
-#: templates/billing/order_detail.html:95
+#: templates/billing/order_detail.html:64 templates/billing/order_detail.html:95
 msgid "Written off"
 msgstr "Afgeschreven"
 
-#: templates/billing/order_detail.html:74
-#: templates/billing/order_detail.html:94
-#: templates/billing/payment_detail.html:40
-#: templates/billing/permanentproduct_detail.html:8
-#: templates/consumption/partials/unit_consumption.html:13
-#: templates/consumption/partials/weight_consumption.html:13
+#: templates/billing/order_detail.html:74 templates/billing/order_detail.html:94 templates/billing/payment_detail.html:40 templates/billing/permanentproduct_detail.html:8 templates/billing/writeoff_order_detail.html:43 templates/consumption/partials/unit_consumption.html:13 templates/consumption/partials/weight_consumption.html:13
 msgid "Product"
 msgstr "Product"
 
-#: templates/billing/order_detail.html:135
+#: templates/billing/order_detail.html:138 templates/billing/order_detail.html:169
 msgid "ID"
 msgstr "ID"
 
-#: templates/billing/order_detail.html:136
-#: templates/billing/payment_detail.html:14
+#: templates/billing/order_detail.html:139 templates/billing/payment_detail.html:14
 msgid "Debtor"
 msgstr "Debiteur"
 
-#: templates/billing/order_detail.html:137
-#: templates/billing/payment_detail.html:26
-#: templates/profile/expenditure_detail.html:14
+#: templates/billing/order_detail.html:140 templates/billing/order_detail.html:170 templates/billing/payment_detail.html:26 templates/billing/writeoff_order_detail.html:29 templates/profile/expenditure_detail.html:14
 msgid "Amount"
 msgstr "Bedrag"
 
-#: templates/billing/order_detail.html:138
-#: templates/billing/payment_detail.html:18
-#: templates/profile/expenditure_detail.html:13
+#: templates/billing/order_detail.html:141 templates/billing/order_detail.html:172 templates/billing/payment_detail.html:18 templates/billing/writeoff_order_detail.html:21 templates/profile/expenditure_detail.html:13
 msgid "Timestamp"
 msgstr "Tijdstempel"
 
-#: templates/billing/order_detail.html:139
+#: templates/billing/order_detail.html:142
 msgid "Synchronized"
 msgstr "Gesynchroniseerd"
 
-#: templates/billing/order_export_form.html:3
-#: templates/billing/order_export_form.html:7
+#: templates/billing/order_detail.html:164
+#| msgid "writeoff orders"
+msgid "Written off orders"
+msgstr "Afgeschreven orders"
+
+#: templates/billing/order_detail.html:171 templates/billing/writeoff_order_detail.html:14
+msgid "Category"
+msgstr "Categorie"
+
+#: templates/billing/order_export_form.html:3 templates/billing/order_export_form.html:7
 #, python-format
 msgid "Export transactions of %(organization)s"
 msgstr "Exporteer transacties van %(organization)s"
 
-#: templates/billing/order_export_result.html:3
-#: templates/billing/order_export_result.html:11
-#: templates/billing/order_list.html:3 templates/billing/order_list.html:8
-#: templates/billing/order_month.html:3 templates/billing/order_month.html:8
-#: templates/billing/order_year.html:3 templates/billing/order_year.html:8
+#: templates/billing/order_export_result.html:3 templates/billing/order_export_result.html:11 templates/billing/order_list.html:3 templates/billing/order_list.html:8 templates/billing/order_month.html:3 templates/billing/order_month.html:8 templates/billing/order_year.html:3 templates/billing/order_year.html:8
 #, python-format
 msgid "Transactions of %(organization)s"
 msgstr "Transacties van %(organization)s"
@@ -2568,8 +1051,7 @@ msgstr "Samenvatting"
 msgid "Specification"
 msgstr "Specificatie"
 
-#: templates/billing/order_list.html:20 templates/general/about.html:39
-#: templates/profile/profile.html:25
+#: templates/billing/order_list.html:20 templates/general/about.html:39 templates/profile/profile.html:25
 msgid "Stats"
 msgstr "Statistieken"
 
@@ -2577,13 +1059,7 @@ msgstr "Statistieken"
 msgid "The amount of unique debtors this event"
 msgstr "Het aantal unieke debiteuren deze activiteit"
 
-#: templates/billing/order_list.html:51 templates/billing/order_month.html:18
-#: templates/billing/pricegroup_confirm_delete.html:3
-#: templates/billing/pricegroup_detail.html:3
-#: templates/billing/pricegroup_detail.html:8
-#: templates/billing/productgroup_detail.html:29
-#: templates/billing/productgroup_detail.html:71
-#: templates/billing/sellingprice_list.html:14
+#: templates/billing/order_list.html:51 templates/billing/order_month.html:18 templates/billing/pricegroup_confirm_delete.html:3 templates/billing/pricegroup_detail.html:3 templates/billing/pricegroup_detail.html:8 templates/billing/productgroup_detail.html:29 templates/billing/productgroup_detail.html:71 templates/billing/sellingprice_list.html:14
 msgid "Price group"
 msgstr "Prijsgroep"
 
@@ -2592,37 +1068,27 @@ msgstr "Prijsgroep"
 msgid "%(organization)s hasn't used Alexia Billing yet!"
 msgstr "%(organization)s heeft Alexia Financieel nog niet in gebruik!"
 
-#: templates/billing/payment_detail.html:3
-#: templates/billing/payment_detail.html:7
+#: templates/billing/payment_detail.html:3 templates/billing/payment_detail.html:7
 msgid "Payment"
 msgstr "Betaling"
 
-#: templates/billing/payment_detail.html:11
-#: templates/billing/pricegroup_detail.html:24
-#: templates/consumption/consumptionform_detail.html:40
-#: templates/scheduling/event_detail.html:38
+#: templates/billing/payment_detail.html:11 templates/billing/pricegroup_detail.html:24 templates/billing/writeoff_order_detail.html:11 templates/consumption/consumptionform_detail.html:40 templates/scheduling/event_detail.html:38
 msgid "Details"
 msgstr "Details"
 
-#: templates/billing/payment_detail.html:30
-#: templates/profile/expenditure_detail.html:15
+#: templates/billing/payment_detail.html:30 templates/billing/writeoff_order_detail.html:33 templates/profile/expenditure_detail.html:15
 msgid "Handled by"
 msgstr "Afgehandeld door"
 
-#: templates/billing/payment_detail.html:36
+#: templates/billing/payment_detail.html:36 templates/billing/writeoff_order_detail.html:39
 msgid "Items"
 msgstr "Specificatie"
 
-#: templates/billing/payment_detail.html:41
-#: templates/billing/pricegroup_detail.html:43
-#: templates/billing/productgroup_detail.html:72
-#: templates/billing/temporaryproduct_detail.html:35
-#: templates/scheduling/event_detail.html:80
+#: templates/billing/payment_detail.html:41 templates/billing/pricegroup_detail.html:43 templates/billing/productgroup_detail.html:72 templates/billing/temporaryproduct_detail.html:35 templates/billing/writeoff_order_detail.html:44 templates/scheduling/event_detail.html:80
 msgid "Price"
 msgstr "Prijs"
 
-#: templates/billing/permanentproduct_confirm_delete.html:3
-#: templates/billing/permanentproduct_confirm_delete.html:7
+#: templates/billing/permanentproduct_confirm_delete.html:3 templates/billing/permanentproduct_confirm_delete.html:7
 msgid "Delete product"
 msgstr "Product verwijderen"
 
@@ -2631,57 +1097,31 @@ msgstr "Product verwijderen"
 msgid "Are you sure you want to delete %(product)s from %(productgroup)s?"
 msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(productgroup)s?"
 
-#: templates/billing/permanentproduct_detail.html:13
-#: templates/billing/permanentproduct_list.html:40
-#: templates/billing/pricegroup_detail.html:13
-#: templates/billing/pricegroup_detail.html:55
-#: templates/billing/pricegroup_list.html:31
-#: templates/billing/productgroup_detail.html:13
-#: templates/billing/productgroup_detail.html:40
-#: templates/billing/productgroup_detail.html:84
-#: templates/billing/productgroup_list.html:31
-#: templates/billing/temporaryproduct_detail.html:13
-#: templates/consumption/consumptionform_detail.html:28
-#: templates/consumption/consumptionproduct_list.html:47
-#: templates/consumption/consumptionproduct_list.html:87
-#: templates/organization/membership_list.html:85
-#: templates/scheduling/availability_list.html:35
-#: templates/scheduling/event_detail.html:29
-#: templates/scheduling/event_detail.html:99
-#: templates/scheduling/mailtemplate_detail.html:13
-#: templates/scheduling/mailtemplate_list.html:30
+#: templates/billing/permanentproduct_confirm_delete.html:20 templates/billing/permanentproduct_detail.html:17 templates/billing/permanentproduct_list.html:44 templates/billing/pricegroup_confirm_delete.html:21 templates/billing/pricegroup_detail.html:17 templates/billing/pricegroup_detail.html:59 templates/billing/pricegroup_list.html:35 templates/billing/productgroup_confirm_delete.html:19 templates/billing/productgroup_detail.html:17 templates/billing/productgroup_detail.html:44 templates/billing/productgroup_detail.html:88 templates/billing/productgroup_list.html:35 templates/billing/sellingprice_confirm_delete.html:17 templates/billing/temporaryproduct_confirm_delete.html:14 templates/billing/temporaryproduct_detail.html:17 templates/consumption/partials/unit_consumption.html:15 templates/consumption/partials/weight_consumption.html:19 templates/organization/membership_confirm_delete.html:20 templates/organization/membership_list.html:89 templates/scheduling/event_detail.html:103
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: templates/billing/permanentproduct_detail.html:13 templates/billing/permanentproduct_list.html:40 templates/billing/pricegroup_detail.html:13 templates/billing/pricegroup_detail.html:55 templates/billing/pricegroup_list.html:31 templates/billing/productgroup_detail.html:13 templates/billing/productgroup_detail.html:40 templates/billing/productgroup_detail.html:84 templates/billing/productgroup_list.html:31 templates/billing/temporaryproduct_detail.html:13 templates/consumption/consumptionform_detail.html:28 templates/consumption/consumptionproduct_list.html:47 templates/consumption/consumptionproduct_list.html:87 templates/organization/membership_list.html:85 templates/scheduling/availability_list.html:35 templates/scheduling/event_detail.html:29 templates/scheduling/event_detail.html:99 templates/scheduling/mailtemplate_detail.html:13 templates/scheduling/mailtemplate_list.html:30
 msgid "Modify"
 msgstr "Wijzigen"
 
-#: templates/billing/permanentproduct_detail.html:24
-#: templates/billing/temporaryproduct_detail.html:24
+#: templates/billing/permanentproduct_detail.html:24 templates/billing/temporaryproduct_detail.html:24
 msgid "Product information"
 msgstr "Productinformatie"
 
-#: templates/billing/permanentproduct_detail.html:35
-#: templates/billing/permanentproduct_list.html:22
-#: templates/billing/pricegroup_detail.html:42
-#: templates/billing/productgroup_confirm_delete.html:3
-#: templates/billing/productgroup_confirm_delete.html:8
-#: templates/billing/productgroup_detail.html:3
-#: templates/billing/productgroup_detail.html:8
-#: templates/billing/sellingprice_list.html:13
+#: templates/billing/permanentproduct_detail.html:35 templates/billing/permanentproduct_list.html:22 templates/billing/pricegroup_detail.html:42 templates/billing/productgroup_confirm_delete.html:3 templates/billing/productgroup_confirm_delete.html:8 templates/billing/productgroup_detail.html:3 templates/billing/productgroup_detail.html:8 templates/billing/sellingprice_list.html:13
 msgid "Product group"
 msgstr "Productgroep"
 
-#: templates/billing/permanentproduct_detail.html:41
-#: templates/billing/temporaryproduct_detail.html:41
+#: templates/billing/permanentproduct_detail.html:41 templates/billing/temporaryproduct_detail.html:41
 msgid "Juliana settings"
 msgstr "Juliana-instellingen"
 
-#: templates/billing/permanentproduct_detail.html:44
-#: templates/billing/permanentproduct_list.html:23
-#: templates/scheduling/availability_list.html:22
+#: templates/billing/permanentproduct_detail.html:44 templates/billing/permanentproduct_list.html:23 templates/scheduling/availability_list.html:22
 msgid "Position"
 msgstr "Positie"
 
-#: templates/billing/permanentproduct_detail.html:56
-#: templates/billing/temporaryproduct_detail.html:52
+#: templates/billing/permanentproduct_detail.html:56 templates/billing/temporaryproduct_detail.html:52
 msgid "Color example"
 msgstr "Kleurvoorbeeld"
 
@@ -2689,43 +1129,23 @@ msgstr "Kleurvoorbeeld"
 msgid "Shortcut"
 msgstr "Shortcut"
 
-#: templates/billing/permanentproduct_form.html:5
-#: templates/billing/permanentproduct_form.html:15
+#: templates/billing/permanentproduct_form.html:5 templates/billing/permanentproduct_form.html:15
 msgid "Edit product"
 msgstr "Wijzig product"
 
-#: templates/billing/permanentproduct_form.html:7
-#: templates/billing/permanentproduct_form.html:17
+#: templates/billing/permanentproduct_form.html:7 templates/billing/permanentproduct_form.html:17
 msgid "New product"
 msgstr "Nieuw product"
 
-#: templates/billing/permanentproduct_list.html:12
-#: templates/billing/pricegroup_detail.html:72
-#: templates/billing/pricegroup_list.html:12
-#: templates/billing/productgroup_detail.html:57
-#: templates/billing/productgroup_detail.html:101
-#: templates/billing/productgroup_list.html:12
-#: templates/scheduling/availability_list.html:12
-#: templates/scheduling/event_detail.html:118
+#: templates/billing/permanentproduct_list.html:12 templates/billing/pricegroup_detail.html:72 templates/billing/pricegroup_list.html:12 templates/billing/productgroup_detail.html:57 templates/billing/productgroup_detail.html:101 templates/billing/productgroup_list.html:12 templates/scheduling/availability_list.html:12 templates/scheduling/event_detail.html:118
 msgid "Add"
 msgstr "Toevoegen"
 
-#: templates/billing/permanentproduct_list.html:24
-#: templates/billing/pricegroup_detail.html:44
-#: templates/billing/pricegroup_list.html:21
-#: templates/billing/productgroup_detail.html:30
-#: templates/billing/productgroup_detail.html:73
-#: templates/billing/productgroup_list.html:21
-#: templates/consumption/consumptionproduct_list.html:27
-#: templates/consumption/consumptionproduct_list.html:67
-#: templates/scheduling/availability_list.html:23
-#: templates/scheduling/event_detail.html:82
-#: templates/scheduling/mailtemplate_list.html:18
+#: templates/billing/permanentproduct_list.html:24 templates/billing/pricegroup_detail.html:44 templates/billing/pricegroup_list.html:21 templates/billing/productgroup_detail.html:30 templates/billing/productgroup_detail.html:73 templates/billing/productgroup_list.html:21 templates/consumption/consumptionproduct_list.html:27 templates/consumption/consumptionproduct_list.html:67 templates/scheduling/availability_list.html:23 templates/scheduling/event_detail.html:82 templates/scheduling/mailtemplate_list.html:18
 msgid "Actions"
 msgstr "Acties"
 
-#: templates/billing/permanentproduct_list.html:50
-#: templates/billing/productgroup_detail.html:50
+#: templates/billing/permanentproduct_list.html:50 templates/billing/productgroup_detail.html:50
 msgid "No products defined."
 msgstr "Geen producten gedefinieerd."
 
@@ -2734,29 +1154,22 @@ msgid "Delete price group"
 msgstr "Verwijder prijsgroep"
 
 #: templates/billing/pricegroup_confirm_delete.html:13
-msgid ""
-"Are you sure you want to delete this price group? The following prices will "
-"also be deleted:"
-msgstr ""
-"Weet je zeker dat je deze prijsgroep wil verwijderen? De volgende prijzen "
-"worden ook verwijderd:"
+msgid "Are you sure you want to delete this price group? The following prices will also be deleted:"
+msgstr "Weet je zeker dat je deze prijsgroep wil verwijderen? De volgende prijzen worden ook verwijderd:"
 
 #: templates/billing/pricegroup_confirm_delete.html:17
 msgid "Events with this price group need a new pricegroup. Please choose one."
 msgstr "Activiteiten met deze prijsgroep moeten een nieuwe prijsgroep krijgen."
 
-#: templates/billing/pricegroup_detail.html:37
-#: templates/billing/productgroup_detail.html:66
+#: templates/billing/pricegroup_detail.html:37 templates/billing/productgroup_detail.html:66
 msgid "Prices"
 msgstr "Prijzen"
 
-#: templates/billing/pricegroup_detail.html:65
-#: templates/billing/productgroup_detail.html:94
+#: templates/billing/pricegroup_detail.html:65 templates/billing/productgroup_detail.html:94
 msgid "No prices defined."
 msgstr "Geen prijzen gedefinieerd."
 
-#: templates/billing/pricegroup_form.html:5
-#: templates/billing/pricegroup_form.html:15
+#: templates/billing/pricegroup_form.html:5 templates/billing/pricegroup_form.html:15
 msgid "Edit price group"
 msgstr "Wijzig prijsgroep"
 
@@ -2765,20 +1178,14 @@ msgid "No price groups defined."
 msgstr "Geen prijsgroepen gedefinieerd."
 
 #: templates/billing/productgroup_confirm_delete.html:14
-msgid ""
-"Are you sure you want to delete this product group? The following products "
-"will also be deleted:"
-msgstr ""
-"Weet je zeker dat je deze productgroep wil verwijderen? De volgende "
-"producten worden ook verwijderd:"
+msgid "Are you sure you want to delete this product group? The following products will also be deleted:"
+msgstr "Weet je zeker dat je deze productgroep wil verwijderen? De volgende producten worden ook verwijderd:"
 
-#: templates/billing/productgroup_form.html:5
-#: templates/billing/productgroup_form.html:15
+#: templates/billing/productgroup_form.html:5 templates/billing/productgroup_form.html:15
 msgid "Edit product group"
 msgstr "Wijzig productgroep"
 
-#: templates/billing/productgroup_form.html:7
-#: templates/billing/productgroup_form.html:17
+#: templates/billing/productgroup_form.html:7 templates/billing/productgroup_form.html:17
 msgid "New product group"
 msgstr "Nieuwe productgroep"
 
@@ -2786,8 +1193,7 @@ msgstr "Nieuwe productgroep"
 msgid "No product groups defined."
 msgstr "Geen productgroepen gedefinieerd."
 
-#: templates/billing/sellingprice_confirm_delete.html:3
-#: templates/billing/sellingprice_confirm_delete.html:7
+#: templates/billing/sellingprice_confirm_delete.html:3 templates/billing/sellingprice_confirm_delete.html:7
 msgid "Delete selling price"
 msgstr "Verwijder verkoopprijs"
 
@@ -2796,18 +1202,15 @@ msgstr "Verwijder verkoopprijs"
 msgid "Are you sure you want to delete %(price)s?"
 msgstr "Weet je zeker dat je %(price)s wil verwijderen?"
 
-#: templates/billing/sellingprice_form.html:5
-#: templates/billing/sellingprice_form.html:15
+#: templates/billing/sellingprice_form.html:5 templates/billing/sellingprice_form.html:15
 msgid "Edit selling price"
 msgstr "Wijzig verkoopprijs"
 
-#: templates/billing/sellingprice_form.html:7
-#: templates/billing/sellingprice_form.html:17
+#: templates/billing/sellingprice_form.html:7 templates/billing/sellingprice_form.html:17
 msgid "New selling price"
 msgstr "Nieuwe verkoopprijs"
 
-#: templates/billing/temporaryproduct_confirm_delete.html:3
-#: templates/billing/temporaryproduct_confirm_delete.html:7
+#: templates/billing/temporaryproduct_confirm_delete.html:3 templates/billing/temporaryproduct_confirm_delete.html:7
 msgid "Delete temporary product"
 msgstr "Verwijder tijdelijk product"
 
@@ -2820,77 +1223,60 @@ msgstr "Weet je zeker dat je %(product)s wil verwijderen van %(event)s?"
 msgid "Temporary product"
 msgstr "Tijdelijk product"
 
-#: templates/billing/temporaryproduct_form.html:5
-#: templates/billing/temporaryproduct_form.html:15
+#: templates/billing/temporaryproduct_form.html:5 templates/billing/temporaryproduct_form.html:15
 msgid "Edit temporary product"
 msgstr "Wijzig tijdelijk product"
 
-#: templates/billing/temporaryproduct_form.html:7
-#: templates/billing/temporaryproduct_form.html:17
+#: templates/billing/temporaryproduct_form.html:7 templates/billing/temporaryproduct_form.html:17
 msgid "New temporary product"
 msgstr "Nieuw tijdelijk product"
 
-#: templates/consumption/consumptionform_detail.html:33
-#: templates/consumption/consumptionform_list.html:104
+#: templates/billing/writeoff_order_detail.html:3 templates/billing/writeoff_order_detail.html:7
+#| msgid "Written off"
+msgid "Write off"
+msgstr "Afschrijven"
+
+#: templates/consumption/consumptionform_detail.html:33 templates/consumption/consumptionform_list.html:104
 msgid "PDF"
 msgstr "PDF"
 
-#: templates/consumption/consumptionform_detail.html:47
-#: templates/consumption/consumptionform_list.html:32
-#: templates/consumption/consumptionform_list.html:69
-#: templates/consumption/dcf_check.html:34
-#: templates/consumption/pdf/page.html:11
-#: templates/scheduling/event_bartender.html:15
-#: templates/scheduling/event_calendar.html:25
-#: templates/scheduling/event_detail.html:56
-#: templates/scheduling/event_list.html:38
+#: templates/consumption/consumptionform_detail.html:47 templates/consumption/consumptionform_list.html:32 templates/consumption/consumptionform_list.html:69 templates/consumption/dcf_check.html:34 templates/consumption/pdf/page.html:11 templates/scheduling/event_bartender.html:15 templates/scheduling/event_calendar.html:25 templates/scheduling/event_detail.html:56 templates/scheduling/event_list.html:38
 msgid "Location"
 msgstr "Locatie"
 
-#: templates/consumption/consumptionform_detail.html:55
-#: templates/consumption/consumptionform_list.html:71
+#: templates/consumption/consumptionform_detail.html:55 templates/consumption/consumptionform_list.html:71
 msgid "Status"
 msgstr "Status"
 
-#: templates/consumption/consumptionform_detail.html:58
-#: templates/consumption/consumptionform_list.html:88
+#: templates/consumption/consumptionform_detail.html:58 templates/consumption/consumptionform_list.html:88
 msgid "Completed"
 msgstr "Ingezonden"
 
-#: templates/consumption/consumptionform_detail.html:60
-#: templates/consumption/consumptionform_list.html:90
+#: templates/consumption/consumptionform_detail.html:60 templates/consumption/consumptionform_list.html:90
 msgid "Pending"
 msgstr "In afwachting"
 
-#: templates/consumption/consumptionform_detail.html:67
-#: templates/consumption/pdf/page.html:75
+#: templates/consumption/consumptionform_detail.html:67 templates/consumption/pdf/page.html:75
 msgid "Signed off by"
 msgstr "Ondertekend door"
 
-#: templates/consumption/consumptionform_detail.html:70
-#: templates/consumption/pdf/page.html:75
+#: templates/consumption/consumptionform_detail.html:70 templates/consumption/pdf/page.html:75
 msgid "on"
 msgstr "op"
 
-#: templates/consumption/consumptionform_detail.html:72
-#: templates/consumption/pdf/page.html:75
+#: templates/consumption/consumptionform_detail.html:72 templates/consumption/pdf/page.html:75
 msgid "at"
 msgstr "om"
 
-#: templates/consumption/consumptionform_detail.html:88
-#: templates/consumption/dcf_check.html:66
-#: templates/consumption/partials/weight_consumption.html:15
-#: templates/consumption/pdf/page.html:41
+#: templates/consumption/consumptionform_detail.html:88 templates/consumption/dcf_check.html:66 templates/consumption/partials/weight_consumption.html:15 templates/consumption/pdf/page.html:41
 msgid "Kegs changed"
 msgstr "Fusten verwisseld"
 
-#: templates/consumption/consumptionform_detail.html:89
-#: templates/consumption/dcf_check.html:67
+#: templates/consumption/consumptionform_detail.html:89 templates/consumption/dcf_check.html:67
 msgid "Flowmeter"
 msgstr "Flowmeter"
 
-#: templates/consumption/consumptionform_detail.html:91
-#: templates/consumption/pdf/page.html:47
+#: templates/consumption/consumptionform_detail.html:91 templates/consumption/pdf/page.html:47
 msgid "Weight"
 msgstr "Gewicht"
 
@@ -2910,13 +1296,11 @@ msgstr "Geen missende formulieren. Hulde!"
 msgid "Has comments:"
 msgstr "Heeft commentaar:"
 
-#: templates/consumption/consumptionproduct_form.html:5
-#: templates/consumption/consumptionproduct_form.html:15
+#: templates/consumption/consumptionproduct_form.html:5 templates/consumption/consumptionproduct_form.html:15
 msgid "Edit consumption product"
 msgstr "Wijzig voorraadproduct"
 
-#: templates/consumption/consumptionproduct_form.html:7
-#: templates/consumption/consumptionproduct_form.html:17
+#: templates/consumption/consumptionproduct_form.html:7 templates/consumption/consumptionproduct_form.html:17
 msgid "New consumption product"
 msgstr "Nieuw voorraadproduct"
 
@@ -2928,8 +1312,7 @@ msgstr "Nieuw (KG)"
 msgid "Add (CE)"
 msgstr "Nieuw (CE)"
 
-#: templates/consumption/consumptionproduct_list.html:26
-#: templates/consumption/consumptionproduct_list.html:66
+#: templates/consumption/consumptionproduct_list.html:26 templates/consumption/consumptionproduct_list.html:66
 msgid "Type"
 msgstr "Type"
 
@@ -2937,8 +1320,7 @@ msgstr "Type"
 msgid "Archived products"
 msgstr "Gearchiveerde producten"
 
-#: templates/consumption/dcf.html:21 templates/consumption/dcf_check.html:10
-#: templates/consumption/dcf_finished.html:9
+#: templates/consumption/dcf.html:21 templates/consumption/dcf_check.html:10 templates/consumption/dcf_finished.html:9
 msgid "Digital consumption form"
 msgstr "Digitaal verbruiksformulier"
 
@@ -2970,8 +1352,7 @@ msgstr "Wijzigen"
 msgid "Correct the errors listed above before completing the form."
 msgstr "Verbeter bovenstaande fouten voordat je het formulier afrond."
 
-#: templates/consumption/dcf_export.html:3
-#: templates/consumption/dcf_export.html:7
+#: templates/consumption/dcf_export.html:3 templates/consumption/dcf_export.html:7
 msgid "Export consumption forms"
 msgstr "Verbruiksformulieren exporteren"
 
@@ -3031,8 +1412,7 @@ msgstr "Fustbier"
 msgid "Begin"
 msgstr "Begin"
 
-#: templates/consumption/pdf/page.html:40
-#: templates/scheduling/event_detail.html:64
+#: templates/consumption/pdf/page.html:40 templates/scheduling/event_detail.html:64
 msgid "End"
 msgstr "Einde"
 
@@ -3065,16 +1445,8 @@ msgid "Developers"
 msgstr "Ontwikkelaars"
 
 #: templates/general/about.html:13
-msgid ""
-"Alexia was developed for the drink basements under management of SBZ "
-"(Zilverling Drink Management Foundation). The base of this application was "
-"developed during the design project course, part of the Computer Science "
-"Bachelor. The following people contributed to this project:"
-msgstr ""
-"Alexia is ontwikkeld voor het beheer van de borrelruimtes van SBZ (Stichting "
-"Borrelbeheer Zilverling). De basis van deze applicatie is gelegd tijdens het "
-"Ontwerpproject van de bachelor Technische Informatica. De volgende mensen "
-"hebben daaraan bijgedragen:"
+msgid "Alexia was developed for the drink basements under management of SBZ (Zilverling Drink Management Foundation). The base of this application was developed during the design project course, part of the Computer Science Bachelor. The following people contributed to this project:"
+msgstr "Alexia is ontwikkeld voor het beheer van de borrelruimtes van SBZ (Stichting Borrelbeheer Zilverling). De basis van deze applicatie is gelegd tijdens het Ontwerpproject van de bachelor Technische Informatica. De volgende mensen hebben daaraan bijgedragen:"
 
 #: templates/general/about.html:27
 msgid "After the design project development of Alexia was continued by"
@@ -3084,8 +1456,7 @@ msgstr "Na het Ontwerpproject is Alexia doorontwikkeld door"
 msgid "Drinks"
 msgstr "Borrels"
 
-#: templates/organization/certificate_form.html:3
-#: templates/organization/certificate_form.html:8
+#: templates/organization/certificate_form.html:3 templates/organization/certificate_form.html:8
 msgid "Upload IVA certificate"
 msgstr "IVA certificaat uploaden"
 
@@ -3094,19 +1465,14 @@ msgid "Caution!"
 msgstr "Let op!"
 
 #: templates/organization/certificate_form.html:14
-msgid ""
-"This is already an approved IVA certificate. Uploading a new one will make "
-"the current one invalid!"
-msgstr ""
-"Dit is al een IVA-ceritficaat dat goedgekeurd is. Als je een nieuwe upload "
-"wordt de oude automatisch verwijderd!"
+msgid "This is already an approved IVA certificate. Uploading a new one will make the current one invalid!"
+msgstr "Dit is al een IVA-ceritficaat dat goedgekeurd is. Als je een nieuwe upload wordt de oude automatisch verwijderd!"
 
 #: templates/organization/certificate_form.html:21
 msgid "User"
 msgstr "Gebruiker"
 
-#: templates/organization/membership_confirm_delete.html:3
-#: templates/organization/membership_confirm_delete.html:7
+#: templates/organization/membership_confirm_delete.html:3 templates/organization/membership_confirm_delete.html:7
 msgid "Delete user"
 msgstr "Gebruiker verwijderen"
 
@@ -3127,6 +1493,10 @@ msgstr "Aantal keer getapt"
 msgid "User details"
 msgstr "Gebruikersgegevens"
 
+#: templates/organization/membership_detail.html:48 templates/profile/profile.html:15
+msgid "Email address"
+msgstr "E-mailadres"
+
 #: templates/organization/membership_detail.html:57
 msgid "Times tended last year"
 msgstr "Getapt afgelopen jaar"
@@ -3135,58 +1505,40 @@ msgstr "Getapt afgelopen jaar"
 msgid "Last tended events"
 msgstr "Laatst getapte activiteiten"
 
-#: templates/organization/membership_form.html:5
-#: templates/organization/membership_form.html:15
+#: templates/organization/membership_form.html:5 templates/organization/membership_form.html:15
 msgid "Modify user"
 msgstr "Gebruiker wijzigen"
 
-#: templates/organization/membership_form.html:7
-#: templates/organization/membership_form.html:17
-#: templates/organization/membership_list.html:12
+#: templates/organization/membership_form.html:7 templates/organization/membership_form.html:17 templates/organization/membership_list.html:12
 msgid "Add user"
 msgstr "Gebruiker toevoegen"
 
-#: templates/organization/membership_iva.html:3
-#: templates/organization/membership_iva.html:8
+#: templates/organization/membership_iva.html:3 templates/organization/membership_iva.html:8
 #, python-format
 msgid "Tenders of %(organization)s"
 msgstr "Tappers van %(organization)s"
 
-#: templates/organization/membership_iva.html:16
-#: templates/organization/membership_list.html:27
+#: templates/organization/membership_iva.html:16 templates/organization/membership_list.html:27
 msgid "Authorization"
 msgstr "Autorisatie"
 
-#: templates/organization/membership_iva.html:17
-#: templates/organization/membership_list.html:29
-#: templates/scheduling/event_list.html:41
+#: templates/organization/membership_iva.html:17 templates/organization/membership_list.html:29 templates/scheduling/event_list.html:41
 msgid "IVA"
 msgstr "IVA"
 
-#: templates/organization/membership_iva.html:26
-#: templates/organization/membership_list.html:47
-#: templates/profile/profile.html:53 templates/profile/profile.html:155
-#: templates/scheduling/event_bartender.html:3
-#: templates/scheduling/event_bartender.html:7
-#: templates/scheduling/event_bartender_availability_form.html:19
-#: templates/scheduling/event_matrix.html:17
+#: templates/organization/membership_iva.html:26 templates/organization/membership_list.html:47 templates/profile/profile.html:53 templates/profile/profile.html:155 templates/scheduling/event_bartender.html:3 templates/scheduling/event_bartender.html:7 templates/scheduling/event_bartender_availability_form.html:19 templates/scheduling/event_matrix.html:17
 msgid "Bartender"
 msgstr "Tapper"
 
-#: templates/organization/membership_iva.html:27
-#: templates/organization/membership_list.html:48
-#: templates/profile/profile.html:156
+#: templates/organization/membership_iva.html:27 templates/organization/membership_list.html:48 templates/profile/profile.html:156
 msgid "Planner"
 msgstr "Planner"
 
-#: templates/organization/membership_iva.html:28
-#: templates/organization/membership_list.html:49
-#: templates/profile/profile.html:157
+#: templates/organization/membership_iva.html:28 templates/organization/membership_list.html:49 templates/profile/profile.html:157
 msgid "Manager"
 msgstr "Manager"
 
-#: templates/organization/membership_list.html:3
-#: templates/organization/membership_list.html:8
+#: templates/organization/membership_list.html:3 templates/organization/membership_list.html:8
 #, python-format
 msgid "Users of %(organization)s"
 msgstr "Gebruikers van %(organization)s"
@@ -3195,20 +1547,15 @@ msgstr "Gebruikers van %(organization)s"
 msgid "Print IVA list"
 msgstr "IVA-lijst uitdraaien"
 
-#: templates/organization/membership_list.html:28
-#: templates/profile/profile.html:93
+#: templates/organization/membership_list.html:28 templates/profile/profile.html:93
 msgid "Active"
 msgstr "Actief"
 
-#: templates/organization/membership_list.html:30
-#: templates/profile/profile.html:40 templates/scheduling/event_matrix.html:18
+#: templates/organization/membership_list.html:30 templates/profile/profile.html:40 templates/scheduling/event_matrix.html:18
 msgid "Tended"
 msgstr "Getapt"
 
-#: templates/organization/membership_list.html:31
-#: templates/scheduling/event_detail.html:135
-#: templates/scheduling/event_detail.html:141
-#: templates/scheduling/event_matrix.html:19
+#: templates/organization/membership_list.html:31 templates/scheduling/event_detail.html:135 templates/scheduling/event_detail.html:141 templates/scheduling/event_matrix.html:19
 msgid "Last tended"
 msgstr "Laatst getapt"
 
@@ -3249,8 +1596,7 @@ msgstr "Mijn uitgaven op %(event)s"
 msgid "There are no payments!"
 msgstr "Er zijn geen betalingen!"
 
-#: templates/profile/expenditure_list.html:3
-#: templates/profile/expenditure_list.html:8
+#: templates/profile/expenditure_list.html:3 templates/profile/expenditure_list.html:8
 msgid "My expenditures"
 msgstr "Mijn uitgaven"
 
@@ -3296,8 +1642,7 @@ msgstr "Uitgegeven"
 
 #: templates/profile/profile.html:87
 msgid "This is an overview of RFID cards linked to your account."
-msgstr ""
-"Dit is een overzicht van RFID-kaarten die aan jouw account gekoppeld zijn."
+msgstr "Dit is een overzicht van RFID-kaarten die aan jouw account gekoppeld zijn."
 
 #: templates/profile/profile.html:92
 msgid "ID number"
@@ -3324,12 +1669,8 @@ msgid "Autorization"
 msgstr "Autorisatie"
 
 #: templates/profile/profile.html:142
-msgid ""
-"The following roles are assigned to you. Contact the organization in "
-"question for more details."
-msgstr ""
-"De volgende rollen zijn aan jou toegekend. Neem contact op met de "
-"betreffende vereniging voor meer details."
+msgid "The following roles are assigned to you. Contact the organization in question for more details."
+msgstr "De volgende rollen zijn aan jou toegekend. Neem contact op met de betreffende vereniging voor meer details."
 
 #: templates/profile/profile.html:147
 msgid "Roles"
@@ -3395,39 +1736,30 @@ msgstr "Log in met je lokale Alexia-account en wachtwoord."
 #, python-format
 msgid ""
 "\n"
-"                        If you have no local Alexia account, please <a "
-"href=\"%(oidc_login_url)s\">log in with your University account</a>.\n"
+"                        If you have no local Alexia account, please <a href=\"%(oidc_login_url)s\">log in with your University account</a>.\n"
 "                    "
 msgstr ""
 "\n"
-"                        Als je geen lokaal Alexia-account hebt, <a "
-"href=\"%(oidc_login_url)s\">log dan in met je Universiteitsaccount</a>.\n"
+"                        Als je geen lokaal Alexia-account hebt, <a href=\"%(oidc_login_url)s\">log dan in met je Universiteitsaccount</a>.\n"
 "                    "
 
-#: templates/registration/register.html:3
-#: templates/registration/register.html:11
+#: templates/registration/register.html:3 templates/registration/register.html:11
 msgid "Registration"
 msgstr "Registratie"
 
 #: templates/registration/register.html:12
-msgid ""
-"Your account details are not complete. Please fill in this form to continue."
-msgstr ""
-"Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te "
-"mogen."
+msgid "Your account details are not complete. Please fill in this form to continue."
+msgstr "Nog niet al jouw gegevens zijn bekend bij Alexia, voer deze in om verder te mogen."
 
-#: templates/scheduling/availability_form.html:5
-#: templates/scheduling/availability_form.html:15
+#: templates/scheduling/availability_form.html:5 templates/scheduling/availability_form.html:15
 msgid "Edit availability"
 msgstr "Wijzig beschikbaarheid"
 
-#: templates/scheduling/availability_form.html:7
-#: templates/scheduling/availability_form.html:17
+#: templates/scheduling/availability_form.html:7 templates/scheduling/availability_form.html:17
 msgid "New availability"
 msgstr "Nieuwe beschikbaarheid"
 
-#: templates/scheduling/availability_list.html:3
-#: templates/scheduling/availability_list.html:8
+#: templates/scheduling/availability_list.html:3 templates/scheduling/availability_list.html:8
 #, python-format
 msgid "Availabilities of %(organization)s"
 msgstr "Beschikbaarheden van %(organization)s"
@@ -3440,10 +1772,11 @@ msgstr "Soort"
 msgid "No availabilities defined."
 msgstr "Geen beschikbaarheden gedefinieerd."
 
-#: templates/scheduling/event_bartender.html:17
-#: templates/scheduling/event_calendar.html:27
-#: templates/scheduling/event_detail.html:130
-#: templates/scheduling/event_list.html:42
+#: templates/scheduling/event_bartender.html:14 templates/scheduling/event_list.html:36
+msgid "Time"
+msgstr "Tijd"
+
+#: templates/scheduling/event_bartender.html:17 templates/scheduling/event_calendar.html:27 templates/scheduling/event_detail.html:130 templates/scheduling/event_list.html:42
 msgid "Bartenders"
 msgstr "Tappers"
 
@@ -3455,8 +1788,7 @@ msgstr "Tappersinstructie"
 msgid "You don't have any events to tend."
 msgstr "Je hoeft nergens te tappen."
 
-#: templates/scheduling/event_bartender_availability_form.html:3
-#: templates/scheduling/event_bartender_availability_form.html:7
+#: templates/scheduling/event_bartender_availability_form.html:3 templates/scheduling/event_bartender_availability_form.html:7
 msgid "Edit bartender availability"
 msgstr "Bewerk tapperbeschikbaarheid"
 
@@ -3483,6 +1815,54 @@ msgstr "maand"
 #: templates/scheduling/event_calendar.html:73
 msgid "week"
 msgstr "week"
+
+#: templates/scheduling/event_calendar.html:75
+msgid "January"
+msgstr "januari"
+
+#: templates/scheduling/event_calendar.html:75
+msgid "February"
+msgstr "februari"
+
+#: templates/scheduling/event_calendar.html:75
+msgid "March"
+msgstr "maart"
+
+#: templates/scheduling/event_calendar.html:75
+msgid "April"
+msgstr "april"
+
+#: templates/scheduling/event_calendar.html:76 templates/scheduling/event_calendar.html:79
+msgid "May"
+msgstr "mei"
+
+#: templates/scheduling/event_calendar.html:76
+msgid "June"
+msgstr "juni"
+
+#: templates/scheduling/event_calendar.html:76
+msgid "July"
+msgstr "juli"
+
+#: templates/scheduling/event_calendar.html:76
+msgid "August"
+msgstr "augustus"
+
+#: templates/scheduling/event_calendar.html:77
+msgid "September"
+msgstr "september"
+
+#: templates/scheduling/event_calendar.html:77
+msgid "October"
+msgstr "oktober"
+
+#: templates/scheduling/event_calendar.html:77
+msgid "November"
+msgstr "november"
+
+#: templates/scheduling/event_calendar.html:77
+msgid "December"
+msgstr "december"
 
 #: templates/scheduling/event_calendar.html:78
 msgid "Jan."
@@ -3528,6 +1908,62 @@ msgstr "nov"
 msgid "Dec."
 msgstr "dec"
 
+#: templates/scheduling/event_calendar.html:81
+msgid "Sunday"
+msgstr "zondag"
+
+#: templates/scheduling/event_calendar.html:81
+msgid "Monday"
+msgstr "maandag"
+
+#: templates/scheduling/event_calendar.html:81
+msgid "Tuesday"
+msgstr "dinsdag"
+
+#: templates/scheduling/event_calendar.html:81
+msgid "Wednesday"
+msgstr "woensdag"
+
+#: templates/scheduling/event_calendar.html:82
+msgid "Thursday"
+msgstr "donderdag"
+
+#: templates/scheduling/event_calendar.html:82
+msgid "Friday"
+msgstr "vrijdag"
+
+#: templates/scheduling/event_calendar.html:82
+msgid "Saturday"
+msgstr "zaterdag"
+
+#: templates/scheduling/event_calendar.html:83
+msgid "Sun"
+msgstr "zo"
+
+#: templates/scheduling/event_calendar.html:83
+msgid "Mon"
+msgstr "ma"
+
+#: templates/scheduling/event_calendar.html:83
+msgid "Tue"
+msgstr "di"
+
+#: templates/scheduling/event_calendar.html:83
+msgid "Wed"
+msgstr "wo"
+
+#: templates/scheduling/event_calendar.html:84
+msgid "Thu"
+msgstr "do"
+
+#: templates/scheduling/event_calendar.html:84
+msgid "Fri"
+msgstr "vr"
+
+#: templates/scheduling/event_calendar.html:84
+msgid "Sat"
+msgstr "za"
+
 #: templates/scheduling/event_calendar.html:85
 msgid "Week"
 msgstr "Week"
@@ -3536,15 +1972,11 @@ msgstr "Week"
 msgid "Loading..."
 msgstr "Laden..."
 
-#: templates/scheduling/event_calendar.html:101
-#: templates/scheduling/event_form.html:7
-#: templates/scheduling/event_form.html:17
-#: templates/scheduling/event_list.html:13
+#: templates/scheduling/event_calendar.html:101 templates/scheduling/event_form.html:7 templates/scheduling/event_form.html:17 templates/scheduling/event_list.html:13
 msgid "Add event"
 msgstr "Activiteit toevoegen"
 
-#: templates/scheduling/event_confirm_delete.html:3
-#: templates/scheduling/event_confirm_delete.html:7
+#: templates/scheduling/event_confirm_delete.html:3 templates/scheduling/event_confirm_delete.html:7
 msgid "Delete event"
 msgstr "Activiteit verwijderen"
 
@@ -3579,22 +2011,21 @@ msgstr "Tijdelijke producten"
 
 #: templates/scheduling/event_detail.html:75
 msgid "Temporary products can only be created or modified by managers."
-msgstr ""
-"Tijdelijke producten kunnen alleen aangemaakt of gewijzigd worden door "
-"managers."
+msgstr "Tijdelijke producten kunnen alleen aangemaakt of gewijzigd worden door managers."
 
 #: templates/scheduling/event_detail.html:110
 msgid "No temporary products defined."
 msgstr "Geen tijdelijke producten gedefinieerd."
 
-#: templates/scheduling/event_detail.html:135
-#: templates/scheduling/event_detail.html:141
-#: templates/scheduling/event_matrix.html:30
+#: templates/scheduling/event_detail.html:135 templates/scheduling/event_detail.html:141 templates/scheduling/event_matrix.html:30
 msgid "Never"
 msgstr "Nooit"
 
-#: templates/scheduling/event_form.html:5
-#: templates/scheduling/event_form.html:15
+#: templates/scheduling/event_detail.html:142
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: templates/scheduling/event_form.html:5 templates/scheduling/event_form.html:15
 msgid "Edit event"
 msgstr "Activiteit bewerken"
 
@@ -3606,8 +2037,7 @@ msgstr "Filters"
 msgid "Kegs"
 msgstr "Fusten"
 
-#: templates/scheduling/event_list.html:78
-#: templates/scheduling/event_list.html:79
+#: templates/scheduling/event_list.html:78 templates/scheduling/event_list.html:79
 msgid "Has tender comment:"
 msgstr "Heeft tappersinstructie:"
 
@@ -3641,18 +2071,15 @@ msgstr "Er is niks ingepland na %(datetime)s."
 msgid "No events have been planned."
 msgstr "Er zijn geen evenementen gepland."
 
-#: templates/scheduling/mailtemplate_detail.html:3
-#: templates/scheduling/mailtemplate_detail.html:8
+#: templates/scheduling/mailtemplate_detail.html:3 templates/scheduling/mailtemplate_detail.html:8
 msgid "Mail template"
 msgstr "Mailsjabloon"
 
-#: templates/scheduling/mailtemplate_detail.html:28
-#: templates/scheduling/mailtemplate_list.html:16
+#: templates/scheduling/mailtemplate_detail.html:28 templates/scheduling/mailtemplate_list.html:16
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: templates/scheduling/mailtemplate_detail.html:32
-#: templates/scheduling/mailtemplate_list.html:17
+#: templates/scheduling/mailtemplate_detail.html:32 templates/scheduling/mailtemplate_list.html:17
 msgid "Is active"
 msgstr "Is actief"
 
@@ -3660,13 +2087,11 @@ msgstr "Is actief"
 msgid "Template"
 msgstr "Sjabloon"
 
-#: templates/scheduling/mailtemplate_form.html:3
-#: templates/scheduling/mailtemplate_form.html:7
+#: templates/scheduling/mailtemplate_form.html:3 templates/scheduling/mailtemplate_form.html:7
 msgid "Edit mail template"
 msgstr "Wijzig mailsjabloon"
 
-#: templates/scheduling/mailtemplate_list.html:3
-#: templates/scheduling/mailtemplate_list.html:8
+#: templates/scheduling/mailtemplate_list.html:3 templates/scheduling/mailtemplate_list.html:8
 #, python-format
 msgid "Mail templates of %(organization)s"
 msgstr "Mailsjablonen van %(organization)s"
@@ -3674,6 +2099,249 @@ msgstr "Mailsjablonen van %(organization)s"
 #: templates/scheduling/mailtemplate_list.html:36
 msgid "No mail templates defined."
 msgstr "Geen mailsjablonen gedefinieerd."
+
+#, fuzzy
+#~ msgid "Enter a valid value."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Syndication"
+#~ msgstr "Specificatie"
+
+#, fuzzy
+#~ msgid "Enter a valid URL."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid integer."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid email address."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid IPv4 address."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid IPv6 address."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Decimal number"
+#~ msgstr "Identificatienr."
+
+#, fuzzy
+#~ msgid "Duration"
+#~ msgstr "Autorisatie"
+
+#, fuzzy
+#~ msgid "File path"
+#~ msgstr "Bestandsformaat"
+
+#, fuzzy
+#~ msgid "IPv4 address"
+#~ msgstr "E-mailadres"
+
+#, fuzzy
+#~ msgid "IP address"
+#~ msgstr "E-mailadres"
+
+#, fuzzy
+#~ msgid "Raw binary data"
+#~ msgstr "aanvullende gegevens"
+
+#, fuzzy
+#~ msgid "Universally unique identifier"
+#~ msgstr "iCal identificatie"
+
+#, fuzzy
+#~ msgid "Enter a whole number."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid date."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid time."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid date/time."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid duration."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Enter a valid UUID."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Order"
+#~ msgstr "Transacties"
+
+#, fuzzy
+#~ msgid "midnight"
+#~ msgstr "Begingewicht"
+
+#, fuzzy
+#~ msgid "jan"
+#~ msgstr "en"
+
+#, fuzzy
+#~ msgid "mar"
+#~ msgstr "Samenvatting"
+
+#, fuzzy
+#~ msgid "may"
+#~ msgstr "mei"
+
+#, fuzzy
+#~ msgid "jun"
+#~ msgstr "zo"
+
+#, fuzzy
+#~ msgid "oct"
+#~ msgstr "product"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "Jan."
+#~ msgstr "jan"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "Feb."
+#~ msgstr "feb"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "maart"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "April"
+#~ msgstr "april"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "May"
+#~ msgstr "mei"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "June"
+#~ msgstr "juni"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "July"
+#~ msgstr "juli"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "Aug."
+#~ msgstr "aug"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "Oct."
+#~ msgstr "oct"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "Nov."
+#~ msgstr "nov"
+
+#, fuzzy
+#~ msgctxt "abbrev. month"
+#~ msgid "Dec."
+#~ msgstr "dec"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "January"
+#~ msgstr "januari"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "February"
+#~ msgstr "februari"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "maart"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "April"
+#~ msgstr "april"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "May"
+#~ msgstr "mei"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "June"
+#~ msgstr "juni"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "July"
+#~ msgstr "juli"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "August"
+#~ msgstr "augustus"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "September"
+#~ msgstr "september"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "October"
+#~ msgstr "oktober"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "november"
+
+#, fuzzy
+#~ msgctxt "alt. month"
+#~ msgid "December"
+#~ msgstr "december"
+
+#, fuzzy, python-format
+#~ msgid "%d month"
+#~ msgid_plural "%d months"
+#~ msgstr[0] "maand"
+#~ msgstr[1] "maand"
+
+#, fuzzy, python-format
+#~ msgid "%d week"
+#~ msgid_plural "%d weeks"
+#~ msgstr[0] "week"
+#~ msgstr[1] "week"
+
+#, fuzzy
+#~ msgid "Enter valid JSON."
+#~ msgstr "Voer een geldige gebruikersnaam in"
+
+#, fuzzy
+#~ msgid "Method not found."
+#~ msgstr "Niet gevonden"
 
 #~ msgid "Logging in failed, please try again."
 #~ msgstr "Het inloggen is mislukt, probeer het alsjeblieft opnieuw."
