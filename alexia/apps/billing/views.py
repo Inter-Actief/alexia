@@ -1,13 +1,15 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.core import serializers
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractYear, TruncMonth
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.dates import MONTHS
 from django.utils.translation import ugettext as _
+from django.views import View
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import (
@@ -33,8 +35,8 @@ from alexia.views import (
     OrganizationFilterMixin, OrganizationFormMixin,
 )
 
-from .models import Order, Purchase
-
+from .models import Order, Purchase, WriteOffOrder, WriteOffPurchase, WriteoffCategory
+import json
 
 class JulianaView(TenderRequiredMixin, DetailView):
     template_name = 'billing/juliana.html'
@@ -57,6 +59,8 @@ class JulianaView(TenderRequiredMixin, DetailView):
             'products': self.get_product_list(),
             'countdown': settings.JULIANA_COUNTDOWN if hasattr(settings, 'JULIANA_COUNTDOWN') else 5,
             'androidapp': self.request.META.get('HTTP_X_REQUESTED_WITH') == 'net.inter_actief.juliananfc',
+            'writeoff': self.object.organizer.writeoff_enabled,
+            'writeoff_categories' : WriteoffCategory.objects.filter(organization=self.object.organizer, is_active=True)
         })
         return context
 
@@ -126,13 +130,58 @@ class OrderDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailVi
             .values('product') \
             .annotate(amount=Sum('amount'), price=Sum('price'))
 
+        writeoff_exists = self.object.writeoff_orders.exists
+        
+        grouped_writeoff_products = None
+        writeoff_orders = None
+        if writeoff_exists:
+            grouped_writeoff_products = WriteOffPurchase.get_writeoff_products(event=self.object)
+            writeoff_orders = WriteOffOrder.objects.filter(event=self.object).order_by('-placed_at')
+
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         context.update({
             'orders': self.object.orders.select_related('authorization__user').order_by('-placed_at'),
+            'writeoff_orders': writeoff_orders,
             'products': products,
             'revenue': products.aggregate(Sum('price'))['price__sum'],
+            'writeoff_exists': writeoff_exists,
+            'grouped_writeoff_data': grouped_writeoff_products
         })
+
         return context
+
+
+class WriteOffDetailView(LoginRequiredMixin, DetailView):
+    model = WriteOffOrder
+    template_name = 'billing/writeoff_order_detail.html'
+
+    def get_object(self, queryset=None):
+        obj = super(WriteOffDetailView, self).get_object(queryset)
+
+        if not self.request.user.is_superuser \
+                and not self.request.user.profile.is_manager(obj.authorization.organization) \
+                and not obj.authorization.user == self.request.user:
+            raise PermissionDenied
+
+        return obj
+
+
+class WriteOffExportView(ManagerRequiredMixin, DenyWrongOrganizationMixin, View):
+    organization_field = 'organizer'
+
+    # get event
+    def get(self, request, *args, **kwargs):
+        event_pk = kwargs.get('pk')  # Extract the pk from kwargs
+        event = get_object_or_404(Event, pk=event_pk)  # Fetch the Event or raise 404 if not found
+
+        writeoff_exists = event.writeoff_orders.exists
+
+        if not writeoff_exists:
+            raise Http404
+        
+        grouped_writeoff_products = WriteOffPurchase.get_writeoff_products(event=event)
+        
+        return JsonResponse(grouped_writeoff_products)
 
 
 class OrderExportView(ManagerRequiredMixin, FormView):
