@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
     
     dependencies = [
-        ('scheduling', '0020_availability_position'),
+        ('scheduling', '0021_auto_20240926_1621'),
     ]
 
     operations = [

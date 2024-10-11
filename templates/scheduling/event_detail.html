@@ -143,6 +143,9 @@
                     </a>
                 </td>
                 <td class="col-xs-4">
+                    {% if obj.bartender_availability.comment %}
+                    <span title="{% trans 'Comment by bartender' %}" class="glyphicon glyphicon-comment"></span>
+                    {% endif %}
                     {{ obj.bartender_availability.comment }}
                 </td>
             </tr>

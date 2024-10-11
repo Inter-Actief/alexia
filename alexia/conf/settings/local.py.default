@@ -43,6 +43,7 @@ RADIUS_IDENTIFIER = ''
 EMAIL_HOST = 'localhost'
 EMAIL_SUBJECT_PREFIX = '[Alexia] '
 EMAIL_FROM = 'Alexia <alexia@localhost>'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Log mail messages to console instead of SMTP server!
 DEFAULT_FROM_EMAIL = EMAIL_FROM
 SERVER_EMAIL = EMAIL_FROM
 
