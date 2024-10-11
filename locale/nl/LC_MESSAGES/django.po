@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 13:14+0200\n"
-"PO-Revision-Date: 2024-10-11 13:14+0018\n"
+"POT-Creation-Date: 2024-10-11 13:42+0200\n"
+"PO-Revision-Date: 2024-10-11 13:42+0018\n"
 "Last-Translator: b'Kevin Alberts <kevin.alberts@inter-actief.net>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -776,7 +776,6 @@ msgid "availability"
 msgstr "beschikbaarheid"
 
 #: alexia/apps/scheduling/models.py:249
-#| msgid "comments"
 msgid "comment"
 msgstr "commentaar"
 
@@ -1058,11 +1057,16 @@ msgstr "Statistieken"
 msgid "The amount of unique debtors this event"
 msgstr "Het aantal unieke debiteuren deze activiteit"
 
-#: templates/billing/order_list.html:51 templates/billing/order_month.html:18 templates/billing/pricegroup_confirm_delete.html:3 templates/billing/pricegroup_detail.html:3 templates/billing/pricegroup_detail.html:8 templates/billing/productgroup_detail.html:29 templates/billing/productgroup_detail.html:71 templates/billing/sellingprice_list.html:14
+#: templates/billing/order_list.html:51
+#| msgid "Write off"
+msgid "Write-offs"
+msgstr "Afschrijvingen"
+
+#: templates/billing/order_list.html:52 templates/billing/order_month.html:18 templates/billing/pricegroup_confirm_delete.html:3 templates/billing/pricegroup_detail.html:3 templates/billing/pricegroup_detail.html:8 templates/billing/productgroup_detail.html:29 templates/billing/productgroup_detail.html:71 templates/billing/sellingprice_list.html:14
 msgid "Price group"
 msgstr "Prijsgroep"
 
-#: templates/billing/order_list.html:66
+#: templates/billing/order_list.html:68
 #, python-format
 msgid "%(organization)s hasn't used Alexia Billing yet!"
 msgstr "%(organization)s heeft Alexia Financieel nog niet in gebruik!"
@@ -2024,7 +2028,6 @@ msgid "Unknown"
 msgstr "Onbekend"
 
 #: templates/scheduling/event_detail.html:148
-#| msgid "bartender"
 msgid "Comment by bartender"
 msgstr "Commentaar van tapper"
 

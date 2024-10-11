@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core import serializers
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Q
 from django.db.models.functions import ExtractYear, TruncMonth
 from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -102,10 +102,11 @@ class OrderListView(ManagerRequiredMixin, ListView):
         return Event.objects.filter(organizer=self.request.organization) \
             .annotate(
                 order_count=Count('orders'),
+                writeoff_order_count=Count('writeoff_orders'),
                 revenue=Sum('orders__amount'),
                 visitors=Count('orders__authorization', distinct=True),
             ) \
-            .filter(order_count__gt=0, ) \
+            .filter(Q(order_count__gt=0) | Q(writeoff_order_count__gt=0)) \
             .order_by('-starts_at') \
             .select_related('pricegroup')
 
