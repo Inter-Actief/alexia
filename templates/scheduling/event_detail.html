@@ -135,12 +135,18 @@
                         {{ obj.tender.user.get_full_name }}
                     </a>
                 </td>
-                <td class="col-xs-6">
+                <td class="col-xs-2 text-right">
                     <a href="{% url 'edit-event-bartender-availability' pk=event.pk user_pk=obj.tender.user.pk %}">
-                        <span title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" class="label label-{{ obj.availability.css_class|default:'default' }}">
-                            {{ obj.availability|default:_("Unknown") }}
+                        <span title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" class="label label-{{ obj.bartender_availability.availability.css_class|default:'default' }}">
+                            {{ obj.bartender_availability.availability|default:_("Unknown") }}
                         </span>
                     </a>
+                </td>
+                <td class="col-xs-4">
+                    {% if obj.bartender_availability.comment %}
+                    <span title="{% trans 'Comment by bartender' %}" class="glyphicon glyphicon-comment"></span>
+                    {% endif %}
+                    {{ obj.bartender_availability.comment }}
                 </td>
             </tr>
         {% endfor %}

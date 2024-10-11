@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 12:32+0200\n"
-"PO-Revision-Date: 2024-10-11 12:35+0018\n"
+"POT-Creation-Date: 2024-10-11 13:14+0200\n"
+"PO-Revision-Date: 2024-10-11 13:14+0018\n"
 "Last-Translator: b'Kevin Alberts <kevin.alberts@inter-actief.net>'\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -221,7 +221,6 @@ msgid "purchases"
 msgstr "aankopen"
 
 #: alexia/apps/billing/models.py:339
-#| msgid "description"
 msgid "short description"
 msgstr "korte omschrijving"
 
@@ -230,13 +229,11 @@ msgid "color"
 msgstr "kleur"
 
 #: alexia/apps/billing/models.py:346
-#| msgid "Active"
 msgid "active"
 msgstr "actief"
 
 #: alexia/apps/billing/models.py:349
 #, python-brace-format
-#| msgid "{user} of {organization}"
 msgid "{name} for {organization}"
 msgstr "{name} van {organization}"
 
@@ -254,7 +251,6 @@ msgstr "Afschrijvingstransacties"
 
 #: alexia/apps/billing/models.py:378
 #, python-brace-format
-#| msgid "{user} at {time} on {event}"
 msgid "{time} on {event}"
 msgstr "{time} bij {event}"
 
@@ -278,7 +274,7 @@ msgstr "Verbruik"
 msgid "General"
 msgstr "Generiek"
 
-#: alexia/apps/config.py:24 alexia/apps/scheduling/forms.py:73 templates/billing/permanentproduct_detail.html:31 templates/billing/pricegroup_detail.html:31 templates/consumption/consumptionform_list.html:31 templates/consumption/consumptionform_list.html:68 templates/consumption/pdf/page.html:9 templates/general/about.html:40 templates/organization/certificate_form.html:27 templates/profile/profile.html:121 templates/profile/profile.html:146 templates/scheduling/event_calendar.html:26 templates/scheduling/event_list.html:37 templates/scheduling/mailtemplate_detail.html:24
+#: alexia/apps/config.py:24 alexia/apps/scheduling/forms.py:73 templates/billing/permanentproduct_detail.html:31 templates/billing/pricegroup_detail.html:31 templates/consumption/consumptionform_list.html:31 templates/consumption/consumptionform_list.html:68 templates/consumption/pdf/page.html:9 templates/general/about.html:40 templates/organization/certificate_form.html:27 templates/profile/profile.html:121 templates/profile/profile.html:146 templates/scheduling/event_calendar.html:26 templates/scheduling/event_list.html:38 templates/scheduling/mailtemplate_detail.html:24
 msgid "Organization"
 msgstr "Organisatie"
 
@@ -462,7 +458,6 @@ msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
 #: alexia/apps/general/views.py:129
-#| msgid "organizations"
 msgid "This organization is inactive."
 msgstr "Deze organisatie is inactief."
 
@@ -780,11 +775,16 @@ msgstr "tapper"
 msgid "availability"
 msgstr "beschikbaarheid"
 
-#: alexia/apps/scheduling/models.py:251
+#: alexia/apps/scheduling/models.py:249
+#| msgid "comments"
+msgid "comment"
+msgstr "commentaar"
+
+#: alexia/apps/scheduling/models.py:252
 msgid "bartender availability"
 msgstr "tapperbeschikbaarheid"
 
-#: alexia/apps/scheduling/models.py:252
+#: alexia/apps/scheduling/models.py:253
 msgid "bartender availabilities"
 msgstr "tapperbeschikbaarheden"
 
@@ -872,7 +872,7 @@ msgstr "individuele bijdragers"
 msgid "Local login"
 msgstr "Lokale login"
 
-#: templates/base_app.html:21 templates/scheduling/event_calendar.html:3 templates/scheduling/event_list.html:3 templates/scheduling/event_list.html:8
+#: templates/base_app.html:21 templates/scheduling/event_calendar.html:3 templates/scheduling/event_list.html:4 templates/scheduling/event_list.html:9
 msgid "Planning"
 msgstr "Planning"
 
@@ -968,11 +968,11 @@ msgstr "Evenementinformatie"
 msgid "Event"
 msgstr "Activiteit"
 
-#: templates/billing/order_detail.html:28 templates/billing/order_export_result.html:35 templates/billing/order_list.html:47 templates/billing/permanentproduct_detail.html:27 templates/billing/permanentproduct_list.html:21 templates/billing/pricegroup_detail.html:27 templates/billing/pricegroup_list.html:20 templates/billing/productgroup_list.html:20 templates/billing/temporaryproduct_detail.html:27 templates/consumption/consumptionproduct_list.html:25 templates/consumption/consumptionproduct_list.html:65 templates/organization/membership_detail.html:45 templates/organization/membership_iva.html:15 templates/organization/membership_list.html:26 templates/scheduling/availability_list.html:20 templates/scheduling/event_bartender.html:16 templates/scheduling/event_detail.html:79 templates/scheduling/event_list.html:39 templates/scheduling/mailtemplate_detail.html:20 templates/scheduling/mailtemplate_list.html:15
+#: templates/billing/order_detail.html:28 templates/billing/order_export_result.html:35 templates/billing/order_list.html:47 templates/billing/permanentproduct_detail.html:27 templates/billing/permanentproduct_list.html:21 templates/billing/pricegroup_detail.html:27 templates/billing/pricegroup_list.html:20 templates/billing/productgroup_list.html:20 templates/billing/temporaryproduct_detail.html:27 templates/consumption/consumptionproduct_list.html:25 templates/consumption/consumptionproduct_list.html:65 templates/organization/membership_detail.html:45 templates/organization/membership_iva.html:15 templates/organization/membership_list.html:26 templates/scheduling/availability_list.html:20 templates/scheduling/event_bartender.html:16 templates/scheduling/event_detail.html:79 templates/scheduling/event_list.html:40 templates/scheduling/mailtemplate_detail.html:20 templates/scheduling/mailtemplate_list.html:15
 msgid "Name"
 msgstr "Naam"
 
-#: templates/billing/order_detail.html:32 templates/billing/order_export_result.html:34 templates/billing/order_list.html:46 templates/billing/order_month.html:15 templates/consumption/consumptionform_detail.html:43 templates/consumption/consumptionform_list.html:30 templates/consumption/consumptionform_list.html:67 templates/consumption/dcf_check.html:30 templates/consumption/pdf/page.html:15 templates/organization/membership_detail.html:66 templates/profile/expenditure_list.html:15 templates/scheduling/event_bartender.html:13 templates/scheduling/event_list.html:35
+#: templates/billing/order_detail.html:32 templates/billing/order_export_result.html:34 templates/billing/order_list.html:46 templates/billing/order_month.html:15 templates/consumption/consumptionform_detail.html:43 templates/consumption/consumptionform_list.html:30 templates/consumption/consumptionform_list.html:67 templates/consumption/dcf_check.html:30 templates/consumption/pdf/page.html:15 templates/organization/membership_detail.html:66 templates/profile/expenditure_list.html:15 templates/scheduling/event_bartender.html:13 templates/scheduling/event_list.html:36
 msgid "Date"
 msgstr "Datum"
 
@@ -1025,7 +1025,6 @@ msgid "Synchronized"
 msgstr "Gesynchroniseerd"
 
 #: templates/billing/order_detail.html:164
-#| msgid "writeoff orders"
 msgid "Written off orders"
 msgstr "Afgeschreven orders"
 
@@ -1232,7 +1231,6 @@ msgid "New temporary product"
 msgstr "Nieuw tijdelijk product"
 
 #: templates/billing/writeoff_order_detail.html:3 templates/billing/writeoff_order_detail.html:7
-#| msgid "Written off"
 msgid "Write off"
 msgstr "Afschrijven"
 
@@ -1240,7 +1238,7 @@ msgstr "Afschrijven"
 msgid "PDF"
 msgstr "PDF"
 
-#: templates/consumption/consumptionform_detail.html:47 templates/consumption/consumptionform_list.html:32 templates/consumption/consumptionform_list.html:69 templates/consumption/dcf_check.html:34 templates/consumption/pdf/page.html:11 templates/scheduling/event_bartender.html:15 templates/scheduling/event_calendar.html:25 templates/scheduling/event_detail.html:56 templates/scheduling/event_list.html:38
+#: templates/consumption/consumptionform_detail.html:47 templates/consumption/consumptionform_list.html:32 templates/consumption/consumptionform_list.html:69 templates/consumption/dcf_check.html:34 templates/consumption/pdf/page.html:11 templates/scheduling/event_bartender.html:15 templates/scheduling/event_calendar.html:25 templates/scheduling/event_detail.html:56 templates/scheduling/event_list.html:39
 msgid "Location"
 msgstr "Locatie"
 
@@ -1522,7 +1520,7 @@ msgstr "Tappers van %(organization)s"
 msgid "Authorization"
 msgstr "Autorisatie"
 
-#: templates/organization/membership_iva.html:17 templates/organization/membership_list.html:29 templates/scheduling/event_list.html:41
+#: templates/organization/membership_iva.html:17 templates/organization/membership_list.html:29 templates/scheduling/event_list.html:42
 msgid "IVA"
 msgstr "IVA"
 
@@ -1772,11 +1770,11 @@ msgstr "Soort"
 msgid "No availabilities defined."
 msgstr "Geen beschikbaarheden gedefinieerd."
 
-#: templates/scheduling/event_bartender.html:14 templates/scheduling/event_list.html:36
+#: templates/scheduling/event_bartender.html:14 templates/scheduling/event_list.html:37
 msgid "Time"
 msgstr "Tijd"
 
-#: templates/scheduling/event_bartender.html:17 templates/scheduling/event_calendar.html:27 templates/scheduling/event_detail.html:130 templates/scheduling/event_list.html:42
+#: templates/scheduling/event_bartender.html:17 templates/scheduling/event_calendar.html:27 templates/scheduling/event_detail.html:130 templates/scheduling/event_list.html:43
 msgid "Bartenders"
 msgstr "Tappers"
 
@@ -1972,7 +1970,7 @@ msgstr "Week"
 msgid "Loading..."
 msgstr "Laden..."
 
-#: templates/scheduling/event_calendar.html:101 templates/scheduling/event_form.html:7 templates/scheduling/event_form.html:17 templates/scheduling/event_list.html:13
+#: templates/scheduling/event_calendar.html:101 templates/scheduling/event_form.html:7 templates/scheduling/event_form.html:17 templates/scheduling/event_list.html:14
 msgid "Add event"
 msgstr "Activiteit toevoegen"
 
@@ -2025,49 +2023,54 @@ msgstr "Nooit"
 msgid "Unknown"
 msgstr "Onbekend"
 
+#: templates/scheduling/event_detail.html:148
+#| msgid "bartender"
+msgid "Comment by bartender"
+msgstr "Commentaar van tapper"
+
 #: templates/scheduling/event_form.html:5 templates/scheduling/event_form.html:15
 msgid "Edit event"
 msgstr "Activiteit bewerken"
 
-#: templates/scheduling/event_list.html:22
+#: templates/scheduling/event_list.html:23
 msgid "Filters"
 msgstr "Filters"
 
-#: templates/scheduling/event_list.html:40
+#: templates/scheduling/event_list.html:41
 msgid "Kegs"
 msgstr "Fusten"
 
-#: templates/scheduling/event_list.html:78 templates/scheduling/event_list.html:79
+#: templates/scheduling/event_list.html:79 templates/scheduling/event_list.html:80
 msgid "Has tender comment:"
 msgstr "Heeft tappersinstructie:"
 
-#: templates/scheduling/event_list.html:82
+#: templates/scheduling/event_list.html:83
 msgid "Risky activity"
 msgstr "Risicoactiviteit"
 
-#: templates/scheduling/event_list.html:92
+#: templates/scheduling/event_list.html:93
 msgid "Some bartenders have IVA, but not everyone"
 msgstr "Sommige tappers hebben IVA, maar niet allemaal"
 
-#: templates/scheduling/event_list.html:129
+#: templates/scheduling/event_list.html:135
 msgid "Point of sale"
 msgstr "Kassa"
 
-#: templates/scheduling/event_list.html:131
+#: templates/scheduling/event_list.html:137
 msgid "DCF"
 msgstr "DVF"
 
-#: templates/scheduling/event_list.html:143
+#: templates/scheduling/event_list.html:149
 #, python-format
 msgid "There's nothing scheduled between %(a)s and %(b)s."
 msgstr "Er is niks ingepland tussen %(a)s en %(b)s."
 
-#: templates/scheduling/event_list.html:145
+#: templates/scheduling/event_list.html:151
 #, python-format
 msgid "There's nothing scheduled after %(datetime)s."
 msgstr "Er is niks ingepland na %(datetime)s."
 
-#: templates/scheduling/event_matrix.html:46
+#: templates/scheduling/event_matrix.html:47
 msgid "No events have been planned."
 msgstr "Er zijn geen evenementen gepland."
 

@@ -246,6 +246,7 @@ class BartenderAvailability(models.Model):
         verbose_name=_('availability'),
         on_delete=models.CASCADE,
     )
+    comment = models.TextField(_('comment'), blank=True, default='', max_length=100)
 
     class Meta:
         verbose_name = _('bartender availability')

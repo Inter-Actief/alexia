@@ -36,6 +36,10 @@ body {
     padding-bottom: 0;
 }
 
+.label.label-has-ba-comment {
+  border: 2px dotted black;
+}
+
 .input-static {
     padding-top: 7px;
 }
