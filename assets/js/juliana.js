@@ -30,6 +30,8 @@ State = {
     ERROR: 2,
     CHECK: 3,
     MESSAGE: 4,
+    WRITEOFF: 5,
+    WRITEOFF_TIMER: 6,
 
     current: this.SALES,
     toggleTo: function (newState, argument) {
@@ -41,6 +43,7 @@ State = {
                 clearInterval(Receipt.counterInterval);
                 Receipt.clear();
                 $('#payment-receipt').html('');
+                $('#writeoff-receipt').html('');
                 $('#countdownbox').show();
 
                 this._hideAllScreens();
@@ -71,6 +74,27 @@ State = {
 
                 $('#rfid-screen').show();
                 break;
+            case this.WRITEOFF_TIMER:
+                console.log('Changing to WRITEOFF_TIMER...');
+                this.current = this.WRITEOFF_TIMER;
+                this._hideAllScreens();
+
+                var receipt = Receipt.receipt;
+                var receiptHTML = '';
+                var total = 0;
+                for (var i = 0; i < receipt.length; i++) {
+                    receiptHTML += '<tr>';
+                    receiptHTML += '<td>' + Settings.products[receipt[i].product].name + '</td>';
+                    receiptHTML += '<td>' + receipt[i].amount + '</td>';
+                    receiptHTML += '<td>&euro;' + (receipt[i].price / 100).toFixed(2) + '</td>';
+                    receiptHTML += '</tr>';
+                    total += receipt[i].price;
+                }
+                receiptHTML += '<tr class="active"><td><strong>Total:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
+                $('#writeoff-receipt').html(receiptHTML);
+
+                $('#writeoff-timer-screen').show();
+                break;
             case this.ERROR:
                 this.current = this.ERROR;
                 this._hideAllScreens();
@@ -87,6 +111,18 @@ State = {
                 $('#current-message').html(argument);
                 $('#message-screen').show();
                 break;
+            case this.WRITEOFF:
+                this.current = this.WRITEOFF;
+
+                // Do not hide all screens, since we want to show the total
+                // (to know how much we're writing off)
+                $("#keypad").hide();
+                $("#products").hide();
+                
+                // HTML Magic and rendering
+                // argument is the Receipt object
+                $('#writeoff-screen').show();
+                break;
             default:
                 console.log('Error: no known state');
                 break;
@@ -101,6 +137,12 @@ State = {
         $('#cashier-screen').hide();
         $('#error-screen').hide();
         $('#message-screen').hide();
+        $('#writeoff-screen').hide();
+        $('#writeoff-timer-screen').hide();
+
+        // Show possible hidden screens in case of writeoff
+        $("#keypad").show();
+        $("#products").show();
     }
 };
 
@@ -286,7 +328,6 @@ Receipt = {
 
         clearInterval(Receipt.counterInterval);
         Receipt.confirmPay(rpcRequest);
-
     },
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
@@ -302,6 +343,49 @@ Receipt = {
         var sum = Receipt.updateTotalAmount();
         var amount = Math.ceil(sum / 10) * 10;
         State.toggleTo(State.MESSAGE, 'Dat wordt dan &euro; ' + (amount/100).toFixed(2));
+    },
+    writeoff: function(categoryId) {
+        if (Receipt.receipt.length > 0) {
+            console.log('Proceeding to countdown.');
+            State.toggleTo(State.WRITEOFF_TIMER);
+
+            Receipt.payData = {
+                event_id: Settings.event_id,
+                writeoff_id: categoryId,
+                purchases: Receipt.receipt
+            };
+
+            var countdown = Settings.countdown - 1;
+            $('#writeoff-countdown').text(countdown + 1);
+            Receipt.counterInterval = setInterval(function () {
+                $('#writeoff-countdown').text(countdown);
+                if (countdown === 0) {
+                    Receipt.writeoffNow();
+                }
+                countdown--;
+            }, 1000);
+        } else {
+            console.log('Info: receipt empty');
+            Display.set('Please select products!');
+            State.toggleTo(State.ERROR, 'Error: Geen producten geselecteerd!');
+        }
+    },
+    writeoffNow: function () {
+        let rpcRequest = {
+            jsonrpc: '2.0',
+            method: 'juliana.writeoff.save',
+            params: Receipt.payData,
+            id: 2 // id used for?
+        }
+        
+        // writing off
+        IAjax.request(rpcRequest, function (result) {
+            if (result.error) {
+                State.toggleTo(State.ERROR, 'Error with writeoff: ' + result.error);
+            } else {
+                State.toggleTo(State.SALES);
+            }
+        })
     }
 };
 
@@ -465,7 +549,20 @@ $(function () {
             case 'payNow':
                 Receipt.payNow();
                 break;
+            case 'writeoffNow':
+                Receipt.writeoffNow();
+                break;
             case 'ok':
+                State.toggleTo(State.SALES);
+                break;
+            case 'writeoff':
+                State.toggleTo(State.WRITEOFF);
+                break;
+            case 'writeoffCategory':
+                // writeoff category with id:
+                Receipt.writeoff($(this).data('category'))
+                break;
+            case 'cancelWriteoff':
                 State.toggleTo(State.SALES);
                 break;
             default:

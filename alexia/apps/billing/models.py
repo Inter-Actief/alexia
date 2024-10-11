@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from collections import defaultdict
 from decimal import Decimal
 
 from django.conf import settings
@@ -331,3 +332,96 @@ class Purchase(models.Model):
 
     def __str__(self):
         return '%s x %s' % (self.amount, self.product)
+
+@python_2_unicode_compatible
+class WriteoffCategory(models.Model):
+    name = models.CharField(_('name'), max_length=20)
+    description = models.CharField(_('short description'), max_length=80)
+    color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
+    organization = models.ForeignKey(
+        Organization,
+        on_delete=models.CASCADE,
+        verbose_name=_('organization')
+    )
+    is_active = models.BooleanField(_('active'), default=False)
+
+    def __str__(self):
+        return _('{name} for {organization}').format(
+            name=self.name,
+            organization=self.organization
+        )
+
+@python_2_unicode_compatible
+class WriteOffOrder(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, related_name='writeoff_orders', verbose_name=_('event'))
+    placed_at = models.DateTimeField(_('placed at'), default=timezone.now)
+    added_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        verbose_name=_('added by'),
+        related_name='+',
+    )
+    amount = models.DecimalField(_('amount'), max_digits=15, decimal_places=2)
+
+    writeoff_category = models.ForeignKey(
+        WriteoffCategory,
+        on_delete=models.PROTECT, # We cannot delete purchases
+        verbose_name=_('writeoff category')
+    )
+    
+    class Meta:
+        ordering = ['-placed_at']
+        verbose_name = _('writeoff order')
+        verbose_name_plural = _('writeoff orders')
+
+    def __str__(self):
+        return _('{time} on {event}').format(
+            time=self.placed_at.strftime('%H:%M'),
+            event=self.event.name,
+        )
+
+    def save(self, *args, **kwargs):
+        self.amount = self.get_price()
+        super(WriteOffOrder, self).save(*args, **kwargs)
+
+    def get_price(self):
+        amount = Decimal('0.0')
+        for purchase in self.writeoff_purchases.all():
+            amount += purchase.price
+        return amount
+
+
+@python_2_unicode_compatible
+class WriteOffPurchase(models.Model):
+    order = models.ForeignKey(WriteOffOrder, on_delete=models.CASCADE, related_name='writeoff_purchases', verbose_name=_('order'))
+    product = models.CharField(_('product'), max_length=32)
+    amount = models.PositiveSmallIntegerField(_('amount'))
+    price = models.DecimalField(_('price'), max_digits=15, decimal_places=2)
+
+    class Meta:
+        verbose_name = _('purchase')
+        verbose_name_plural = _('purchases')
+
+    def __str__(self):
+        return '%s x %s' % (self.amount, self.product)
+
+    @classmethod
+    def get_writeoff_products(cls, event):
+        writeoff_products = WriteOffPurchase.objects.filter(order__event=event) \
+            .values('order__writeoff_category__name', 'order__writeoff_category__description', 'product') \
+            .annotate(total_amount=models.Sum('amount'), total_price=models.Sum('price')) \
+            .order_by('order__writeoff_category__name', 'product')
+
+        # Group writeoffs by category
+        grouped_writeoff_products = defaultdict(lambda: {'products': [], 'total_amount': 0, 'total_price': 0, 'description': ''})
+
+        # calculate total product amount and total price per category
+        for product in writeoff_products:
+            category_name = product['order__writeoff_category__name']
+            grouped_writeoff_products[category_name]['description'] = product['order__writeoff_category__description']
+            grouped_writeoff_products[category_name]['products'].append(product)
+            grouped_writeoff_products[category_name]['total_amount'] += product['total_amount']
+            grouped_writeoff_products[category_name]['total_price'] += product['total_price']
+
+        # Convert defaultdict to a regular dict for easier template use
+        return dict(grouped_writeoff_products)
