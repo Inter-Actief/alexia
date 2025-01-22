@@ -278,9 +278,9 @@
         {# Juliana #}
         <script src="{% static 'js/juliana.js' %}"></script>
         {% endcompress %}
-        {% if event.pk == 9814 %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-        <script src="{% static 'js/wallstreet.js' %}"></script>
+        {% if event.pk == 13503 %}{# Wallstreet drink #}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+            <script src="{% static 'js/wallstreet.js' %}"></script>
         {% endif %}
         </body>
 </html>

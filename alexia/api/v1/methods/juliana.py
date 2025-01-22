@@ -159,8 +159,14 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
 
         price = amount * product.get_price(event)
 
-        # Grolsch? Trust Juliana (variable price)
-        if product.pk == 1:
+        # One of the Wallstreet drink drinks? Trust Juliana (variable price)
+        WALLSTREET_DRINKS = [
+            1, # Grolsch
+            2, # Cola/Fanta
+            485, # Fuze Tea (big)
+            296, # Wine glass
+        ]
+        if product.pk in WALLSTREET_DRINKS:
             price = p['price'] / Decimal(100)
 
         if price != p['price'] / Decimal(100):
@@ -196,7 +202,7 @@ def juliana_user_check(request, event_id, user_id):
 def juliana_writeoff_save(request, event_id, writeoff_id, purchases):
     """Saves a writeoff order in the Database"""
     event = _get_validate_event(request, event_id)
-    
+
     try:
         writeoff_cat = WriteoffCategory.objects.get(id=writeoff_id)
     except WriteoffCategory.DoesNotExist:
@@ -232,7 +238,7 @@ def juliana_writeoff_save(request, event_id, writeoff_id, purchases):
 
         if price != p['price'] / Decimal(100):
             raise InvalidParamsError('Price for product %s is incorrect' % p['product'])
-        
+
         purchase = WriteOffPurchase(order=order, product=product.name, amount=amount, price=price)
         purchase.save()
 

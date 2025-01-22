@@ -118,7 +118,7 @@ State = {
                 // (to know how much we're writing off)
                 $("#keypad").hide();
                 $("#products").hide();
-                
+
                 // HTML Magic and rendering
                 // argument is the Receipt object
                 $('#writeoff-screen').show();
@@ -320,21 +320,32 @@ Receipt = {
     payNow: function () {
         console.log('Processing payment now.');
 
-        var numBeers = 0;
+        // Start Wallstreet drink code
+
+        var WALLSTREET_DRINKS = [
+            1, // Grolsch
+            2, // Cola/Fanta
+            485, // Fuze Tea (big)
+            296, // Wine glass
+        ]
+
+        var countsPerProduct = {};
         for (var i in this.receipt) {
             if (this.receipt[i]===undefined) continue;
 
             var product = this.receipt[i].product;
             var quantity = this.receipt[i].amount;
 
-            if(product === 1) {
-                numBeers = quantity;
+            if(WALLSTREET_DRINKS.includes(product)) {
+                countsPerProduct[product] = quantity;
             }
         }
 
-        if (numBeers) {
-            increasePrice(numBeers);
+        if (!countsPerProduct.isEmpty()) {
+            increasePrice(countsPerProduct);
         }
+
+        // End Wallstreet drink code
 
         var rpcRequest = {
             jsonrpc: '2.0',
@@ -394,7 +405,7 @@ Receipt = {
             params: Receipt.payData,
             id: 2 // id used for?
         }
-        
+
         // writing off
         IAjax.request(rpcRequest, function (result) {
             if (result.error) {

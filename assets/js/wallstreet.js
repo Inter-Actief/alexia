@@ -1,57 +1,123 @@
-var socket = io('beta.ia.utwente.nl:21382');
+const socket = io('beta.ia.utwente.nl:21382');
 socket.emit('new client', "Juliana");
+console.log(`Connected to Wallstreet websocket`)
 
-var pStart = Settings.products[1].price / 100;
-var pMax = 0.80;
-var pMin = 0.20;
-var pDelta = 0.05;
-var pMulti = 0.5;
+const linkToBeerPrice = [2, 485]; // Make sure sodas can't get more expensive than beer
+const beerProductId = 1;
+const products = [
+    {id: 1, pMax: 1.00, pMin: 0.25},  // Grolsch
+    {id: 2, pMax: 1.00, pMin: 0.25},  // Cola/Fanta
+    {id: 485, pMax: 1.00, pMin: 0.25},  // Fuze Tea (big)
+    {id: 296, pMax: 2.60, pMin: 0.65},  // Wine glass
+];
 
-var p = pStart;
-
-var lastAdvertisedPrice = parseInt(pStart * 100);
-
-function newPrice() {
-  var cents = Math.round(p * 100);
-  Settings.products[1].price = cents;
-
-  if(cents != lastAdvertisedPrice) {
-    var diff;
-    var string = (cents / 100).toFixed(2).replace('.', ',');
-    string += ' ';
-    if (cents >= lastAdvertisedPrice) {
-      string += '+';
-      diff = (cents - lastAdvertisedPrice) / lastAdvertisedPrice;
-    } else {
-      string += '-';
-      diff = (lastAdvertisedPrice - cents) / lastAdvertisedPrice;
+// Build prices object from products listing above.
+let prices = {};
+for (const product of products) {
+    console.log(`Loading product ${product.id}...`)
+    prices[product.id] = {
+        pStart: Settings.products[product.id].price / 100,
+        pCurrent: Settings.products[product.id].price / 100,
+        pLastAdvertised: Settings.products[product.id].price,
+        pMax: product.pMax,
+        pMin: product.pMin,
     }
-    string += (diff * 100).toFixed(1).replace('.', ',');
-    string += '%';
-
-    socket.emit('new price', string);
-    lastAdvertisedPrice = cents;
-  }
 }
 
-function reducePrice() {
-  p = p - (pDelta * ((p / pMin) - 1));
+const pDelta = 0.05;
+const pMulti = 0.5;
 
-  if(p < pMin) {
-    p = pMin;
-  }
+function advertisePrices() {
+    let pricesChanged = false;
+    let priceChangeData = {};
 
-  newPrice();
+    for (const productId in prices) {
+        let lastAdvertisedPrice = prices[productId].pLastAdvertised;
+        let cents = Settings.products[productId].price;
+        let diff;
+        let string = (cents / 100).toFixed(2).replace('.', ',');
+        string += ' ';
+        if (cents >= lastAdvertisedPrice) {
+            string += '+';
+            diff = (cents - lastAdvertisedPrice) / lastAdvertisedPrice;
+        } else {
+            string += '-';
+            diff = (lastAdvertisedPrice - cents) / lastAdvertisedPrice;
+        }
+        string += (diff * 100).toFixed(1).replace('.', ',');
+        string += '%';
+
+        priceChangeData[productId] = string;
+
+        if (prices[productId].pLastAdvertised !== cents) {
+            pricesChanged = true;
+        }
+    }
+
+    if (pricesChanged) {
+        console.log(`Sending new price changes to screen`)
+        socket.emit('new prices', priceChangeData);
+        for (const productId in prices) {
+            prices[productId].pLastAdvertised = Settings.products[productId].price;
+        }
+    }
 }
 
-function increasePrice(numBeers) {
-  p = p + (pDelta * (numBeers ** pMulti));
+function reducePrices() {
+    for (const productId in prices) {
+        let pMin = prices[productId].pMin;
+        const pOriginal = prices[productId].pCurrent;
+        let pCurrent = prices[productId].pCurrent;
+        pCurrent = pCurrent - (pDelta * ((pCurrent / pMin) - 1));
 
-  if(p > pMax) {
-    p = pMax;
-  }
+        if(pCurrent < pMin) {
+            pCurrent = pMin;
+        }
 
-  newPrice();
+        prices[productId].pCurrent = pCurrent;
+        Settings.products[productId].price = Math.round(prices[productId].pCurrent * 100);
+        console.log(`Reduced price of ${productId} from ${pOriginal} to ${pCurrent}`)
+
+        // Make sure soda prices also go down if beer price goes down below soda price
+        if (productId === beerProductId) {
+            for (const sodaId of linkToBeerPrice) {
+                if (prices[beerProductId].pCurrent < prices[sodaId].pCurrent) {
+                    prices[sodaId].pCurrent = prices[beerProductId].pCurrent;
+                    Settings.products[sodaId].price = Settings.products[beerProductId].price;
+                    console.log(`Changed price of ${sodaId} to match lower beer price ${prices[beerProductId].pCurrent}`)
+                }
+            }
+        }
+    }
+    advertisePrices();
 }
 
-setInterval(reducePrice, 60 * 1000);
+function increasePrice(countsPerProduct) {
+    for (const productId in countsPerProduct) {
+        let pMax = prices[productId].pMax;
+        const pOriginal = prices[productId].pCurrent;
+        let pCurrent = prices[productId].pCurrent;
+        pCurrent = pCurrent + (pDelta * (countsPerProduct[productId] ** pMulti));
+
+        if(pCurrent > pMax) {
+            pCurrent = pMax;
+        }
+
+        prices[productId].pCurrent = pCurrent;
+        Settings.products[productId].price = Math.round(prices[productId].pCurrent * 100);
+        console.log(`Increased price of ${productId} from ${pOriginal} to ${pCurrent}`)
+    }
+
+    // If beer got cheaper than the sodas after increase, make the soda price the same as the beer price
+    for (const sodaId of linkToBeerPrice) {
+        if (prices[beerProductId].pCurrent < prices[sodaId].pCurrent) {
+            prices[sodaId].pCurrent = prices[beerProductId].pCurrent;
+            Settings.products[sodaId].price = Settings.products[beerProductId].price;
+            console.log(`Changed price of ${sodaId} to match lower beer price ${prices[beerProductId].pCurrent}`)
+        }
+    }
+
+    advertisePrices();
+}
+
+setInterval(reducePrices, 60 * 1000);
