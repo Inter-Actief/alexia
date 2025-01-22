@@ -32,8 +32,9 @@
             </td>
             {% for e in t.events %}
             <td class="text-center">
-                <a href="{% url 'edit-event-bartender-availability' pk=e.event.pk user_pk=t.tender.user.pk %}">
-                    <span class="label label-{{ e.availability.css_class|default:'default' }}">{{ e.availability|default:'?' }}</span>
+                <a href="{% url 'edit-event-bartender-availability' pk=e.event.pk user_pk=t.tender.user.pk %}"
+                   {% if e.bartender_availability.comment %} data-toggle="tooltip" data-placement="left" title="{{e.bartender_availability.comment}}" {% endif %}>
+                    <span class="label label-{{ e.bartender_availability.availability.css_class|default:'default' }}{% if e.bartender_availability.comment %} label-has-ba-comment{% endif %}">{{ e.bartender_availability.availability|default:'?' }}</span>
                 </a>
             </td>
             {% endfor %}

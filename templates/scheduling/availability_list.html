@@ -19,6 +19,7 @@
         <tr>
             <th class="col-md-4">{% trans 'Name' %}</th>
             <th class="col-md-4">{% trans 'Nature' %}</th>
+            <th class="col-md-4">{% trans 'Position' %}</th>
             <th class="col-md-4">{% trans 'Actions' %}</th>
         </tr>
     </thead>
@@ -27,6 +28,7 @@
         <tr>
             <td>{{ availability.name }}</td>
             <td>{{ availability.get_nature_display }}</td>
+            <td>{{ availability.position }}</td>
             <td>
                 <a class="btn btn-xs btn-default" href="{% url 'availability_update' availability.pk %}">
                     <span class="glyphicon glyphicon-pencil"></span>

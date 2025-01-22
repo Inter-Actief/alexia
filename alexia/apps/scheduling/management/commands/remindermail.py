@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Send reminder mails for events with missing availabilities'
 
     def handle(self, *args, **options):
-        for mailtemplate in MailTemplate.objects.filter(name=MailTemplate.REMINDER, is_active=True):
+        for mailtemplate in MailTemplate.objects.filter(name=MailTemplate.REMINDER, is_active=True, organization__is_active=True):
             now = timezone.now()
             organization = mailtemplate.organization
             bartenders = organization.membership_set.filter(is_tender=True, is_active=True, user__email__isnull=False)

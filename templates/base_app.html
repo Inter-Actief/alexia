@@ -106,9 +106,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         {% for organization in organizations %}
-                        <li{% if current_organization == organization %} class="active"{% endif %}>
-                            <a href="{% url 'change-current-organization' organization.slug %}?next={{ request.path }}">{{ organization }}</a>
-                        </li>
+                            {% if organization.is_active or user.profile.is_foundation_manager or user.is_superuser %}
+                            <li{% if current_organization == organization %} class="active"{% endif %}>
+                                <a href="{% url 'change-current-organization' organization.slug %}?next={{ request.path }}">{{ organization }}</a>
+                            </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </li>
@@ -124,13 +126,13 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="{% url 'logout' %}">{% trans 'Log out' %}</a>
+                            <a href="{% url 'oidc_logout' %}">{% trans 'Log out' %}</a>
                         </li>
                     </ul>
                 {% endmenuitem %}
                 {% else %}
                 <li>
-                    <a href="{% url 'saml2_login' %}">{% trans 'Login with UTwente' %}</a>
+                    <a href="{% url 'oidc_authentication_init' %}">{% trans 'Login with UTwente' %}</a>
                 </li>
                 {% endif %}
             </ul>

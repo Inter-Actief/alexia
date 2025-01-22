@@ -7,19 +7,16 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
-from djangosaml2.views import AssertionConsumerServiceView
-from django.utils.decorators import method_decorator
-from saml2.response import UnsolicitedResponse
 from django.utils.translation import ugettext_lazy as _
 
 from alexia.apps.organization.models import Location, Membership, Organization
@@ -56,6 +53,8 @@ def login_complete(request):
     # If it is not, send them to the page to complete the profile, else, send them to the main page.
     if not request.user.first_name or not request.user.email:
         return HttpResponseRedirect(resolve_url('register'))
+    if hasattr(request.user, 'profile') and request.user.profile.current_organization:
+        request.session['organization_pk'] = request.user.profile.current_organization.pk
     return HttpResponseRedirect("/")
 
 
@@ -109,23 +108,6 @@ def login(request, template_name='registration/login.html',
     return TemplateResponse(request, template_name, context)
 
 
-# The SAML login page throws a very annoying error when a timed-out response arrives,
-# so we need to wrap it and ignore the error to stop it from showing up in our Sentry logs.
-# Also, we need to inject the current onrganisation right after login.
-class SAMLACSOverrideView(AssertionConsumerServiceView):
-    @method_decorator(csrf_exempt)
-    def post(self, *args, **kwargs):
-        try:
-            res = super(SAMLACSOverrideView, self).post(*args, **kwargs)
-            if self.request.user:
-                # Set current organisation
-                if hasattr(self.request.user, 'profile') and self.request.user.profile.current_organization:
-                    self.request.session['organization_pk'] = self.request.user.profile.current_organization.pk
-            return res
-        except UnsolicitedResponse:
-            raise PermissionDenied(_("Logging in failed, please try again."))
-
-
 class RegisterView(LoginRequiredMixin, UpdateView):
     template_name = 'registration/register.html'
     fields = ['first_name', 'last_name', 'email']
@@ -138,10 +120,13 @@ class RegisterView(LoginRequiredMixin, UpdateView):
 class ChangeCurrentOrganizationView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         organization = get_object_or_404(Organization, slug=kwargs['slug'])
-        self.request.session['organization_pk'] = organization.pk
-        self.request.user.profile.current_organization = organization
-        self.request.user.profile.save()
-        return self.request.POST.get(REDIRECT_FIELD_NAME, self.request.GET.get(REDIRECT_FIELD_NAME, ''))
+        if organization.is_active or self.request.user.profile.is_foundation_manager or self.request.user.is_superuser:
+            self.request.session['organization_pk'] = organization.pk
+            self.request.user.profile.current_organization = organization
+            self.request.user.profile.save()
+            return self.request.POST.get(REDIRECT_FIELD_NAME, self.request.GET.get(REDIRECT_FIELD_NAME, ''))
+        else:
+            raise PermissionDenied(_("This organization is inactive."))
 
 
 class AboutView(TemplateView):
@@ -169,3 +154,7 @@ class AboutView(TemplateView):
 
 class HelpView(TemplateView):
     template_name = 'general/help.html'
+
+
+def healthz_view(request):
+    return HttpResponse('ok', content_type="text/plain")

@@ -28,4 +28,5 @@ urlpatterns = [
     # AJAT (Asynchroon Javascript en Tekst... wie gebruikt er nog in
     # hemelsnaam XML!?)
     url(r'^ajax/bartender_availability/$', views.set_bartender_availability),
+    url(r'^ajax/bartender_availability/comment/$', views.set_bartender_availability_comment),
 ]

@@ -207,11 +207,13 @@ class Availability(models.Model):
     )
     name = models.CharField(_('name'), max_length=32)
     nature = models.CharField(_('nature'), max_length=1, choices=NATURE_CHOICES)
+    position = models.IntegerField(_('position'), default=1)
 
     class Meta:
         unique_together = ('organization', 'name')
         verbose_name = _('availability type')
         verbose_name_plural = _('availability types')
+        ordering = ['position']
 
     def __str__(self):
         return self.name
@@ -244,6 +246,7 @@ class BartenderAvailability(models.Model):
         verbose_name=_('availability'),
         on_delete=models.CASCADE,
     )
+    comment = models.TextField(_('comment'), blank=True, default='', max_length=100)
 
     class Meta:
         verbose_name = _('bartender availability')

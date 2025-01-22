@@ -55,24 +55,76 @@
     </div>
     <div class="col-xs-12 col-sm-6">
         <h3>{% trans 'Sales' %}</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="col-xs-3"></th>
-                    <th class="col-xs-6">{% trans 'Product' %}</th>
-                    <th class="col-xs-3">{% trans 'Revenue' %}</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for product in products %}
-                <tr>
-                    <td class="text-right">{{ product.amount }} &times;</td>
-                    <td>{{ product.product }}</td>
-                    <td>&euro; {{ product.price }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#orders" data-toggle="tab">{% trans 'Orders' %}</a>
+            </li>
+            {% if writeoff_exists %}
+            <li>
+                <a href="#writeoffOrders" data-toggle="tab">{% trans 'Written off' %}</a>
+            </li>
+            {% endif %}
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="orders">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3"></th>
+                            <th class="col-xs-6">{% trans 'Product' %}</th>
+                            <th class="col-xs-3">{% trans 'Revenue' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td class="text-right">{{ product.amount }} &times;</td>
+                            <td>{{ product.product }}</td>
+                            <td>&euro; {{ product.price }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="writeoffOrders">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3"></th>
+                            <th class="col-xs-6">{% trans 'Product' %}</th>
+                            <th class="col-xs-3">{% trans 'Written off' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for category, data in grouped_writeoff_data.items %}
+                        <!-- Section Header for each Category -->
+                        <tr>
+                            <th colspan="3">
+                                {% if data.description %}<abbr title="{{ data.description }}">{{ category }}</abbr>
+                                {% else %}{{ category }}{% endif %}
+                            </th>
+                        </tr>
+
+                        <!-- Products for the current category -->
+                        {% for product in data.products %}
+                            <tr>
+                                <td class="text-right">{{ product.total_amount }} &times;</td>
+                                <td>{{ product.product }}</td>
+                                <td>&euro; {{ product.total_price }}</td>
+                            </tr>
+                        {% endfor %}
+                        <!-- Display total amount for the current category -->
+                        <tr>
+                            <td class="text-right"><strong>Total:</strong></td>
+                            <td>{{ data.total_amount }}</td>
+                            <td><strong>&euro;{{data.total_price}}</strong></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'writeoff_export' event.pk %}" class="btn btn-default">{% trans 'Export' %}</a>
+            </div>
+        </div>
     </div>
 </div>
 <hr>
@@ -105,4 +157,34 @@
         </div>
     </div>
 </div>
+{% if writeoff_exists %}
+<hr>
+<div class="row">
+    <div class="col-xs-12">
+        <h3>{% trans 'Written off orders' %}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'ID' %}</th>
+                        <th>{% trans 'Amount' %}</th>
+                        <th>{% trans 'Category' %}</th>
+                        <th>{% trans 'Timestamp' %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in writeoff_orders %}
+                    <tr{% if order.amount < 0 %} class="tr-muted"{% endif %}>
+                        <td><a href="{% url 'writeoff-order' order.pk %}">{{ order.pk }}</a></td>
+                        <td>&euro; {{ order.amount|floatformat:2 }}</td>
+                        <td>{{ order.writeoff_category.name }}</td>
+                        <td>{{ order.placed_at }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock content %}
