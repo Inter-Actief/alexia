@@ -341,7 +341,7 @@ Receipt = {
             }
         }
 
-        if (!countsPerProduct.isEmpty()) {
+        if (countsPerProduct !== {}) {
             increasePrice(countsPerProduct);
         }
 
