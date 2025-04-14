@@ -72,6 +72,7 @@ INSTALLED_APPS = [
 
     'compressor',
     'crispy_forms',
+    'crispy_bootstrap3',
     'debug_toolbar',
     'jsonrpc',
     'wkhtmltopdf',
@@ -142,6 +143,12 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+
+# Default primary key field type to use for models
+# This will change to BigAutoField in the future so it is set to the old value here to avoid future unwanted migrations.
+# TODO: We might want to look into migrating our current fields to BigAutoField at some point - albertskja 14-04-2025
+# See https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Single Sign On via https://auth.ia.utwente.nl/
 OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/auth"
