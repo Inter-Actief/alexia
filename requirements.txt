@@ -4,7 +4,7 @@ django-crispy-forms>=2.0,<2.1
 crispy-bootstrap3>=2024.1,<2024.2
 django-debug-toolbar>=4.3.0,<4.4
 django-wkhtmltopdf>=3.4.0,<3.5
-mysqlclient>=2.2.7,<2.3
+mysqlclient>=2.1.1
 icalendar==4.1.0
 jsonfield>=3.1.0,<3.2
 git+https://github.com/samuraisam/django-json-rpc@a88d744d960e828f3eb21265da0f10a694b8ebcf
