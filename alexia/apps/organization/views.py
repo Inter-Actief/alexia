@@ -13,7 +13,7 @@ from django.views.generic.edit import (
 )
 from django.views.generic.list import ListView
 
-from alexia.auth.backends import SAML2_BACKEND_NAME
+from alexia.auth.backends import OIDC_BACKEND_NAME
 from alexia.auth.mixins import DenyWrongOrganizationMixin, ManagerRequiredMixin
 from alexia.forms import CrispyFormMixin
 from alexia.utils import log
@@ -46,11 +46,11 @@ class MembershipCreateView(ManagerRequiredMixin, CrispyFormMixin, FormView):
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
+        User = get_user_model()
         try:
-            authentication_data = AuthenticationData.objects.get(username=username, backend=SAML2_BACKEND_NAME)
-        except AuthenticationData.DoesNotExist:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
             return redirect('add-membership', username=username)
-        user = authentication_data.user
         membership, is_new = Membership.objects.get_or_create(user=user, organization=self.request.organization)
         if is_new:
             log.membership_created(self.request.user, membership)
@@ -62,7 +62,7 @@ class UserCreateView(ManagerRequiredMixin, CrispyFormMixin, CreateView):
     fields = ['first_name', 'last_name', 'email']
 
     def get_context_data(self, **kwargs):
-        if AuthenticationData.objects.filter(username=self.kwargs['username'], backend=SAML2_BACKEND_NAME).count():
+        if AuthenticationData.objects.filter(username=self.kwargs['username'], backend=OIDC_BACKEND_NAME).count():
             raise Http404('Account already exists')
 
         context = super(UserCreateView, self).get_context_data(**kwargs)
@@ -75,7 +75,7 @@ class UserCreateView(ManagerRequiredMixin, CrispyFormMixin, CreateView):
         user.set_unusable_password()
         user.save()
 
-        data = AuthenticationData(user=user, backend=SAML2_BACKEND_NAME, username=self.kwargs['username'])
+        data = AuthenticationData(user=user, backend=OIDC_BACKEND_NAME, username=self.kwargs['username'])
         data.save()
 
         profile = Profile(user=user)

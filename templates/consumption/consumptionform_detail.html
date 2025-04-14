@@ -8,11 +8,14 @@
         <h1>
             {{ consumptionform }}
             <div class="pull-right">
-                {% if consumptionform.event.organizer == request.organization and is_manager and consumptionform.event.orders.exists %}
-                    <a href="{% url 'event-orders' consumptionform.event.pk %}" class="btn btn-default">
-                        <span class="glyphicon glyphicon-euro"></span>
-                        {% trans 'Orders' %}
-                    </a>
+                {% if consumptionform.event.organizer == request.organization and is_manager %}
+					{% comment %} Nested if because using brackets creates a TemplateSyntaxError {% endcomment %}
+					{% if consumptionform.event.orders.exists or consumptionform.event.writeoff_orders.exists %}
+                    	<a href="{% url 'event-orders' consumptionform.event.pk %}" class="btn btn-default">
+                    	    <span class="glyphicon glyphicon-euro"></span>
+                    	    {% trans 'Orders' %}
+                    	</a>
+					{% endif %}
                 {% endif %}
                 <a href="{% url 'event' consumptionform.event.pk %}" class="btn btn-default">
                     <span class="glyphicon glyphicon-calendar"></span>

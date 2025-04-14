@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -109,10 +110,12 @@ class Profile(models.Model):
 
     def tended_count(self):
         return BartenderAvailability.objects.filter(
+            Q(event__kegs__gt=0) | Q(event__consumptionform__isnull=False) | Q(event__orders=True) |
+                Q(event__ends_at__lte=timezone.datetime(2016, 12, 13)),  # Date of first consumption form
             user=self.user,
             event__ends_at__lte=timezone.now(),
             availability__nature=Availability.ASSIGNED,
-        ).count()
+        ).distinct().count()
 
     def get_bartender_name(self):
         return (self.nickname or self.user.first_name)
@@ -124,6 +127,7 @@ class Organization(models.Model):
     color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     is_active = models.BooleanField(_('is active'), default=True)
+    writeoff_enabled = models.BooleanField(_('writeoff enabled'), default=False)
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='Membership',

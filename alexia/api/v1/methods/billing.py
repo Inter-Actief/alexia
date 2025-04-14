@@ -5,7 +5,7 @@ from jsonrpc import jsonrpc_method
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.billing.models import Order
-from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
+from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_order
 from ..config import api_v1_site
@@ -218,14 +218,10 @@ def order_list(request, radius_username=None):
 
     if radius_username is not None:
         try:
-            user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+            user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            try:
-                user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                        authenticationdata__username=radius_username)
-            except User.DoesNotExist:
-                return []
+            return []
         orders = orders.filter(authorization__user=user)
 
     orders = orders.select_related('event', 'authorization')

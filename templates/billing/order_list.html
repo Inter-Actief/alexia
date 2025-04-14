@@ -48,6 +48,7 @@
                 <th class="col-xs-1"><abbr title="{% trans 'The amount of unique debtors this event' %}">{% trans 'Visitors' %}</abbr></th>
                 <th class="col-xs-1">{% trans 'Transactions' %}</th>
                 <th class="col-xs-1">{% trans 'Revenue' %}</th>
+                {% if request.organization.writeoff_enabled %}<th>{% trans 'Write-offs' %}</th>{% endif %}
                 <th class="col-xs-2">{% trans 'Price group' %}</th>
             </tr>
         </thead>
@@ -58,7 +59,8 @@
                 <td><a href="{% url 'event-orders' event.pk %}">{{ event.name }}</a></td>
                 <td>{{ event.visitors }}</td>
                 <td>{{ event.order_count }}</td>
-                <td>&euro; {{ event.revenue|floatformat:2 }}</td>
+                <td>&euro; {{ event.revenue|floatformat:2|default:"&mdash;" }}</td>
+                {% if request.organization.writeoff_enabled %}<td>{{ event.writeoff_order_count }}</td>{% endif %}
                 <td>{{ event.pricegroup }}</td>
             </tr>
         {% empty %}

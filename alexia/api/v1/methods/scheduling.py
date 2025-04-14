@@ -3,7 +3,7 @@ from jsonrpc import jsonrpc_method
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError
 from alexia.apps.scheduling.models import BartenderAvailability
-from alexia.auth.backends import RADIUS_BACKEND_NAME, User, SAML2_BACKEND_NAME
+from alexia.auth.backends import OIDC_BACKEND_NAME, User
 
 from ..config import api_v1_site
 
@@ -46,14 +46,10 @@ def user_get_availabilities(request, radius_username):
     ]
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     availabilities = BartenderAvailability.objects.filter(user=user, event__organizer=request.organization)
 

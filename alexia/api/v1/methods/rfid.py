@@ -5,7 +5,7 @@ from jsonrpc import jsonrpc_method
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError
 from alexia.apps.billing.models import RfidCard
-from alexia.auth.backends import RADIUS_BACKEND_NAME, SAML2_BACKEND_NAME
+from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_rfidcard
 from ..config import api_v1_site
@@ -54,14 +54,10 @@ def rfid_list(request, radius_username=None):
 
     if radius_username is not None:
         try:
-            user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+            user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                     authenticationdata__username=radius_username)
         except User.DoesNotExist:
-            try:
-                user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                        authenticationdata__username=radius_username)
-            except User.DoesNotExist:
-                return []
+            return []
         rfidcards = rfidcards.filter(user=user)
 
     rfidcards = rfidcards.select_related('user')
@@ -97,14 +93,10 @@ def rfid_get(request, radius_username):
     """
     result = []
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     rfidcards = RfidCard.objects.filter(user=user, managed_by=request.organization)
 
@@ -141,14 +133,10 @@ def rfid_add(request, radius_username, identifier):
     """
 
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)
@@ -183,14 +171,10 @@ def rfid_remove(request, radius_username, identifier):
     Raises error -32602 (Invalid params) if the RFID card does not exist for this person/organization.
     """
     try:
-        user = User.objects.get(authenticationdata__backend=SAML2_BACKEND_NAME,
+        user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
     except User.DoesNotExist:
-        try:
-            user = User.objects.get(authenticationdata__backend=RADIUS_BACKEND_NAME,
-                                    authenticationdata__username=radius_username)
-        except User.DoesNotExist:
-            raise InvalidParamsError('User with provided username does not exits')
+        raise InvalidParamsError('User with provided username does not exits')
 
     try:
         rfidcard = RfidCard.objects.select_for_update().get(user=user, identifier=identifier)

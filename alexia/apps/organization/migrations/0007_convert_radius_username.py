@@ -1,6 +1,6 @@
 from django.db import migrations
 
-from alexia.auth.backends import RADIUS_BACKEND_NAME
+RADIUS_BACKEND_NAME = 'utils.auth.backends.radius.RadiusBackend'
 
 
 def convert_radius_username(apps, schema_editor):
