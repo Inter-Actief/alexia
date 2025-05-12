@@ -8,7 +8,7 @@ from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.dates import MONTHS
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView, SingleObjectMixin
@@ -132,7 +132,7 @@ class OrderDetailView(ManagerRequiredMixin, DenyWrongOrganizationMixin, DetailVi
             .annotate(amount=Sum('amount'), price=Sum('price'))
 
         writeoff_exists = self.object.writeoff_orders.exists
-        
+
         grouped_writeoff_products = None
         writeoff_orders = None
         if writeoff_exists:
@@ -179,9 +179,9 @@ class WriteOffExportView(ManagerRequiredMixin, DenyWrongOrganizationMixin, View)
 
         if not writeoff_exists:
             raise Http404
-        
+
         grouped_writeoff_products = WriteOffPurchase.get_writeoff_products(event=event)
-        
+
         return JsonResponse(grouped_writeoff_products)
 
 
@@ -273,7 +273,7 @@ class PriceGroupUpdateView(ManagerRequiredMixin, OrganizationFilterMixin, Crispy
     fields = ['name']
 
 
-class PriceGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, FormMixin, DeleteView):
+class PriceGroupDeleteView(ManagerRequiredMixin, OrganizationFilterMixin, DeleteView):
     model = PriceGroup
     success_url = reverse_lazy('pricegroup_list')
     form_class = DeletePriceGroupForm

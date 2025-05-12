@@ -203,7 +203,7 @@ class APITestCase(TestCase):
         :param params: Parameters for JSON RPC call.
         :rtype : django.http.response.HttpResponse
         """
-        path = reverse('api_v1_mountpoint')
+        path = reverse('jsonrpc_mountpoint')
 
         req = {
             'jsonrpc': '1.0',
@@ -225,7 +225,7 @@ class APITestCase(TestCase):
 
         response = self.send_request(method, params)
 
-        self.assertEqual(response['Content-Type'], 'application/json-rpc')
+        self.assertEqual(response['Content-Type'], 'application/json')
 
         content = response.content.decode('utf-8')
 
@@ -238,14 +238,13 @@ class APITestCase(TestCase):
 
         self.assertJSONEqual(content, expected_data)
 
-    def send_and_compare_request_error(self, method, params, error_code, error_name, error_message, error_data=None,
+    def send_and_compare_request_error(self, method, params, error_code, error_message, error_data=None,
                                        status_code=200):
         """
         Send JSON RPC method call and compare actual error result with expected error result.
         :param method: Name of method to call.
         :param params: Parameters for JSON RPC call.
         :param error_code: Expected error code.
-        :param error_name: Expected error name.
         :param error_message: Expected error message.
         :param error_data: Expected error data.
         :param status_code: Expected HTTP status code.
@@ -257,7 +256,7 @@ class APITestCase(TestCase):
 
         self.assertEqual(response.status_code, status_code, 'HTTP status code')
 
-        self.assertEqual(response['Content-Type'], 'application/json-rpc')
+        self.assertEqual(response['Content-Type'], 'application/json')
 
         content = response.content.decode('utf-8')
 
@@ -266,11 +265,11 @@ class APITestCase(TestCase):
             'id': 'jsonrpc',
             'error': {
                 'code': error_code,
-                'name': error_name,
                 'message': error_message,
-                'data': error_data,
             },
             'result': None,
         }
+        if error_data is not None:
+            expected_data['error']['data'] = error_data
 
         self.assertJSONEqual(content, expected_data, 'JSON RPC result')

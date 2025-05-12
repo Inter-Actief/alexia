@@ -1,10 +1,11 @@
 from decimal import Decimal
+from typing import Dict, List
 
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models import Sum
-from jsonrpc import jsonrpc_method
-from jsonrpc.exceptions import OtherError
+from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.exceptions import RPCInternalError
 
 from alexia.api.exceptions import (
     ForbiddenError, InvalidParamsError, ObjectNotFoundError,
@@ -15,7 +16,7 @@ from alexia.apps.billing.models import (
 from alexia.apps.scheduling.models import Event
 
 from ..common import format_authorization
-from ..config import api_v1_site
+from ...decorators import login_required
 
 
 def rfid_to_identifier(rfid):
@@ -78,8 +79,15 @@ def _get_validate_event(request, event_id, safe=False):
     return event
 
 
-@jsonrpc_method('juliana.rfid.get(Number,Object) -> Object', site=api_v1_site, safe=True, authenticated=True)
-def juliana_rfid_get(request, event_id, rfid):
+@rpc_method(name='juliana.rfid.get', entry_point='v1')
+@login_required
+def juliana_rfid_get(event_id: int, rfid: Dict, **kwargs) -> Dict:
+    """
+    Internal API method for the Point of Sale module.
+
+    *No documentation available yet.*
+    """
+    request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id, True)
 
     identifier = rfid_to_identifier(rfid=rfid)
@@ -108,10 +116,18 @@ def juliana_rfid_get(request, event_id, rfid):
     return res
 
 
-@jsonrpc_method('juliana.order.save(Number,Number,Array,Object) -> Nil', site=api_v1_site, authenticated=True)
+@rpc_method(name='juliana.order.save', entry_point='v1')
+@login_required
 @transaction.atomic
-def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
-    """Saves a new order in the database"""
+def juliana_order_save(event_id: int, user_id: int, purchases: List[Dict], rfid_data: Dict, **kwargs) -> None:
+    """
+    Internal API method for the Point of Sale module.
+
+    Saves a new order in the database
+
+    *No documentation available yet.*
+    """
+    request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id)
 
     rfid_identifier = rfid_to_identifier(rfid=rfid_data)
@@ -150,7 +166,7 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
             if event != product.event:
                 raise InvalidParamsError('Product %s is not available for this event' % p['product'])
         else:
-            raise OtherError('Product %s is broken' % p['product'])
+            raise RPCInternalError('Product %s is broken' % p['product'])
 
         amount = p['amount']
 
@@ -169,8 +185,15 @@ def juliana_order_save(request, event_id, user_id, purchases, rfid_data):
     return True
 
 
-@jsonrpc_method('juliana.user.check(Number, Number) -> Number', site=api_v1_site, safe=True, authenticated=True)
-def juliana_user_check(request, event_id, user_id):
+@rpc_method(name='juliana.user.check', entry_point='v1')
+@login_required
+def juliana_user_check(event_id: int, user_id: int, **kwargs) -> int:
+    """
+    Internal API method for the Point of Sale module.
+
+    *No documentation available yet.*
+    """
+    request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id, True)
 
     try:
@@ -187,12 +210,20 @@ def juliana_user_check(request, event_id, user_id):
     else:
         return 0
 
-@jsonrpc_method('juliana.writeoff.save(Number,Number,Array) -> Nil', site=api_v1_site, authenticated=True)
+@rpc_method(name='juliana.writeoff.save', entry_point='v1')
+@login_required
 @transaction.atomic
-def juliana_writeoff_save(request, event_id, writeoff_id, purchases):
-    """Saves a writeoff order in the Database"""
+def juliana_writeoff_save(event_id: int, writeoff_id: int, purchases: List[Dict], **kwargs) -> bool:
+    """
+    Internal API method for the Point of Sale module.
+
+    Saves a writeoff order in the Database
+
+    *No documentation available yet.*
+    """
+    request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id)
-    
+
     try:
         writeoff_cat = WriteoffCategory.objects.get(id=writeoff_id)
     except WriteoffCategory.DoesNotExist:
@@ -217,7 +248,7 @@ def juliana_writeoff_save(request, event_id, writeoff_id, purchases):
             if event != product.event:
                 raise InvalidParamsError('Product %s is not available for this event' % p['product'])
         else:
-            raise OtherError('Product %s is broken' % p['product'])
+            raise RPCInternalError('Product %s is broken' % p['product'])
 
         amount = p['amount']
 
@@ -228,7 +259,7 @@ def juliana_writeoff_save(request, event_id, writeoff_id, purchases):
 
         if price != p['price'] / Decimal(100):
             raise InvalidParamsError('Price for product %s is incorrect' % p['product'])
-        
+
         purchase = WriteOffPurchase(order=order, product=product.name, amount=amount, price=price)
         purchase.save()
 

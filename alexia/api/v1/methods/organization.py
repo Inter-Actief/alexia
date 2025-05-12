@@ -1,47 +1,77 @@
-from jsonrpc import jsonrpc_method
+from typing import Optional, List
 
+from modernrpc.core import rpc_method, REQUEST_KEY
+
+from alexia.api.decorators import login_required
 from alexia.api.exceptions import ObjectNotFoundError
 from alexia.apps.organization.models import Organization
 
-from ..config import api_v1_site
 
-
-@jsonrpc_method('organization.current.get() -> String', site=api_v1_site, safe=True, authenticated=True)
-def organization_current_get(request):
+@rpc_method(name='organization.current.get', entry_point='v1')
+@login_required
+def organization_current_get(**kwargs) -> Optional[str]:
     """
-    Return the current organization slug.
+    **Signature**: `organization.current.get()`
 
-    Required user level: None
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: *(optional)* `str`
+
+    **Idempotent**: yes
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    Return the current organization slug.
 
     All operations performed will be performed by this organization.
 
-    If no organization has been chosen, it will return None.
+    If no organization has been chosen, it will return `None`.
 
-    Example return value:
-    "inter-actief"
+    **Example return value**:
+
+        "inter-actief"
     """
+    request = kwargs.get(REQUEST_KEY)
     if request.organization:
         return request.organization.slug
     else:
         return None
 
 
-@jsonrpc_method('organization.current.set(organization=String) -> Boolean', site=api_v1_site, authenticated=True)
-def organization_current_set(request, organization):
+@rpc_method(name='organization.current.set', entry_point='v1')
+@login_required
+def organization_current_set(organization: str, **kwargs) -> bool:
     """
-    Set the current organization.
+    **Signature**: `organization.current.set(organization)`
 
-    Required user level: None
+    **Arguments**:
+
+    - `organization` : `str` -- slug of the organization or empty string to deselect organization.
+
+    **Return type**: `bool`
+
+    **Idempotent**: no
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    Set the current organization.
 
     All further operations performed will be performed by this organization.
 
-    Return true if the organization is switched. Returns false if the current
+    Return `True` if the organization is switched. Returns `False` if the current
     organization equals the provided organization.
 
-    organization    -- slug of the organization or empty string to deselect organization.
+    **Raises errors**:
 
-    Raises error 404 if provided organization cannot be found.
+    - `404` (Object not found) if provided organization cannot be found.
     """
+    request = kwargs.get(REQUEST_KEY)
     if not organization:
         if 'organization_pk' in request.session:
             del request.session['organization_pk']
@@ -61,23 +91,37 @@ def organization_current_set(request, organization):
             return False
 
 
-@jsonrpc_method('organization.list() -> Array', site=api_v1_site, safe=True)
-def organization_list(request):
+@rpc_method(name='organization.list', entry_point='v1')
+@login_required
+def organization_list(**kwargs) -> List[str]:
     """
+    **Signature**: `organization.list()`
+
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: List of `str`
+
+    **Idempotent**: no
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
     List all public organizations.
 
-    Required user level: None
+    Returns an array with zero or more organizations.
 
-    Returns a array with zero or more organizations.
+    **Example return value**:
 
-    Example return value:
-    [
-        "abacus",
-        "inter-actief",
-        "proto",
-        "scintilla",
-        "sirius",
-        "stress"
-    ]
+        [
+          "abacus",
+          "inter-actief",
+          "proto",
+          "scintilla",
+          "sirius",
+          "stress"
+        ]
     """
     return [o.slug for o in Organization.objects.all()]

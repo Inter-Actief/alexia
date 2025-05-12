@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from alexia.apps.organization.models import Certificate
 from alexia.apps.scheduling.models import Availability, BartenderAvailability

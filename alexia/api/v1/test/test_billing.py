@@ -80,8 +80,7 @@ class BillingTest(APITestCase):
         self.load_billing_order_data()
 
         self.send_and_compare_request_error('order.marksynchronized', [self.data['order1'].id*10],
-                                            status_code=422,
+                                            status_code=200,
                                             error_code=-32602,
-                                            error_name='InvalidParamsError',
-                                            error_message='InvalidParamsError: Order with id not found',
+                                            error_message='Order with id not found',
                                             )

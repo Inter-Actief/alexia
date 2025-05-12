@@ -1,7 +1,9 @@
+from typing import List, Dict, Optional
+
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.utils import timezone
-from jsonrpc import jsonrpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError
@@ -9,35 +11,48 @@ from alexia.apps.billing.models import Authorization
 from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_authorization
-from ..config import api_v1_site
 
 
-@jsonrpc_method('authorization.list(radius_username=String) -> Array', site=api_v1_site, authenticated=True, safe=True)
+@rpc_method(name='authorization.list', entry_point='v1')
 @manager_required
-def authorization_list(request, radius_username=None):
+def authorization_list(radius_username: Optional[str] = None, **kwargs) -> List[Dict]:
     """
-    Retrieve registered authorizations for the current selected organization.
+    **Signature**: `authorization.list(radius_username)`
 
-    Required user level: Manager
+    **Arguments**:
+
+    - `radius_username` : `str` -- *(optional)* Username to search for.
+
+    **Return type**: List of `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
+    Retrieve registered authorizations for the current selected organization.
 
     Provide radius_username to select only authorizations of the provided user.
 
     Returns an array of accounts of registered authorizations.
 
-    radius_username    -- (optional) Username to search for.
+    **Example return value**:
 
-    Example return value:
-    [
-        {
+        [
+          {
             "id": 1,
             "end_date": null,
             "start_date": "2014-09-21T14:16:06+00:00",
             "user": "s0000000"
-        }
-    ]
+          }
+        ]
 
-    Raises error -32602 (Invalid params) if the username does not exist.
+    **Raises errors**:
+
+    - `-32602` (Invalid params) if the username does not exist.
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     authorizations = Authorization.objects.filter(organization=request.organization)
 
@@ -58,30 +73,44 @@ def authorization_list(request, radius_username=None):
     return result
 
 
-@jsonrpc_method('authorization.get(radius_username=String) -> Array', site=api_v1_site, authenticated=True, safe=True)
+@rpc_method(name='authorization.get', entry_point='v1')
 @manager_required
-def authorization_get(request, radius_username):
+def authorization_get(radius_username: str, **kwargs) -> List[Dict]:
     """
+    **Signature**: `authorization.get(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Retrieve registered authorizations for a specified user and current selected
     organization.
 
-    Required user level: Manager
-
     Returns an array of accounts of registered authorizations.
 
-    radius_username    -- Username to search for.
+    **Example return value**:
 
-    Example return value:
-    [
-        {
+        [
+          {
             "id": 1,
             "end_date": null,
             "start_date": "2014-09-21T14:16:06+00:00"
-        }
-    ]
+          }
+        ]
 
-    Raises error -32602 (Invalid params) if the username does not exist.
+    **Raises errors**:
+
+    - `-32602` (Invalid params) if the username does not exist.
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
 
     try:
@@ -102,33 +131,44 @@ def authorization_get(request, radius_username):
     return result
 
 
-@jsonrpc_method(
-    'authorization.add(radius_username=String, account=String) -> Object',
-    site=api_v1_site,
-    authenticated=True
-)
+@rpc_method(name='authorization.add', entry_point='v1')
 @manager_required
 @transaction.atomic
-def authorization_add(request, radius_username, account):
+def authorization_add(radius_username: str, account: str, **kwargs) -> Dict:
     """
-    Add a new authorization to the specified user.
+    **Signature**: `authorization.add(radius_username, account)`
 
-    Required user level: Manager
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+    - `account` : `str` -- Unused
+
+    **Return type**: `dict`
+
+    **Idempotent**: no
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
+    Add a new authorization to the specified user.
 
     Returns the authorization on success.
 
-    radius_username    -- Username to search for.
+    **Example return value**:
 
-    Example return value:
-    {
-        "id": 1,
-        "end_date": null,
-        "start_date": "2014-09-21T14:16:06+00:00",
-        "user": "s0000000"
-    }
+        {
+          "id": 1,
+          "end_date": null,
+          "start_date": "2014-09-21T14:16:06+00:00",
+          "user": "s0000000"
+        }
 
-    Raises error -32602 (Invalid params) if the username does not exist.
+    **Raises errors**:
+
+    - `-32602` (Invalid params) if the username does not exist.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
@@ -141,24 +181,36 @@ def authorization_add(request, radius_username, account):
     return format_authorization(authorization)
 
 
-@jsonrpc_method('authorization.end(radius_username=String, authorization_id=Number) -> Boolean', site=api_v1_site,
-                authenticated=True)
+@rpc_method(name='authorization.end', entry_point='v1')
 @manager_required
 @transaction.atomic
-def authorization_end(request, radius_username, authorization_id):
+def authorization_end(radius_username: str, authorization_id: int, **kwargs) -> bool:
     """
-    End an authorization from the specified user.
+    **Signature**: `authorization.end(radius_username, authorization_id)`
 
-    Required user level: Manager
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+    - `authorization_id` : `int` -- ID of the authorization to end
+
+    **Return type**: `bool`
+
+    **Idempotent**: no
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
+    End an authorization from the specified user.
 
     Returns true when successful. Returns false when the authorization was already ended.
 
-    radius_username    -- Username to search for.
-    identifier         -- RFID card hardware identifier (max. 16 chars)
+    **Raises errors**:
 
-    Raises error -32602 (Invalid params) if the username does not exist.
-    Raises error -32602 (Invalid params) if provided authorization cannot be found.
+    - `-32602` (Invalid params) if the username does not exist.
+    - `-32602` (Invalid params) if provided authorization cannot be found.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
