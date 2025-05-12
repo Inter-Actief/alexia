@@ -1,13 +1,13 @@
+from typing import List, Dict
+
 from django.utils import timezone
-from jsonrpc import jsonrpc_method
+from modernrpc.core import rpc_method
 
 from alexia.apps.scheduling.models import Event
 
-from ..config import api_v1_site
 
-
-@jsonrpc_method('event.upcoming_list(include_ongoing=Boolean) -> Array', site=api_v1_site, safe=True)
-def upcoming_events_list(request, include_ongoing=False):
+@rpc_method(name='event.upcoming_list', entry_point='v1')
+def upcoming_events_list(include_ongoing: bool = False, **kwargs) -> List[Dict]:
     """
     List all current and upcoming events.
 

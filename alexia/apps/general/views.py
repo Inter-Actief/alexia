@@ -11,13 +11,13 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, resolve_url
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.utils.http import is_safe_url
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import UpdateView
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from alexia.apps.organization.models import Location, Membership, Organization
 from alexia.apps.scheduling.models import (
@@ -42,7 +42,7 @@ from alexia.apps.scheduling.models import (
 
 def _get_login_redirect_url(request, redirect_to):
     # Ensure the user-originating redirection URL is safe.
-    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
+    if not url_has_allowed_host_and_scheme(url=redirect_to, allowed_hosts=request.get_host()):
         return resolve_url(settings.LOGIN_REDIRECT_URL)
     return redirect_to
 

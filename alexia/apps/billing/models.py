@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from alexia.apps.organization.models import Organization
 from alexia.apps.scheduling.models import Event
@@ -297,6 +297,11 @@ class Order(models.Model):
         )
 
     def save(self, *args, **kwargs):
+        # Set amount to 0, save the order, and then update the amount.
+        # This needs to be done in 2 steps because the get_price() method uses a
+        # relationship that can only be used after the model has been saved
+        self.amount = Decimal('0.0')
+        super(Order, self).save(*args, **kwargs)
         self.amount = self.get_price()
         super(Order, self).save(*args, **kwargs)
 
@@ -357,7 +362,7 @@ class WriteOffOrder(models.Model):
         on_delete=models.PROTECT, # We cannot delete purchases
         verbose_name=_('writeoff category')
     )
-    
+
     class Meta:
         ordering = ['-placed_at']
         verbose_name = _('writeoff order')

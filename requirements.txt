@@ -1,20 +1,21 @@
-Django>=3.2.25,<3.3
-django-compressor>=4.4,<4.5
-django-crispy-forms>=2.0,<2.1
+Django>=4.2.20,<4.3
+django-compressor>=4.5.1,<4.6
+django-crispy-forms>=2.4,<2.5
 crispy-bootstrap3>=2024.1,<2024.2
-django-debug-toolbar>=4.3.0,<4.4
+django-debug-toolbar>=5.1.0,<5.2
 django-wkhtmltopdf>=3.4.0,<3.5
-mysqlclient>=2.2.7,<2.3
+mysqlclient>=2.1.1
 icalendar==4.1.0
 jsonfield>=3.1.0,<3.2
-git+https://github.com/samuraisam/django-json-rpc@a88d744d960e828f3eb21265da0f10a694b8ebcf
+# Django Modern RPC -- For our JSONRPC API
+django-modern-rpc>=1.0.1,<1.1
 raven==6.10.0
 # Translations -- development
-django-rosetta>=0.9.8,<0.10.0
+django-rosetta>=0.10.2,<0.11.0
 # Django-extensions (runserver_plus command) -- development
-django-extensions>=3.1.5,<4.0
+django-extensions>=4.1,<4.2
 # Werkzeug needed for runserver_plus command) -- development
-Werkzeug>=3.0,<3.1
+Werkzeug>=3.1,<3.2
 # Single Sign On - OIDC Client
 mozilla-django-oidc>=4.0.1,<4.1
 # Sentry error logging

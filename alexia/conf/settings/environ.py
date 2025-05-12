@@ -155,6 +155,8 @@ LOGGING = {
         },
         # Set OIDC logging to at least info due to process_request log flooding
         'mozilla_django_oidc.middleware': {'level': 'INFO'},
+        # Set ModernRPC logging to at least info due to "register_method" log flooding for API
+        'modernrpc.core': {'level': 'INFO'},
     },
 }
 

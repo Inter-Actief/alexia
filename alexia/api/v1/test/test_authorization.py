@@ -31,9 +31,8 @@ class AuthorizationTest(APITestCase):
         """
         # Invalid user
         self.send_and_compare_request_error('authorization.list', ['invalidusername'],
-                                            status_code=422,
+                                            status_code=200,
                                             error_code=-32602,
-                                            error_name='InvalidParamsError',
-                                            error_message='InvalidParamsError: User with provided ' +
+                                            error_message='User with provided ' +
                                                           'username does not exist',
                                             )

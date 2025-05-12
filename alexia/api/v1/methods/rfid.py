@@ -1,6 +1,8 @@
+from typing import List, Dict
+
 from django.contrib.auth.models import User
 from django.db import transaction
-from jsonrpc import jsonrpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError
@@ -8,12 +10,11 @@ from alexia.apps.billing.models import RfidCard
 from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_rfidcard
-from ..config import api_v1_site
 
 
-@jsonrpc_method('rfid.list(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='rfid.list', entry_point='v1')
 @manager_required
-def rfid_list(request, radius_username=None):
+def rfid_list(radius_username: str = None, **kwargs) -> List[Dict]:
     """
     Retrieve registered RFID cards for the current selected organization.
 
@@ -49,6 +50,7 @@ def rfid_list(request, radius_username=None):
         }
     ]
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     rfidcards = RfidCard.objects.filter(managed_by=request.organization)
 
@@ -68,9 +70,9 @@ def rfid_list(request, radius_username=None):
     return result
 
 
-@jsonrpc_method('rfid.get(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='rfid.get', entry_point='v1')
 @manager_required
-def rfid_get(request, radius_username):
+def rfid_get(radius_username: str, **kwargs) -> List[str]:
     """
     Retrieve registered RFID cards for a specified user and current selected
     organization.
@@ -91,6 +93,7 @@ def rfid_get(request, radius_username):
 
     Raises error -32602 (Invalid params) if the username does not exist.
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
@@ -106,10 +109,10 @@ def rfid_get(request, radius_username):
     return result
 
 
-@jsonrpc_method('rfid.add(radius_username=String, identifier=String) -> Object', site=api_v1_site, authenticated=True)
+@rpc_method(name='rfid.add', entry_point='v1')
 @manager_required
 @transaction.atomic
-def rfid_add(request, radius_username, identifier):
+def rfid_add(radius_username: str, identifier: str, **kwargs) -> Dict:
     """
     Add a new RFID card to the specified user.
 
@@ -131,7 +134,7 @@ def rfid_add(request, radius_username, identifier):
     Raises error -32602 (Invalid params) if the RFID card already exists for this person.
     Raises error -32602 (Invalid params) if the RFID card is already registered by someone else.
     """
-
+    request = kwargs.get(REQUEST_KEY)
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
@@ -155,12 +158,12 @@ def rfid_add(request, radius_username, identifier):
         raise InvalidParamsError('RFID card with provided identifier already exists for this person')
 
 
-@jsonrpc_method('rfid.remove(radius_username=String, identifier=String) -> Nil', site=api_v1_site, authenticated=True)
+@rpc_method(name='rfid.remove', entry_point='v1')
 @manager_required
 @transaction.atomic
-def rfid_remove(request, radius_username, identifier):
+def rfid_remove(radius_username: str, identifier: str, **kwargs) -> None:
     """
-    Remove a RFID card from the specified user.
+    Remove an RFID card from the specified user.
 
     Required user level: Manager
 
@@ -170,6 +173,7 @@ def rfid_remove(request, radius_username, identifier):
     Raises error -32602 (Invalid params) if the username does not exist.
     Raises error -32602 (Invalid params) if the RFID card does not exist for this person/organization.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)

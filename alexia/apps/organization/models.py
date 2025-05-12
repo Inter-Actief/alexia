@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from alexia.apps.organization import managers
 from alexia.apps.scheduling.models import Availability, BartenderAvailability

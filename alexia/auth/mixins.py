@@ -9,8 +9,10 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.utils.http import urlquote
-from django.utils.translation import ugettext_lazy as _
+from urllib.parse import quote
+from django.utils.translation import gettext_lazy as _
+
+from alexia.utils.request import is_ajax
 
 
 class PassesTestMixin(object):
@@ -31,7 +33,7 @@ class PassesTestMixin(object):
         return True
 
     def dispatch(self, request, *args, **kwargs):
-        url = u'%s?%s=%s' % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, urlquote(request.get_full_path()))
+        url = u'%s?%s=%s' % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, quote(request.get_full_path()))
         if self.needs_login and not request.user.is_authenticated:
             return HttpResponseRedirect(url)
         else:
@@ -45,7 +47,7 @@ class RequireAjaxMixin(PassesTestMixin):
     reason = _('AJAX-request required')
 
     def test_requirement(self, request):
-        return request.is_ajax()
+        return is_ajax(request)
 
 
 class TenderRequiredMixin(PassesTestMixin):

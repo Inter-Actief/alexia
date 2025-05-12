@@ -1,21 +1,16 @@
-from jsonrpc import jsonrpc_method
+from typing import List, Dict
+
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError
 from alexia.apps.scheduling.models import BartenderAvailability
 from alexia.auth.backends import OIDC_BACKEND_NAME, User
 
-from ..config import api_v1_site
 
-
-@jsonrpc_method(
-    'user.get_availabilities(radius_username=String) -> Array',
-    site=api_v1_site,
-    safe=True,
-    authenticated=True
-)
+@rpc_method(name='user.get_availabilities', entry_point='v1')
 @manager_required
-def user_get_availabilities(request, radius_username):
+def user_get_availabilities(radius_username: str, **kwargs) -> List[Dict]:
     """
     Retrieve the availabilities entered by a specific user for the current organization.
 
@@ -45,6 +40,7 @@ def user_get_availabilities(request, radius_username):
         }
     ]
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)

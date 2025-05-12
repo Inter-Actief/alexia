@@ -31,6 +31,7 @@ from alexia.views import (
 
 from .forms import EventForm, FilterEventForm
 from .models import Availability, BartenderAvailability, Event, MailTemplate
+from ...utils.request import is_ajax
 
 
 def event_list_view(request):
@@ -109,7 +110,7 @@ def event_list_view(request):
     # Net als onze BartenderAvailabilities
     bartender_availabilities = BartenderAvailability.objects.filter(
         user_id=request.user.pk).values('event_id', 'availability_id', 'comment')
-    
+
     bartender_availabilities = {ba['event_id']: ba for ba in bartender_availabilities}
 
     return render(request, 'scheduling/event_list.html', locals())
@@ -135,7 +136,7 @@ class EventCalendarFetch(View):
         start = request.GET.get('start', None)
         end = request.GET.get('end', None)
 
-        if not (start and end) or not request.is_ajax():
+        if not (start and end) or not is_ajax(request):
             raise SuspiciousOperation('Bad calendar fetch request')
 
         from_time = datetime.fromtimestamp(float(start), tz=timezone.utc)
@@ -337,10 +338,10 @@ def set_bartender_availability_comment(request):
     if (request.organization not in event.participants.all()) or \
             not request.user.profile.is_tender(request.organization):
         raise PermissionDenied
-    
-    if not (request.method == 'POST' and request.is_ajax()):
+
+    if not (request.method == 'POST' and is_ajax(request)):
         return HttpResponseBadRequest("NOTOK")
-    
+
     comment = request.POST.get('comment')
     if len(comment) > 100:
         return HttpResponseBadRequest("TOOLONG")
@@ -378,7 +379,7 @@ def set_bartender_availability(request):
             request.user in event.get_assigned_bartenders():
         raise PermissionDenied
 
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and is_ajax(request):
         bartender_availability, is_new_record = \
             BartenderAvailability.objects.get_or_create(
                 user=request.user, event=event,

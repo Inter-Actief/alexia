@@ -1,11 +1,11 @@
+from typing import List
+
 from django.db import transaction
-from jsonrpc import jsonrpc_method
-
-from ..config import api_v1_site
+from modernrpc.core import rpc_method, registry, REQUEST_KEY, ENTRY_POINT_KEY, PROTOCOL_KEY
 
 
-@jsonrpc_method('version() -> Number', site=api_v1_site, safe=True)
-def version(request):
+@rpc_method(name='version', entry_point='v1')
+def version(**kwargs) -> int:
     """
     Returns the current API version.
 
@@ -20,8 +20,8 @@ def version(request):
     return 1
 
 
-@jsonrpc_method('methods() -> Array', site=api_v1_site, safe=True)
-def methods(request):
+@rpc_method(name='methods', entry_point='v1')
+def methods(**kwargs) -> List[str]:
     """
     Introspect the API and return all callable methods.
 
@@ -29,29 +29,28 @@ def methods(request):
 
     Returns an array with the methods.
     """
-    result = []
+    entry_point = kwargs.get(ENTRY_POINT_KEY)
+    protocol = kwargs.get(PROTOCOL_KEY)
 
-    for proc in api_v1_site.describe(request)['procs']:
-        result.append(proc['name'])
-
-    return result
+    return registry.get_all_method_names(entry_point, protocol, sort_methods=True)
 
 
-@jsonrpc_method('login(username=String, password=String) -> Boolean', site=api_v1_site)
+@rpc_method(name='login', entry_point='v1')
 @transaction.atomic
-def login(request, username, password):
+def login(username: str, password: str, **kwargs) -> bool:
     """
-    Authenticate an user to use the API.
+    Authenticate a user to use the API.
 
     Required user level: None
 
-    Returns true when an user has successful signed in. A session will be
+    Returns true when a user has successfully signed in. A session will be
     started and stored. Cookies must be supported by the client.
 
     username        -- Username of user
     password        -- Password of the user
     """
     from django.contrib.auth import authenticate, login
+    request = kwargs.get(REQUEST_KEY)
 
     # TODO: Authenticating for the API will be hard once RADIUS shuts down. As a stopgap, we can give each association
     #       a local Alexia account to use for the API, but in due time we will probably want to move to something
@@ -65,9 +64,9 @@ def login(request, username, password):
         return True
 
 
-@jsonrpc_method('logout() -> Nil', site=api_v1_site)
+@rpc_method(name='logout', entry_point='v1')
 @transaction.atomic
-def logout(request):
+def logout(**kwargs) -> None:
     """
     Sign out the current user, even if no one was signed in.
 
@@ -76,5 +75,6 @@ def logout(request):
     Destroys the current session.
     """
     from django.contrib.auth import logout
+    request = kwargs.get(REQUEST_KEY)
 
     logout(request)

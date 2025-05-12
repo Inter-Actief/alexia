@@ -1,6 +1,8 @@
+from typing import List, Dict, Optional
+
 from django.contrib.auth.models import User
 from django.db import transaction
-from jsonrpc import jsonrpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
@@ -8,12 +10,11 @@ from alexia.apps.billing.models import Order
 from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_order
-from ..config import api_v1_site
 
 
-@jsonrpc_method('order.unsynchronized(unused=Number) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='order.unsynchronized', entry_point='v1')
 @manager_required
-def order_unsynchronized(request, unused=0):
+def order_unsynchronized(unused: int = 0, **kwargs) -> List[Dict]:
     """
     Return a list of unsynchronized orders.
 
@@ -35,7 +36,7 @@ def order_unsynchronized(request, unused=0):
                 },
                 {
                     "price": "1.00",
-                    "product": {"name": "Coca Cola"},
+                    "product": {"name": "Coca-Cola"},
                     "amount": 2
                 }
             ],
@@ -58,7 +59,7 @@ def order_unsynchronized(request, unused=0):
             "purchases": [
                 {
                     "price": "1.00",
-                    "product": {"name": "Coca Cola"},
+                    "product": {"name": "Coca-Cola"},
                     "amount": 2
                 }, {
                     "price": "0.50",
@@ -83,6 +84,7 @@ def order_unsynchronized(request, unused=0):
         }
     ]
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     orders = Order.objects.filter(authorization__organization=request.organization, synchronized=False)
 
@@ -94,9 +96,9 @@ def order_unsynchronized(request, unused=0):
     return result
 
 
-@jsonrpc_method('order.get(order_id=Number) -> Object', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='order.get', entry_point='v1')
 @manager_required
-def order_get(request, order_id):
+def order_get(order_id: int, **kwargs) -> Dict:
     """
     Return a specific order.
 
@@ -137,6 +139,7 @@ def order_get(request, order_id):
         }
     }
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         order = Order.objects.get(authorization__organization=request.organization, pk=order_id)
     except Order.DoesNotExist:
@@ -145,9 +148,9 @@ def order_get(request, order_id):
     return format_order(order)
 
 
-@jsonrpc_method('order.list(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='order.list', entry_point='v1')
 @manager_required
-def order_list(request, radius_username=None):
+def order_list(radius_username: Optional[str] = None, **kwargs) -> List[Dict]:
     """
     Retrieve a list of orders for the currently selected organization.
 
@@ -165,7 +168,7 @@ def order_list(request, radius_username=None):
             "purchases": [
                 {
                     "price": "1.00",
-                    "product": {"name": "Coca Cola"},
+                    "product": {"name": "Coca-Cola"},
                     "amount": 2
                 }, {
                     "price": "0.50",
@@ -213,6 +216,7 @@ def order_list(request, radius_username=None):
         }
     ]
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     orders = Order.objects.filter(event__organizer=request.organization)
 
@@ -232,10 +236,10 @@ def order_list(request, radius_username=None):
     return result
 
 
-@jsonrpc_method('order.marksynchronized(order_id=Number) -> Boolean', site=api_v1_site, authenticated=True)
+@rpc_method(name='order.marksynchronized', entry_point='v1')
 @manager_required
 @transaction.atomic
-def order_marksynchronized(request, order_id):
+def order_marksynchronized(order_id: int, **kwargs) -> bool:
     """
     Mark an order as synchronized.
 
@@ -247,6 +251,7 @@ def order_marksynchronized(request, order_id):
 
     Raises error 422 if provided order id cannot be found.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         order = Order.objects.select_for_update().get(authorization__organization=request.organization, pk=order_id)
     except Order.DoesNotExist:

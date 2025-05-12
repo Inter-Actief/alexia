@@ -1,6 +1,6 @@
 import os
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = os.path.normpath(os.path.join(os.path.abspath(__file__), '..', '..', '..', '..'))
 
@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap3',
     'debug_toolbar',
-    'jsonrpc',
+    'modernrpc',
     'wkhtmltopdf',
 
     # OIDC Client (authentication via auth.ia)
@@ -149,6 +149,14 @@ COMPRESS_CSS_FILTERS = [
 # TODO: We might want to look into migrating our current fields to BigAutoField at some point - albertskja 14-04-2025
 # See https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# ModernRPC API
+MODERNRPC_HANDLERS = [
+    "alexia.api.handlers.AlexiaJSONRPCHandler"
+]
+MODERNRPC_METHODS_MODULES = [
+    'alexia.api.v1.methods'
+]
 
 # Single Sign On via https://auth.ia.utwente.nl/
 OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/auth"

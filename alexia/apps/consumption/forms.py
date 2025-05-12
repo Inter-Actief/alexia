@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils import timezone
 from django.utils.dates import MONTHS
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from alexia.forms import AlexiaForm, EmptyInlineFormSet
 
