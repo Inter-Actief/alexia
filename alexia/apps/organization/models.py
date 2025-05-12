@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import os
 
 from django.conf import settings
@@ -7,7 +5,6 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
@@ -16,7 +13,6 @@ from alexia.apps.scheduling.models import Availability, BartenderAvailability
 from alexia.core.validators import validate_color
 
 
-@python_2_unicode_compatible
 class Location(models.Model):
     name = models.CharField(_('name'), max_length=32)
     prevent_conflicting_events = models.BooleanField(_('prevent conflicting events'), default=True)
@@ -45,7 +41,6 @@ class AuthenticationData(models.Model):
         unique_together = (('backend', 'username'), ('user', 'backend'))
 
 
-@python_2_unicode_compatible
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -126,7 +121,6 @@ class Profile(models.Model):
         return (self.nickname or self.user.first_name)
 
 
-@python_2_unicode_compatible
 class Organization(models.Model):
     name = models.CharField(_('name'), max_length=32, unique=True)
     slug = models.SlugField(_('slug'), editable=False, unique=True)
@@ -154,7 +148,6 @@ class Organization(models.Model):
         super(Organization, self).save(*args, **kwargs)
 
 
-@python_2_unicode_compatible
 class Membership(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -216,7 +209,6 @@ def _get_certificate_path(instance, filename):
     return os.path.join(path, filename + ext)
 
 
-@python_2_unicode_compatible
 class Certificate(models.Model):
     file = models.FileField(_('certificate'), upload_to=_get_certificate_path)
     uploaded_at = models.DateField(auto_now_add=True, verbose_name=_('uploaded at'))

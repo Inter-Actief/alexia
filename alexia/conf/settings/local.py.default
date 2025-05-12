@@ -35,10 +35,6 @@ DATABASES = {
 # http://www.miniwebtool.com/django-secret-key-generator/
 SECRET_KEY = ''
 
-# UT Radius login
-RADIUS_SECRET = ''
-RADIUS_IDENTIFIER = ''
-
 # Email settings
 EMAIL_HOST = 'localhost'
 EMAIL_SUBJECT_PREFIX = '[Alexia] '
