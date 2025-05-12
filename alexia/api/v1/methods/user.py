@@ -19,25 +19,40 @@ from ..common import format_certificate, format_user
 @transaction.atomic
 def user_add(radius_username: str, first_name: str, last_name: str, email: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.add(radius_username, first_name, last_name, email)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Unique username
+    - `first_name` : `str` -- First name
+    - `last_name` : `str` -- Last name
+    - `email` : `str` -- Valid email address
+
+    **Return type**: `dict`
+
+    **Idempotent**: no
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Add a new user to Alexia.
 
     A user must have a unique username and a valid email address.
 
     Returns the user information on success.
 
-    radius_username  -- Unique username
-    first_name       -- First name
-    last_name        -- Last name
-    email            -- Valid email address
+    **Example return value**:
 
-    Example result value:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "radius_username": "s0000000"
-    }
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "radius_username": "s0000000"
+        }
 
-    Raises error -32602 (Invalid params) if the username already exists.
+    **Raises errors**:
+
+    - `-32602` (Invalid params) if the username already exists.
     """
     if User.objects.filter(username=radius_username).exists() or \
             AuthenticationData.objects.filter(backend=OIDC_BACKEND_NAME, username__iexact=radius_username).exists():
@@ -59,11 +74,23 @@ def user_add(radius_username: str, first_name: str, last_name: str, email: str, 
 @login_required
 def user_exists(radius_username: str, **kwargs) -> bool:
     """
+    **Signature**: `user.exists(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for
+
+    **Return type**: `bool`
+
+    **Idempotent**: yes
+
+    **Required user level**: User
+
+    **Documentation**:
+
     Check if a user exists by his or her username.
 
-    Returns true when the username exists, false otherwise.
-
-    radius_username    -- Username to search for.
+    Returns `True` when the username exists, `False` otherwise.
     """
     return User.objects.filter(authenticationdata__backend=OIDC_BACKEND_NAME,
                                authenticationdata__username=radius_username).exists()
@@ -73,21 +100,35 @@ def user_exists(radius_username: str, **kwargs) -> bool:
 @login_required
 def user_get(radius_username: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.get(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: User
+
+    **Documentation**:
+
     Retrieve information about a specific user.
 
-    Returns an object representing the user. Result contains first_name,
-    last_name and radius_username.
+    Returns an object representing the user. Result contains `first_name`, `last_name` and `radius_username`.
 
-    radius_username    -- Username to search for.
+    **Example return value**:
 
-    Raises error 404 if provided username cannot be found.
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "radius_username": "s0000000"
+        }
 
-    Example result value:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "radius_username": "s0000000"
-    }
+    **Raises errors**:
+
+    - `404` (Object not found) if the provided username cannot be found.
     """
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
@@ -102,18 +143,33 @@ def user_get(radius_username: str, **kwargs) -> Dict:
 @login_required
 def user_get_by_id(user_id: int, **kwargs) -> Dict:
     """
+    **Signature**: `user.get_by_id(radius_username)`
+
+    **Arguments**:
+
+    - `user_id` : `int` -- User id to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: User
+
+    **Documentation**:
+
     Retrieve information about a specific user.
 
-    user_id    -- User id to search for.
+    **Example return value**:
 
-    Raises error 404 if provided username cannot be found.
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "radius_username": "s0000000"
+        }
 
-    Example result value:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "radius_username": "s0000000"
-    }
+    **Raises errors**:
+
+    - `404` (Object not found) if the provided username cannot be found.
     """
     try:
         user = User.objects.get(id=user_id)
@@ -127,25 +183,37 @@ def user_get_by_id(user_id: int, **kwargs) -> Dict:
 @manager_required
 def user_get_membership(radius_username: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.get_membership(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Retrieve the membership details for a specific user for the current organization.
 
-    Required user level: Manager
+    **Example return value**:
 
-    radius_username     -- Username to search for.
+        {
+          "user": "s0000000",
+          "organization": "Inter-Actief",
+          "comments": "",
+          "is_tender": True,
+          "is_planner": False,
+          "is_manager": False,
+          "is_active": True
+        }
 
-    Raises error 404 if the provided username cannot be found or the user has no membership with the current
-    organization.
+    **Raises errors**:
 
-    Example result value:
-    {
-        "user": "s0000000",
-        "organization": "Inter-Actief",
-        "comments": "",
-        "is_tender": True,
-        "is_planner": False,
-        "is_manager": False,
-        "is_active": True
-    }
+    - `404` (Object not found) if the provided username cannot be found or the user has no membership with the current organization.
     """
     request = kwargs.get(REQUEST_KEY)
     try:
@@ -177,19 +245,33 @@ def user_get_membership(radius_username: str, **kwargs) -> Dict:
 @manager_required
 def user_get_iva_certificate(radius_username: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.get_iva_certificate(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Retrieve the IVA certificate file for a specific user.
 
-    Required user level: Manager
+    **Example return value**:
 
-    radius_username    -- Username to search for.
+        {
+          "user": "s0000000",
+          "certificate_data": "U29tZSBiYXNlIDY0IHRleHQgdGhhdCBtaWdodCBiZ.........BhIGxvdCBsb25nZXIgdGhhbiB0aGlzIGlzLi4u"
+        }
 
-    Raises error 404 if provided username cannot be found or the user has no IVA certificate.
+    **Raises errors**:
 
-    Example result value:
-    {
-        "user": "s0000000",
-        "certificate_data": "U29tZSBiYXNlIDY0IHRleHQgdGhhdCBtaWdodCBiZ.........BhIGxvdCBsb25nZXIgdGhhbiB0aGlzIGlzLi4u"
-    }
+    - `404` (Object not found) if provided username cannot be found or the user has no IVA certificate.
+
     """
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,

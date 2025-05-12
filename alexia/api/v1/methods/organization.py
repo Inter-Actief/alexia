@@ -11,16 +11,29 @@ from alexia.apps.organization.models import Organization
 @login_required
 def organization_current_get(**kwargs) -> Optional[str]:
     """
-    Return the current organization slug.
+    **Signature**: `organization.current.get()`
 
-    Required user level: None
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: *(optional)* `str`
+
+    **Idempotent**: yes
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    Return the current organization slug.
 
     All operations performed will be performed by this organization.
 
-    If no organization has been chosen, it will return None.
+    If no organization has been chosen, it will return `None`.
 
-    Example return value:
-    "inter-actief"
+    **Example return value**:
+
+        "inter-actief"
     """
     request = kwargs.get(REQUEST_KEY)
     if request.organization:
@@ -33,18 +46,30 @@ def organization_current_get(**kwargs) -> Optional[str]:
 @login_required
 def organization_current_set(organization: str, **kwargs) -> bool:
     """
-    Set the current organization.
+    **Signature**: `organization.current.set(organization)`
 
-    Required user level: None
+    **Arguments**:
+
+    - `organization` : `str` -- slug of the organization or empty string to deselect organization.
+
+    **Return type**: `bool`
+
+    **Idempotent**: no
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    Set the current organization.
 
     All further operations performed will be performed by this organization.
 
-    Return true if the organization is switched. Returns false if the current
+    Return `True` if the organization is switched. Returns `False` if the current
     organization equals the provided organization.
 
-    organization    -- slug of the organization or empty string to deselect organization.
+    **Raises errors**:
 
-    Raises error 404 if provided organization cannot be found.
+    - `404` (Object not found) if provided organization cannot be found.
     """
     request = kwargs.get(REQUEST_KEY)
     if not organization:
@@ -70,20 +95,33 @@ def organization_current_set(organization: str, **kwargs) -> bool:
 @login_required
 def organization_list(**kwargs) -> List[str]:
     """
-    List all public organizations.
+    **Signature**: `organization.list()`
 
-    Required user level: None
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: List of `str`
+
+    **Idempotent**: no
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    List all public organizations.
 
     Returns an array with zero or more organizations.
 
-    Example return value:
-    [
-        "abacus",
-        "inter-actief",
-        "proto",
-        "scintilla",
-        "sirius",
-        "stress"
-    ]
+    **Example return value**:
+
+        [
+          "abacus",
+          "inter-actief",
+          "proto",
+          "scintilla",
+          "sirius",
+          "stress"
+        ]
     """
     return [o.slug for o in Organization.objects.all()]

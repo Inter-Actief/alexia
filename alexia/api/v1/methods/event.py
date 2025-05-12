@@ -9,25 +9,38 @@ from alexia.apps.scheduling.models import Event
 @rpc_method(name='event.upcoming_list', entry_point='v1')
 def upcoming_events_list(include_ongoing: bool = False, **kwargs) -> List[Dict]:
     """
+    **Signature**: `event.upcoming_list(include_current)`
+
+    **Arguments**:
+
+    - `include_current` : `bool` -- Whether to include ongoing events, defaults to false
+
+    **Return type**: List of `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
     List all current and upcoming events.
-
-    Required user level: None
-
-    include_current -- Whether to include ongoing events, defaults to false
 
     Returns an array with zero or more events.
 
-    Example output:
-    [{
-        'name': 'Test Drink',
-        'locations': 'Abscint',
-        'organizer': 'Inter-Actief',
-        'participants': ['Inter-Actief'],
-        'starts_at': 2017-09-12T14:00:00Z,
-        'ends_at': 2017-09-12T16:00:00Z,
-        'kegs': 2,
-        'is_risky': false,
-    }]
+    **Example return value**:
+
+        [
+          {
+            'name': 'Test Drink',
+            'locations': 'Abscint',
+            'organizer': 'Inter-Actief',
+            'participants': ['Inter-Actief'],
+            'starts_at': 2017-09-12T14:00:00Z,
+            'ends_at': 2017-09-12T16:00:00Z,
+            'kegs': 2,
+            'is_risky': false,
+          }
+        ]
     """
     filter_key = 'ends_at__gte' if include_ongoing else 'starts_at__gte'
     return [{

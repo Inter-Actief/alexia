@@ -151,12 +151,14 @@ COMPRESS_CSS_FILTERS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # ModernRPC API
-MODERNRPC_HANDLERS = [
-    "alexia.api.handlers.AlexiaJSONRPCHandler"
-]
 MODERNRPC_METHODS_MODULES = [
     'alexia.api.v1.methods'
 ]
+MODERNRPC_HANDLERS = [
+    "alexia.api.handlers.AlexiaJSONRPCHandler"
+]
+# API documentation strings are formatted with markdown
+MODERNRPC_DOC_FORMAT = 'markdown'
 
 # Single Sign On via https://auth.ia.utwente.nl/
 OIDC_OP_AUTHORIZATION_ENDPOINT = "https://auth.ia.utwente.nl/realms/inter-actief/protocol/openid-connect/auth"

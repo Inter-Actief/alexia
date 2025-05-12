@@ -82,6 +82,11 @@ def _get_validate_event(request, event_id, safe=False):
 @rpc_method(name='juliana.rfid.get', entry_point='v1')
 @login_required
 def juliana_rfid_get(event_id: int, rfid: Dict, **kwargs) -> Dict:
+    """
+    Internal API method for the Point of Sale module.
+
+    *No documentation available yet.*
+    """
     request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id, True)
 
@@ -115,7 +120,13 @@ def juliana_rfid_get(event_id: int, rfid: Dict, **kwargs) -> Dict:
 @login_required
 @transaction.atomic
 def juliana_order_save(event_id: int, user_id: int, purchases: List[Dict], rfid_data: Dict, **kwargs) -> None:
-    """Saves a new order in the database"""
+    """
+    Internal API method for the Point of Sale module.
+
+    Saves a new order in the database
+
+    *No documentation available yet.*
+    """
     request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id)
 
@@ -177,6 +188,11 @@ def juliana_order_save(event_id: int, user_id: int, purchases: List[Dict], rfid_
 @rpc_method(name='juliana.user.check', entry_point='v1')
 @login_required
 def juliana_user_check(event_id: int, user_id: int, **kwargs) -> int:
+    """
+    Internal API method for the Point of Sale module.
+
+    *No documentation available yet.*
+    """
     request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id, True)
 
@@ -198,7 +214,13 @@ def juliana_user_check(event_id: int, user_id: int, **kwargs) -> int:
 @login_required
 @transaction.atomic
 def juliana_writeoff_save(event_id: int, writeoff_id: int, purchases: List[Dict], **kwargs) -> bool:
-    """Saves a writeoff order in the Database"""
+    """
+    Internal API method for the Point of Sale module.
+
+    Saves a writeoff order in the Database
+
+    *No documentation available yet.*
+    """
     request = kwargs.get(REQUEST_KEY)
     event = _get_validate_event(request, event_id)
 

@@ -7,9 +7,21 @@ from modernrpc.core import rpc_method, registry, REQUEST_KEY, ENTRY_POINT_KEY, P
 @rpc_method(name='version', entry_point='v1')
 def version(**kwargs) -> int:
     """
-    Returns the current API version.
+    **Signature**: `version()`
 
-    Required user level: None
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: `int`
+
+    **Idempotent**: yes
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    Returns the current API version.
 
     The client will then be able to determine which methods it can use and
     which methods it cannot use.
@@ -23,9 +35,21 @@ def version(**kwargs) -> int:
 @rpc_method(name='methods', entry_point='v1')
 def methods(**kwargs) -> List[str]:
     """
-    Introspect the API and return all callable methods.
+    **Signature**: `methods()`
 
-    Required user level: None
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: List of `str`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
+    Introspect the API and return all callable methods.
 
     Returns an array with the methods.
     """
@@ -39,15 +63,25 @@ def methods(**kwargs) -> List[str]:
 @transaction.atomic
 def login(username: str, password: str, **kwargs) -> bool:
     """
+    **Signature**: `login()`
+
+    **Arguments**:
+
+    - `username` : `str` -- Username of user.
+    - `password` : `str` -- Password of the user.
+
+    **Return type**: `bool`
+
+    **Idempotent**: no
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
     Authenticate a user to use the API.
 
-    Required user level: None
-
-    Returns true when a user has successfully signed in. A session will be
+    Returns `True` when a user has successfully signed in. A session will be
     started and stored. Cookies must be supported by the client.
-
-    username        -- Username of user
-    password        -- Password of the user
     """
     from django.contrib.auth import authenticate, login
     request = kwargs.get(REQUEST_KEY)
@@ -68,9 +102,21 @@ def login(username: str, password: str, **kwargs) -> bool:
 @transaction.atomic
 def logout(**kwargs) -> None:
     """
-    Sign out the current user, even if no one was signed in.
+    **Signature**: `logout()`
 
-    Required user level: None
+    **Arguments**:
+
+    - *None*
+
+    **Return type**: `None`
+
+    **Idempotent**: no
+
+    **Required user level**: *None*
+
+    **Documentation**:
+
+    Sign out the current user, even if no one was signed in.
 
     Destroys the current session.
     """
