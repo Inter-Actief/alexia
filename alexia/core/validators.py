@@ -1,5 +1,5 @@
 from django.core.validators import RegexValidator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 color_validator = RegexValidator(
     r'^[0-9a-zA-Z]{6}$',

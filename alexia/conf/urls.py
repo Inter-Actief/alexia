@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import re_path
+from django.urls import re_path, path
 from django.views.generic import RedirectView, TemplateView
 from django.views.static import serve
 
@@ -13,56 +13,56 @@ from alexia.apps.scheduling import views as scheduling_views
 
 urlpatterns = [
     # Root
-    url(r'^$', RedirectView.as_view(pattern_name='event-list', permanent=True)),
+    path(r'', RedirectView.as_view(pattern_name='event-list', permanent=True)),
 
     # Short urls to 'subsystems'
-    url(r'^dcf/(?P<pk>\d+)/$', dcf, name='dcf'),
-    url(r'^dcf/(?P<pk>\d+)/check/$', complete_dcf, name='dcf-complete'),
-    url(r'^juliana/(?P<pk>\d+)/$', JulianaView.as_view(), name='juliana'),
+    path('dcf/<int:pk>/', dcf, name='dcf'),
+    path('dcf/<int:pk>/check/', complete_dcf, name='dcf-complete'),
+    path('juliana/<int:pk>/', JulianaView.as_view(), name='juliana'),
 
     # Apps
-    url(r'^billing/', include('alexia.apps.billing.urls')),
-    url(r'^consumption/', include('alexia.apps.consumption.urls')),
-    url(r'^organization/', include('alexia.apps.organization.urls')),
-    url(r'^profile/', include('alexia.apps.profile.urls')),
-    url(r'^scheduling/', include('alexia.apps.scheduling.urls')),
-    url(r'^ical$', scheduling_views.ical),
-    url(r'^ical/(?P<ical_id>[^/]+)$', scheduling_views.personal_ical, name='ical'),
+    path('billing/', include('alexia.apps.billing.urls')),
+    path('consumption/', include('alexia.apps.consumption.urls')),
+    path('organization/', include('alexia.apps.organization.urls')),
+    path('profile/', include('alexia.apps.profile.urls')),
+    path('scheduling/', include('alexia.apps.scheduling.urls')),
+    path('ical', scheduling_views.ical),
+    path('ical/<str:ical_id>', scheduling_views.personal_ical, name='ical'),
 
-    url(r'^api/', include('alexia.api.urls')),
+    path('api/', include('alexia.api.urls')),
 
     # "Static" general_views
-    url(r'^healthz/$', general_views.healthz_view, name='healthz_simple'),
-    url(r'^about/$', general_views.AboutView.as_view(), name='about'),
-    url(r'^help/$', general_views.HelpView.as_view(), name='help'),
-    url(r'^login_complete/$', general_views.login_complete, name='login_complete'),
-    url(r'^legacy_login/$', general_views.login, name='login'),
-    url(r'^legacy_logout/$', auth_views.LogoutView.as_view(), name='logout'),
-    url(r'^register/$', general_views.RegisterView.as_view(), name='register'),
-    url(r'^change_current_organization/(?P<slug>[-\w]+)/$',
+    path('healthz/', general_views.healthz_view, name='healthz_simple'),
+    path('about/', general_views.AboutView.as_view(), name='about'),
+    path('help/', general_views.HelpView.as_view(), name='help'),
+    path('login_complete/', general_views.login_complete, name='login_complete'),
+    path('legacy_login/', general_views.login, name='login'),
+    path('legacy_logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('register/', general_views.RegisterView.as_view(), name='register'),
+    path('change_current_organization/<str:slug>/',
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
-    url(r'^oidc/', include('mozilla_django_oidc.urls')),
+    path('oidc/', include('mozilla_django_oidc.urls')),
 
     # Django Admin
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', admin.site.urls),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+    path('admin/', admin.site.urls),
 
     # Internationalization
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+    path('i18n/', include('django.conf.urls.i18n')),
 
     # Robots
-    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]
 
 # Debug toolbar
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path('__debug__/', include(debug_toolbar.urls)),
     ]
     # Translation application for development
     urlpatterns += [
-        url(r'^translations/', include('rosetta.urls'), name='translations')
+        path('translations/', include('rosetta.urls'), name='translations')
     ]
     # Static and media files in development mode
     urlpatterns += [

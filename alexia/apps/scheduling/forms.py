@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 from alexia.apps.organization.models import Location, Organization
 from alexia.forms import AlexiaForm, AlexiaModelForm
@@ -32,7 +32,7 @@ class EventForm(AlexiaModelForm):
         ends_at = self.cleaned_data.get('ends_at')
         if starts_at and ends_at and starts_at > ends_at:
             raise forms.ValidationError(
-                ugettext('The end time is earlier than the start time.'),
+                gettext('The end time is earlier than the start time.'),
                 code='invalid',
             )
         return ends_at
@@ -49,7 +49,7 @@ class EventForm(AlexiaModelForm):
                         conflicting_events = conflicting_events.exclude(pk=self.instance.pk)
                     if conflicting_events.exists():
                         raise forms.ValidationError(
-                            ugettext('There is already an event in %(location)s.'),
+                            gettext('There is already an event in %(location)s.'),
                             code='conflicting_event',
                             params={'location': location},
                         )

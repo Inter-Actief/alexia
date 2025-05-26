@@ -1,6 +1,8 @@
+from typing import List, Dict, Optional
+
 from django.contrib.auth.models import User
 from django.db import transaction
-from jsonrpc import jsonrpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from alexia.api.decorators import manager_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
@@ -8,25 +10,37 @@ from alexia.apps.billing.models import Order
 from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_order
-from ..config import api_v1_site
 
 
-@jsonrpc_method('order.unsynchronized(unused=Number) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='order.unsynchronized', entry_point='v1')
 @manager_required
-def order_unsynchronized(request, unused=0):
+def order_unsynchronized(unused: int = 0, **kwargs) -> List[Dict]:
     """
-    Return a list of unsynchronized orders.
+    **Signature**: `order.unsynchronized(unused)`
 
-    Required user level: Manager
+    **Arguments**:
+
+    - `unused` : `int` -- Unused parameter
+
+    **Return type**: List of `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
+    Return a list of unsynchronized orders.
 
     Optionally gets an unused parameter because of a former compatibility issue
     between the jsonrpc server en jsonrpclib client.
 
     Returns a list of Order objects.
 
-    Example return value:
-    [
-        {
+    **Example return value**:
+
+        [
+          {
             "purchases": [
                 {
                     "price": "5.00",
@@ -35,7 +49,7 @@ def order_unsynchronized(request, unused=0):
                 },
                 {
                     "price": "1.00",
-                    "product": {"name": "Coca Cola"},
+                    "product": {"name": "Coca-Cola"},
                     "amount": 2
                 }
             ],
@@ -53,12 +67,12 @@ def order_unsynchronized(request, unused=0):
                 "start_date": "2014-09-21T14:16:06+00:00",
                 "user": "s0000000"
             }
-        },
-        {
+          },
+          {
             "purchases": [
                 {
                     "price": "1.00",
-                    "product": {"name": "Coca Cola"},
+                    "product": {"name": "Coca-Cola"},
                     "amount": 2
                 }, {
                     "price": "0.50",
@@ -80,9 +94,10 @@ def order_unsynchronized(request, unused=0):
                 "start_date": "2014-09-21T14:16:06+00:00",
                 "user": "s0000000"
             }
-        }
-    ]
+          }
+        ]
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     orders = Order.objects.filter(authorization__organization=request.organization, synchronized=False)
 
@@ -94,49 +109,63 @@ def order_unsynchronized(request, unused=0):
     return result
 
 
-@jsonrpc_method('order.get(order_id=Number) -> Object', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='order.get', entry_point='v1')
 @manager_required
-def order_get(request, order_id):
+def order_get(order_id: int, **kwargs) -> Dict:
     """
-    Return a specific order.
+    **Signature**: `order.get(order_id)`
 
-    Required user level: Manager
+    **Arguments**:
+
+    - `order_id` : `int` -- ID of the Order object.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
+    Return a specific order.
 
     Returns an order object.
 
-    order_id -- ID of the Order object.
+    **Example return value**:
 
-    Raises error 404 if provided order id cannot be found.
-
-    Example return value:
-    {
-        "purchases": [
+        {
+          "purchases": [
             {
-                "price": "1.00",
-                "product": {"name": "Coca Cola"},
-                "amount": 2
+              "price": "1.00",
+              "product": {"name": "Coca-Cola"},
+              "amount": 2
             }, {
-                "price": "0.50",
-                "product": {"name": "Grolsch"},
-                "amount": 1
+              "price": "0.50",
+              "product": {"name": "Grolsch"},
+              "amount": 1
             }
-        ],
-        "synchronized": false,
-        "event": {
+          ],
+          "synchronized": false,
+          "event": {
             "id": 4210,
             "name": "Testborrel"
-        },
-        "placed_at": "2015-03-11T15:24:06+00:00",
-        "id": 1255,
-        "rfid": "02,06:65:74:49",
-        "authorization": {
+          },
+          "placed_at": "2015-03-11T15:24:06+00:00",
+          "id": 1255,
+          "rfid": "02,06:65:74:49",
+          "authorization": {
             "id": 1,
             "end_date": null,
             "start_date": "2014-09-21T14:16:06+00:00",
             "user": "s0000000"
+          }
         }
-    }
+
+    **Raises errors**:
+
+    - `404` (Object not found) if provided order id cannot be found.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         order = Order.objects.get(authorization__organization=request.organization, pk=order_id)
     except Order.DoesNotExist:
@@ -145,74 +174,86 @@ def order_get(request, order_id):
     return format_order(order)
 
 
-@jsonrpc_method('order.list(radius_username=String) -> Array', site=api_v1_site, safe=True, authenticated=True)
+@rpc_method(name='order.list', entry_point='v1')
 @manager_required
-def order_list(request, radius_username=None):
+def order_list(radius_username: Optional[str] = None, **kwargs) -> List[Dict]:
     """
+    **Signature**: `order.list(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- *(optional)* Username to search for.
+
+    **Return type**: List of `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Retrieve a list of orders for the currently selected organization.
 
-    Required user level: Manager
-
-    Povide a username to select only orders made by the provided user.
+    Provide a username to select only orders made by the provided user.
 
     Returns an array of orders.
 
-    radius_username -- (optional) Username to search for.
+    **Example return value**:
 
-    Example return value:
-    [
-        {
+        [
+          {
             "purchases": [
-                {
-                    "price": "1.00",
-                    "product": {"name": "Coca Cola"},
-                    "amount": 2
-                }, {
-                    "price": "0.50",
-                    "product": {"name": "Grolsch"},
-                    "amount": 1
-                }
+              {
+                "price": "1.00",
+                "product": {"name": "Coca-Cola"},
+                "amount": 2
+              }, {
+                "price": "0.50",
+                "product": {"name": "Grolsch"},
+                "amount": 1
+              }
             ],
             "synchronized": false,
             "event": {
-                "id": 4210,
-                "name": "Testborrel"
+              "id": 4210,
+              "name": "Testborrel"
             },
             "placed_at": "2015-03-11T15:24:06+00:00",
             "id": 1255,
             "rfid": "02,06:65:74:49",
             "authorization": {
-                "id": 1,
-                "end_date": null,
-                "start_date": "2014-09-21T14:16:06+00:00",
-                "user": "s0000000"
+              "id": 1,
+              "end_date": null,
+              "start_date": "2014-09-21T14:16:06+00:00",
+              "user": "s0000000"
             }
-        },
-        {
+          },
+          {
             "purchases": [
-                {
-                    "price": "1.50",
-                    "product": {"name": "Grolsch"},
-                    "amount": 3
-                }
+              {
+                "price": "1.50",
+                "product": {"name": "Grolsch"},
+                "amount": 3
+              }
             ],
             "synchronized": true,
             "event": {
-                "id": 4210,
-                "name": "Testborrel"
+              "id": 4210,
+              "name": "Testborrel"
             },
             "placed_at": "2015-03-11T16:47:21+00:00",
             "id": 1271,
             "rfid": "02,06:65:74:49",
             "authorization": {
-                "id": 1,
-                "end_date": null,
-                "start_date": "2014-09-21T14:16:06+00:00",
-                "user": "s0000000"
+              "id": 1,
+              "end_date": null,
+              "start_date": "2014-09-21T14:16:06+00:00",
+              "user": "s0000000"
             }
-        }
-    ]
+          }
+        ]
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
     orders = Order.objects.filter(event__organizer=request.organization)
 
@@ -232,21 +273,34 @@ def order_list(request, radius_username=None):
     return result
 
 
-@jsonrpc_method('order.marksynchronized(order_id=Number) -> Boolean', site=api_v1_site, authenticated=True)
+@rpc_method(name='order.marksynchronized', entry_point='v1')
 @manager_required
 @transaction.atomic
-def order_marksynchronized(request, order_id):
+def order_marksynchronized(order_id: int, **kwargs) -> bool:
     """
+    **Signature**: `order.marksynchronized(order_id)`
+
+    **Arguments**:
+
+    - `order_id` : `int` -- ID of the Order object.
+
+    **Return type**: `bool`
+
+    **Idempotent**: no
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Mark an order as synchronized.
 
-    Required user level: Manager
+    Returns `True` if the operation succeeded. Returns `False` if the order is already marked as synchronized.
 
-    Returns True if the operation succeeded. Returns False if the order is already marked as synchronized.
+    **Raises errors**:
 
-    order_id -- ID of the Order object.
-
-    Raises error 422 if provided order id cannot be found.
+    - `-32602` (Invalid params) if provided order id cannot be found.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         order = Order.objects.select_for_update().get(authorization__organization=request.organization, pk=order_id)
     except Order.DoesNotExist:

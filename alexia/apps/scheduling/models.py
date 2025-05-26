@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .tools import notify_tenders
 

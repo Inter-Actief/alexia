@@ -1,8 +1,10 @@
+from typing import Dict
+
 from django.contrib.auth.models import User
 from django.db import transaction
-from jsonrpc import jsonrpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
-from alexia.api.decorators import manager_required
+from alexia.api.decorators import manager_required, login_required
 from alexia.api.exceptions import InvalidParamsError, ObjectNotFoundError
 from alexia.apps.organization.models import (
     AuthenticationData, Certificate, Membership, Profile,
@@ -10,34 +12,47 @@ from alexia.apps.organization.models import (
 from alexia.auth.backends import OIDC_BACKEND_NAME
 
 from ..common import format_certificate, format_user
-from ..config import api_v1_site
 
 
-@jsonrpc_method('user.add(radius_username=String, first_name=String, last_name=String, email=String) -> Object',
-                site=api_v1_site, authenticated=True)
+@rpc_method(name='user.add', entry_point='v1')
 @manager_required
 @transaction.atomic
-def user_add(request, radius_username, first_name, last_name, email):
+def user_add(radius_username: str, first_name: str, last_name: str, email: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.add(radius_username, first_name, last_name, email)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Unique username
+    - `first_name` : `str` -- First name
+    - `last_name` : `str` -- Last name
+    - `email` : `str` -- Valid email address
+
+    **Return type**: `dict`
+
+    **Idempotent**: no
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Add a new user to Alexia.
 
-    An user must have an unique username and a valid email address.
+    A user must have a unique username and a valid email address.
 
     Returns the user information on success.
 
-    radius_username  -- Unique username
-    first_name       -- First name
-    last_name        -- Last name
-    email            -- Valid email address
+    **Example return value**:
 
-    Example result value:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "radius_username": "s0000000"
-    }
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "radius_username": "s0000000"
+        }
 
-    Raises error -32602 (Invalid params) if the username already exists.
+    **Raises errors**:
+
+    - `-32602` (Invalid params) if the username already exists.
     """
     if User.objects.filter(username=radius_username).exists() or \
             AuthenticationData.objects.filter(backend=OIDC_BACKEND_NAME, username__iexact=radius_username).exists():
@@ -55,37 +70,65 @@ def user_add(request, radius_username, first_name, last_name, email):
     return format_user(user)
 
 
-@jsonrpc_method('user.exists(radius_username=String) -> Boolean', site=api_v1_site, authenticated=True, safe=True)
-def user_exists(request, radius_username):
+@rpc_method(name='user.exists', entry_point='v1')
+@login_required
+def user_exists(radius_username: str, **kwargs) -> bool:
     """
+    **Signature**: `user.exists(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for
+
+    **Return type**: `bool`
+
+    **Idempotent**: yes
+
+    **Required user level**: User
+
+    **Documentation**:
+
     Check if a user exists by his or her username.
 
-    Returns true when the username exists, false otherwise.
-
-    radius_username    -- Username to search for.
+    Returns `True` when the username exists, `False` otherwise.
     """
     return User.objects.filter(authenticationdata__backend=OIDC_BACKEND_NAME,
                                authenticationdata__username=radius_username).exists()
 
 
-@jsonrpc_method('user.get(radius_username=String) -> Object', site=api_v1_site, authenticated=True, safe=True)
-def user_get(request, radius_username):
+@rpc_method(name='user.get', entry_point='v1')
+@login_required
+def user_get(radius_username: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.get(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: User
+
+    **Documentation**:
+
     Retrieve information about a specific user.
 
-    Returns a object representing the user. Result contains first_name,
-    last_name and radius_username.
+    Returns an object representing the user. Result contains `first_name`, `last_name` and `radius_username`.
 
-    radius_username    -- Username to search for.
+    **Example return value**:
 
-    Raises error 404 if provided username cannot be found.
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "radius_username": "s0000000"
+        }
 
-    Example result value:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "radius_username": "s0000000"
-    }
+    **Raises errors**:
+
+    - `404` (Object not found) if the provided username cannot be found.
     """
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
@@ -96,21 +139,37 @@ def user_get(request, radius_username):
     return format_user(user)
 
 
-@jsonrpc_method('user.get_by_id(user_id=Number) -> Object', site=api_v1_site, authenticated=True, safe=True)
-def user_get_by_id(request, user_id):
+@rpc_method(name='user.get_by_id', entry_point='v1')
+@login_required
+def user_get_by_id(user_id: int, **kwargs) -> Dict:
     """
+    **Signature**: `user.get_by_id(radius_username)`
+
+    **Arguments**:
+
+    - `user_id` : `int` -- User id to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: User
+
+    **Documentation**:
+
     Retrieve information about a specific user.
 
-    user_id    -- User id to search for.
+    **Example return value**:
 
-    Raises error 404 if provided username cannot be found.
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "radius_username": "s0000000"
+        }
 
-    Example result value:
-    {
-        "first_name": "John",
-        "last_name": "Doe",
-        "radius_username": "s0000000"
-    }
+    **Raises errors**:
+
+    - `404` (Object not found) if the provided username cannot be found.
     """
     try:
         user = User.objects.get(id=user_id)
@@ -120,35 +179,43 @@ def user_get_by_id(request, user_id):
     return format_user(user)
 
 
-@jsonrpc_method(
-    'user.get_membership(radius_username=String) -> Object',
-    site=api_v1_site,
-    safe=True,
-    authenticated=True
-)
+@rpc_method(name='user.get_membership', entry_point='v1')
 @manager_required
-def user_get_membership(request, radius_username):
+def user_get_membership(radius_username: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.get_membership(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Retrieve the membership details for a specific user for the current organization.
 
-    Required user level: Manager
+    **Example return value**:
 
-    radius_username     -- Username to search for.
+        {
+          "user": "s0000000",
+          "organization": "Inter-Actief",
+          "comments": "",
+          "is_tender": True,
+          "is_planner": False,
+          "is_manager": False,
+          "is_active": True
+        }
 
-    Raises error 404 if the provided username cannot be found or the user has no membership with the current
-    organization.
+    **Raises errors**:
 
-    Example result value:
-    {
-        "user": "s0000000",
-        "organization": "Inter-Actief",
-        "comments": "",
-        "is_tender": True,
-        "is_planner": False,
-        "is_manager": False,
-        "is_active": True
-    }
+    - `404` (Object not found) if the provided username cannot be found or the user has no membership with the current organization.
     """
+    request = kwargs.get(REQUEST_KEY)
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,
                                 authenticationdata__username=radius_username)
@@ -174,28 +241,37 @@ def user_get_membership(request, radius_username):
     }
 
 
-@jsonrpc_method(
-    'user.get_iva_certificate(radius_username=String) -> Object',
-    site=api_v1_site,
-    safe=True,
-    authenticated=True
-)
+@rpc_method(name='user.get_iva_certificate', entry_point='v1')
 @manager_required
-def user_get_iva_certificate(request, radius_username):
+def user_get_iva_certificate(radius_username: str, **kwargs) -> Dict:
     """
+    **Signature**: `user.get_iva_certificate(radius_username)`
+
+    **Arguments**:
+
+    - `radius_username` : `str` -- Username to search for.
+
+    **Return type**: `dict`
+
+    **Idempotent**: yes
+
+    **Required user level**: Manager
+
+    **Documentation**:
+
     Retrieve the IVA certificate file for a specific user.
 
-    Required user level: Manager
+    **Example return value**:
 
-    radius_username    -- Username to search for.
+        {
+          "user": "s0000000",
+          "certificate_data": "U29tZSBiYXNlIDY0IHRleHQgdGhhdCBtaWdodCBiZ.........BhIGxvdCBsb25nZXIgdGhhbiB0aGlzIGlzLi4u"
+        }
 
-    Raises error 404 if provided username cannot be found or the user has no IVA certificate.
+    **Raises errors**:
 
-    Example result value:
-    {
-        "user": "s0000000",
-        "certificate_data": "U29tZSBiYXNlIDY0IHRleHQgdGhhdCBtaWdodCBiZ.........BhIGxvdCBsb25nZXIgdGhhbiB0aGlzIGlzLi4u"
-    }
+    - `404` (Object not found) if provided username cannot be found or the user has no IVA certificate.
+
     """
     try:
         user = User.objects.get(authenticationdata__backend=OIDC_BACKEND_NAME,

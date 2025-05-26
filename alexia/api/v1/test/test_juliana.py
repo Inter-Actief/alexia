@@ -244,10 +244,9 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=404,
+            status_code=200,
             error_code=404,
-            error_name='ObjectNotFoundError',
-            error_message='ObjectNotFoundError: RFID card not found',
+            error_message='RFID card not found',
         )
 
     def test_rfid_get_no_authorization(self):
@@ -264,10 +263,9 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=404,
+            status_code=200,
             error_code=404,
-            error_name='ObjectNotFoundError',
-            error_message='ObjectNotFoundError: No authorization found for user',
+            error_message='No authorization found for user',
         )
 
     def test_rfid_get_other_authorization(self):
@@ -284,10 +282,9 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=404,
+            status_code=200,
             error_code=404,
-            error_name='ObjectNotFoundError',
-            error_message='ObjectNotFoundError: No authorization found for user',
+            error_message='No authorization found for user',
         )
 
     def test_rfid_get_invalid_event(self):
@@ -301,10 +298,9 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.rfid.get', [event_id, rfid_data],
-            status_code=404,
+            status_code=200,
             error_code=404,
-            error_name='ObjectNotFoundError',
-            error_message='ObjectNotFoundError: Event does not exist',
+            error_message='Event does not exist',
         )
 
     def test_user_check_no_orders(self):
@@ -330,10 +326,9 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.user.check', [event_id, user_id],
-            status_code=404,
+            status_code=200,
             error_code=404,
-            error_name='ObjectNotFoundError',
-            error_message='ObjectNotFoundError: Event does not exist',
+            error_message='Event does not exist',
         )
 
     def test_user_check_invalid_user(self):
@@ -342,8 +337,7 @@ class JulianaTest(APITestCase):
 
         self.send_and_compare_request_error(
             'juliana.user.check', [event_id, user_id],
-            status_code=404,
+            status_code=200,
             error_code=404,
-            error_name='ObjectNotFoundError',
-            error_message='ObjectNotFoundError: User does not exist',
+            error_message='User does not exist',
         )
