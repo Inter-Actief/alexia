@@ -9,7 +9,7 @@
         {% endcompress %}
         <script>
             Settings = {
-                api_url: "{% url 'api_v1_mountpoint' %}",
+                api_url: "{% url 'jsonrpc_mountpoint' %}",
                 event_id: {{ event.pk }},
                 products: {
                 {% for product in products %}

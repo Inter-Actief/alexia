@@ -4,7 +4,7 @@ from collections import defaultdict
 from decimal import Decimal
 
 from django.conf import settings
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
@@ -297,13 +297,14 @@ class Order(models.Model):
         )
 
     def save(self, *args, **kwargs):
-        # Set amount to 0, save the order, and then update the amount.
-        # This needs to be done in 2 steps because the get_price() method uses a
-        # relationship that can only be used after the model has been saved
-        self.amount = Decimal('0.0')
-        super(Order, self).save(*args, **kwargs)
-        self.amount = self.get_price()
-        super(Order, self).save(*args, **kwargs)
+        with transaction.atomic():
+            # Set amount to 0, save the order, and then update the amount.
+            # This needs to be done in 2 steps because the get_price() method uses a
+            # relationship that can only be used after the model has been saved
+            self.amount = Decimal('0.0')
+            super(Order, self).save(*args, **kwargs)
+            self.amount = self.get_price()
+            super(Order, self).save(*args, **kwargs)
 
     def get_price(self):
         amount = Decimal('0.0')
@@ -375,8 +376,14 @@ class WriteOffOrder(models.Model):
         )
 
     def save(self, *args, **kwargs):
-        self.amount = self.get_price()
-        super(WriteOffOrder, self).save(*args, **kwargs)
+        with transaction.atomic():
+            # Set amount to 0, save the order, and then update the amount.
+            # This needs to be done in 2 steps because the get_price() method uses a
+            # relationship that can only be used after the model has been saved
+            self.amount = Decimal('0.0')
+            super(WriteOffOrder, self).save(*args, **kwargs)
+            self.amount = self.get_price()
+            super(WriteOffOrder, self).save(*args, **kwargs)
 
     def get_price(self):
         amount = Decimal('0.0')

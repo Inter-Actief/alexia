@@ -47,4 +47,4 @@ To set up your own copy of Alexia, use the following steps:
 
 ## Copyright and license
 
-Code and documentation copyright 2017 the [Alexia Authors](https://github.com/Inter-Actief/alexia/graphs/contributors). Code released under the [BSD 3-Clause License](https://github.com/Inter-Actief/alexia/blob/master/LICENSE.md).
+Code and documentation copyright 2017 the [Alexia Authors](https://github.com/Inter-Actief/alexia/graphs/contributors). Code released under the [BSD 3-Clause License](https://github.com/Inter-Actief/alexia/blob/main/LICENSE.md).

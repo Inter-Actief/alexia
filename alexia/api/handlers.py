@@ -9,11 +9,13 @@ from alexia.api.v1 import version
 class AlexiaJSONRPCHandler(JSONRPCHandler):
 
     # Override content types because older apps send an initialization request with the content type
-    # text/plain, so we need to add that to the allowed content types for JSON-RPC. -- albertskja 2025-05-12
+    # text/plain or even application/x-www-form-urlencoded, so we need to add that to the
+    # allowed content types for JSON-RPC. -- albertskja 2025-05-12
     @staticmethod
     def valid_content_types():
         return [
             "text/plain",
+            "application/x-www-form-urlencoded",
             "application/json",
             "application/json-rpc",
             "application/jsonrequest",

@@ -118,7 +118,7 @@ State = {
                 // (to know how much we're writing off)
                 $("#keypad").hide();
                 $("#products").hide();
-                
+
                 // HTML Magic and rendering
                 // argument is the Receipt object
                 $('#writeoff-screen').show();
@@ -332,7 +332,17 @@ Receipt = {
     confirmPay: function (rpcRequest) {
         IAjax.request(rpcRequest, function (result) {
             if (result.error) {
-                State.toggleTo(State.ERROR, 'Error with payment: ' + result.error);
+                var errorMsg = result.error;
+                if (result.error instanceof Object) {
+                    if ("message" in result.error) {
+                        errorMsg = result.error.message;
+                    } else if ("code" in result.error) {
+                        errorMsg = result.error.code;
+                    } else {
+                        errorMsg = "Unkonwn error - " + errorMsg;
+                    }
+                }
+                State.toggleTo(State.ERROR, 'Error with payment: ' + errorMsg);
             } else {
                 State.toggleTo(State.SALES);
             }
@@ -377,11 +387,21 @@ Receipt = {
             params: Receipt.payData,
             id: 2 // id used for?
         }
-        
+
         // writing off
         IAjax.request(rpcRequest, function (result) {
             if (result.error) {
-                State.toggleTo(State.ERROR, 'Error with writeoff: ' + result.error);
+                var errorMsg = result.error;
+                if (result.error instanceof Object) {
+                    if ("message" in result.error) {
+                        errorMsg = result.error.message;
+                    } else if ("code" in result.error) {
+                        errorMsg = result.error.code;
+                    } else {
+                        errorMsg = "Unkonwn error - " + errorMsg;
+                    }
+                }
+                State.toggleTo(State.ERROR, 'Error with writeoff: ' + errorMsg);
             } else {
                 State.toggleTo(State.SALES);
             }
