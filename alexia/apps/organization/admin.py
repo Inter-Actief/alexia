@@ -81,6 +81,7 @@ class WriteoffCategoryInline(admin.TabularInline):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    fields = [('name', 'assigns_tenders'), 'is_active', 'color', 'writeoff_enabled']
+    fields = [('name', 'assigns_tenders'), 'is_active', 'color', 'writeoff_enabled',
+              'age_check_enabled', 'age_check_api_endpoint', 'age_check_api_key']
     inlines = [AvailabilityInline, WriteoffCategoryInline]
     list_display = ['name']

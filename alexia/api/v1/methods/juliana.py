@@ -112,6 +112,9 @@ def juliana_rfid_get(event_id: int, rfid: Dict, **kwargs) -> Dict:
         },
         'authorization': format_authorization(authorization),
     }
+    # If age checking is enabled for this organization, get the check result and add it to the result.
+    if event.organizer.age_check_enabled:
+        res['age_check'] = event.organizer.age_check_rfid(identifier)
 
     return res
 

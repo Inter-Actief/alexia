@@ -36,7 +36,6 @@ from alexia.views import (
 )
 
 from .models import Order, Purchase, WriteOffOrder, WriteOffPurchase, WriteoffCategory
-import json
 
 class JulianaView(TenderRequiredMixin, DetailView):
     template_name = 'billing/juliana.html'

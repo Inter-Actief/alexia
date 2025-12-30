@@ -1,6 +1,9 @@
 import os
+from typing import Optional
 
+import requests
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -128,6 +131,9 @@ class Organization(models.Model):
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     is_active = models.BooleanField(_('is active'), default=True)
     writeoff_enabled = models.BooleanField(_('writeoff enabled'), default=False)
+    age_check_enabled = models.BooleanField(_('age check enabled'), default=False)
+    age_check_api_endpoint = models.URLField(_('age check API endpoint'), blank=True, null=True)
+    age_check_api_key = models.CharField(_('age check API key'), max_length=64, blank=True, null=True)
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='Membership',
@@ -143,9 +149,42 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    def clean(self):
+        if self.age_check_enabled and (not self.age_check_api_endpoint or not self.age_check_api_key):
+            raise ValidationError(
+                _('You must specify an API endpoint and an API key if you enable the age check functionality.')
+            )
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.__str__())
         super(Organization, self).save(*args, **kwargs)
+
+    def age_check_rfid(self, rfid_code: str) -> Optional[bool]:
+        """
+        If the organization has age checking enabled, send a check request to their API endpoint
+        to see if the RFID code passes the age check.
+
+        If the feature is not enabled, always returns True as if the check was successful.
+
+        :param rfid_code: The RFID code to check.
+        :return: The age check result.
+        """
+        if self.age_check_enabled:
+            try:
+                res = requests.post(
+                    self.age_check_api_endpoint,
+                    json={'apiKey': self.age_check_api_key, 'rfid': rfid_code}
+                )
+                if res.status_code == 200:
+                    result = res.json()
+                    if 'check_ok' in result and isinstance(result['check_ok'], bool):
+                        return result['check_ok']
+            except requests.exceptions.RequestException:
+                pass
+            return None
+        else:
+            # If age checking is not enabled, always returns True as if the check was successful.
+            return True
 
 
 class Membership(models.Model):
