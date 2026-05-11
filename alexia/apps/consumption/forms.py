@@ -42,11 +42,23 @@ class WeightEntryForm(forms.ModelForm):
         flow_start = cleaned_data.get('flow_start')
         flow_end = cleaned_data.get('flow_end')
 
-        if product and start_weight and product.full_weight < start_weight:
-            self.add_error('start_weight', ValidationError(_('Begin weight is higher than product max weight.')))
+        if product and start_weight is not None and start_weight > product.full_weight:
+            self.add_error('start_weight', ValidationError(
+                _('Begin weight ({beginw}) is higher than product max weight ({maxw}).').format(beginw=start_weight, maxw=product.full_weight)
+            ))
+        if product and start_weight is not None and start_weight < product.empty_weight:
+            self.add_error('start_weight', ValidationError(
+                _('Begin weight ({beginw}) is lower than product min weight ({minw}).').format(beginw=start_weight, minw=product.empty_weight)
+            ))
 
-        if product and end_weight and end_weight and product.empty_weight > end_weight:
-            self.add_error('end_weight', ValidationError(_('End weight is lower than product min weight.')))
+        if product and end_weight is not None and end_weight > product.full_weight:
+            self.add_error('end_weight', ValidationError(
+                _('End weight ({endw}) is higher than product max weight ({maxw}).').format(endw=end_weight, maxw=product.full_weight)
+            ))
+        if product and end_weight is not None and end_weight < product.empty_weight:
+            self.add_error('end_weight', ValidationError(
+                _('End weight ({endw}) is lower than product min weight ({minw}).').format(endw=end_weight, minw=product.empty_weight)
+            ))
 
         if hasattr(product, 'has_flowmeter') and product.has_flowmeter and not flow_start:
             self.add_error('flow_start', ValidationError(_('Flowmeter positions are required for this product.')))
