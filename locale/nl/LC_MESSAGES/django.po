@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 01:24+0100\n"
-"PO-Revision-Date: 2025-12-30 01:25+0100\n"
+"POT-Creation-Date: 2026-05-11 17:16+0200\n"
+"PO-Revision-Date: 2026-05-11 17:17+0200\n"
 "Last-Translator: Kevin Alberts <kevin.alberts@inter-actief.net>\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Translated-Using: django-rosetta 0.10.2\n"
 
-#: alexia/apps/billing/forms.py:51 alexia/apps/consumption/forms.py:116 templates/billing/order_detail.html:125 templates/billing/order_list.html:12 templates/consumption/consumptionform_list.html:13
+#: alexia/apps/billing/forms.py:51 alexia/apps/consumption/forms.py:128 templates/billing/order_detail.html:125 templates/billing/order_list.html:12 templates/consumption/consumptionform_list.html:13
 msgid "Export"
 msgstr "Exporteren"
 
@@ -33,11 +33,11 @@ msgstr "Eindtijd"
 msgid "New price group"
 msgstr "Nieuwe prijsgroep"
 
-#: alexia/apps/billing/models.py:22 alexia/apps/billing/models.py:43 alexia/apps/billing/models.py:136 alexia/apps/billing/models.py:222 alexia/apps/billing/models.py:340 alexia/apps/organization/models.py:146 alexia/apps/organization/models.py:199 alexia/apps/scheduling/models.py:24 alexia/apps/scheduling/models.py:200
+#: alexia/apps/billing/models.py:22 alexia/apps/billing/models.py:43 alexia/apps/billing/models.py:136 alexia/apps/billing/models.py:222 alexia/apps/billing/models.py:340 alexia/apps/organization/models.py:140 alexia/apps/organization/models.py:160 alexia/apps/scheduling/models.py:24 alexia/apps/scheduling/models.py:200
 msgid "organization"
 msgstr "organisatie"
 
-#: alexia/apps/billing/models.py:25 alexia/apps/billing/models.py:46 alexia/apps/billing/models.py:87 alexia/apps/billing/models.py:334 alexia/apps/consumption/models.py:10 alexia/apps/organization/models.py:20 alexia/apps/organization/models.py:128 alexia/apps/scheduling/models.py:25 alexia/apps/scheduling/models.py:55 alexia/apps/scheduling/models.py:202
+#: alexia/apps/billing/models.py:25 alexia/apps/billing/models.py:46 alexia/apps/billing/models.py:87 alexia/apps/billing/models.py:334 alexia/apps/consumption/models.py:10 alexia/apps/organization/models.py:17 alexia/apps/organization/models.py:125 alexia/apps/scheduling/models.py:25 alexia/apps/scheduling/models.py:55 alexia/apps/scheduling/models.py:202
 msgid "name"
 msgstr "naam"
 
@@ -122,7 +122,7 @@ msgstr "tijdelijke producten"
 msgid "identifier"
 msgstr "identifier"
 
-#: alexia/apps/billing/models.py:194 alexia/apps/organization/models.py:132 alexia/apps/scheduling/models.py:28
+#: alexia/apps/billing/models.py:194 alexia/apps/organization/models.py:129 alexia/apps/scheduling/models.py:28
 msgid "is active"
 msgstr "is actief"
 
@@ -130,7 +130,7 @@ msgstr "is actief"
 msgid "registered at"
 msgstr "geregistreerd op"
 
-#: alexia/apps/billing/models.py:196 alexia/apps/billing/models.py:216 alexia/apps/organization/models.py:37 alexia/apps/organization/models.py:51 alexia/apps/organization/models.py:194
+#: alexia/apps/billing/models.py:196 alexia/apps/billing/models.py:216 alexia/apps/organization/models.py:34 alexia/apps/organization/models.py:48 alexia/apps/organization/models.py:155
 msgid "user"
 msgstr "gebruiker"
 
@@ -224,7 +224,7 @@ msgstr "aankopen"
 msgid "short description"
 msgstr "korte omschrijving"
 
-#: alexia/apps/billing/models.py:336 alexia/apps/organization/models.py:22 alexia/apps/organization/models.py:130
+#: alexia/apps/billing/models.py:336 alexia/apps/organization/models.py:19 alexia/apps/organization/models.py:127
 msgid "color"
 msgstr "kleur"
 
@@ -254,11 +254,11 @@ msgstr "Afschrijvingstransacties"
 msgid "{time} on {event}"
 msgstr "{time} bij {event}"
 
-#: alexia/apps/billing/views.py:48 alexia/apps/consumption/views.py:73
+#: alexia/apps/billing/views.py:49 alexia/apps/consumption/views.py:73
 msgid "You are not a tender for this event"
 msgstr "Je bent geen tapper bij deze borrel!"
 
-#: alexia/apps/billing/views.py:50
+#: alexia/apps/billing/views.py:51
 msgid "This event is not open"
 msgstr "Deze borrel begint nog niet!"
 
@@ -290,51 +290,67 @@ msgstr "Planning"
 msgid "Comments..."
 msgstr "Commentaar..."
 
-#: alexia/apps/consumption/forms.py:46
-msgid "Begin weight is higher than product max weight."
-msgstr "Begingewicht is hoger dan het maximale gewicht."
+#: alexia/apps/consumption/forms.py:47
+#, python-brace-format
+#| msgid "Begin weight is higher than product max weight."
+msgid "Begin weight ({beginw}) is higher than product max weight ({maxw})."
+msgstr "Begingewicht ({beginw}) is hoger dan het maximale gewicht ({maxw})."
 
-#: alexia/apps/consumption/forms.py:49
-msgid "End weight is lower than product min weight."
-msgstr "Eindgewicht is lager dan het minimumgewicht."
+#: alexia/apps/consumption/forms.py:51
+#, python-brace-format
+#| msgid "End weight is lower than product min weight."
+msgid "Begin weight ({beginw}) is lower than product min weight ({minw})."
+msgstr "Eindgewicht ({beginw}) is lager dan het minimumgewicht ({minw})."
 
-#: alexia/apps/consumption/forms.py:52
+#: alexia/apps/consumption/forms.py:56
+#, python-brace-format
+#| msgid "Begin weight is higher than product max weight."
+msgid "End weight ({endw}) is higher than product max weight ({maxw})."
+msgstr "Begingewicht ({endw}) is hoger dan het maximale gewicht ({maxw})."
+
+#: alexia/apps/consumption/forms.py:60
+#, python-brace-format
+#| msgid "End weight is lower than product min weight."
+msgid "End weight ({endw}) is lower than product min weight ({minw})."
+msgstr "Eindgewicht ({endw}) is lager dan het minimumgewicht ({minw})."
+
+#: alexia/apps/consumption/forms.py:64
 msgid "Flowmeter positions are required for this product."
 msgstr "Flowmeterstanden zijn verplicht voor dit product."
 
-#: alexia/apps/consumption/forms.py:55
+#: alexia/apps/consumption/forms.py:67
 msgid "Flowmeter start position is bigger than end."
 msgstr "Flowmeter beginstand is hoger dan eindstand."
 
-#: alexia/apps/consumption/forms.py:93
+#: alexia/apps/consumption/forms.py:105
 msgid "I declare that I have cleaned the rooms"
 msgstr "Ik verklaar dat de ruimtes schoongemaakt zijn"
 
-#: alexia/apps/consumption/forms.py:94
+#: alexia/apps/consumption/forms.py:106
 msgid "After each event the rooms have to cleaned according to the cleaning checklist."
 msgstr "Na elk evenement moeten de ruimtes schoongemaakt worden aan de hand van de schoonmaakchecklist."
 
-#: alexia/apps/consumption/forms.py:97
+#: alexia/apps/consumption/forms.py:109
 msgid "I declare that this form has been filled in truthfully"
 msgstr "Ik verklaar dat dit formulier naar waarheid is ingevuld"
 
-#: alexia/apps/consumption/forms.py:98
+#: alexia/apps/consumption/forms.py:110
 msgid "I am sure that the values above are filled in correct and has been verified."
 msgstr "Ik weet zeker dat bovenstaande gegevens gecheckt zijn en kloppen."
 
-#: alexia/apps/consumption/forms.py:118 templates/billing/order_export_result.html:17 templates/billing/order_year.html:15
+#: alexia/apps/consumption/forms.py:130 templates/billing/order_export_result.html:17 templates/billing/order_year.html:15
 msgid "Month"
 msgstr "Maand"
 
-#: alexia/apps/consumption/forms.py:119 templates/billing/order_list.html:26
+#: alexia/apps/consumption/forms.py:131 templates/billing/order_list.html:26
 msgid "Year"
 msgstr "Jaar"
 
-#: alexia/apps/consumption/forms.py:120
+#: alexia/apps/consumption/forms.py:132
 msgid "File format"
 msgstr "Bestandsformaat"
 
-#: alexia/apps/consumption/models.py:11 alexia/apps/organization/models.py:205
+#: alexia/apps/consumption/models.py:11 alexia/apps/organization/models.py:166
 msgid "is currently active"
 msgstr "is actief"
 
@@ -378,7 +394,7 @@ msgstr "afgerond door"
 msgid "completed at"
 msgstr "afgerond op"
 
-#: alexia/apps/consumption/models.py:54 alexia/apps/organization/models.py:201
+#: alexia/apps/consumption/models.py:54 alexia/apps/organization/models.py:162
 msgid "comments"
 msgstr "commentaar"
 
@@ -481,152 +497,136 @@ msgstr "Student- of medewerkersaccount (bijv. s0000000 of m0000000)"
 msgid "Bartender nickname"
 msgstr "Tappersbijnaam"
 
-#: alexia/apps/organization/models.py:21
+#: alexia/apps/organization/models.py:18
 msgid "prevent conflicting events"
 msgstr "voorkom conflicterende activiteiten"
 
-#: alexia/apps/organization/models.py:26 alexia/apps/scheduling/models.py:62
+#: alexia/apps/organization/models.py:23 alexia/apps/scheduling/models.py:62
 msgid "location"
 msgstr "locatie"
 
-#: alexia/apps/organization/models.py:27
+#: alexia/apps/organization/models.py:24
 msgid "locations"
 msgstr "locaties"
 
-#: alexia/apps/organization/models.py:39
+#: alexia/apps/organization/models.py:36
 msgid "authentication backend"
 msgstr "authenticatiesysteem"
 
-#: alexia/apps/organization/models.py:40
+#: alexia/apps/organization/models.py:37
 msgid "username"
 msgstr "gebruikersnaam"
 
-#: alexia/apps/organization/models.py:41
+#: alexia/apps/organization/models.py:38
 msgid "additional data"
 msgstr "aanvullende gegevens"
 
-#: alexia/apps/organization/models.py:55
+#: alexia/apps/organization/models.py:52
 msgid "has IVA-certificate"
 msgstr "heeft IVA-certificaat"
 
-#: alexia/apps/organization/models.py:58
+#: alexia/apps/organization/models.py:55
 msgid "Override for an user to indicate IVA rights without uploading a certificate."
 msgstr "Override voor een gebruiker om IVA-rechten te hebben zonder certificaat."
 
-#: alexia/apps/organization/models.py:62
+#: alexia/apps/organization/models.py:59
 msgid "has BHV-certificate"
 msgstr "heeft BHV-diploma"
 
-#: alexia/apps/organization/models.py:65
+#: alexia/apps/organization/models.py:62
 msgid "Designates that this user has a valid, non-expired BHV (Emergency Response Officer) certificate."
 msgstr "Geeft aan dat deze gebruiker een geldig, niet verlopen BHV-diploma heeft."
 
-#: alexia/apps/organization/models.py:69
+#: alexia/apps/organization/models.py:66
 msgid "is foundation manager"
 msgstr "is stichtingsmananger"
 
-#: alexia/apps/organization/models.py:72
+#: alexia/apps/organization/models.py:69
 msgid "Designates that this user is manager of the purchasing foundation."
 msgstr "Geeft aan dat deze gebruiker manager is van de inkoopstichting."
 
-#: alexia/apps/organization/models.py:79
+#: alexia/apps/organization/models.py:76
 msgid "current organization"
 msgstr "huidige organisatie"
 
-#: alexia/apps/organization/models.py:81
+#: alexia/apps/organization/models.py:78
 msgid "iCal identifier"
 msgstr "iCal identificatie"
 
-#: alexia/apps/organization/models.py:82
+#: alexia/apps/organization/models.py:79
 msgid "bartender nickname"
 msgstr "tappersbijnaam"
 
-#: alexia/apps/organization/models.py:85
+#: alexia/apps/organization/models.py:82
 msgid "profile"
 msgstr "profiel"
 
-#: alexia/apps/organization/models.py:86
+#: alexia/apps/organization/models.py:83
 msgid "profiles"
 msgstr "profielen"
 
-#: alexia/apps/organization/models.py:129
+#: alexia/apps/organization/models.py:126
 msgid "slug"
 msgstr "slug"
 
-#: alexia/apps/organization/models.py:131
+#: alexia/apps/organization/models.py:128
 msgid "assigns tenders"
 msgstr "wijst tappers aan"
 
-#: alexia/apps/organization/models.py:133
+#: alexia/apps/organization/models.py:130
 msgid "writeoff enabled"
 msgstr "Afschrijvingen ingeschakeld"
 
 #: alexia/apps/organization/models.py:134
-msgid "age check enabled"
-msgstr "leeftijdscontrole ingeschakeld"
-
-#: alexia/apps/organization/models.py:135
-msgid "age check API endpoint"
-msgstr "leeftijdscontrole API endpoint"
-
-#: alexia/apps/organization/models.py:136
-msgid "age check API key"
-msgstr "leeftijdscontrole API key"
-
-#: alexia/apps/organization/models.py:140
 msgid "users"
 msgstr "gebruikers"
 
-#: alexia/apps/organization/models.py:147
+#: alexia/apps/organization/models.py:141
 msgid "organizations"
 msgstr "organisatie"
 
-#: alexia/apps/organization/models.py:155
-msgid "You must specify an API endpoint and an API key if you enable the age check functionality."
-msgstr "Je moet een API endpoint en API key invoeren als je de leeftijdscontrolefunctionaliteit inschakelt."
-
-#: alexia/apps/organization/models.py:202
+#: alexia/apps/organization/models.py:163
 msgid "may tend on events"
 msgstr "mag op borrels tappen"
 
-#: alexia/apps/organization/models.py:203
+#: alexia/apps/organization/models.py:164
 msgid "may create and modify events"
 msgstr "mag borrels aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:204
+#: alexia/apps/organization/models.py:165
 msgid "may create and modify users"
 msgstr "mag gebruikers aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:209
+#: alexia/apps/organization/models.py:170
 msgid "membership"
 msgstr "lidmaatschap"
 
-#: alexia/apps/organization/models.py:210
+#: alexia/apps/organization/models.py:171
 msgid "memberships"
 msgstr "lidmaatschappen"
 
-#: alexia/apps/organization/models.py:213
+#: alexia/apps/organization/models.py:174
 #, python-format
 msgid "%(user)s of %(organization)s"
 msgstr "%(user)s van %(organization)s"
 
-#: alexia/apps/organization/models.py:252 alexia/apps/organization/models.py:265
+#: alexia/apps/organization/models.py:213 alexia/apps/organization/models.py:226
 msgid "certificate"
 msgstr "certificaat"
 
-#: alexia/apps/organization/models.py:253
+#: alexia/apps/organization/models.py:214
 msgid "uploaded at"
 msgstr "geüpload op"
 
-#: alexia/apps/organization/models.py:259
+#: alexia/apps/organization/models.py:220
 msgid "approved by"
 msgstr "goedgekeurd door"
 
-#: alexia/apps/organization/models.py:261
+#: alexia/apps/organization/models.py:222
 msgid "approved at"
 msgstr "goedgekeurd op"
 
-#: alexia/apps/organization/models.py:270
+#: alexia/apps/organization/models.py:231
 msgid "IVA certificate of"
 msgstr "IVA certificaat van"
 

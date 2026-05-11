@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils import timezone
@@ -176,6 +176,9 @@ class Event(models.Model):
 
     def visitors(self):
         return self.orders.values('authorization').distinct().count()
+
+    def revenue(self):
+        return self.orders.values('amount').aggregate(Sum('amount'))['amount__sum'] or 0
 
 
 pre_save.connect(notify_tenders, Event)
