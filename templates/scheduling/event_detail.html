@@ -63,6 +63,12 @@
                 <th>{% trans 'End' %}</th>
                 <td>{{ event.ends_at|date:"l d F H:i" }}</td>
             </tr>
+            {% if event.organizer == request.organization %}{% if is_tender or is_planner or is_manager %}
+                <tr>
+                    <th>{% trans 'Price group' %}</th>
+                    <td>{{ event.pricegroup }}</td>
+                </tr>
+            {% endif %}{% endif %}
         </table>
         {% if event.organizer == request.organization %}
         {% if is_tender or is_planner or is_manager %}
