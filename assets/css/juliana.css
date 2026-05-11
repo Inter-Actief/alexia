@@ -149,7 +149,7 @@ body {
 
 #receipt-table a.btn {
     position:absolute;
-    vertical-align:middel;
+    vertical-align:middle;
     border-radius:30px;
 }
 
@@ -182,6 +182,18 @@ body {
     height:860px;
     padding-top:130px;
     padding-bottom:130px;
+}
+
+#agecheckbox .alert {
+    border-width: 2px;
+}
+
+#agecheckbox .alert-danger {
+    border-color: #C00;
+}
+
+#age-check-ok, #age-check-warning, #age-check-unknown {
+    font-size:24px;
 }
 
 #payment-in, #writeoff-in {

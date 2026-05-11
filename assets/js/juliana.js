@@ -72,6 +72,7 @@ State = {
                 receiptHTML += '<tr class="active"><td><strong>Totaal:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
                 $('#payment-receipt').html(receiptHTML);
 
+                $('#agecheckbox').hide();
                 $('#rfid-screen').show();
                 break;
             case this.WRITEOFF_TIMER:
@@ -299,6 +300,34 @@ Receipt = {
         } else {
             console.log('Userdata received correctly. Proceeding to countdown.');
 
+            let ageCheckbox = $('#agecheckbox');
+            let ageCheckboxDiv = $('#agecheckbox .alert');
+            let ageOk = $('#age-check-ok');
+            let ageWarning = $('#age-check-warning');
+            let ageUnknown = $('#age-check-unknown');
+            ageCheckboxDiv.removeClass('alert-warning');
+            ageCheckboxDiv.removeClass('alert-success');
+            ageCheckboxDiv.removeClass('alert-danger');
+            if (userData.result.age_check === true) {
+                ageCheckboxDiv.addClass('alert-success');
+                ageOk.show();
+                ageWarning.hide();
+                ageUnknown.hide();
+                ageCheckbox.show();
+            } else if (userData.result.age_check === false) {
+                ageCheckboxDiv.addClass('alert-danger');
+                ageOk.hide();
+                ageWarning.show();
+                ageUnknown.hide();
+                ageCheckbox.show();
+            } else if (userData.result.age_check === null) {
+                ageCheckboxDiv.addClass('alert-warning');
+                ageOk.hide();
+                ageWarning.hide();
+                ageUnknown.show();
+                ageCheckbox.show();
+            }
+
             Receipt.payData = {
                 event_id: Settings.event_id,
                 user_id: userData.result.user.id,
@@ -339,7 +368,7 @@ Receipt = {
                     } else if ("code" in result.error) {
                         errorMsg = result.error.code;
                     } else {
-                        errorMsg = "Unkonwn error - " + errorMsg;
+                        errorMsg = "Unknown error - " + errorMsg;
                     }
                 }
                 State.toggleTo(State.ERROR, 'Error with payment: ' + errorMsg);
