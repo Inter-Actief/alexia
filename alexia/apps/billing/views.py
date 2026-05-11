@@ -101,9 +101,8 @@ class OrderListView(ManagerRequiredMixin, ListView):
     def get_queryset(self):
         return Event.objects.filter(organizer=self.request.organization) \
             .annotate(
-                order_count=Count('orders'),
-                writeoff_order_count=Count('writeoff_orders'),
-                revenue=Sum('orders__amount'),
+                order_count=Count('orders', distinct=True),
+                writeoff_order_count=Count('writeoff_orders', distinct=True),
                 visitors=Count('orders__authorization', distinct=True),
             ) \
             .filter(Q(order_count__gt=0) | Q(writeoff_order_count__gt=0)) \
