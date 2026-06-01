@@ -28,7 +28,9 @@ def get_or_create_user(backend, username):
         data = AuthenticationData(user=user, backend=backend, username=username.lower())
         data.save()
 
-        if not user.profile:
+        try:
+            profile = user.profile
+        except User.profile.RelatedObjectDoesNotExist:
             profile = Profile(user=user)
             profile.save()
 
