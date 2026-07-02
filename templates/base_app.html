@@ -2,90 +2,83 @@
 {% load menuitem %}
 
 {% block body %}
-<div class="navbar navbar-fixed-top navbar-default">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alexia-navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'event-list' %}">
-                <img src="{% static 'img/alexia.svg' %}" alt="Alexia">
-            </a>
-        </div>
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#alexia-navbar-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'event-list' %}">
+            <img src="{% static 'img/alexia.svg' %}" alt="Alexia">
+        </a>
         <div class="collapse navbar-collapse" id="alexia-navbar-collapse">
-            <ul class="nav navbar-nav">
-                {% menuitem 'apps.scheduling.views' class='dropdown' %}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <ul class="navbar-nav">
+                {% menuitem 'apps.scheduling.views' class='nav-item dropdown' %}
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Planning' %}
-                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'event-list' %}">{% trans 'List' %}</a></li>
-                        <li><a href="{% url 'calendar-schedule' %}">{% trans 'Calendar' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'event-list' %}">{% trans 'List' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'calendar-schedule' %}">{% trans 'Calendar' %}</a></li>
                         {% if is_tender %}
-                        <li><a href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'bartender-schedule' %}">{% trans 'Personal schedule' %}</a></li>
                         {% endif %}
                         {% if is_tender or is_manager %}
-                        <li><a href="{% url 'event_matrix' %}">{% trans 'Availability matrix' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'event_matrix' %}">{% trans 'Availability matrix' %}</a></li>
                         {% endif %}
                         {% if is_manager %}
-                        <li class="divider"></li>
-                        <li><a href="{% url 'availability_list' %}">{% trans 'Availabilities' %}</a></li>
-                        <li><a href="{% url 'mailtemplate_list' %}">{% trans 'Mail templates' %}</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'availability_list' %}">{% trans 'Availabilities' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'mailtemplate_list' %}">{% trans 'Mail templates' %}</a></li>
                         {% endif %}
                     </ul>
                 {% endmenuitem %}
                 {% if is_manager %}
-                {% menuitem 'apps.organization.views' %}
-                    <a href="{% url 'memberships' %}">
+                {% menuitem 'apps.organization.views' class='nav-item' %}
+                    <a class="nav-link" href="{% url 'memberships' %}">
                         {% trans 'Users' %}
                     </a>
                 {% endmenuitem %}
-                {% menuitem 'apps.billing.views' class='dropdown' %}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% menuitem 'apps.billing.views' class='nav-item dropdown' %}
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Billing' %}
-                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'productgroup_list' %}">{% trans 'Product groups' %}</a></li>
-                        <li><a href="{% url 'pricegroup_list' %}">{% trans 'Price groups' %}</a></li>
-                        <li><a href="{% url 'product_list' %}">{% trans 'Products' %}</a></li>
-                        <li><a href="{% url 'sellingprice_list' %}">{% trans 'Price matrix' %}</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{% url 'orders' %}">{% trans 'Orders' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'productgroup_list' %}">{% trans 'Product groups' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'pricegroup_list' %}">{% trans 'Price groups' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'product_list' %}">{% trans 'Products' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'sellingprice_list' %}">{% trans 'Price matrix' %}</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'orders' %}">{% trans 'Orders' %}</a></li>
                     </ul>
                 {% endmenuitem %}
-                {% menuitem 'apps.consumption.views.ConsumptionForm' %}
-                    <a href="{% url 'consumptionform_list' %}">
+                {% menuitem 'apps.consumption.views.ConsumptionForm' class='nav-item' %}
+                    <a class="nav-link" href="{% url 'consumptionform_list' %}">
                         {% trans 'Consumption' %}
                     </a>
                 {% endmenuitem %}
                 {% endif %}
                 {% if is_foundation_manager %}
-                {% menuitem 'apps.consumption.views' class='dropdown' %}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% menuitem 'apps.consumption.views' class='nav-item dropdown' %}
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         {% trans 'Management' %}
-                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'consumptionproduct_list' %}">{% trans 'Consumption products' %}</a></li>
-                        <li><a href="{% url 'consumptionform_list' %}">{% trans 'Consumption forms' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'consumptionproduct_list' %}">{% trans 'Consumption products' %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'consumptionform_list' %}">{% trans 'Consumption forms' %}</a></li>
                     </ul>
                 {% endmenuitem %}
                 {% endif %}
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="navbar-nav ml-auto">
                 {% for code, name in LANGUAGES %}
                 {% if LANGUAGE_CODE != code %}
-                <li>
+                <li class="nav-item">
                     <form id="set-lang-{{ code }}" action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
                         <input name="next" type="hidden" value="{{ request.path }}">
                         <input type="hidden" name="language" value="{{ code }}">
                     </form>
-                    <a href="#" title="{{ name }}" data-set-lang="{{ code }}">
+                    <a class="nav-link" href="#" title="{{ name }}" data-set-lang="{{ code }}">
                         {% with 'img/icon/flag_'|add:code|add:'.png' as flag_url %}
                         <img src="{% static flag_url %}" alt="{{ name }}">
                         {% endwith %}
@@ -93,52 +86,49 @@
                 </li>
                 {% endif %}
                 {% endfor %}
-                {% menuitem 'apps.general.views.HelpView' %}
-                    <a href="{% url 'help' %}">
+                {% menuitem 'apps.general.views.HelpView' class='nav-item' %}
+                    <a class="nav-link" href="{% url 'help' %}">
                         {% trans 'Help' %}
                     </a>
                 {% endmenuitem %}
                 {% if user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         {{ current_organization.name|default:_('No organization') }}
-                        <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-right">
                         {% for organization in organizations %}
                             {% if organization.is_active or user.profile.is_foundation_manager or user.is_superuser %}
-                            <li{% if current_organization == organization %} class="active"{% endif %}>
-                                <a href="{% url 'change-current-organization' organization.slug %}?next={{ request.path }}">{{ organization }}</a>
+                            <li>
+                                <a class="dropdown-item{% if current_organization == organization %} active{% endif %}" href="{% url 'change-current-organization' organization.slug %}?next={{ request.path }}">{{ organization }}</a>
                             </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
                 </li>
-                <li class="divider-vertical"></li>
-                {% menuitem 'apps.profile.views' class='dropdown' %}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% menuitem 'apps.profile.views' class='nav-item dropdown' %}
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         {{ user.get_full_name|default:user }}
-                        <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-right">
                         <li>
-                            <a href="{% url 'profile' %}">{% trans 'My profile' %}</a>
+                            <a class="dropdown-item" href="{% url 'profile' %}">{% trans 'My profile' %}</a>
                         </li>
-                        <li class="divider"></li>
+                        <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a href="{% url 'oidc_logout' %}">{% trans 'Log out' %}</a>
+                            <a class="dropdown-item" href="{% url 'oidc_logout' %}">{% trans 'Log out' %}</a>
                         </li>
                     </ul>
                 {% endmenuitem %}
                 {% else %}
-                <li>
-                    <a href="{% url 'oidc_authentication_init' %}">{% trans 'Login with UTwente' %}</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'oidc_authentication_init' %}">{% trans 'Login with UTwente' %}</a>
                 </li>
                 {% endif %}
             </ul>
         </div>
     </div>
-</div>
+</nav>
 <div class="container">
 {% block content %}{% endblock content %}
 </div>

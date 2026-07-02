@@ -7,9 +7,9 @@
     <h1>
         <small>{% trans 'Mail template' %}</small>
         {{ mailtemplate }}
-        <div class="pull-right">
-            <a class="btn btn-default" href="{% url 'mailtemplate_update' mailtemplate.name %}">
-                <span class="glyphicon glyphicon-pencil"></span>
+        <div class="float-right">
+            <a class="btn btn-secondary" href="{% url 'mailtemplate_update' mailtemplate.name %}">
+                <span class="bi bi-pencil"></span>
                 {% trans 'Modify' %}
             </a>
         </div>

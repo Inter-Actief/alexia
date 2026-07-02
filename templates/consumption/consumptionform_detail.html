@@ -7,28 +7,28 @@
     <div class="page-header">
         <h1>
             {{ consumptionform }}
-            <div class="pull-right">
+            <div class="float-right">
                 {% if consumptionform.event.organizer == request.organization and is_manager %}
 					{% comment %} Nested if because using brackets creates a TemplateSyntaxError {% endcomment %}
 					{% if consumptionform.event.orders.exists or consumptionform.event.writeoff_orders.exists %}
-                    	<a href="{% url 'event-orders' consumptionform.event.pk %}" class="btn btn-default">
-                    	    <span class="glyphicon glyphicon-euro"></span>
+                    	<a href="{% url 'event-orders' consumptionform.event.pk %}" class="btn btn-secondary">
+                    	    <span class="bi bi-currency-euro"></span>
                     	    {% trans 'Orders' %}
                     	</a>
 					{% endif %}
                 {% endif %}
-                <a href="{% url 'event' consumptionform.event.pk %}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-calendar"></span>
+                <a href="{% url 'event' consumptionform.event.pk %}" class="btn btn-secondary">
+                    <span class="bi bi-calendar"></span>
                     {% trans 'Event information' %}
                 </a>
                 {% if is_foundation_manager %}
                 <a class="btn btn-warning" href="{% url 'dcf' consumptionform.event.pk %}">
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="bi bi-pencil"></span>
                     {% trans 'Modify' %}
                 </a>
                 {% endif %}
-                <a class="btn btn-default" href="{% url 'consumptionform_pdf' consumptionform.pk %}">
-                    <span class="glyphicon glyphicon-print"></span>
+                <a class="btn btn-secondary" href="{% url 'consumptionform_pdf' consumptionform.pk %}">
+                    <span class="bi bi-printer"></span>
                     {% trans 'PDF' %}
                 </a>
             </div>
@@ -39,8 +39,8 @@
             <h3>{% trans 'Details' %}</h3>
             <table class="table table-bordered">
                 <tr>
-                    <th class="col-xs-3">{% trans 'Date' %}</th>
-                    <td class="col-xs-9">{{ consumptionform.event.starts_at|date:"l j F" }}</td>
+                    <th class="col-3">{% trans 'Date' %}</th>
+                    <td class="col-9">{{ consumptionform.event.starts_at|date:"l j F" }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Location' %}</th>
@@ -83,12 +83,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th class="col-xs-2"></th>
-                    <th class="col-xs-2">{% trans 'Kegs changed' %}</th>
-                    <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
-                    <th class="col-xs-2">{% trans 'Consumption' %}</th>
-                    <th class="col-xs-2">{% trans 'Weight' %}</th>
-                    <th class="col-xs-2">{% trans 'Consumption' %}</th>
+                    <th class="col-2"></th>
+                    <th class="col-2">{% trans 'Kegs changed' %}</th>
+                    <th class="col-2">{% trans 'Flowmeter' %}</th>
+                    <th class="col-2">{% trans 'Consumption' %}</th>
+                    <th class="col-2">{% trans 'Weight' %}</th>
+                    <th class="col-2">{% trans 'Consumption' %}</th>
                 </tr>
             </thead>
             <tbody>

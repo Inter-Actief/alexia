@@ -22,7 +22,7 @@
                 <td>{{ order.placed_at|date:"l d F H:i" }}</td>
                 <td>&euro; {{ order.amount|floatformat:2 }}</td>
                 <td>{{ order.added_by.get_full_name }}</td>
-                <td><a href="{% url 'order' order.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                <td><a href="{% url 'order' order.pk %}" class="btn btn-xs btn-secondary">Details</a></td>
             </tr>
         {% empty %}
             <tr>

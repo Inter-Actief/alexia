@@ -25,16 +25,16 @@ var location_name = '{{ event.location.all|join:""|lower }}';
         <div class="alert alert-warning collapse" id="flowmeterWarning"></div>
         {% include 'consumption/partials/weight_consumption.html' %}
         {% include 'consumption/partials/unit_consumption.html' %}
-        <div class="well" id="comments">
+        <div class="card card-body" id="comments">
         {% crispy_field form.comments %}
         </div>
-        <div class="well text-right">
-            <button class="btn btn-lg btn-default">
-                <span class="glyphicon glyphicon-floppy-disk"></span>
+        <div class="card card-body text-right">
+            <button class="btn btn-lg btn-secondary">
+                <span class="bi bi-save"></span>
                 {% trans 'Save' %}
             </button>
             <a href="{% url 'dcf-complete' event.pk %}" class="btn btn-lg btn-primary" id="complete">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="bi bi-pencil"></span>
                 {% trans 'Complete form' %}
             </a>
         </div>

@@ -6,25 +6,25 @@
 <div class="page-header">
     <h1>
         {% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}
-        <div class="pull-right">
-            <a href="{% url 'export-orders' %}" class="btn btn-default">
-                <span class="glyphicon glyphicon-print"></span>
+        <div class="float-right">
+            <a href="{% url 'export-orders' %}" class="btn btn-secondary">
+                <span class="bi bi-printer"></span>
                 {% trans 'Export' %}
             </a>
         </div>
     </h1>
 </div>
-<div class="panel-group" id="stats">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a data-toggle="collapse" data-parent="#stats" href="#stats_table">{% trans 'Stats' %}</a>
+<div class="accordion" id="stats">
+    <div class="card">
+        <div class="card-header">
+            <a data-toggle="collapse" href="#stats_table">{% trans 'Stats' %}</a>
         </div>
-        <div id="stats_table" class="panel-collapse collapse">
+        <div id="stats_table" class="collapse" data-parent="#stats">
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="col-xs-2">{% trans 'Year' %}</th>
-                        <th class="col-xs-10">{% trans 'Revenue' %}</th>
+                        <th class="col-2">{% trans 'Year' %}</th>
+                        <th class="col-10">{% trans 'Revenue' %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,13 +43,13 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th class="col-xs-2">{% trans 'Date' %}</th>
-                <th class="col-xs-5">{% trans 'Name' %}</th>
-                <th class="col-xs-1"><abbr title="{% trans 'The amount of unique debtors this event' %}">{% trans 'Visitors' %}</abbr></th>
-                <th class="col-xs-1">{% trans 'Transactions' %}</th>
-                <th class="col-xs-1">{% trans 'Revenue' %}</th>
+                <th class="col-2">{% trans 'Date' %}</th>
+                <th class="col-5">{% trans 'Name' %}</th>
+                <th class="col-1"><abbr title="{% trans 'The amount of unique debtors this event' %}">{% trans 'Visitors' %}</abbr></th>
+                <th class="col-1">{% trans 'Transactions' %}</th>
+                <th class="col-1">{% trans 'Revenue' %}</th>
                 {% if request.organization.writeoff_enabled %}<th>{% trans 'Write-offs' %}</th>{% endif %}
-                <th class="col-xs-2">{% trans 'Price group' %}</th>
+                <th class="col-2">{% trans 'Price group' %}</th>
             </tr>
         </thead>
         <tbody>

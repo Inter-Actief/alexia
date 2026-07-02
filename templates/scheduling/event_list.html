@@ -8,41 +8,41 @@
     <h1>
         {% trans 'Planning' %}
         {% if is_planner %}
-        <div class="pull-right">
+        <div class="float-right">
             <a href="{% url 'new-event' %}" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span>
+                <span class="bi bi-plus-lg"></span>
                 {% trans 'Add event' %}
             </a>
         </div>
         {% endif %}
     </h1>
 </div>
-<div class="panel-group" id="filters">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a data-toggle="collapse" data-parent="#filters" href="#filters_form">{% trans 'Filters' %}</a>
+<div class="accordion" id="filters">
+    <div class="card">
+        <div class="card-header">
+            <a data-toggle="collapse" href="#filters_form">{% trans 'Filters' %}</a>
         </div>
-        <div id="filters_form" class="panel-collapse collapse">
-            <div class="panel-body">
+        <div id="filters_form" class="collapse" data-parent="#filters">
+            <div class="card-body">
                 {% crispy filter_form %}
             </div>
         </div>
     </div>
 </div>
 <div class="table-responsive">
-    <table class="table table-hover table-condensed table-events">
+    <table class="table table-hover table-sm table-events">
         <thead>
             <tr>
-                <th class="col-xs-1">{% trans 'Date' %}</th>
-                <th class="col-xs-1">{% trans 'Time' %}</th>
-                <th class="col-xs-1">{% trans 'Organization' %}</th>
-                <th class="col-xs-1">{% trans 'Location' %}</th>
+                <th class="col-1">{% trans 'Date' %}</th>
+                <th class="col-1">{% trans 'Time' %}</th>
+                <th class="col-1">{% trans 'Organization' %}</th>
+                <th class="col-1">{% trans 'Location' %}</th>
                 <th>{% trans 'Name' %}</th>
                 <th>{% trans 'Kegs' %}</th>
                 <th>{% trans 'IVA' %}</th>
                 <th>{% trans 'Bartenders' %}</th>
                 {% if is_tender %}<th></th>{% endif %}
-                {% if is_planner or is_tender %}<th class="col-xs-1"></th>{% endif %}
+                {% if is_planner or is_tender %}<th class="col-1"></th>{% endif %}
             </tr>
         </thead>
         <tbody>
@@ -75,12 +75,12 @@
                         {{ e.name }}
                     </a>
                     {% if e.tender_comments and e in events_tending %}
-                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"
+                        <span class="bi bi-info-circle" aria-hidden="true"
                                 title="{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}"></span>
                         <span class="sr-only">{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}</span>
                     {% endif %}
                     {% if e.is_risky %}
-                        <span class="glyphicon glyphicon-warning-sign" title="{% trans 'Risky activity' %}"></span>
+                        <span class="bi bi-exclamation-triangle" title="{% trans 'Risky activity' %}"></span>
                     {% endif %}
                 </td>
                 <td>{{ e.kegs|default:'&mdash;' }}</td>
@@ -90,7 +90,7 @@
                     {% if ivacheck == "YES" %}
                     <i class="icon-alexia-ok"></i>
                     {% elif ivacheck == "MAYBE" %}
-                    <span class="text-warning glyphicon glyphicon-warning-sign" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
+                    <span class="text-warning bi bi-exclamation-triangle" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
                     {% else %}
                     <i class="icon-alexia-notok"></i>
                     {% endif %}
@@ -126,8 +126,8 @@
                     <div class="btn-group btn-group-xs">
                     {% if is_planner %}
                     {% if e.organizer == request.organization %}
-                    <a class="btn btn-default" href="{% url 'edit-event' e.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="glyphicon glyphicon-trash"></i></a>
+                    <a class="btn btn-secondary" href="{% url 'edit-event' e.pk %}"><span class="bi bi-pencil"></span></a>
+                    <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="bi bi-trash"></i></a>
                     {% endif %}
                     {% endif %}
                     {% if is_tender and e.can_be_opened %}

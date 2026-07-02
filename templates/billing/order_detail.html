@@ -6,27 +6,27 @@
 <div class="page-header">
     <h2>
         {% trans 'Orders' %}: {{ event }}
-        <div class="pull-right">
+        <div class="float-right">
             {% if event.organizer == request.organization and is_manager and event.consumptionform %}
-                <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-tint"></span>
+                <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-secondary">
+                    <span class="bi bi-droplet"></span>
                     {% trans 'Consumption form' %}
                 </a>
             {% endif %}
-            <a href="{% url 'event' event.pk %}" class="btn btn-default">
-                <span class="glyphicon glyphicon-calendar"></span>
+            <a href="{% url 'event' event.pk %}" class="btn btn-secondary">
+                <span class="bi bi-calendar"></span>
                 {% trans 'Event information' %}
             </a>
         </div>
     </h2>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-12 col-sm-6">
         <h3>{% trans 'Event' %}</h3>
         <table class="table table-bordered">
             <tr>
-                <th class="col-xs-4">{% trans 'Name' %}</th>
-                <td class="col-xs-8">{{ event }}</td>
+                <th class="col-4">{% trans 'Name' %}</th>
+                <td class="col-8">{{ event }}</td>
             </tr>
             <tr>
                 <th>{% trans 'Date' %}</th>
@@ -40,8 +40,8 @@
         <h3>{% trans 'Billing' %}</h3>
         <table class="table table-bordered">
             <tr>
-                <th class="col-xs-4">{% trans 'Visitors' %}</th>
-                <td class="col-xs-8">{{ event.visitors }}</th>
+                <th class="col-4">{% trans 'Visitors' %}</th>
+                <td class="col-8">{{ event.visitors }}</th>
             </tr>
             <tr>
                 <th>{% trans 'Transactions' %}</th>
@@ -53,7 +53,7 @@
             </tr>
         </table>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-12 col-sm-6">
         <h3>{% trans 'Sales' %}</h3>
         <ul class="nav nav-tabs">
             <li class="active">
@@ -70,9 +70,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="col-xs-3"></th>
-                            <th class="col-xs-6">{% trans 'Product' %}</th>
-                            <th class="col-xs-3">{% trans 'Revenue' %}</th>
+                            <th class="col-3"></th>
+                            <th class="col-6">{% trans 'Product' %}</th>
+                            <th class="col-3">{% trans 'Revenue' %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,9 +90,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="col-xs-3"></th>
-                            <th class="col-xs-6">{% trans 'Product' %}</th>
-                            <th class="col-xs-3">{% trans 'Written off' %}</th>
+                            <th class="col-3"></th>
+                            <th class="col-6">{% trans 'Product' %}</th>
+                            <th class="col-3">{% trans 'Written off' %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,14 +122,14 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <a href="{% url 'writeoff_export' event.pk %}" class="btn btn-default">{% trans 'Export' %}</a>
+                <a href="{% url 'writeoff_export' event.pk %}" class="btn btn-secondary">{% trans 'Export' %}</a>
             </div>
         </div>
     </div>
 </div>
 <hr>
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
         <h3>{% trans 'Orders' %}</h3>
         <div class="table-responsive">
             <table class="table">
@@ -160,7 +160,7 @@
 {% if writeoff_exists %}
 <hr>
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
         <h3>{% trans 'Written off orders' %}</h3>
         <div class="table-responsive">
             <table class="table">

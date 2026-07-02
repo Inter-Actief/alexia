@@ -11,11 +11,11 @@
     <h4>{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}</h4>
 </div>
 <h4>{% trans 'Summary' %}</h4>
-<table class="table table-condensed table-bordered">
+<table class="table table-sm table-bordered">
     <thead>
         <tr>
-            <th class="col-xs-10">{% trans 'Month' %}</th>
-            <th class="col-xs-2 text-right">{% trans 'Revenue' %}</th>
+            <th class="col-10">{% trans 'Month' %}</th>
+            <th class="col-2 text-right">{% trans 'Revenue' %}</th>
         </tr>
     </thead>
     <tbody>
@@ -28,12 +28,12 @@
     </tbody>
 </table>
 <h4>{% trans 'Specification' %}</h4>
-<table class="table table-condensed table-bordered">
+<table class="table table-sm table-bordered">
     <thead>
         <tr>
-            <th class="col-xs-3">{% trans 'Date' %}</th>
-            <th class="col-xs-7">{% trans 'Name' %}</th>
-            <th class="col-xs-2 text-right">{% trans 'Revenue' %}</th>
+            <th class="col-3">{% trans 'Date' %}</th>
+            <th class="col-7">{% trans 'Name' %}</th>
+            <th class="col-2 text-right">{% trans 'Revenue' %}</th>
         </tr>
     </thead>
     <tbody>

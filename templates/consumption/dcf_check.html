@@ -12,7 +12,7 @@
             </h1>
         </div>
         {% if cf.has_issues %}
-        <div class="well">
+        <div class="card card-body">
             <strong>{% trans 'Please check the following' %}</strong>
             <ul class="dcf-issues">
             {% for error in cf.issues.errors %}
@@ -24,11 +24,11 @@
             </ul>
         </div>
         {% endif %}
-        <div class="well">
+        <div class="card card-body">
             <table class="table table-bordered">
                 <tr>
-                    <th class="col-xs-3">{% trans 'Date' %}</th>
-                    <td class="col-xs-9">{{ event.starts_at|date:"l j F" }}</td>
+                    <th class="col-3">{% trans 'Date' %}</th>
+                    <td class="col-9">{{ event.starts_at|date:"l j F" }}</td>
                 </tr>
                 <tr>
                     <th>{% trans 'Location' %}</th>
@@ -41,13 +41,13 @@
             </table>
         </div>
         {% if cf.unitentry_set.all %}
-        <div class="well">
+        <div class="card card-body">
             <table class="table table-bordered">
                 <tbody>
                 {% for entry in cf.unitentry_set.all %}
                     <tr>
-                        <th class="col-xs-3">{{ entry.product }}</th>
-                        <td class="col-xs-9">{{ entry.amount }}</td>
+                        <th class="col-3">{{ entry.product }}</th>
+                        <td class="col-9">{{ entry.amount }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -55,17 +55,17 @@
         </div>
         {% endif %}
         {% if cf.weightentry_set.all %}
-        <div class="well">
+        <div class="card card-body">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="col-xs-3"></th>
-                            <th class="col-xs-2">{% trans 'Begin weight' %}</th>
-                            <th class="col-xs-2">{% trans 'End weight' %}</th>
-                            <th class="col-xs-1">{% trans 'Kegs changed' %}</th>
-                            <th class="col-xs-2">{% trans 'Flowmeter' %}</th>
-                            <th class="col-xs-2">{% trans 'Consumption' %}</th>
+                            <th class="col-3"></th>
+                            <th class="col-2">{% trans 'Begin weight' %}</th>
+                            <th class="col-2">{% trans 'End weight' %}</th>
+                            <th class="col-1">{% trans 'Kegs changed' %}</th>
+                            <th class="col-2">{% trans 'Flowmeter' %}</th>
+                            <th class="col-2">{% trans 'Consumption' %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,27 +89,27 @@
         </div>
         {% endif %}
         {% if cf.comments %}
-        <div class="well">
+        <div class="card card-body">
             <h3>{% trans 'Comments' %}</h3>
             <p>{{ cf.comments|linebreaks }}</p>
         </div>
         {% endif %}
         {% if cf.is_valid %}
-        <div class="well">
+        <div class="card card-body">
             {% crispy form %}
         </div>
         {% endif %}
-        <div class="well text-center">
+        <div class="card card-body text-center">
             <p>
                 {% if cf.is_valid %}
                 <button type="submit" class="btn btn-lg btn-primary">
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="bi bi-pencil"></span>
                     {% trans 'Sign form as' %}
                     {{ user.get_full_name }}
                 </button>
                 {% endif %}
-                <a href="{% url 'dcf' event.pk %}" class="btn btn-default btn-lg">
-                    <span class="glyphicon glyphicon-edit"></span>
+                <a href="{% url 'dcf' event.pk %}" class="btn btn-secondary btn-lg">
+                    <span class="bi bi-pencil-square"></span>
                     {% trans 'Revise' %}
                 </a>
             </p>

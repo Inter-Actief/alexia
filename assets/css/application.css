@@ -16,7 +16,7 @@
     }
 }
 
-label.control-label { font-weight: bold; }
+label.col-form-label { font-weight: bold; }
 
 body {
     padding-top: 60px;
@@ -36,7 +36,7 @@ body {
     padding-bottom: 0;
 }
 
-.label.label-has-ba-comment {
+.badge.label-has-ba-comment {
   border: 2px dotted black;
 }
 
@@ -137,18 +137,18 @@ ul.dcf-issues {
 }
 
 ul.dcf-issues li:before {
-	font-family: 'Glyphicons Halflings';
+	font-family: 'bootstrap-icons';
 	display: inline-block;
     margin-left: -1.3em;
     width: 1.3em;
 }
 
 ul.dcf-issues li.text-danger:before {
-	content: "\e101";
+	content: "\f623";
 }
 
 ul.dcf-issues li.text-warning:before {
-	content: "\e107";
+	content: "\f33b";
 }
 
 iframe#iva-list {

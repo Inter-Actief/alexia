@@ -7,8 +7,8 @@
     <h1>{{ user.get_full_name }}</h1>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
-        <div class="well">
+    <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+        <div class="card card-body">
             <dl class="dl-vertical">
                 <dt>{% trans 'OIDC username' %}</dt>
                 <dd>{{ oidc_username|default:'&mdash;' }}</dd>
@@ -26,24 +26,24 @@
             </tr>
             <tr>
                 <td class="text-right">
-                    <strong class="pull-left">{% trans 'Transactions' %}</strong> {{ order_count }}
+                    <strong class="float-left">{% trans 'Transactions' %}</strong> {{ order_count }}
                 </td>
             </tr>
             <tr>
                 <td class="text-right">
-                    <strong class="pull-left">{% trans 'Events attended' %}</strong> {{ events|length }}
+                    <strong class="float-left">{% trans 'Events attended' %}</strong> {{ events|length }}
                 </td>
             </tr>
             {% if is_tender %}
             <tr>
                 <td class="text-right">
-                    <strong class="pull-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}
+                    <strong class="float-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}
                 </td>
             </tr>
             {% endif %}
         </table>
     </div>
-    <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+    <div class="col-12 col-sm-7 col-md-8 col-lg-9">
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#billing" data-toggle="tab">{% trans 'Billing' %}</a>
@@ -57,7 +57,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="billing">
                 <div class="row">
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <h4>{% trans 'Events' %}</h4>
                         <p>
                             {% trans 'These are the last 5 events you attended.' %}
@@ -76,13 +76,13 @@
                                 <tr>
                                     <td class="overflow-protect">{{ e.name }}</td>
                                     <td>&euro; {{ e.spent|floatformat:2 }}</td>
-                                    <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-default">Details</a></td>
+                                    <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-secondary">Details</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <h4>{% trans 'RFID cards' %}</h4>
                         <p>{% trans 'This is an overview of RFID cards linked to your account.' %}</p>
                         <table class="table table-striped table-bordered">
@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <h4>{% trans 'Share' %}</h4>
                         <p>{% trans 'The percentage of sales which you are responsible for.' %}</p>
                         <table class="table table-bordered">
@@ -137,7 +137,7 @@
             {% if is_tender %}
             <div class="tab-pane" id="bartender">
                 <div class="row">
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <h4>{% trans 'Autorization' %}</h4>
                         <p>{% trans 'The following roles are assigned to you. Contact the organization in question for more details.' %}</p>
                         <table class="table table-striped table-bordered">
@@ -152,9 +152,9 @@
                                 <tr>
                                     <td>{{ membership.organization }}</td>
                                     <td>
-                                        {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
-                                        {% if membership.is_planner %}<span class="label label-default">{% trans 'Planner' %}</span>{% endif %}
-                                        {% if membership.is_manager %}<span class="label label-default">{% trans 'Manager' %}</span>{% endif %}
+                                        {% if membership.is_tender %}<span class="badge badge-secondary">{% trans 'Bartender' %}</span>{% endif %}
+                                        {% if membership.is_planner %}<span class="badge badge-secondary">{% trans 'Planner' %}</span>{% endif %}
+                                        {% if membership.is_manager %}<span class="badge badge-secondary">{% trans 'Manager' %}</span>{% endif %}
                                     </td>
                                 </tr>
                             {% empty %}
@@ -165,17 +165,17 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-12 col-lg-6">
                         <h4>
                             {% trans 'iCal bartender agenda' %}
-                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-xs btn-primary pull-right">{% trans 'Generate new' %}</a>
+                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-xs btn-primary float-right">{% trans 'Generate new' %}</a>
                         </h4>
                         {% if user.profile.ical_id %}
                         <div class="input-group">
                             <input type="text" class="form-control" value="{{ request.scheme }}://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
-                                    <span class="glyphicon glyphicon-copy"></span>
+                                <button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
+                                    <span class="bi bi-copy"></span>
                                 </button>
                             </span>
                         </div>
@@ -183,7 +183,7 @@
                         <hr>
                         <h4>
                             {% trans 'IVA certificate' %}
-                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-xs pull-right">{% trans 'Manage certificate' %}</a>
+                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-xs float-right">{% trans 'Manage certificate' %}</a>
                         </h4>
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>

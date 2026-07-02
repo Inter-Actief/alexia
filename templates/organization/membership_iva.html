@@ -8,7 +8,7 @@
         {% blocktrans with organization=request.organization.name %}Tenders of {{ organization }}{% endblocktrans %}
     </h1>
 </div>
-<table class="table table-striped table-bordered table-condensed">
+<table class="table table-striped table-bordered table-sm">
     <thead>
         <tr>
             <th>#</th>
@@ -23,9 +23,9 @@
             <td>{{ forloop.counter }}</td>
             <td>{{ membership.user.get_full_name }}</td>
             <td>
-                {% if membership.is_tender %}<span class="label label-default">{% trans 'Bartender' %}</span>{% endif %}
-                {% if membership.is_planner %}<span class="label label-default">{% trans 'Planner' %}</span>{% endif %}
-                {% if membership.is_manager %}<span class="label label-default">{% trans 'Manager' %}</span>{% endif %}
+                {% if membership.is_tender %}<span class="badge badge-secondary">{% trans 'Bartender' %}</span>{% endif %}
+                {% if membership.is_planner %}<span class="badge badge-secondary">{% trans 'Planner' %}</span>{% endif %}
+                {% if membership.is_manager %}<span class="badge badge-secondary">{% trans 'Manager' %}</span>{% endif %}
             </td>
             <td>
                 <i class="icon-alexia-{% if not membership.user.profile.has_iva %}not{% endif %}ok"></i>
