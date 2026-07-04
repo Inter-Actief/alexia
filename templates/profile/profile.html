@@ -45,12 +45,12 @@
     </div>
     <div class="col-12 col-sm-7 col-md-8 col-lg-9">
         <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#billing" data-toggle="tab">{% trans 'Billing' %}</a>
+            <li class="nav-item">
+                <a class="nav-link active" href="#billing" data-toggle="tab">{% trans 'Billing' %}</a>
             </li>
             {% if is_tender %}
-            <li>
-                <a href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a>
+            <li class="nav-item">
+                <a class="nav-link" href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a>
             </li>
             {% endif %}
         </ul>
@@ -76,7 +76,7 @@
                                 <tr>
                                     <td class="overflow-protect">{{ e.name }}</td>
                                     <td>&euro; {{ e.spent|floatformat:2 }}</td>
-                                    <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-xs btn-secondary">Details</a></td>
+                                    <td><a href="{% url 'event-expenditures-profile' e.pk %}" class="btn btn-sm btn-secondary">Details</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -168,22 +168,22 @@
                     <div class="col-12 col-lg-6">
                         <h4>
                             {% trans 'iCal bartender agenda' %}
-                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-xs btn-primary float-right">{% trans 'Generate new' %}</a>
+                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-sm btn-primary float-right">{% trans 'Generate new' %}</a>
                         </h4>
                         {% if user.profile.ical_id %}
                         <div class="input-group">
                             <input type="text" class="form-control" value="{{ request.scheme }}://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
-                            <span class="input-group-btn">
+                            <div class="input-group-append">
                                 <button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
                                     <span class="bi bi-copy"></span>
                                 </button>
-                            </span>
+                            </div>
                         </div>
                         {% endif %}
                         <hr>
                         <h4>
                             {% trans 'IVA certificate' %}
-                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-xs float-right">{% trans 'Manage certificate' %}</a>
+                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-sm float-right">{% trans 'Manage certificate' %}</a>
                         </h4>
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>

@@ -42,7 +42,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-xs btn-secondary" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
+                    <a class="btn btn-sm btn-secondary" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
                         <span class="bi bi-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
@@ -82,7 +82,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-secondary" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
+                                <a class="btn btn-sm btn-secondary" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
                                     <span class="bi bi-pencil"></span>
                                     {% trans 'Modify' %}
                                 </a>

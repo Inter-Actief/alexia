@@ -80,11 +80,11 @@
                 {% endwith %}
                 <td>{{ membership.user.last_login|default:'&mdash;' }}</td>
                 <td>
-                    <a class="btn btn-xs btn-secondary" href="{% url 'edit-membership' membership.pk %}">
+                    <a class="btn btn-sm btn-secondary" href="{% url 'edit-membership' membership.pk %}">
                         <span class="bi bi-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
-                    <a class="btn btn-xs btn-danger" href="{% url 'delete-membership' membership.pk %}">
+                    <a class="btn btn-sm btn-danger" href="{% url 'delete-membership' membership.pk %}">
                         <span class="bi bi-trash"></span>
                         {% trans 'Delete' %}
                     </a>

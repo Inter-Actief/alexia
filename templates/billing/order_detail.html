@@ -56,12 +56,12 @@
     <div class="col-12 col-sm-6">
         <h3>{% trans 'Sales' %}</h3>
         <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#orders" data-toggle="tab">{% trans 'Orders' %}</a>
+            <li class="nav-item">
+                <a class="nav-link active" href="#orders" data-toggle="tab">{% trans 'Orders' %}</a>
             </li>
             {% if writeoff_exists %}
-            <li>
-                <a href="#writeoffOrders" data-toggle="tab">{% trans 'Written off' %}</a>
+            <li class="nav-item">
+                <a class="nav-link" href="#writeoffOrders" data-toggle="tab">{% trans 'Written off' %}</a>
             </li>
             {% endif %}
         </ul>

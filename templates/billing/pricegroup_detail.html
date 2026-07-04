@@ -50,11 +50,11 @@
                         <td><a href="{{ sellingprice.productgroup.get_absolute_url }}">{{ sellingprice.productgroup }}</a></td>
                         <td class="text-right">&euro; {{ sellingprice.price }}</td>
                         <td>
-                            <a class="btn btn-xs btn-secondary" href="{% url 'sellingprice_update' sellingprice.pk %}">
+                            <a class="btn btn-sm btn-secondary" href="{% url 'sellingprice_update' sellingprice.pk %}">
                                 <span class="bi bi-pencil"></span>
                                 {% trans 'Modify' %}
                             </a>
-                            <a class="btn btn-xs btn-danger" href="{% url 'sellingprice_delete' sellingprice.pk %}">
+                            <a class="btn btn-sm btn-danger" href="{% url 'sellingprice_delete' sellingprice.pk %}">
                                 <span class="bi bi-trash"></span>
                                 {% trans 'Delete' %}
                             </a>
@@ -67,7 +67,7 @@
                 {% endfor %}
                     <tr>
                         <td colspan="3" class="text-center">
-                            <a class="btn btn-primary btn-xs" href="{% url 'sellingprice_create' pricegroup_pk=pricegroup.pk %}">
+                            <a class="btn btn-primary btn-sm" href="{% url 'sellingprice_create' pricegroup_pk=pricegroup.pk %}">
                                 <span class="bi bi-plus-lg"></span>
                                 {% trans 'Add' %}
                             </a>

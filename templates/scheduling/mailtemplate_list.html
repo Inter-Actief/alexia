@@ -25,7 +25,7 @@
                 <td>{{ mailtemplate.subject }}</td>
                 <td>{{ mailtemplate.is_active|yesno }}</td>
                 <td>
-                    <a class="btn btn-xs btn-secondary" href="{% url 'mailtemplate_update' mailtemplate.name %}">
+                    <a class="btn btn-sm btn-secondary" href="{% url 'mailtemplate_update' mailtemplate.name %}">
                         <span class="bi bi-pencil"></span>
                         {% trans 'Modify' %}
                     </a>

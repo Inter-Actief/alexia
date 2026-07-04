@@ -42,7 +42,7 @@
                             <td>{{ event.location.all|join:", " }}</td>
                             <td>{{ event }}</td>
                             <td>
-                                <a href="{% url 'dcf' event.pk %}" class="btn btn-xs btn-warning">
+                                <a href="{% url 'dcf' event.pk %}" class="btn btn-sm btn-warning">
                                     <span class="bi bi-pencil"></span>
                                     {% trans 'Fill in' %}
                                 </a>
@@ -88,7 +88,7 @@
                     <span class="text-success">{% trans 'Completed' %}</span>
                     {% else %}
                     <span class="text-danger">{% trans 'Pending' %}</span>
-                    <a href="{% url 'dcf' consumptionform.event.pk %}" class="btn btn-xs btn-warning">
+                    <a href="{% url 'dcf' consumptionform.event.pk %}" class="btn btn-sm btn-warning">
                         <span class="bi bi-pencil"></span>
                     </a>
                     {% endif %}
@@ -99,7 +99,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-xs btn-secondary" href="{% url 'consumptionform_pdf' consumptionform.pk %}">
+                    <a class="btn btn-sm btn-secondary" href="{% url 'consumptionform_pdf' consumptionform.pk %}">
                         <span class="bi bi-cloud-download"></span>
                         {% trans 'PDF' %}
                     </a>

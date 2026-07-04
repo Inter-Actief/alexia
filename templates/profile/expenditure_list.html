@@ -24,7 +24,7 @@
                 <td>{{ event.starts_at|date:"l d F" }}</td>
                 <td><a href="{% url 'event-expenditures-profile' event.pk %}">{{ event.name }}</a></td>
                 <td>&euro; {{ event.spent|floatformat:2 }}</td>
-                <td><a href="{% url 'event-expenditures-profile' event.pk %}" class="btn btn-xs btn-secondary">Details</a></td>
+                <td><a href="{% url 'event-expenditures-profile' event.pk %}" class="btn btn-sm btn-secondary">Details</a></td>
             </tr>
         {% empty %}
             <tr>

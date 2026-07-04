@@ -18,6 +18,24 @@
 
 label.col-form-label { font-weight: bold; }
 
+/* Bootstrap 4 dropped the .page-header component; restore its Bootstrap 3 look. */
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Bootstrap 4 dropped .has-error/.help-block; restore form error styling for them. */
+.has-error .form-control {
+    border-color: #dc3545;
+}
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    color: #dc3545;
+}
+
 body {
     padding-top: 60px;
     padding-bottom: 40px;

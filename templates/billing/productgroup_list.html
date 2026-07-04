@@ -26,11 +26,11 @@
         <tr>
             <td><a href="{{ productgroup.get_absolute_url }}">{{ productgroup.name }}</a></td>
             <td>
-                <a class="btn btn-xs btn-secondary" href="{% url 'productgroup_update' productgroup.pk %}">
+                <a class="btn btn-sm btn-secondary" href="{% url 'productgroup_update' productgroup.pk %}">
                     <span class="bi bi-pencil"></span>
                     {% trans 'Modify' %}
                 </a>
-                <a class="btn btn-xs btn-danger" href="{% url 'productgroup_delete' productgroup.pk %}">
+                <a class="btn btn-sm btn-danger" href="{% url 'productgroup_delete' productgroup.pk %}">
                     <span class="bi bi-trash"></span>
                     {% trans 'Delete' %}
                 </a>

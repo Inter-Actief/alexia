@@ -30,7 +30,7 @@
             <td>{{ availability.get_nature_display }}</td>
             <td>{{ availability.position }}</td>
             <td>
-                <a class="btn btn-xs btn-secondary" href="{% url 'availability_update' availability.pk %}">
+                <a class="btn btn-sm btn-secondary" href="{% url 'availability_update' availability.pk %}">
                     <span class="bi bi-pencil"></span>
                     {% trans 'Modify' %}
                 </a>

@@ -26,11 +26,11 @@
         <tr>
             <td><a href="{{ pricegroup.get_absolute_url }}">{{ pricegroup.name }}</a></td>
             <td>
-                <a class="btn btn-xs btn-secondary" href="{% url 'pricegroup_update' pricegroup.pk %}">
+                <a class="btn btn-sm btn-secondary" href="{% url 'pricegroup_update' pricegroup.pk %}">
                     <span class="bi bi-pencil"></span>
                     {% trans 'Modify' %}
                 </a>
-                <a class="btn btn-xs btn-danger" href="{% url 'pricegroup_delete' pricegroup.pk %}">
+                <a class="btn btn-sm btn-danger" href="{% url 'pricegroup_delete' pricegroup.pk %}">
                     <span class="bi bi-trash"></span>
                     {% trans 'Delete' %}
                 </a>

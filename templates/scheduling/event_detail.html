@@ -99,11 +99,11 @@
                     <td class="text-right">&euro; {{ temporaryproduct.price }}</td>
                     {% if is_manager %}
                     <td>
-                        <a class="btn btn-secondary btn-xs" href="{% url 'temporaryproduct_update' temporaryproduct.pk %}">
+                        <a class="btn btn-secondary btn-sm" href="{% url 'temporaryproduct_update' temporaryproduct.pk %}">
                             <span class="bi bi-pencil"></span>
                             {% trans 'Modify' %}
                         </a>
-                        <a class="btn btn-danger btn-xs" href="{% url 'temporaryproduct_delete' temporaryproduct.pk %}">
+                        <a class="btn btn-danger btn-sm" href="{% url 'temporaryproduct_delete' temporaryproduct.pk %}">
                             <span class="bi bi-trash"></span>
                             {% trans 'Delete' %}
                         </a>
@@ -118,7 +118,7 @@
             {% if is_manager %}
                 <tr>
                     <td colspan="{% if is_manager %}3{% else %}2{% endif %}" class="text-center">
-                        <a href="{% url 'temporaryproduct_create' event_pk=event.pk %}" class="btn btn-primary btn-xs">
+                        <a href="{% url 'temporaryproduct_create' event_pk=event.pk %}" class="btn btn-primary btn-sm">
                             <span class="bi bi-plus-lg"></span>
                             {% trans 'Add' %}
                         </a>

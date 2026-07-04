@@ -35,11 +35,11 @@
                 <td><a href="{{ permanentproduct.productgroup.get_absolute_url }}">{{ permanentproduct.productgroup }}</a></td>
                 <td>{{ permanentproduct.position }}</td>
                 <td>
-                    <a class="btn btn-xs btn-secondary" href="{% url 'product_update' permanentproduct.pk %}">
+                    <a class="btn btn-sm btn-secondary" href="{% url 'product_update' permanentproduct.pk %}">
                         <span class="bi bi-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
-                    <a class="btn btn-xs btn-danger" href="{% url 'product_delete' permanentproduct.pk %}">
+                    <a class="btn btn-sm btn-danger" href="{% url 'product_delete' permanentproduct.pk %}">
                         <span class="bi bi-trash"></span>
                         {% trans 'Delete' %}
                     </a>
