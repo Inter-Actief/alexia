@@ -8,15 +8,12 @@ python3 -V
 # Path to the python binary being used
 echo "Python binary:"
 which python
-# Pip version
-echo "Pip version:"
-pip -V
-# Path to the pip binary being used
-echo "Pip binary:"
-which pip
-# Installed pip package list
-echo "Pip installed packages:"
-pip freeze
+# uv version
+echo "uv version:"
+uv --version
+# Installed package list
+echo "Installed packages:"
+uv pip list
 
 # Configure Django and run the tests
 # ----------------------------------
