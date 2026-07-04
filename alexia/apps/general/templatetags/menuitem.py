@@ -4,6 +4,7 @@ from django.template import Library, Node, TemplateSyntaxError
 from django.template.base import token_kwargs
 from django.urls import Resolver404, resolve
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 register = Library()
 
@@ -33,10 +34,10 @@ class MenuItemNode(Node):
         if classes:
             open_tag = format_html('<li class="{}">', ' '.join(classes))
         else:
-            open_tag = format_html('<li>')
+            open_tag = mark_safe('<li>')
 
         content = self.nodelist.render(context)
-        close_tag = format_html('</li>')
+        close_tag = mark_safe('</li>')
         return open_tag + content + close_tag
 
 
