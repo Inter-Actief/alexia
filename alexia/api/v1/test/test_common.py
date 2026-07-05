@@ -23,7 +23,7 @@ class CommonTest(TestCase):
         """
 
         # '2014-09-21T14:16:06+00:00'
-        start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
+        start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), datetime.timezone.utc)
 
         # Create authorization
         auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], start_date=start_date)
@@ -44,9 +44,9 @@ class CommonTest(TestCase):
         """
 
         # '2014-09-21T14:16:06+00:00'
-        start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
+        start_date = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), datetime.timezone.utc)
         # '2015-04-16T02:56:33+00:00'
-        end_date = timezone.make_aware(datetime.datetime(2015, 4, 16, 2, 56, 33), timezone.utc)
+        end_date = timezone.make_aware(datetime.datetime(2015, 4, 16, 2, 56, 33), datetime.timezone.utc)
 
         # Create authorization
         auth = Authorization(user=self.data['user1'], organization=self.data['organization1'], start_date=start_date,
@@ -63,7 +63,7 @@ class CommonTest(TestCase):
         self.convertAndAssertJSONEqual(format_authorization(auth), auth_json)
 
     def test_order_unsynchronized(self):
-        starts_at = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
+        starts_at = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), datetime.timezone.utc)
         ends_at = starts_at + datetime.timedelta(hours=1)
 
         placed_at = starts_at + datetime.timedelta(minutes=30)
