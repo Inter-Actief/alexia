@@ -13,7 +13,7 @@ RUN echo "Updating repostitories..." && \
     echo "Upgrading base debian system..." && \
     apt-get upgrade -y && \
     echo "Installing alexia required packages..." && \
-    apt-get install -y apt-utils git net-tools curl python3 mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
+    apt-get install -y apt-utils git net-tools curl python3 python3-dev build-essential pkg-config mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
     echo "Installing uv..." && \
     curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh && \
     echo "Installing wkhtmltopdf (no longer packaged in Debian repos)..." && \
@@ -28,7 +28,7 @@ RUN echo "Updating repostitories..." && \
     echo "Creating directories for alexia..." && \
     mkdir -p /alexia /config /static /media /var/log /var/run && \
     echo "Installing python requirements..." && \
-    uv sync --frozen && \
+    UV_PYTHON_INSTALL_DIR=/usr/local/share/uv/python uv sync --frozen && \
     echo "Correcting permissions on directories..." && \
     chown -R 1000:1000 /alexia /config /static /media /var/log
 
