@@ -1,5 +1,5 @@
 # Build the alexia docker image based on Debian 11 (Bullseye)
-FROM debian:trixie
+FROM debian:trixie-slim
 
 # Copy alexia sources
 COPY . /alexia
