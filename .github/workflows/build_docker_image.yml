@@ -61,7 +61,7 @@ jobs:
           docker run --rm --entrypoint "/alexia/scripts/run_tests.sh" ghcr.io/inter-actief/alexia@${{ steps.push.outputs.digest }}
 
       - name: Cleanup untagged images older than 1 week
-        uses: snok/container-retention-policy@v3
+        uses: snok/container-retention-policy@v3.1.0
         with:
           image-names: alexia
           cut-off: 1 week ago UTC
@@ -72,7 +72,7 @@ jobs:
           untagged-only: true
 
       - name: Cleanup tagged images (except main and production) older than 1 month
-        uses: snok/container-retention-policy@v3
+        uses: snok/container-retention-policy@v3.1.0
         with:
           image-names: alexia
           cut-off: 1 month ago UTC
