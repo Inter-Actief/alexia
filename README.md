@@ -12,16 +12,21 @@ Alexia is the management system for the drink rooms in the Zilverling at the Uni
 ## Prerequisites
 
 - **MySQL**
-
   Due to raw SQL in the migrations only MySQL is supported.
 - **wkhtmltopdf**
 - **xvfb (optional)**
 
   For servers without an X Server.
+- **Docker**
+
+  For local development using Docker.
+
 
 ## Quick start
 
 To set up your own copy of Alexia, use the following steps:
+
+### Baremetal development
 
 - Make sure you have a [virtualenv](https://virtualenv.pypa.io) set up.
 - Clone the repo: `git clone https://github.com/Inter-Actief/alexia.git`
@@ -32,6 +37,21 @@ To set up your own copy of Alexia, use the following steps:
 - Run the migrations: `python manage.py migrate`
 - (optional) Create a super user: `python manage.py createsuperuser`
 - Run it: `python manage.py runserver`
+
+The set up can be automated using the command: `make setup-local`
+
+### Docker development
+
+- Clone the repo: `git clone https://github.com/Inter-Actief/alexia.git`
+- Copy the default settings and edit to your likings.
+  - `cp alexia/conf/settings/local.py.default alexia/conf/settings/local.py`
+  - `vi alexia/conf/settings.py`
+- Make sure you have Docker installed.
+- Make the containers available: `docker compose up -d --build`
+- Run the migrations: `docker compose exec app python manage.py migrate`
+- (optional) Create a super user: `docker compose exec app python manage.py createsuperuser`
+
+The set up can be automated using the command: `make setup-docker`
 
 ## Project structure
 

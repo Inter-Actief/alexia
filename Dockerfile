@@ -8,7 +8,7 @@ COPY . /alexia
 WORKDIR /alexia
 
 # Install required packages for alexia and prepare the system to run alexia
-RUN echo "Updating repostitories..." && \
+RUN echo "Updating repositories..." && \
     apt-get update -y && \
     echo "Upgrading base debian system..." && \
     apt-get upgrade -y && \
