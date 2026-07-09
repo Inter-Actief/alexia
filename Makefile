@@ -5,6 +5,5 @@ setup-local:
 	python manage.py runserver
 
 setup-docker:
-	cp alexia/conf/settings/local.py.default alexia/conf/settings/local.py
 	docker compose up -d --build
 	docker compose exec app python manage.py migrate
