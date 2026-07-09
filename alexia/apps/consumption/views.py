@@ -7,7 +7,8 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.utils import timezone
+from django.utils import timezone as django_timezone
+from datetime import timezone
 from django.utils.translation import gettext as _
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView, UpdateView
@@ -85,7 +86,7 @@ def complete_dcf(request, pk):
         form = ConsumptionFormConfirmationForm(request.POST)
         if form.is_valid() and cf.is_valid():
             cf.completed_by = request.user
-            cf.completed_at = timezone.now()
+            cf.completed_at = django_timezone.now()
             cf.save()
             return render(request, 'consumption/dcf_finished.html', locals())
     else:
@@ -189,8 +190,8 @@ class ConsumptionFormListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ConsumptionFormListView, self).get_context_data(**kwargs)
         context['missing_dcf_list'] = Event.objects.filter(
-            ends_at__lte=timezone.now(),
-            ends_at__gte=timezone.now() - datetime.timedelta(days=30),
+            ends_at__lte=django_timezone.now(),
+            ends_at__gte=django_timezone.now() - datetime.timedelta(days=30),
             consumptionform__isnull=True,
             kegs__gt=0,
         ).order_by('-starts_at').select_related('organizer')

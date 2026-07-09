@@ -7,7 +7,8 @@ from django.db.models import Prefetch, Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
-from django.utils import timezone
+from datetime import timezone
+from django.utils import timezone as django_timezone
 from django.utils.dateparse import parse_datetime
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
@@ -55,7 +56,7 @@ def event_list_view(request):
     )
 
     # Default from_time is now.
-    from_time = timezone.now()
+    from_time = django_timezone.now()
     end_time = None
 
     # Filterformulier maken, al dan niet met huidige waarden
@@ -121,7 +122,7 @@ class EventBartenderView(TenderRequiredMixin, ListView):
 
     def get_queryset(self):
         return Event.objects.filter(
-            ends_at__gte=timezone.now(),
+            ends_at__gte=django_timezone.now(),
             bartender_availabilities__availability__nature=Availability.ASSIGNED,
             bartender_availabilities__user=self.request.user
         ).order_by('starts_at')
@@ -182,7 +183,7 @@ class EventMatrixView(TenderOrManagerRequiredMixin, TemplateView):
                 queryset=BartenderAvailability.objects.select_related('user', 'event', 'availability')
             )
         ).filter(
-            ends_at__gte=timezone.now(),
+            ends_at__gte=django_timezone.now(),
             participants=self.request.organization
         ).exclude(kegs=0).order_by('starts_at')[:12]
 
@@ -205,7 +206,7 @@ class EventMatrixView(TenderOrManagerRequiredMixin, TemplateView):
             ]
             tended = [
                 a.event
-                for a in tender.tended() if a.event.starts_at < timezone.now()
+                for a in tender.tended() if a.event.starts_at < django_timezone.now()
             ]
             tenders.append({
                 'tender': tender,
@@ -402,7 +403,7 @@ def set_bartender_availability(request):
 
 
 def ical(request):
-    events = Event.objects.filter(starts_at__gte=timezone.now() - timedelta(100)).order_by('starts_at')
+    events = Event.objects.filter(starts_at__gte=django_timezone.now() - timedelta(100)).order_by('starts_at')
     return IcalResponse(generate_ical(events))
 
 
@@ -410,7 +411,7 @@ def personal_ical(request, ical_id):
     profile = get_object_or_404(Profile, ical_id=ical_id)
     bas = profile.user.bartender_availability_set.filter(
         availability__nature=Availability.ASSIGNED,
-        event__starts_at__gte=timezone.now() - timedelta(100)
+        event__starts_at__gte=django_timezone.now() - timedelta(100)
     ). order_by('event__starts_at')
     events = []
     for ba in bas:
