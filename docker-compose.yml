@@ -29,7 +29,7 @@ services:
   nginx:
     image: nginx:latest
   db:
-    image: mysql:9
+    image: mariadb:10.11
     environment:
       - MYSQL_DATABASE=alexia
       - MYSQL_USER=alexia
