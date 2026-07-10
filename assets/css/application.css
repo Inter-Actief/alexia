@@ -22,22 +22,11 @@
 
 label.col-form-label { font-weight: bold; }
 
-/* Bootstrap 4 dropped the .page-header component; restore its Bootstrap 3 look. */
+/* Bootstrap dropped the .page-header component; restore its Bootstrap 3 look. */
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;
-    border-bottom: 1px solid #eee;
-}
-
-/* Bootstrap 4 dropped .has-error/.help-block; restore form error styling for them. */
-.has-error .form-control {
-    border-color: #dc3545;
-}
-
-.help-block {
-    display: block;
-    margin-top: 5px;
-    color: #dc3545;
+    border-bottom: 1px solid var(--bs-border-color);
 }
 
 body {
@@ -59,7 +48,7 @@ body {
 }
 
 .badge.label-has-ba-comment {
-  border: 2px dotted black;
+  border: 2px dotted var(--bs-body-color);
 }
 
 .input-static {
@@ -68,13 +57,13 @@ body {
 
 .table tbody > tr.tr-muted > td,
 .table tbody > tr.tr-muted > th {
-  background-color: #ebebeb;
+  background-color: var(--bs-secondary-bg);
   font-style: italic;
 }
 
 .table tbody > tr.tr-yellow > td,
 .table tbody > tr.tr-yellow > th {
-  background-color: #fdfd96;
+  background-color: var(--bs-warning-bg-subtle);
 }
 
 .table tbody > tr > td.overflow-protect {
@@ -203,14 +192,14 @@ span.reverse {
 }
 
 .table > tbody > tr.dynamic-form-add > td > a:hover {
-	background-color: #ccc;
+	background-color: var(--bs-secondary-bg);
 }
 
 /* Match the FullCalendar classic theme's toolbar buttons to Bootstrap's .btn-primary */
 :root {
-	--fc-classic-button: #007bff;
-	--fc-classic-button-border: #007bff;
-	--fc-classic-button-strong: #0069d9;
-	--fc-classic-button-strong-border: #0062cc;
-	--fc-classic-button-outline: #007bff80;
+	--fc-classic-button: #0d6efd;
+	--fc-classic-button-border: #0d6efd;
+	--fc-classic-button-strong: #0b5ed7;
+	--fc-classic-button-strong-border: #0a58ca;
+	--fc-classic-button-outline: #0d6efd80;
 }

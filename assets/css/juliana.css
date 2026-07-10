@@ -96,8 +96,8 @@ body {
 }
 
 #display.flash {
-  background-color: #FCC;
-  color: #C00;
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-danger-text-emphasis);
 }
 
 .receipt-container {
@@ -132,7 +132,7 @@ body {
 #receipt-table td {
 	padding-bottom: 10px;
 	font-size:16px;
-    border-bottom:1px solid #CCC;
+    border-bottom:1px solid var(--bs-border-color);
     padding-top:10px;
     padding-left:10px;
     position:relative;
@@ -189,7 +189,7 @@ body {
 }
 
 #agecheckbox .alert-danger {
-    border-color: #C00;
+    border-color: var(--bs-danger);
 }
 
 #age-check-ok, #age-check-warning, #age-check-unknown {
@@ -203,7 +203,7 @@ body {
 #payment-countdown, #writeoff-countdown {
     font-size:28px;
     padding:10px 18px;
-    background:#888;
+    background:var(--bs-secondary);
     border-radius:40px;
     color:#FFF;
     font-weight:bold;
