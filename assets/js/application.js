@@ -1,9 +1,46 @@
 var LOCALE = $('html').attr('lang') || 'en';
-var dateformats = {
-    nl: 'dd-mm-yyyy',
-    en: 'yyyy-mm-dd',
-};
 var csrftoken = getCookie('csrftoken');
+
+var THEME_STORAGE_KEY = 'alexia-theme';
+var THEME_ICONS = {
+    light: 'bi-sun-fill',
+    dark: 'bi-moon-stars-fill',
+    auto: 'bi-circle-half',
+};
+var prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+function getStoredTheme() {
+    var theme = localStorage.getItem(THEME_STORAGE_KEY);
+    return (theme === 'light' || theme === 'dark') ? theme : 'auto';
+}
+
+function resolveTheme(theme) {
+    if (theme === 'auto') {
+        return prefersDarkQuery.matches ? 'dark' : 'light';
+    }
+    return theme;
+}
+
+function applyTheme(theme) {
+    var resolved = resolveTheme(theme);
+    document.documentElement.setAttribute('data-bs-theme', resolved);
+    document.documentElement.setAttribute('data-color-scheme', resolved);
+}
+
+function updateThemeMenu(theme) {
+    $('#theme-icon').attr('class', 'bi ' + THEME_ICONS[theme]);
+    $('[data-theme-value]').each(function () {
+        var active = $(this).data('theme-value') === theme;
+        $(this).toggleClass('active', active);
+        $(this).find('.bi-check2').toggleClass('d-none', !active);
+    });
+}
+
+function setTheme(theme) {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+    applyTheme(theme);
+    updateThemeMenu(theme);
+}
 
 function getCookie(name) {
     var cookieValue = null;
@@ -85,18 +122,22 @@ $(function () {
 
     resetCommentPrompts();
 
-    $('.dateinput').datepicker({
-        autoclose: true,
-        format: dateformats[LOCALE],
-        weekStart: 1,
+    applyTheme(getStoredTheme());
+    updateThemeMenu(getStoredTheme());
+
+    $('[data-theme-value]').click(function () {
+        setTheme($(this).data('theme-value'));
     });
 
-    $('.timeinput').timepicker({
-        defaultTime: false,
-        showMeridian: false,
+    prefersDarkQuery.addEventListener('change', function () {
+        if (getStoredTheme() === 'auto') {
+            applyTheme('auto');
+        }
     });
 
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-bs-toggle="tooltip"]').each(function () {
+        new bootstrap.Tooltip(this);
+    });
 
     $('#ical-copy').click(function() {
         $('#ical-url').select();

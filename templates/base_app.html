@@ -2,9 +2,9 @@
 {% load menuitem %}
 
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#alexia-navbar-collapse">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#alexia-navbar-collapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="{% url 'event-list' %}">
@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="alexia-navbar-collapse">
             <ul class="navbar-nav">
                 {% menuitem 'apps.scheduling.views' class='nav-item dropdown' %}
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         {% trans 'Planning' %}
                     </a>
                     <ul class="dropdown-menu">
@@ -39,7 +39,7 @@
                     </a>
                 {% endmenuitem %}
                 {% menuitem 'apps.billing.views' class='nav-item dropdown' %}
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         {% trans 'Billing' %}
                     </a>
                     <ul class="dropdown-menu">
@@ -59,7 +59,7 @@
                 {% endif %}
                 {% if is_foundation_manager %}
                 {% menuitem 'apps.consumption.views' class='nav-item dropdown' %}
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         {% trans 'Management' %}
                     </a>
                     <ul class="dropdown-menu">
@@ -69,7 +69,7 @@
                 {% endmenuitem %}
                 {% endif %}
             </ul>
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
                 {% for code, name in LANGUAGES %}
                 {% if LANGUAGE_CODE != code %}
                 <li class="nav-item">
@@ -93,10 +93,10 @@
                 {% endmenuitem %}
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         {{ current_organization.name|default:_('No organization') }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         {% for organization in organizations %}
                             {% if organization.is_active or user.profile.is_foundation_manager or user.is_superuser %}
                             <li>
@@ -107,10 +107,10 @@
                     </ul>
                 </li>
                 {% menuitem 'apps.profile.views' class='nav-item dropdown' %}
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         {{ user.get_full_name|default:user }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="{% url 'profile' %}">{% trans 'My profile' %}</a>
                         </li>
@@ -125,6 +125,28 @@
                     <a class="nav-link" href="{% url 'oidc_authentication_init' %}">{% trans 'Login with UTwente' %}</a>
                 </li>
                 {% endif %}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="theme-menu" data-bs-toggle="dropdown" aria-label="{% trans 'Toggle theme' %}">
+                        <i class="bi bi-circle-half" id="theme-icon"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="light">
+                                <i class="bi bi-sun-fill me-2"></i>{% trans 'Light' %}<i class="bi bi-check2 ms-auto d-none"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="dark">
+                                <i class="bi bi-moon-stars-fill me-2"></i>{% trans 'Dark' %}<i class="bi bi-check2 ms-auto d-none"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="auto">
+                                <i class="bi bi-circle-half me-2"></i>{% trans 'Auto' %}<i class="bi bi-check2 ms-auto d-none"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
