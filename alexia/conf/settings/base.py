@@ -15,7 +15,8 @@ LOGIN_URL = '/oidc/authenticate/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Crispy forms
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Debugging
 DEBUG = False
@@ -72,7 +73,7 @@ INSTALLED_APPS = [
 
     'compressor',
     'crispy_forms',
-    'crispy_bootstrap4',
+    'crispy_bootstrap5',
     'debug_toolbar',
     'modernrpc',
     'wkhtmltopdf',

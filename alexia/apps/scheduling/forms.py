@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext, gettext_lazy as _
 
 from alexia.apps.organization.models import Location, Organization
-from alexia.forms import AlexiaForm, AlexiaModelForm
+from alexia.forms import AlexiaForm, AlexiaModelForm, NativeSplitDateTimeWidget
 
 from .models import Event
 
@@ -20,6 +20,8 @@ class EventForm(AlexiaModelForm):
         widgets = {
             'participants': forms.CheckboxSelectMultiple,
             'location': forms.CheckboxSelectMultiple,
+            'starts_at': NativeSplitDateTimeWidget,
+            'ends_at': NativeSplitDateTimeWidget,
         }
 
     def __init__(self, organization, *args, **kwargs):
@@ -71,8 +73,21 @@ class FilterEventForm(AlexiaForm):
         required=False,
     )
     organizer = forms.ModelChoiceField(required=False, queryset=Organization.objects, label=_('Organization'))
-    from_time = forms.SplitDateTimeField(label=_('From time'), initial=timezone.now, required=False)
-    till_time = forms.SplitDateTimeField(label=_('Till time'), required=False)
+    from_time = forms.SplitDateTimeField(
+        label=_('From time'),
+        initial=timezone.now,
+        required=False,
+        widget=NativeSplitDateTimeWidget,
+        input_date_formats=['%Y-%m-%d'],
+        input_time_formats=['%H:%M', '%H:%M:%S'],
+    )
+    till_time = forms.SplitDateTimeField(
+        label=_('Till time'),
+        required=False,
+        widget=NativeSplitDateTimeWidget,
+        input_date_formats=['%Y-%m-%d'],
+        input_time_formats=['%H:%M', '%H:%M:%S'],
+    )
     drinks_only = forms.BooleanField(label=_('Drinks only'), required=False)
     meetings_only = forms.BooleanField(label=_('Meetings only'), required=False)
 
