@@ -205,3 +205,12 @@ span.reverse {
 .table > tbody > tr.dynamic-form-add > td > a:hover {
 	background-color: #ccc;
 }
+
+/* Match the FullCalendar classic theme's toolbar buttons to Bootstrap's .btn-primary */
+:root {
+	--fc-classic-button: #007bff;
+	--fc-classic-button-border: #007bff;
+	--fc-classic-button-strong: #0069d9;
+	--fc-classic-button-strong-border: #0062cc;
+	--fc-classic-button-outline: #007bff80;
+}

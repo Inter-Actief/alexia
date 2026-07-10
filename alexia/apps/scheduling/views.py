@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -140,8 +140,14 @@ class EventCalendarFetch(View):
         if not (start and end) or not is_ajax(request):
             raise SuspiciousOperation('Bad calendar fetch request')
 
-        from_time = datetime.fromtimestamp(float(start), tz=timezone.utc)
-        till_time = datetime.fromtimestamp(float(end), tz=timezone.utc)
+        # Use Django's parse_datetime (rather than datetime.fromisoformat) since it handles
+        # a trailing 'Z' UTC designator, which datetime.fromisoformat only supports as of
+        # Python 3.11 and this project also needs to run on older Python versions.
+        from_time = parse_datetime(start)
+        till_time = parse_datetime(end)
+
+        if from_time is None or till_time is None:
+            raise SuspiciousOperation('Bad calendar fetch request')
 
         data = []
         for event in Event.objects.filter(ends_at__gte=from_time,
@@ -159,9 +165,11 @@ class EventCalendarFetch(View):
                 'start': event.starts_at.isoformat(),
                 'end': event.ends_at.isoformat(),
                 'color': color,
-                'organizers': ', '.join(map(lambda x: x.name, event.participants.all())),
-                'location': ', '.join(map(lambda x: x.name, event.location.all())),
-                'tenders': ', '.join(map(lambda x: x.first_name, event.get_assigned_bartenders())) or '<i>geen</i>',
+                'extendedProps': {
+                    'organizers': ', '.join(map(lambda x: x.name, event.participants.all())),
+                    'location': ', '.join(map(lambda x: x.name, event.location.all())),
+                    'tenders': ', '.join(map(lambda x: x.first_name, event.get_assigned_bartenders())) or '<i>geen</i>',
+                },
             })
         return JsonResponse(data, safe=False)
 
