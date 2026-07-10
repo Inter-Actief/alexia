@@ -31,18 +31,18 @@ services:
   db:
     image: mariadb:10.11
     environment:
-      - MYSQL_DATABASE=alexia
-      - MYSQL_USER=alexia
-      - MYSQL_PASSWORD=alexia
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=alexia
+      - MARIADB_USER=alexia
+      - MARIADB_PASSWORD=alexia
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 5s
       retries: 10
     volumes:
       - db_data:/var/lib/mysql
-      - ./docker/mysql-init:/docker-entrypoint-initdb.d:ro
+      - ./docker/mariadb-init:/docker-entrypoint-initdb.d:ro
 volumes:
   db_data:
   app_venv:
