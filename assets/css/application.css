@@ -5,6 +5,10 @@
 
 .login-form { text-align: center; }
 
+.login-form form { text-align: left; }
+
+.login-form .form-actions.center { text-align: center; }
+
 .login-form .login-logo {
 	height: 150px;
 	max-width: 100%;
@@ -115,6 +119,10 @@ body {
 
 .icon-alexia-upload {
   background-image: url('/static/img/icon/alexia-upload.png');
+}
+
+footer {
+  font-size: 14px;
 }
 
 @media print {

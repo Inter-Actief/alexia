@@ -20,9 +20,10 @@
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ next }}">
                     {{ form | crispy }}
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">{% trans 'Log in' %}</button>
-                        <a href="{% url 'help' %}" class="btn">{% trans 'Help' %}</a>
+                    <div class="form-actions center">
+                        <button type="submit" class="btn btn-primary btn-block">{% trans 'Log in' %}</button>
+                        <br>
+                        Having problems? Check the <a href="{% url 'help' %}" class="link">{% trans 'Help' %}</a> page
                     </div>
                 </form>
             </div>
