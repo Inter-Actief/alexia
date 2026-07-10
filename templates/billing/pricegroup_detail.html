@@ -7,7 +7,7 @@
     <h1>
         <small>{% trans 'Price group' %}</small>
         {{ pricegroup }}
-        <div class="float-right">
+        <div class="float-end">
             <a class="btn btn-secondary" href="{% url 'pricegroup_update' pricegroup.pk %}">
                 <span class="bi bi-pencil"></span>
                 {% trans 'Modify' %}
@@ -40,7 +40,7 @@
                 <thead>
                     <tr>
                         <th class="col-4">{% trans 'Product group' %}</th>
-                        <th class="col-2 text-right">{% trans 'Price' %}</th>
+                        <th class="col-2 text-end">{% trans 'Price' %}</th>
                         <th class="col-6">{% trans 'Actions' %}</th>
                     </tr>
                 </thead>
@@ -48,7 +48,7 @@
                 {% for sellingprice in pricegroup.sellingprice_set.all %}
                     <tr>
                         <td><a href="{{ sellingprice.productgroup.get_absolute_url }}">{{ sellingprice.productgroup }}</a></td>
-                        <td class="text-right">&euro; {{ sellingprice.price }}</td>
+                        <td class="text-end">&euro; {{ sellingprice.price }}</td>
                         <td>
                             <a class="btn btn-sm btn-secondary" href="{% url 'sellingprice_update' sellingprice.pk %}">
                                 <span class="bi bi-pencil"></span>

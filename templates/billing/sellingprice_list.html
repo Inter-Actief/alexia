@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>{% trans 'Product group' %}</th>
-                <th class="text-right">{% trans 'Price group' %}</th>
+                <th class="text-end">{% trans 'Price group' %}</th>
                 {% for pricegroup in pricegroups %}
                 <th class="text-center"><a href="{{ pricegroup.get_absolute_url }}">{{ pricegroup }}</a></th>
                 {% endfor %}

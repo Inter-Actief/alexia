@@ -15,14 +15,14 @@
     <thead>
         <tr>
             <th class="col-10">{% trans 'Month' %}</th>
-            <th class="col-2 text-right">{% trans 'Revenue' %}</th>
+            <th class="col-2 text-end">{% trans 'Revenue' %}</th>
         </tr>
     </thead>
     <tbody>
     {% for s in summary %}
         <tr>
             <td>{{ s.month|date:"F Y" }}</td>
-            <td class="text-right">&euro; {{ s.revenue|floatformat:2 }}</td>
+            <td class="text-end">&euro; {{ s.revenue|floatformat:2 }}</td>
         </tr>
     {% endfor %}
     </tbody>
@@ -33,7 +33,7 @@
         <tr>
             <th class="col-3">{% trans 'Date' %}</th>
             <th class="col-7">{% trans 'Name' %}</th>
-            <th class="col-2 text-right">{% trans 'Revenue' %}</th>
+            <th class="col-2 text-end">{% trans 'Revenue' %}</th>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
         <tr>
             <td>{{ event.starts_at|date }}</td>
             <td>{{ event.name }}</td>
-            <td class="text-right">&euro; {{ event.revenue|floatformat:2 }}</td>
+            <td class="text-end">&euro; {{ event.revenue|floatformat:2 }}</td>
         </tr>
     {% endfor %}
     </tbody>

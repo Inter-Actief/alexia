@@ -6,7 +6,7 @@
 <div class="page-header">
     <h2>
         {% trans 'Orders' %}: {{ event }}
-        <div class="float-right">
+        <div class="float-end">
             {% if event.organizer == request.organization and is_manager and event.consumptionform %}
                 <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-secondary">
                     <span class="bi bi-droplet"></span>
@@ -55,18 +55,18 @@
     </div>
     <div class="col-12 col-sm-6">
         <h3>{% trans 'Sales' %}</h3>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="#orders" data-toggle="tab">{% trans 'Orders' %}</a>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" href="#orders" data-bs-toggle="tab" role="tab" aria-controls="orders" aria-selected="true">{% trans 'Orders' %}</a>
             </li>
             {% if writeoff_exists %}
-            <li class="nav-item">
-                <a class="nav-link" href="#writeoffOrders" data-toggle="tab">{% trans 'Written off' %}</a>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#writeoffOrders" data-bs-toggle="tab" role="tab" aria-controls="writeoffOrders" aria-selected="false">{% trans 'Written off' %}</a>
             </li>
             {% endif %}
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="orders">
+            <div class="tab-pane active" id="orders" role="tabpanel">
                 <table class="table">
                     <thead>
                         <tr>
@@ -78,7 +78,7 @@
                     <tbody>
                     {% for product in products %}
                         <tr>
-                            <td class="text-right">{{ product.amount }} &times;</td>
+                            <td class="text-end">{{ product.amount }} &times;</td>
                             <td>{{ product.product }}</td>
                             <td>&euro; {{ product.price }}</td>
                         </tr>
@@ -86,7 +86,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane" id="writeoffOrders">
+            <div class="tab-pane" id="writeoffOrders" role="tabpanel">
                 <table class="table">
                     <thead>
                         <tr>
@@ -108,14 +108,14 @@
                         <!-- Products for the current category -->
                         {% for product in data.products %}
                             <tr>
-                                <td class="text-right">{{ product.total_amount }} &times;</td>
+                                <td class="text-end">{{ product.total_amount }} &times;</td>
                                 <td>{{ product.product }}</td>
                                 <td>&euro; {{ product.total_price }}</td>
                             </tr>
                         {% endfor %}
                         <!-- Display total amount for the current category -->
                         <tr>
-                            <td class="text-right"><strong>Total:</strong></td>
+                            <td class="text-end"><strong>Total:</strong></td>
                             <td>{{ data.total_amount }}</td>
                             <td><strong>&euro;{{data.total_price}}</strong></td>
                         </tr>

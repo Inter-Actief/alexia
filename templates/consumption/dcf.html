@@ -28,7 +28,7 @@ var location_name = '{{ event.location.all|join:""|lower }}';
         <div class="card card-body" id="comments">
         {% crispy_field form.comments %}
         </div>
-        <div class="card card-body text-right">
+        <div class="card card-body text-end">
             <button class="btn btn-lg btn-secondary">
                 <span class="bi bi-save"></span>
                 {% trans 'Save' %}

@@ -7,7 +7,7 @@
     <h1>
         {{ event }}
         {% if event.organizer == request.organization and is_planner %}
-        <div class="float-right">
+        <div class="float-end">
             {% if event.organizer == request.organization and is_manager and event.consumptionform %}
                 <a href="{% url 'consumptionform_detail' event.consumptionform.pk %}" class="btn btn-secondary">
                     <span class="bi bi-droplet"></span>
@@ -82,7 +82,7 @@
             <thead>
                 <tr>
                     <th class="col-4">{% trans 'Name' %}</th>
-                    <th class="text-right">{% trans 'Price' %}</th>
+                    <th class="text-end">{% trans 'Price' %}</th>
                     {% if is_manager %}
                     <th>{% trans 'Actions' %}</th>
                     {% endif %}
@@ -96,7 +96,7 @@
                             {{ temporaryproduct.name }}
                         </span>
                     </td>
-                    <td class="text-right">&euro; {{ temporaryproduct.price }}</td>
+                    <td class="text-end">&euro; {{ temporaryproduct.price }}</td>
                     {% if is_manager %}
                     <td>
                         <a class="btn btn-secondary btn-sm" href="{% url 'temporaryproduct_update' temporaryproduct.pk %}">
@@ -136,14 +136,14 @@
         <table class="table table-sm">
         {% for obj in tender_list %}
             <tr{% if not obj.tender.is_active %} class="tr-muted"{% endif %}>
-                <td class="col-6 text-right">
+                <td class="col-6 text-end">
                     <a title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" href="{% url 'membership' obj.tender.pk %}">
                         {{ obj.tender.user.get_full_name }}
                     </a>
                 </td>
-                <td class="col-2 text-right">
+                <td class="col-2 text-end">
                     <a href="{% url 'edit-event-bartender-availability' pk=event.pk user_pk=obj.tender.user.pk %}">
-                        <span title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" class="badge badge-{{ obj.bartender_availability.availability.css_class|default:'secondary' }}">
+                        <span title="{% trans 'Last tended' %}: {{ obj.last_tended|default:_("Never") }}" class="badge text-bg-{{ obj.bartender_availability.availability.css_class|default:'secondary' }}">
                             {{ obj.bartender_availability.availability|default:_("Unknown") }}
                         </span>
                     </a>

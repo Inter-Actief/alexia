@@ -25,19 +25,19 @@
                 <th>{% trans 'Stats' %}</th>
             </tr>
             <tr>
-                <td class="text-right">
-                    <strong class="float-left">{% trans 'Transactions' %}</strong> {{ order_count }}
+                <td class="text-end">
+                    <strong class="float-start">{% trans 'Transactions' %}</strong> {{ order_count }}
                 </td>
             </tr>
             <tr>
-                <td class="text-right">
-                    <strong class="float-left">{% trans 'Events attended' %}</strong> {{ events|length }}
+                <td class="text-end">
+                    <strong class="float-start">{% trans 'Events attended' %}</strong> {{ events|length }}
                 </td>
             </tr>
             {% if is_tender %}
             <tr>
-                <td class="text-right">
-                    <strong class="float-left">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}
+                <td class="text-end">
+                    <strong class="float-start">{% trans 'Tended' %}</strong> {{ user.profile.tended_count }}
                 </td>
             </tr>
             {% endif %}
@@ -46,11 +46,11 @@
     <div class="col-12 col-sm-7 col-md-8 col-lg-9">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="#billing" data-toggle="tab">{% trans 'Billing' %}</a>
+                <a class="nav-link active" href="#billing" data-bs-toggle="tab">{% trans 'Billing' %}</a>
             </li>
             {% if is_tender %}
             <li class="nav-item">
-                <a class="nav-link" href="#bartender" data-toggle="tab">{% trans 'Bartender' %}</a>
+                <a class="nav-link" href="#bartender" data-bs-toggle="tab">{% trans 'Bartender' %}</a>
             </li>
             {% endif %}
         </ul>
@@ -152,9 +152,9 @@
                                 <tr>
                                     <td>{{ membership.organization }}</td>
                                     <td>
-                                        {% if membership.is_tender %}<span class="badge badge-secondary">{% trans 'Bartender' %}</span>{% endif %}
-                                        {% if membership.is_planner %}<span class="badge badge-secondary">{% trans 'Planner' %}</span>{% endif %}
-                                        {% if membership.is_manager %}<span class="badge badge-secondary">{% trans 'Manager' %}</span>{% endif %}
+                                        {% if membership.is_tender %}<span class="badge text-bg-secondary">{% trans 'Bartender' %}</span>{% endif %}
+                                        {% if membership.is_planner %}<span class="badge text-bg-secondary">{% trans 'Planner' %}</span>{% endif %}
+                                        {% if membership.is_manager %}<span class="badge text-bg-secondary">{% trans 'Manager' %}</span>{% endif %}
                                     </td>
                                 </tr>
                             {% empty %}
@@ -168,22 +168,20 @@
                     <div class="col-12 col-lg-6">
                         <h4>
                             {% trans 'iCal bartender agenda' %}
-                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-sm btn-primary float-right">{% trans 'Generate new' %}</a>
+                            <a href="{% url 'ical-gen-profile' %}" class="btn btn-sm btn-primary float-end">{% trans 'Generate new' %}</a>
                         </h4>
                         {% if user.profile.ical_id %}
                         <div class="input-group">
                             <input type="text" class="form-control" value="{{ request.scheme }}://{{ request.get_host }}{% url 'ical' user.profile.ical_id %}" id="ical-url">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
-                                    <span class="bi bi-copy"></span>
-                                </button>
-                            </div>
+                            <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans 'Copy to clipboard' %}" id="ical-copy">
+                                <span class="bi bi-copy"></span>
+                            </button>
                         </div>
                         {% endif %}
                         <hr>
                         <h4>
                             {% trans 'IVA certificate' %}
-                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-sm float-right">{% trans 'Manage certificate' %}</a>
+                            <a href="{% url 'iva-profile' %}" class="btn btn-primary btn-sm float-end">{% trans 'Manage certificate' %}</a>
                         </h4>
                         <dl class="dl-horizontal">
                             <dt>{% trans 'Uploaded' %}</dt>

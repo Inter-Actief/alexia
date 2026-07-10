@@ -3,8 +3,19 @@
 <html>
     <head>
         <title>Juliana</title>
+        <script>
+            (function () {
+                var theme = null;
+                try { theme = localStorage.getItem('alexia-theme'); } catch (e) {}
+                if (theme !== 'light' && theme !== 'dark') {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-bs-theme', theme);
+                document.documentElement.setAttribute('data-color-scheme', theme);
+            })();
+        </script>
         {% compress css %}
-        <link rel="stylesheet" href="{% static 'css/bootstrap-4.6.2.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-5.3.8.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-icons-1.11.3.css' %}">
         <link rel="stylesheet" href="{% static 'css/juliana.css' %}">
         {% endcompress %}
@@ -58,35 +69,35 @@
                             Welkom bij Juliana
                         </div>
                         <div class="row">
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">7</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">8</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">9</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">7</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">8</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">9</a></div>
                         </div>
                         <div class="row">
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">4</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">5</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">6</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">4</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">5</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">6</a></div>
                         </div>
                         <div class="row">
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">1</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">2</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-secondary btn-block btn-keypad">3</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">1</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">2</a></div>
+                            <div class="col-4"><a href="#" class="btn btn-secondary w-100 btn-keypad">3</a></div>
                         </div>
                         <div class="row">
-                            <div class="col-8"><a href="#" class="btn btn-secondary btn-block btn-keypad">0</a></div>
-                            <div class="col-4"><a href="#" class="btn btn-block btn-primary btn-keypad btn-specialpad command"
+                            <div class="col-8"><a href="#" class="btn btn-secondary w-100 btn-keypad">0</a></div>
+                            <div class="col-4"><a href="#" class="btn w-100 btn-primary btn-keypad btn-specialpad command"
                                                      data-command="clear">Herstel</a></div>
                         </div>
                         <div class="row">
-                            <div class="col-12"><a href="#" class="btn btn-block btn-danger btn-specialpad command"
+                            <div class="col-12"><a href="#" class="btn w-100 btn-danger btn-specialpad command"
                                                       data-command="cancel">Annuleer</a></div>
-                            <div class="col-12"><a href="#" class="btn btn-block btn-info btn-specialpad command"
+                            <div class="col-12"><a href="#" class="btn w-100 btn-info btn-specialpad command"
                                                       data-command="check">Saldo controleren</a></div>
                             {% if writeoff %}
-                            <div class="col-12"><a href="#" class="btn btn-block btn-primary btn-specialpad command"
+                            <div class="col-12"><a href="#" class="btn w-100 btn-primary btn-specialpad command"
                                                       data-command="writeoff">Afschrijven</a></div>
                             {% else %}
-                            <div class="col-12"><a href="#" class="btn btn-block btn-primary btn-specialpad command"
+                            <div class="col-12"><a href="#" class="btn w-100 btn-primary btn-specialpad command"
                                                       data-command="cash">Contant</a></div>
                             {% endif %}
                         </div>
@@ -97,7 +108,7 @@
                                 <div class="row">
                                     {% for product in products %}
                                         <div class="col-4">
-                                            <a href="#" class="btn btn-block btn-info command"
+                                            <a href="#" class="btn w-100 btn-info command"
                                                {% if product.background_color %}style="background-color: #{{ product.background_color }}; border-color: #{{ product.background_color }};"{% endif %}
                                                data-command="sales" data-product="{{ product.id }}">
                                                 <span {% if product.text_color %}style="color: #{{ product.text_color }};"{% endif %}>{{ product.name }}</span>
@@ -119,7 +130,7 @@
                                     <div class="row">
                                         {% for category in writeoff_categories %}
                                             <div class="col-4">
-                                                <a href="#" class="btn btn-block btn-info btn-writeoff command"
+                                                <a href="#" class="btn w-100 btn-info btn-writeoff command"
                                                    {% if category.color %}style="background-color: #{{ category.color }}; border-color: #{{ category.color }};"{% endif %}
                                                    data-command="writeoffCategory" data-category="{{ category.id }}">
                                                     <span style="color: #ffffff">
@@ -134,7 +145,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="" id="cancel-writeoff-buttons">
-                                            <a class="btn btn-block btn-danger btn-specialpad command" data-command="cancelWriteoff"
+                                            <a class="btn w-100 btn-danger btn-specialpad command" data-command="cancelWriteoff"
                                             id="cancel-writeoff">Annuleer</a>
                                         </div>
                                     </div>
@@ -153,9 +164,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div id="receipt-total" class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><b>Totaal: </b></span>
-                                    </div>
+                                    <span class="input-group-text"><b>Totaal: </b></span>
                                     <input type="text" class="form-control" disabled>
                                 </div>
                             </div>
@@ -198,7 +207,7 @@
                                 <div class="" id="payment-buttons">
                                     <a class="btn btn-lg btn-danger command" data-command="cancelPayment"
                                        id="cancel-payment">Annuleren</a>
-                                    <a class="btn btn-lg btn-success float-right command" data-command="payNow" id="pay-now">Ok</a>
+                                    <a class="btn btn-lg btn-success float-end command" data-command="payNow" id="pay-now">Ok</a>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +240,7 @@
                                 <div class="" id="writeoff-buttons">
                                     <a class="btn btn-lg btn-danger command" data-command="cancelPayment"
                                        id="cancel-writeoff">Annuleren</a>
-                                    <a class="btn btn-lg btn-success float-right command" data-command="writeoffNow" id="writeoff-now">Ok</a>
+                                    <a class="btn btn-lg btn-success float-end command" data-command="writeoffNow" id="writeoff-now">Ok</a>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +260,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <a class="btn btn-lg btn-success float-right command" data-command="ok">Ok</a>
+                            <a class="btn btn-lg btn-success float-end command" data-command="ok">Ok</a>
                         </div>
                     </div>
                 </div>
@@ -286,7 +295,7 @@
         {% compress js %}
         {# Vendor #}
         <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
-        <script src="{% static 'js/bootstrap-4.6.2.bundle.js' %}"></script>
+        <script src="{% static 'js/bootstrap-5.3.8.bundle.js' %}"></script>
         {# Juliana #}
         <script src="{% static 'js/juliana.js' %}"></script>
         {% endcompress %}

@@ -6,7 +6,7 @@
 <div class="page-header">
     <h1>
         {% blocktrans with organization=current_organization %}Users of {{ organization }}{% endblocktrans %}
-        <div class="float-right">
+        <div class="float-end">
             <a href="{% url 'new-membership' %}" class="btn btn-primary">
                 <span class="bi bi-plus-lg"></span>
                 {% trans 'Add user' %}
@@ -44,9 +44,9 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if membership.is_tender %}<span class="badge badge-secondary">{% trans 'Bartender' %}</span>{% endif %}
-                    {% if membership.is_planner %}<span class="badge badge-secondary">{% trans 'Planner' %}</span>{% endif %}
-                    {% if membership.is_manager %}<span class="badge badge-secondary">{% trans 'Manager' %}</span>{% endif %}
+                    {% if membership.is_tender %}<span class="badge text-bg-secondary">{% trans 'Bartender' %}</span>{% endif %}
+                    {% if membership.is_planner %}<span class="badge text-bg-secondary">{% trans 'Planner' %}</span>{% endif %}
+                    {% if membership.is_manager %}<span class="badge text-bg-secondary">{% trans 'Manager' %}</span>{% endif %}
                 </td>
                 <td>
                     <span class="icon-alexia-{% if not membership.is_active %}not{% endif %}ok"></span>

@@ -6,7 +6,7 @@
 <div class="page-header">
     <h1>
          {% trans 'Consumption products' %}
-         <div class="float-right">
+         <div class="float-end">
              <a class="btn btn-primary" href="{% url 'weightconsumptionproduct_create' %}">
                  <span class="bi bi-plus-lg"></span>
                  {% trans 'Add (KG)' %}
@@ -33,12 +33,12 @@
                 <td>{{ consumptionproduct.name }}</td>
                 <td>
                     {% if consumptionproduct.is_weighted %}
-                    <span class="badge badge-danger">KG</span>
+                    <span class="badge text-bg-danger">KG</span>
                     {% if consumptionproduct.weighted.has_flowmeter %}
-                    <span class="badge badge-secondary">Flowmeter</span>
+                    <span class="badge text-bg-secondary">Flowmeter</span>
                     {% endif %}
                     {% else %}
-                    <span class="badge badge-primary">CE</span>
+                    <span class="badge text-bg-primary">CE</span>
                     {% endif %}
                 </td>
                 <td>
@@ -53,12 +53,14 @@
     </table>
 </div>
 <div class="accordion" id="archived">
-    <div class="card">
-        <div class="card-header">
-            <a data-toggle="collapse" href="#archived_contents">{% trans 'Archived products' %}</a>
-        </div>
-        <div id="archived_contents" class="collapse" data-parent="#archived">
-            <div class="card-body">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#archived_contents">
+                {% trans 'Archived products' %}
+            </button>
+        </h2>
+        <div id="archived_contents" class="accordion-collapse collapse" data-bs-parent="#archived">
+            <div class="accordion-body">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -73,12 +75,12 @@
                             <td>{{ consumptionproduct.name }}</td>
                             <td>
                                 {% if consumptionproduct.is_weighted %}
-                                <span class="badge badge-danger">KG</span>
+                                <span class="badge text-bg-danger">KG</span>
                                 {% if consumptionproduct.weighted.has_flowmeter %}
-                                <span class="badge badge-secondary">Flowmeter</span>
+                                <span class="badge text-bg-secondary">Flowmeter</span>
                                 {% endif %}
                                 {% else %}
-                                <span class="badge badge-primary">CE</span>
+                                <span class="badge text-bg-primary">CE</span>
                                 {% endif %}
                             </td>
                             <td>

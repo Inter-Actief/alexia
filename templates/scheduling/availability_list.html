@@ -6,7 +6,7 @@
 <div class="page-header">
     <h1>
          {% blocktrans with organization=current_organization %}Availabilities of {{ organization }}{% endblocktrans %}
-         <div class="float-right">
+         <div class="float-end">
              <a class="btn btn-primary" href="{% url 'availability_create' %}">
                  <span class="bi bi-plus-lg"></span>
                  {% trans 'Add' %}

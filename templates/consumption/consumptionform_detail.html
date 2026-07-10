@@ -7,7 +7,7 @@
     <div class="page-header">
         <h1>
             {{ consumptionform }}
-            <div class="float-right">
+            <div class="float-end">
                 {% if consumptionform.event.organizer == request.organization and is_manager %}
 					{% comment %} Nested if because using brackets creates a TemplateSyntaxError {% endcomment %}
 					{% if consumptionform.event.orders.exists or consumptionform.event.writeoff_orders.exists %}

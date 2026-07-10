@@ -6,7 +6,7 @@
 <div class="page-header">
     <h1>
         {% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}
-        <div class="float-right">
+        <div class="float-end">
             <a href="{% url 'export-orders' %}" class="btn btn-secondary">
                 <span class="bi bi-printer"></span>
                 {% trans 'Export' %}
@@ -15,27 +15,29 @@
     </h1>
 </div>
 <div class="accordion" id="stats">
-    <div class="card">
-        <div class="card-header">
-            <a data-toggle="collapse" href="#stats_table">{% trans 'Stats' %}</a>
-        </div>
-        <div id="stats_table" class="collapse" data-parent="#stats">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="col-2">{% trans 'Year' %}</th>
-                        <th class="col-10">{% trans 'Revenue' %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for year in stats_years %}
-                    <tr>
-                        <td><a href="{% url 'year-orders' year.year %}">{{ year.year }}</a></td>
-                        <td>&euro; {{ year.revenue|floatformat:2|default:"&mdash;" }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stats_table" aria-expanded="false" aria-controls="stats_table">{% trans 'Stats' %}</button>
+        </h2>
+        <div id="stats_table" class="accordion-collapse collapse" data-bs-parent="#stats">
+            <div class="accordion-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-2">{% trans 'Year' %}</th>
+                            <th class="col-10">{% trans 'Revenue' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for year in stats_years %}
+                        <tr>
+                            <td><a href="{% url 'year-orders' year.year %}">{{ year.year }}</a></td>
+                            <td>&euro; {{ year.revenue|floatformat:2|default:"&mdash;" }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

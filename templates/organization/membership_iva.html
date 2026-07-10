@@ -23,9 +23,9 @@
             <td>{{ forloop.counter }}</td>
             <td>{{ membership.user.get_full_name }}</td>
             <td>
-                {% if membership.is_tender %}<span class="badge badge-secondary">{% trans 'Bartender' %}</span>{% endif %}
-                {% if membership.is_planner %}<span class="badge badge-secondary">{% trans 'Planner' %}</span>{% endif %}
-                {% if membership.is_manager %}<span class="badge badge-secondary">{% trans 'Manager' %}</span>{% endif %}
+                {% if membership.is_tender %}<span class="badge text-bg-secondary">{% trans 'Bartender' %}</span>{% endif %}
+                {% if membership.is_planner %}<span class="badge text-bg-secondary">{% trans 'Planner' %}</span>{% endif %}
+                {% if membership.is_manager %}<span class="badge text-bg-secondary">{% trans 'Manager' %}</span>{% endif %}
             </td>
             <td>
                 <i class="icon-alexia-{% if not membership.user.profile.has_iva %}not{% endif %}ok"></i>

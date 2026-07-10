@@ -123,8 +123,8 @@ $(document).ready(function() {
         {% trans 'Calendar' %}
         <small id="loading" style="display: none;">{% trans 'Loading...' %}</small>
         {% if is_planner %}
-        <div class="float-right">
-            <a href="{% url 'new-event' %}" class="btn btn-primary float-right">
+        <div class="float-end">
+            <a href="{% url 'new-event' %}" class="btn btn-primary float-end">
                 <span class="bi bi-plus-lg"></span>
                 {% trans 'Add event' %}
             </a>
