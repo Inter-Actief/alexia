@@ -110,6 +110,31 @@ body {
   background-image: url('/static/img/icon/alexia-upload.png');
 }
 
+/* Keep the debug toolbar panel below the fixed navbar; at top: 0 it covers
+   the right-hand navbar items (theme toggle, language) and swallows their
+   clicks. Inert in production, where the toolbar is not rendered. */
+/* The extra html qualifier outranks the toolbar's own id+id rule, which is
+   loaded after this stylesheet. */
+html #djDebug #djDebugToolbar {
+    top: 60px;
+}
+
+/* With the toolbar pushed below the navbar, opened navbar dropdowns (theme,
+   language) extend into the toolbar's area; lift the navbar above the
+   toolbar's z-index (100000000) so those menus stay clickable. Scoped to
+   pages where the toolbar is rendered so production stacking is unchanged. */
+body:has(#djDebug) .navbar.fixed-top {
+    z-index: 100000001;
+}
+
+.flag-icon {
+  width: 21px;
+  height: 14px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--bs-border-color);
+  vertical-align: -2px;
+}
+
 footer {
   font-size: 14px;
 }

@@ -79,8 +79,8 @@
                         <input type="hidden" name="language" value="{{ code }}">
                     </form>
                     <a class="nav-link" href="#" title="{{ name }}" data-set-lang="{{ code }}">
-                        {% with 'img/icon/flag_'|add:code|add:'.png' as flag_url %}
-                        <img src="{% static flag_url %}" alt="{{ name }}">
+                        {% with 'img/icon/flag_'|add:code|add:'.svg' as flag_url %}
+                        <img class="flag-icon" src="{% static flag_url %}" alt="{{ name }}">
                         {% endwith %}
                     </a>
                 </li>
