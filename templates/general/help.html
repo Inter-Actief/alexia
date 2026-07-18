@@ -3,139 +3,173 @@
 {% block title %}Help{% endblock title %}
 
 {% block content %}
+{% url 'event-list' as event_list_url %}
+{% url 'new-event' as new_event_url %}
+{% url 'profile' as profile_url %}
+{% url 'memberships' as memberships_url %}
 <div class="page-header">
-    <h1>Help</h1>
+    <h1>{% trans 'Help' %}</h1>
 </div>
 <p>
-    Alexia is het borrelbeheersysteem van de studieverenigingen van de faculteiten EWI en MB, samenwerkend in Stichting
-    Borrelbeheer Zilverling. In dit systeem worden de borrelruimtes gereserveerd en in de toekomst kunnen ook verbruik
-    en verkoop geregistreerd worden.
+    {% blocktrans trimmed %}
+    Alexia is the drinks management system of the study associations of the EWI and MB faculties, working together in
+    Stichting Borrelbeheer Zilverling. In this system the drink rooms are reserved, and in the future consumption and
+    sales can also be registered.
+    {% endblocktrans %}
 </p>
-<h2>Inhoudsopgave</h2>
+<h2>{% trans 'Table of contents' %}</h2>
 <ul>
-    <li><a href="#inloggen">Inloggen</a></li>
-    <li><a href="#beschikbaarheid">Beschikbaarheid aangeven</a></li>
-    <li><a href="#plannen">Borrels plannen</a></li>
-    <li><a href="#tappersbeheren">Tappers beheren</a></li>
-    <li><a href="#bugs">Fouten of suggesties?</a></li>
+    <li><a href="#inloggen">{% trans 'Login' %}</a></li>
+    <li><a href="#beschikbaarheid">{% trans 'Indicate availability' %}</a></li>
+    <li><a href="#plannen">{% trans 'Schedule events' %}</a></li>
+    <li><a href="#tappersbeheren">{% trans 'Manage bartenders' %}</a></li>
+    <li><a href="#bugs">{% trans 'Bugs or suggestions?' %}</a></li>
 </ul>
-<h2 id="inloggen">Inloggen</h2>
+<h2 id="inloggen">{% trans 'Login' %}</h2>
 <p>
-    Het inloggen in Alexia gaat door middel van je UTwente-account (s- of m-nummer en bijbehorend wachtwoord). Het
-    wachtwoord voor het oude borrelbeheersysteem wordt dus niet meer gebruikt.
+    {% blocktrans trimmed %}
+    Logging in to Alexia is done using your UTwente account (s- or m-number and the corresponding password). The
+    password for the old drinks management system is therefore no longer used.
+    {% endblocktrans %}
 </p>
 <p>
-    Op de inlogpagina kan je tevens aangeven voor welke vereniging je inlogt, door het logo van die vereniging aan te
-    klikken.
+    {% blocktrans trimmed %}
+    On the login page you can also indicate which organization you are logging in for, by clicking the logo of that
+    organization.
+    {% endblocktrans %}
 </p>
-<h3>Eerste keer inloggen</h3>
+<h3>{% trans 'Logging in for the first time' %}</h3>
 <p>
-    Als je voor de eerste keer inlogt, kan je gevraagd worden naar je naam en/of e-mailadres. Hier vul je het
-    e-mailadres in waarop je alle mails vanuit Alexia wilt ontvangen.
+    {% blocktrans trimmed %}
+    If you log in for the first time, you may be asked for your name and/or email address. Here you fill in the
+    email address on which you want to receive all emails from Alexia.
+    {% endblocktrans %}
 </p>
-<h2 id="beschikbaarheid">Beschikbaarheid aangeven</h2>
+<h2 id="beschikbaarheid">{% trans 'Indicate availability' %}</h2>
 <p>
-    Als je een tapper bent voor een vereniging, kun je je beschikbaarheid aangeven onder de knop
-    <a href="{% url 'event-list' %}">Planning</a>. Op deze pagina kun je alle ingeplande borrels zien. Bij de borrels
-    waar jouw vereniging deelneemt, kun je met het keuzemenu rechts aangeven of je die borrel wilt tappen.
+    {% blocktrans trimmed with event_list_url=event_list_url %}
+    If you are a bartender for an organization, you can indicate your availability under the
+    <a href="{{ event_list_url }}">Planning</a> button. On this page you can see all scheduled events. For events
+    where your organization participates, you can use the dropdown menu on the right to indicate whether you want to
+    tend that event.
+    {% endblocktrans %}
 </p>
 <p>
-    <em>Kan je je beschikbaarheid niet wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd
-    rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je
-    controleren of je ook als tapper bent geregistreerd bij je vereniging. Verder kan het zijn dat het aangeven van de
-    beschikbaarheid is uitgeschakeld voor een borrel.
+    {% blocktrans trimmed with profile_url=profile_url %}
+    <em>Can't change your availability?</em> Check whether you have selected the correct organization in the top
+    right of the page. Under <a href="{{ profile_url }}">My profile</a> (section <em>Authorization</em>) you can
+    check whether you are also registered as a bartender with your organization. It may also be that indicating
+    availability has been disabled for an event.
+    {% endblocktrans %}
 </p>
-<h2 id="plannen">Borrels plannen</h2>
+<h2 id="plannen">{% trans 'Schedule events' %}</h2>
 <p>
-    Met de knop <a href="{% url 'new-event' %}">Nieuwe activiteit</a> op de pagina
-    <a href="{% url 'event-list' %}">Planning</a> kun je als Planner nieuwe borrels inplannen. Met het potloodje
-    <a class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a> kun je borrels wijzigen en
-    met het prullenbakje <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> kun je
-    geplande borrels verwijderen.
+    {% blocktrans trimmed with new_event_url=new_event_url event_list_url=event_list_url %}
+    With the <a href="{{ new_event_url }}">Add event</a> button on the <a href="{{ event_list_url }}">Planning</a>
+    page, you can schedule new events as a Planner. With the pencil icon
+    <a class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a> you can modify events, and
+    with the trash icon <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> you can
+    delete scheduled events.
+    {% endblocktrans %}
 </p>
 <dl>
-    <dt>Participants</dt>
+    <dt>{% trans 'participants' as t %}{{ t|capfirst }}</dt>
     <dd>
-        Geeft aan welke vereniging meedoen met deze activiteit. Tappers van de verenigingen die je selecteerd kunnen zich inschrijven als tapper voor de borrel.
+        {% blocktrans trimmed %}
+        Indicates which organizations participate in this event. Bartenders from the organizations you select can
+        sign up as a bartender for the event.
+        {% endblocktrans %}
     </dd>
-    <dt>Naam</dt>
+    <dt>{% trans 'name' as t %}{{ t|capfirst }}</dt>
     <dd>
-        De naam van de borrel of activiteit
+        {% trans 'The name of the event or activity' %}
     </dd>
-    <dt>Omschrijving</dt>
+    <dt>{% trans 'description' as t %}{{ t|capfirst }}</dt>
     <dd>
-        Extra informatie over een borrel. Momenteel alleen zichtbaar voor planners.
+        {% trans 'Additional information about an event. Currently only visible to planners.' %}
     </dd>
-    <dt>Begintijd</dt>
+    <dt>{% trans 'starts at' as t %}{{ t|capfirst }}</dt>
     <dd>
-        De begintijd van de reservering. De reservering mag niet overlappen met andere reserveringen in dezelfde ruimte.
+        {% trans 'The start time of the reservation. The reservation may not overlap with other reservations in the same room.' %}
     </dd>
-    <dt>Eindtijd</dt>
+    <dt>{% trans 'ends at' as t %}{{ t|capfirst }}</dt>
     <dd>
-        De eindtijd van de reservering.
+        {% trans 'The end time of the reservation.' %}
     </dd>
-    <dt>Inschrijving gesloten</dt>
+    <dt>{% trans 'tender enrollment closed' as t %}{{ t|capfirst }}</dt>
     <dd>
-        Als dit vakje is aangevinkt, kunnen tappers zich niet meer inschrijven voor deze borrel of hun beschikbaarheid wijzigen.
+        {% trans 'If this box is checked, bartenders can no longer sign up for this event or change their availability.' %}
     </dd>
-    <dt>Location</dt>
+    <dt>{% trans 'location' as t %}{{ t|capfirst }}</dt>
     <dd>
-        De gereserveerde ruimte(s).
+        {% trans 'The reserved room(s).' %}
     </dd>
-    <dt>Aantal fusten</dt>
+    <dt>{% trans 'number of kegs' as t %}{{ t|capfirst }}</dt>
     <dd>
-        Het aantal fusten bier dat je verwacht te verbruiken.
+        {% trans 'The number of kegs of beer you expect to use.' %}
     </dd>
-    <dt>Prijscategorie</dt>
+    <dt>{% trans 'pricegroup' as t %}{{ t|capfirst }}</dt>
     <dd>
-        De categorie voor verkoopprijzen voor deze borrel. Wordt momenteel niet gebruikt.
+        {% trans 'The category for selling prices for this event. Currently not used.' %}
     </dd>
 </dl>
 <p>
-    <em>Kan je geen borrels plannen of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd
-    rechts bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je
-    controleren of je ook als planner bent geregistreerd bij je vereniging.
+    {% blocktrans trimmed with profile_url=profile_url %}
+    <em>Can't schedule or modify events?</em> Check whether you have selected the correct organization in the top
+    right of the page. Under <a href="{{ profile_url }}">My profile</a> (section <em>Authorization</em>) you can
+    check whether you are also registered as a planner with your organization.
+    {% endblocktrans %}
 </p>
-<h2 id="tappersbeheren">Tappers beheren</h2>
+<h2 id="tappersbeheren">{% trans 'Manage bartenders' %}</h2>
 <p>
-    Op de pagina <a href="{% url 'memberships' %}">Gebruikers</a> kunnen Managers van de vereniging de tappers,
-    planners en managers van de vereniging bekijken, toevogen, bewerken of verwijderen.
+    {% blocktrans trimmed with memberships_url=memberships_url %}
+    On the <a href="{{ memberships_url }}">Users</a> page, Managers of the organization can view, add, edit or delete
+    the bartenders, planners and managers of the organization.
+    {% endblocktrans %}
 </p>
 <dl>
-    <dt>RADIUS-gebruikersnaam</dt>
+    <dt>{% trans 'RADIUS username' %}</dt>
     <dd>
-        Vul hier het s- of m-nummer van de betreffende persoon in.
+        {% trans 'Enter the s- or m-number of the person in question here.' %}
     </dd>
-    <dt>Mag op borrels tappen</dt>
+    <dt>{% trans 'may tend on events' as t %}{{ t|capfirst }}</dt>
     <dd>
-        Geeft aan dat de persoon zich in kan schrijven als tapper voor borrels.
+        {% trans 'Indicates that the person can sign up as a bartender for events.' %}
     </dd>
-    <dt>Mag borrels aanmaken en wijzigen</dt>
+    <dt>{% trans 'may create and modify events' as t %}{{ t|capfirst }}</dt>
     <dd>
-        Geeft aan dat de persoon borrels kan aanmaken, wijzigen en verwijderen.
+        {% trans 'Indicates that the person can create, modify and delete events.' %}
     </dd>
-    <dt>Mag tappers aanmaken en wijzigen</dt>
+    <dt>{% trans 'May create and modify bartenders' %}</dt>
     <dd>
-        Geeft aan dat de persoon tappers, planners en managers kan aanmaken, wijzigen en verwijderen.
+        {% trans 'Indicates that the person can create, modify and delete bartenders, planners and managers.' %}
     </dd>
 </dl>
 <p>
-    Als een persoon voor de eerste keer wordt toegevoegd aan het systeem, moet je ook zijn voornaam, achternaam en
-    e-mailadres invullen.
+    {% blocktrans trimmed %}
+    When a person is added to the system for the first time, you must also fill in their first name, last name and
+    email address.
+    {% endblocktrans %}
 </p>
 <p>
-    <em>Kan je geen tappers inzien of wijzigen?</em> Controleer dan of je de juiste vereniging hebt geselecteerd rechts
-    bovenaan de pagina. Bij <a href="{% url 'profile' %}">Mijn profiel</a> (kopje <em>Autorisatie</em>) kun je
-    controleren of je ook als manager bent geregistreerd bij je vereniging.
+    {% blocktrans trimmed with profile_url=profile_url %}
+    <em>Can't view or modify bartenders?</em> Check whether you have selected the correct organization in the top
+    right of the page. Under <a href="{{ profile_url }}">My profile</a> (section <em>Authorization</em>) you can
+    check whether you are also registered as a manager with your organization.
+    {% endblocktrans %}
 </p>
-<h2 id="bugs">Fouten of suggesties?</h2>
+<h2 id="bugs">{% trans 'Bugs or suggestions?' %}</h2>
 <p>
-    Als je een probleem hebt met de planning van een borrel, kun je contact opnemen met het bestuur van Stichting
-    Borrelbeheer Zilverling via <span class="reverse">ln.etnewtu.zbs@gelrevo</span>.
+    {% blocktrans trimmed %}
+    If you have a problem with the scheduling of an event, you can contact the board of Stichting Borrelbeheer
+    Zilverling via <span class="reverse">ln.etnewtu.zbs@gelrevo</span>.
+    {% endblocktrans %}
 </p>
 <p>
-    Heb je een fout gevonden in dit borrelbeheersysteem of heb je suggesties voor verbetering, dat kun je contact
-    opnemen met de <a href="https://www.inter-actief.utwente.nl/committees/2/www-committee/">WWW-commissie</a> van
-    Inter-<i>Actief</i> via <span class="reverse">ten.feitca-retni@www</span>.
+    {% blocktrans trimmed with www_committee_url="https://www.inter-actief.utwente.nl/committees/2/www-committee/" %}
+    If you have found a bug in this drinks management system or have suggestions for improvement, you can contact the
+    <a href="{{ www_committee_url }}">WWW committee</a> of Inter-<i>Actief</i>
+    via <span class="reverse">ten.feitca-retni@www</span>.
+    {% endblocktrans %}
 </p>
 {% endblock content %}
