@@ -1,6 +1,6 @@
 {% load compress %}
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
     <head>
         <title>Juliana</title>
         <script>
@@ -17,6 +17,7 @@
         {% compress css %}
         <link rel="stylesheet" href="{% static 'css/bootstrap-5.3.8.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-icons-1.13.1.css' %}">
+        <link rel="stylesheet" href="{% static 'css/application.css' %}">
         <link rel="stylesheet" href="{% static 'css/juliana.css' %}">
         {% endcompress %}
         <script>
@@ -155,7 +156,47 @@
                     </div>
                     {% endif %}
                     <div class="col-3 receipt-container">
-                        <h3>Rekening</h3>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h3 class="mb-0">Rekening</h3>
+                            <div class="d-flex align-items-center gap-2">
+                                {% for code, name in LANGUAGES %}
+                                {% if LANGUAGE_CODE != code %}
+                                <form id="set-lang-{{ code }}" action="{% url 'set_language' %}" method="post" class="d-none">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.path }}">
+                                    <input type="hidden" name="language" value="{{ code }}">
+                                </form>
+                                <a href="#" title="{{ name }}" data-set-lang="{{ code }}">
+                                    {% with 'img/icon/flag_'|add:code|add:'.svg' as flag_url %}
+                                    <img class="flag-icon" src="{% static flag_url %}" alt="{{ name }}">
+                                    {% endwith %}
+                                </a>
+                                {% endif %}
+                                {% endfor %}
+                                <div class="dropdown">
+                                    <a href="#" id="theme-menu" data-bs-toggle="dropdown" aria-label="{% trans 'Toggle theme' %}">
+                                        <i class="bi bi-circle-half" id="theme-icon"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="light">
+                                                <i class="bi bi-sun-fill me-2"></i>{% trans 'Light' %}<i class="bi bi-check2 ms-auto d-none"></i>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="dark">
+                                                <i class="bi bi-moon-stars-fill me-2"></i>{% trans 'Dark' %}<i class="bi bi-check2 ms-auto d-none"></i>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="auto">
+                                                <i class="bi bi-circle-half me-2"></i>{% trans 'Auto' %}<i class="bi bi-check2 ms-auto d-none"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card card-body" id="receipt">
                             <table id="receipt-table">
                             </table>
@@ -296,6 +337,8 @@
         {# Vendor #}
         <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
         <script src="{% static 'js/bootstrap-5.3.8.bundle.js' %}"></script>
+        {# Alexia #}
+        <script src="{% static 'js/application.js' %}"></script>
         {# Juliana #}
         <script src="{% static 'js/juliana.js' %}"></script>
         {% endcompress %}
