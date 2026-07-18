@@ -76,6 +76,19 @@ body {
   font-size: 13px;
 }
 
+.event-card.tr-muted {
+  background-color: var(--bs-secondary-bg);
+  font-style: italic;
+}
+
+.event-card.tr-yellow {
+  background-color: var(--bs-warning-bg-subtle);
+}
+
+.event-card .card-title a {
+  text-decoration: none;
+}
+
 [class^="icon-alexia"] {
   /* Copied from Boodstrap 2.3.2
      https://github.com/twbs/bootstrap/blob/v2.3.2/less/sprites.less line 19-28 */

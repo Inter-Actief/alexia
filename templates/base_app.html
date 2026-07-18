@@ -4,12 +4,12 @@
 {% block body %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container">
-        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#alexia-navbar-collapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <a class="navbar-brand" href="{% url 'event-list' %}">
             <img src="{% static 'img/alexia.svg' %}" alt="Alexia">
         </a>
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#alexia-navbar-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="alexia-navbar-collapse">
             <ul class="navbar-nav">
                 {% menuitem 'apps.scheduling.views' class='nav-item dropdown' %}

@@ -46,6 +46,9 @@ USE_TZ = True
 
 # HTTP
 INTERNAL_IPS = ['127.0.0.1']
+# The IVA membership list is embedded in a same-origin iframe (for printing);
+# Django's default of DENY blocks that too, so relax it to SAMEORIGIN.
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
