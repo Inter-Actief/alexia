@@ -19,15 +19,17 @@ new Chart(document.getElementById("chart"), {
     },
     options: {
         scales: {
-            yAxes: [{
+            y: {
+                beginAtZero: true,
                 ticks: {
-                    beginAtZero: true,
-                    fixedStepSize: true,
+                    stepSize: 1,
                 },
-            }],
+            },
         },
-        legend: {
-            display: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
         },
     },
 });

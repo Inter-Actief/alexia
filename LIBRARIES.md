@@ -12,6 +12,10 @@ released under the following licenses.
   * MIT License
   * https://icons.getbootstrap.com/
   * https://github.com/twbs/icons/tree/v1.13.1
+* Chart.js 4.5.0:
+  * MIT License
+  * https://www.chartjs.org/
+  * https://github.com/chartjs/Chart.js/tree/v4.5.0
 * FullCalendar 7.0.0:
   * MIT License
   * https://fullcalendar.io/
