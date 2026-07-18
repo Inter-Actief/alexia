@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from datetime import timezone
 from django.utils import timezone as django_timezone
@@ -403,8 +404,19 @@ def set_bartender_availability(request):
         else:
             log.availability_created(
                 request.user, event, request.user, availability)
-        return render(request, 'scheduling/partials/assigned_bartenders.html',
-                      {'e': event})
+        # Both the assigned bartenders and the (derived) IVA status can change,
+        # so return every fragment the event list needs to refresh in place.
+        return JsonResponse({
+            'bartenders': render_to_string(
+                'scheduling/partials/assigned_bartenders.html',
+                {'e': event}, request=request),
+            'iva': render_to_string(
+                'scheduling/partials/iva_status.html',
+                {'e': event}, request=request),
+            'iva_mobile': render_to_string(
+                'scheduling/partials/iva_status.html',
+                {'e': event, 'mobile': True}, request=request),
+        })
     else:
         # TODO Better error message and HTTP status code [JZ]
         return HttpResponse("NOTOK")

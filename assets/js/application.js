@@ -115,9 +115,15 @@ $(function () {
             event_id: event_id,
             availability_id: $(this).val()
         }, function (data) {
-            $('#assigned_bartenders_' + event_id).html(data);
-            $('#bartender_availability_comment_' + event_id).css('visibility', 'visible');
-        }, "text");
+            // Update both the desktop table row and the mobile card. The
+            // IVA status is derived from the assigned bartenders, so refresh
+            // it alongside the names.
+            $('#assigned_bartenders_' + event_id).html(data.bartenders);
+            $('#assigned_bartenders_mobile_' + event_id).html(data.bartenders);
+            $('#iva_' + event_id).html(data.iva);
+            $('#iva_mobile_' + event_id).html(data.iva_mobile);
+            $('.bartender_availability_comment[data-event-id="' + event_id + '"]').css('visibility', 'visible');
+        }, "json");
     });
 
     resetCommentPrompts();

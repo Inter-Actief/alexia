@@ -72,24 +72,14 @@
                 {% endif %}
             </div>
             <div class="d-flex flex-wrap align-items-center gap-2 small mb-2">
-                {% if e.needs_iva %}
-                {% with ivacheck=e.meets_iva_requirement %}
-                {% if ivacheck == "YES" %}
-                <span><i class="icon-alexia-ok"></i> IVA</span>
-                {% elif ivacheck == "MAYBE" %}
-                <span class="text-warning"><span class="bi bi-exclamation-triangle"></span> {% trans 'Some bartenders have IVA, but not everyone' %}</span>
-                {% else %}
-                <span><i class="icon-alexia-notok"></i> IVA</span>
-                {% endif %}
-                {% endwith %}
-                {% endif %}
+                <span id="iva_mobile_{{ e.pk }}">{% include 'scheduling/partials/iva_status.html' with e=e mobile=True %}</span>
                 {% if e.kegs %}
                 <span>{{ e.kegs }} &times; {% trans 'Kegs' %}</span>
                 {% endif %}
             </div>
-            <div class="small mb-2" id="assigned_bartenders_mobile_{{ e.pk }}">
+            <div class="small mb-2">
                 <span class="bi bi-person-badge me-1" aria-hidden="true"></span>
-                {% include 'scheduling/partials/assigned_bartenders.html' with e=e %}
+                <span id="assigned_bartenders_mobile_{{ e.pk }}">{% include 'scheduling/partials/assigned_bartenders.html' with e=e %}</span>
             </div>
             {% if is_tender %}
                 {% if not e.is_closed and request.organization in e.participants.all %}
@@ -188,20 +178,8 @@
                     {% endif %}
                 </td>
                 <td>{{ e.kegs|default:'&mdash;' }}</td>
-                <td>
-                    {% if e.needs_iva %}
-                    {% with ivacheck=e.meets_iva_requirement %}
-                    {% if ivacheck == "YES" %}
-                    <i class="icon-alexia-ok"></i>
-                    {% elif ivacheck == "MAYBE" %}
-                    <span class="text-warning bi bi-exclamation-triangle" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
-                    {% else %}
-                    <i class="icon-alexia-notok"></i>
-                    {% endif %}
-                    {% endwith %}
-                    {% else %}
-                    &mdash;
-                    {% endif %}
+                <td id="iva_{{ e.pk }}">
+                    {% include 'scheduling/partials/iva_status.html' with e=e %}
                 </td>
                 <td id="assigned_bartenders_{{ e.pk }}">
                     {% include 'scheduling/partials/assigned_bartenders.html' with e=e %}
