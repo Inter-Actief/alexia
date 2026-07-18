@@ -76,6 +76,10 @@ body {
   font-size: 13px;
 }
 
+.tab-content {
+  padding-top: 1rem;
+}
+
 .event-card.tr-muted {
   background-color: var(--bs-secondary-bg);
   font-style: italic;
