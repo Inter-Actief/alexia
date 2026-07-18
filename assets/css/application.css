@@ -110,6 +110,19 @@ body {
   background-image: url('/static/img/icon/alexia-upload.png');
 }
 
+[data-bs-theme="dark"] .navbar-brand > img,
+[data-bs-theme="dark"] .login-logo {
+  content: url('/static/img/alexia-white.svg');
+}
+
+[data-bs-theme="dark"] .icon-bottle {
+  content: url('/static/img/bottle-white.svg');
+}
+
+[data-bs-theme="dark"] .icon-tap {
+  content: url('/static/img/tap-white.svg');
+}
+
 /* Keep the debug toolbar panel below the fixed navbar; at top: 0 it covers
    the right-hand navbar items (theme toggle, language) and swallows their
    clicks. Inert in production, where the toolbar is not rendered. */
