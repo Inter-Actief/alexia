@@ -16,7 +16,7 @@ released under the following licenses.
   * MIT License
   * https://fullcalendar.io/
   * https://github.com/fullcalendar/fullcalendar/tree/v7.0.0
-* jQuery 3.1.1:
+* jQuery 3.7.1:
   * MIT License
   * https://jquery.com/
 * django-modern-rpc:
