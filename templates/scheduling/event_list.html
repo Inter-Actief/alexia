@@ -123,19 +123,23 @@
                 {% endif %}
                 {% if is_tender or is_planner %}
                 <td>
-                    <div class="btn-group btn-group-xs">
+                    <div class="d-flex flex-column gap-1">
                     {% if is_planner %}
                     {% if e.organizer == request.organization %}
-                    <a class="btn btn-secondary" href="{% url 'edit-event' e.pk %}"><span class="bi bi-pencil"></span></a>
-                    <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="bi bi-trash"></i></a>
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-secondary" href="{% url 'edit-event' e.pk %}"><span class="bi bi-pencil"></span></a>
+                        <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="bi bi-trash"></i></a>
+                    </div>
                     {% endif %}
                     {% endif %}
                     {% if is_tender and e.can_be_opened %}
                     {% if e in events_tending or request.organization == e.organizer and request.organization.assigns_tenders and is_tender %}
-                    <a class="btn btn-primary" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
-                    {% if not e.consumptionform.is_completed %}
-                    <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
-                    {% endif %}
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-primary text-nowrap" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
+                        {% if not e.consumptionform.is_completed %}
+                        <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
+                        {% endif %}
+                    </div>
                     {% endif %}
                     {% endif %}
                     </div>
