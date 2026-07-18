@@ -29,6 +29,12 @@ label.col-form-label { font-weight: bold; }
     border-bottom: 1px solid var(--bs-border-color);
 }
 
+@media (max-width: 767px) {
+    .page-header {
+        margin-top: 20px;
+    }
+}
+
 body {
     padding-top: 60px;
     padding-bottom: 40px;
