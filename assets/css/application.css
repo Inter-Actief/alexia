@@ -20,7 +20,8 @@
     }
 }
 
-label.col-form-label { font-weight: bold; }
+.form-label,
+.col-form-label { font-weight: bold; }
 
 /* Bootstrap dropped the .page-header component; restore its Bootstrap 3 look. */
 .page-header {

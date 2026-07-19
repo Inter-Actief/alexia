@@ -22,6 +22,7 @@ class EventForm(AlexiaModelForm):
             'location': forms.CheckboxSelectMultiple,
             'starts_at': NativeSplitDateTimeWidget,
             'ends_at': NativeSplitDateTimeWidget,
+            'kegs': forms.NumberInput(attrs={'style': 'max-width: 10rem;'}),
         }
 
     def __init__(self, organization, *args, **kwargs):
