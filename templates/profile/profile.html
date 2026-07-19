@@ -46,16 +46,16 @@
     <div class="col-12 col-sm-7 col-md-8 col-lg-9">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="#billing" data-bs-toggle="tab">{% trans 'Billing' %}</a>
+                <a class="nav-link{% if request.GET.tab != 'bartender' %} active{% endif %}" href="#billing" data-bs-toggle="tab">{% trans 'Billing' %}</a>
             </li>
             {% if is_tender %}
             <li class="nav-item">
-                <a class="nav-link" href="#bartender" data-bs-toggle="tab">{% trans 'Bartender' %}</a>
+                <a class="nav-link{% if request.GET.tab == 'bartender' %} active{% endif %}" href="#bartender" data-bs-toggle="tab">{% trans 'Bartender' %}</a>
             </li>
             {% endif %}
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="billing">
+            <div class="tab-pane{% if request.GET.tab != 'bartender' %} active{% endif %}" id="billing">
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <h4>{% trans 'Events' %}</h4>
@@ -135,7 +135,7 @@
                 </div>
             </div>
             {% if is_tender %}
-            <div class="tab-pane" id="bartender">
+            <div class="tab-pane{% if request.GET.tab == 'bartender' %} active{% endif %}" id="bartender">
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <h4>{% trans 'Autorization' %}</h4>
