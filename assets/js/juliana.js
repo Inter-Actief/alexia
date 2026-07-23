@@ -296,7 +296,13 @@ Receipt = {
         if (!userData) {
             State.toggleTo(State.ERROR, 'RFID card retrieval failed');
         } else if (userData.error) {
-            State.toggleTo(State.ERROR, 'Error authenticating: ' + userData.error.message);
+            let url = userData.error.data?.card_register_url;
+            if (url) {
+                State.toggleTo(State.ERROR, `Error authenticating: ${userData.error.message}</br><a href="${url}" target="_blank">Click here</a> to register the card.`);
+            } else{
+                State.toggleTo(State.ERROR, `Error authenticating: ${userData.error.message}</br`);
+            }
+
         } else {
             console.log('Userdata received correctly. Proceeding to countdown.');
 

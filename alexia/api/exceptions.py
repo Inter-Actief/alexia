@@ -26,3 +26,13 @@ class InvalidParamsError(RPCException):
             code=RPC_INVALID_PARAMS,
             message='Invalid params.' if message is None else message
         )
+
+
+class UnregisteredCardError(RPCException):
+    """ Invalid method parameters. """
+    def __init__(self, card_register_url=None, message=None):
+        super(UnregisteredCardError, self).__init__(
+            code=RPC_INVALID_PARAMS,
+            message='Unregistered card.' if message is None else message,
+            data={"card_register_url":card_register_url}
+        )

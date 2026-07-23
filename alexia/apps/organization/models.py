@@ -134,6 +134,8 @@ class Organization(models.Model):
     age_check_enabled = models.BooleanField(_('age check enabled'), default=False)
     age_check_api_endpoint = models.URLField(_('age check API endpoint'), blank=True, null=True)
     age_check_api_key = models.CharField(_('age check API key'), max_length=64, blank=True, null=True)
+    card_registration_url = models.URLField(_('card registration URL'), blank=True, null=True)
+
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='Membership',
