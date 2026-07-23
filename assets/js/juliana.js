@@ -292,65 +292,51 @@ Receipt = {
     },
     continuePay: function (userData, rfid) {
         console.log('continuePay was called: ');
-        console.log(userData);
-        if (!userData) {
-            State.toggleTo(State.ERROR, 'RFID card retrieval failed');
-        } else if (userData.error) {
-            let url = userData.error.data?.card_register_url;
-            if (url) {
-                State.toggleTo(State.ERROR, `Error authenticating: ${userData.error.message}</br><a href="${url}" target="_blank">Click here</a> to register the card.`);
-            } else{
-                State.toggleTo(State.ERROR, `Error authenticating: ${userData.error.message}</br`);
-            }
 
-        } else {
-            console.log('Userdata received correctly. Proceeding to countdown.');
-
-            let ageCheckbox = $('#agecheckbox');
-            let ageCheckboxDiv = $('#agecheckbox .alert');
-            let ageOk = $('#age-check-ok');
-            let ageWarning = $('#age-check-warning');
-            let ageUnknown = $('#age-check-unknown');
-            ageCheckboxDiv.removeClass('alert-warning');
-            ageCheckboxDiv.removeClass('alert-success');
-            ageCheckboxDiv.removeClass('alert-danger');
-            if (userData.result.age_check === true) {
-                ageCheckboxDiv.addClass('alert-success');
-                ageOk.show();
-                ageWarning.hide();
-                ageUnknown.hide();
-                ageCheckbox.show();
-            } else if (userData.result.age_check === false) {
-                ageCheckboxDiv.addClass('alert-danger');
-                ageOk.hide();
-                ageWarning.show();
-                ageUnknown.hide();
-                ageCheckbox.show();
-            } else if (userData.result.age_check === null) {
-                ageCheckboxDiv.addClass('alert-warning');
-                ageOk.hide();
-                ageWarning.hide();
-                ageUnknown.show();
-                ageCheckbox.show();
-            }
-
-            Receipt.payData = {
-                event_id: Settings.event_id,
-                user_id: userData.result.user.id,
-                purchases: Receipt.receipt,
-                rfid_data: rfid
-            };
-
-            var countdown = Settings.countdown - 1;
-            $('#payment-countdown').text(countdown + 1);
-            Receipt.counterInterval = setInterval(function () {
-                $('#payment-countdown').text(countdown);
-                if (countdown === 0) {
-                    Receipt.payNow();
-                }
-                countdown--;
-            }, 1000);
+        let ageCheckbox = $('#agecheckbox');
+        let ageCheckboxDiv = $('#agecheckbox .alert');
+        let ageOk = $('#age-check-ok');
+        let ageWarning = $('#age-check-warning');
+        let ageUnknown = $('#age-check-unknown');
+        ageCheckboxDiv.removeClass('alert-warning');
+        ageCheckboxDiv.removeClass('alert-success');
+        ageCheckboxDiv.removeClass('alert-danger');
+        if (userData.result.age_check === true) {
+            ageCheckboxDiv.addClass('alert-success');
+            ageOk.show();
+            ageWarning.hide();
+            ageUnknown.hide();
+            ageCheckbox.show();
+        } else if (userData.result.age_check === false) {
+            ageCheckboxDiv.addClass('alert-danger');
+            ageOk.hide();
+            ageWarning.show();
+            ageUnknown.hide();
+            ageCheckbox.show();
+        } else if (userData.result.age_check === null) {
+            ageCheckboxDiv.addClass('alert-warning');
+            ageOk.hide();
+            ageWarning.hide();
+            ageUnknown.show();
+            ageCheckbox.show();
         }
+
+        Receipt.payData = {
+            event_id: Settings.event_id,
+            user_id: userData.result.user.id,
+            purchases: Receipt.receipt,
+            rfid_data: rfid
+        };
+
+        var countdown = Settings.countdown - 1;
+        $('#payment-countdown').text(countdown + 1);
+        Receipt.counterInterval = setInterval(function () {
+            $('#payment-countdown').text(countdown);
+            if (countdown === 0) {
+                Receipt.payNow();
+            }
+            countdown--;
+        }, 1000);
     },
     payNow: function () {
         console.log('Processing payment now.');
@@ -505,7 +491,24 @@ User = {
             id: 1
         };
         console.log('Sending request: ' + JSON.stringify(rpcRequest));
-        IAjax.request(rpcRequest, callback);
+
+        IAjax.request(rpcRequest, function (userData){
+            if (!userData) {
+                State.toggleTo(State.ERROR, 'RFID card retrieval failed');
+            } else if (userData.error) {
+                let url = userData.error.data?.card_register_url;
+                if (url) {
+                    State.toggleTo(State.ERROR, `Error authenticating: ${userData.error.message}</br><a href="${url}" target="_blank">Click here</a> to register the card.`);
+                } else{
+                    State.toggleTo(State.ERROR, `Error authenticating: ${userData.error.message}</br`);
+                }
+            } else {
+                console.log(userData);
+                console.log('Userdata received correctly.');
+
+                callback(userData);
+            }
+        });
     },
     check: function (rfid) {
         console.log('Card scanned. Retrieving userData for: ' + rfid);
