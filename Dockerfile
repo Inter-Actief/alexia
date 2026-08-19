@@ -39,7 +39,7 @@ ENV PATH="/alexia/.venv/bin:$PATH"
 USER 1000:1000
 
 # Check if Django can run
-RUN python3 manage.py check
+RUN uv run python3 manage.py check
 
 # Expose volumes
 VOLUME ["/config", "/static", "/media"]
