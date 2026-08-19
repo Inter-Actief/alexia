@@ -161,7 +161,7 @@ Scanner = {
 
         socket.onerror = function (event) {
             console.log('Failed to connect with websocket, warning user.');
-            alert('Verbinden met NFC-reader mislukt.');
+            alert('Connecting to NFC reader failed.');
         };
 
         socket.onmessage = function (event) {

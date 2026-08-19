@@ -39,20 +39,19 @@
         <h3>{% trans 'Stats' %}</h3>
         <h4>{% trans 'Organization' %}</h4>
         <p>
-            Alexia kent
-            <strong>{{ count.users }} (oud-)gebruikers</strong>. Er zijn
-            <strong>{{ count.organizations }} verenigingen </strong> met
-            <strong>{{ count.tenders }} tappers</strong>. Verder zijn er
-            <strong>{{ count.locations }} locaties</strong>.
+            {% blocktrans trimmed with users=count.users organizations=count.organizations tenders=count.tenders locations=count.locations %}
+            Alexia has <strong>{{ users }} (former) users</strong>. There are <strong>{{ organizations }} organizations</strong>
+            with <strong>{{ tenders }} bartenders</strong>. There are also <strong>{{ locations }} locations</strong>.
+            {% endblocktrans %}
         </p>
         <h4>{% trans 'Drinks' %}</h4>
         <p>
-            Het systeem registreert borrels sinds
-            <strong>{{ count.first_event.starts_at|date }}</strong> en sindsdien zijn er
-            <strong>{{ count.events }} borrels</strong> aangemeld. Voor deze borrels hebben de tappers
-            <strong>{{ count.bartender_availabilities }} keer</strong> hun beschikbaarheid aangegeven, waarvan er
-            <strong>{{ count.bartender_availabilities_yes }} keer 'ja'</strong> is gezegd door de tappers, en er
-            <strong>{{ count.bartender_availabilities_assigned }} tappers zijn toegewezen</strong>.
+            {% blocktrans trimmed with first_event_date=count.first_event.starts_at|date events=count.events bartender_availabilities=count.bartender_availabilities bartender_availabilities_yes=count.bartender_availabilities_yes bartender_availabilities_assigned=count.bartender_availabilities_assigned %}
+            The system has been registering events since <strong>{{ first_event_date }}</strong>, and <strong>{{ events }} events</strong>
+            have been registered since then. For these events, bartenders have indicated their availability
+            <strong>{{ bartender_availabilities }} times</strong>, of which bartenders said <strong>'yes' {{ bartender_availabilities_yes }} times</strong>,
+            and <strong>{{ bartender_availabilities_assigned }} bartenders have been assigned</strong>.
+            {% endblocktrans %}
         </p>
     </div>
 </div>
