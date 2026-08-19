@@ -8,7 +8,7 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from modernrpc.exceptions import RPCInternalError
 
 from alexia.api.exceptions import (
-    ForbiddenError, InvalidParamsError, ObjectNotFoundError,
+    ForbiddenError, InvalidParamsError, ObjectNotFoundError, UnregisteredCardError,
 )
 from alexia.apps.billing.models import (
     Authorization, Order, Product, Purchase, RfidCard, WriteoffCategory, WriteOffOrder, WriteOffPurchase
@@ -17,6 +17,8 @@ from alexia.apps.scheduling.models import Event
 
 from ..common import format_authorization
 from ...decorators import login_required
+import urllib.parse as urlparse
+from urllib.parse import urlencode
 
 
 def rfid_to_identifier(rfid):
@@ -95,7 +97,15 @@ def juliana_rfid_get(event_id: int, rfid: Dict, **kwargs) -> Dict:
     try:
         card = RfidCard.objects.get(identifier=identifier, is_active=True)
     except RfidCard.DoesNotExist:
-        raise ObjectNotFoundError('RFID card not found')
+        card_registration_url = None
+        if event.organizer.card_registration_url:
+            url_parts = list(urlparse.urlparse(event.organizer.card_registration_url))
+            query = dict(urlparse.parse_qsl(url_parts[4]))
+            query["tag"] = identifier
+            url_parts[4] = urlencode(query)
+
+            card_registration_url = urlparse.urlunparse(url_parts)
+        raise UnregisteredCardError(message='RFID card not found', card_register_url=card_registration_url)
 
     user = card.user
     authorization = Authorization.get_for_user_event(user, event)

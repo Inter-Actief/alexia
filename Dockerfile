@@ -1,5 +1,5 @@
-# Build the alexia docker image based on Debian 11 (Bullseye)
-FROM debian:trixie-slim
+# Build the alexia docker image based on Debian 13 (Trixie)
+FROM debian:trixie
 
 # Copy alexia sources
 COPY . /alexia
@@ -13,9 +13,7 @@ RUN echo "Updating repositories..." && \
     echo "Upgrading base debian system..." && \
     apt-get upgrade -y && \
     echo "Installing alexia required packages..." && \
-    apt-get install -y apt-utils git net-tools curl python3 python3-dev build-essential pkg-config mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
-    echo "Installing uv..." && \
-    curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh && \
+    apt-get install -y apt-utils git net-tools curl python3 python3-pip python3-dev build-essential pkg-config mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
     echo "Installing wkhtmltopdf (no longer packaged in Debian repos)..." && \
     curl -LsSf -o /tmp/wkhtmltox.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb && \
     apt-get install -y /tmp/wkhtmltox.deb && \
@@ -28,20 +26,18 @@ RUN echo "Updating repositories..." && \
     echo "Creating directories for alexia..." && \
     mkdir -p /alexia /config /static /media /var/log /var/run && \
     echo "Installing python requirements..." && \
-    UV_PYTHON_INSTALL_DIR=/usr/local/share/uv/python uv sync --frozen && \
+    pip3 install --upgrade uv --break-system-packages && \
+    uv sync && \
     echo "Correcting permissions on directories..." && \
     chown -R 1000:1000 /alexia /config /static /media /var/log
-
-# Make the project's virtual environment available on PATH
-ENV PATH="/alexia/.venv/bin:$PATH"
-
-# uv needs a writable cache dir; the default (derived from $HOME) isn't writable for the non-root user below
-ENV UV_CACHE_DIR="/config/uv-cache"
 
 # Switch back to a local user
 USER 1000:1000
 
-# Check if Django can run
+# Enable uv dependencies
+ENV PATH=".venv/bin:$PATH"
+
+# Install requirements and check if Django can run
 RUN python3 manage.py check
 
 # Expose volumes
