@@ -36,9 +36,13 @@ USER 1000:1000
 # Make the project's virtual environment available on PATH
 ENV PATH="/alexia/.venv/bin:$PATH"
 
+# uv needs a writable cache dir; the default (derived from $HOME) isn't writable for the non-root user below
+ENV UV_CACHE_DIR="/config/uv-cache"
+
 # Install requirements and check if Django can run
 RUN echo "Installing python requirements..." && \
     uv sync --frozen && \
+    echo "Check if Django can run..." && \
     python3 manage.py check
 
 # Expose volumes
