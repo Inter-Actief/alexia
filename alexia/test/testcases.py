@@ -50,7 +50,7 @@ class TestCase(TransactionTestCase, testcases.TestCase):
         super(TestCase, self).setUp()
         self.data = dict()
 
-        self.data['datetime1'] = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), timezone.utc)
+        self.data['datetime1'] = timezone.make_aware(datetime.datetime(2014, 9, 21, 14, 16, 6), datetime.timezone.utc)
         self.data['datetime2'] = self.data['datetime1'] + datetime.timedelta(hours=1)
         self.data['datetime3'] = self.data['datetime1'] + datetime.timedelta(hours=2)
 

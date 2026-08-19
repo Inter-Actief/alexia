@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    command: sh -c "uv run python3 manage.py migrate && uv run python3 manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mysql://alexia:alexia@db:3306/alexia
+      - DJANGO_DEBUG=True
+      - DJANGO_SECRET_KEY=dev-insecure-secret-key-change-in-production
+    links:
+      - nginx
+    ports:
+      - 8000:8000
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /alexia
+          ignore:
+            - .venv/
+    volumes:
+      - .:/alexia
+      - app_venv:/alexia/.venv
+  nginx:
+    image: nginx:latest
+  db:
+    image: mariadb:10.11
+    environment:
+      - MARIADB_DATABASE=alexia
+      - MARIADB_USER=alexia
+      - MARIADB_PASSWORD=alexia
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mariadb-init:/docker-entrypoint-initdb.d:ro
+volumes:
+  db_data:
+  app_venv:

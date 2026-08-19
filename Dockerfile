@@ -1,5 +1,5 @@
-# Build the alexia docker image based on Debian 11 (Bullseye)
-FROM debian:bullseye
+# Build the alexia docker image based on Debian 13 (Trixie)
+FROM debian:trixie-slim
 
 # Copy alexia sources
 COPY . /alexia
@@ -8,12 +8,18 @@ COPY . /alexia
 WORKDIR /alexia
 
 # Install required packages for alexia and prepare the system to run alexia
-RUN echo "Updating repostitories..." && \
+RUN echo "Updating repositories..." && \
     apt-get update -y && \
     echo "Upgrading base debian system..." && \
     apt-get upgrade -y && \
     echo "Installing alexia required packages..." && \
-    apt-get install -y apt-utils git net-tools python3 python3-pip mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl wkhtmltopdf xvfb && \
+    apt-get install -y apt-utils git net-tools curl python3 python3-dev build-essential pkg-config mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
+    echo "Installing uv..." && \
+    curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh && \
+    echo "Installing wkhtmltopdf (no longer packaged in Debian repos)..." && \
+    curl -LsSf -o /tmp/wkhtmltox.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb && \
+    apt-get install -y /tmp/wkhtmltox.deb && \
+    rm /tmp/wkhtmltox.deb && \
     echo "Enabling 'nl_NL' and 'en_US' locales..." && \
     sed -i -e 's/# nl_NL.UTF-8 UTF-8/nl_NL.UTF-8 UTF-8/' /etc/locale.gen && \
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -22,9 +28,15 @@ RUN echo "Updating repostitories..." && \
     echo "Creating directories for alexia..." && \
     mkdir -p /alexia /config /static /media /var/log /var/run && \
     echo "Installing python requirements..." && \
-    pip3 install -r requirements.txt && \
+    UV_PYTHON_INSTALL_DIR=/usr/local/share/uv/python uv sync --frozen && \
     echo "Correcting permissions on directories..." && \
     chown -R 1000:1000 /alexia /config /static /media /var/log
+
+# Make the project's virtual environment available on PATH
+ENV PATH="/alexia/.venv/bin:$PATH"
+
+# uv needs a writable cache dir; the default (derived from $HOME) isn't writable for the non-root user below
+ENV UV_CACHE_DIR="/config/uv-cache"
 
 # Switch back to a local user
 USER 1000:1000

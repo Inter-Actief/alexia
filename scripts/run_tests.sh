@@ -4,19 +4,16 @@
 # ------------------------------------------------------
 # Python version
 echo "Python version:"
-python3 -V
+uv run python3 -V
 # Path to the python binary being used
 echo "Python binary:"
-which python
-# Pip version
-echo "Pip version:"
-pip -V
-# Path to the pip binary being used
-echo "Pip binary:"
-which pip
-# Installed pip package list
-echo "Pip installed packages:"
-pip freeze
+uv run which python3
+# uv version
+echo "uv version:"
+uv --version
+# Installed package list
+echo "Installed packages:"
+uv pip list
 
 # Configure Django and run the tests
 # ----------------------------------
@@ -26,16 +23,16 @@ cp ./alexia/conf/settings/test.py ./alexia/conf/settings/local.py
 
 # Run Django initial checks
 echo "Checking if Django can run..."
-python3 manage.py check
+uv run python3 manage.py check
 
 # Make sure staticfiles are collected into the static volume
 echo "Collecting static files..."
-python3 manage.py collectstatic --noinput
+uv run python3 manage.py collectstatic --noinput
 
 # Make sure database is migrated
 echo "Executing Django migrations..."
-python3 manage.py migrate
+uv run python3 manage.py migrate
 
 # Run Django tests
 echo "Running Alexia tests..."
-python3 manage.py test --keepdb
+uv run python3 manage.py test --keepdb
