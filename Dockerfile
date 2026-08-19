@@ -42,7 +42,7 @@ ENV UV_CACHE_DIR="/config/uv-cache"
 USER 1000:1000
 
 # Check if Django can run
-RUN uv run python3 manage.py check
+RUN uv run python manage.py check
 
 # Expose volumes
 VOLUME ["/config", "/static", "/media"]
