@@ -13,7 +13,7 @@ RUN echo "Updating repositories..." && \
     echo "Upgrading base debian system..." && \
     apt-get upgrade -y && \
     echo "Installing alexia required packages..." && \
-    apt-get install -y apt-utils git net-tools curl python3 python3-dev build-essential pkg-config mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
+    apt-get install -y apt-utils git net-tools curl python3 python3-pip python3-dev build-essential pkg-config mariadb-client libmariadb-dev xmlsec1 libssl-dev libldap-dev libsasl2-dev libjpeg-dev zlib1g-dev gettext locales acl xvfb && \
     echo "Installing uv..." && \
     pip3 install --upgrade uv --break-system-packages && \
     echo "Installing wkhtmltopdf (no longer packaged in Debian repos)..." && \
