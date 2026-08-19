@@ -35,6 +35,9 @@ RUN echo "Updating repositories..." && \
 # Make the project's virtual environment available on PATH
 ENV PATH="/alexia/.venv/bin:$PATH"
 
+# uv needs a writable cache dir; the default (derived from $HOME) isn't writable for the non-root user below
+ENV UV_CACHE_DIR="/config/uv-cache"
+
 # Switch back to a local user
 USER 1000:1000
 
