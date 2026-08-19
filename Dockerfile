@@ -27,22 +27,19 @@ RUN echo "Updating repositories..." && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     echo "Creating directories for alexia..." && \
     mkdir -p /alexia /config /static /media /var/log /var/run && \
-    echo "Installing python requirements..." && \
-    uv sync --frozen && \
     echo "Correcting permissions on directories..." && \
     chown -R 1000:1000 /alexia /config /static /media /var/log
-
-# Make the project's virtual environment available on PATH
-ENV PATH="/alexia/.venv/bin:$PATH"
-
-# uv needs a writable cache dir; the default (derived from $HOME) isn't writable for the non-root user below
-ENV UV_CACHE_DIR="/config/uv-cache"
 
 # Switch back to a local user
 USER 1000:1000
 
-# Check if Django can run
-RUN uv run python manage.py check
+# Make the project's virtual environment available on PATH
+ENV PATH="/alexia/.venv/bin:$PATH"
+
+# Install requirements and check if Django can run
+RUN echo "Installing python requirements..." && \
+    uv sync --frozen && \
+    python3 manage.py check
 
 # Expose volumes
 VOLUME ["/config", "/static", "/media"]
