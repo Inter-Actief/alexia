@@ -247,6 +247,7 @@ class JulianaTest(APITestCase):
             status_code=200,
             error_code=404,
             error_message='RFID card not found',
+            error_data={'card_register_url': None},
         )
 
     def test_rfid_get_no_authorization(self):
