@@ -65,7 +65,7 @@ class Event(models.Model):
         verbose_name=_('tender enrollment closed'),
         default=False,
         help_text=_(
-            'Designates if tenders can sign up for this event.'
+            'If checked, tenders will not be able to sign up for this event (note: tenders get e-mailed about events with open enrollments).'
         ),
     )
     bartenders = models.ManyToManyField(
