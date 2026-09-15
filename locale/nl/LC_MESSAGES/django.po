@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 18:29+0200\n"
-"PO-Revision-Date: 2026-05-11 18:31+0200\n"
+"POT-Creation-Date: 2026-09-15 09:40+0200\n"
+"PO-Revision-Date: 2026-09-15 09:45+0200\n"
 "Last-Translator: Kevin Alberts <kevin.alberts@inter-actief.net>\n"
 "Language-Team: WWW-commissie <www@inter-actief.net>\n"
 "Language: nl\n"
@@ -33,7 +33,7 @@ msgstr "Eindtijd"
 msgid "New price group"
 msgstr "Nieuwe prijsgroep"
 
-#: alexia/apps/billing/models.py:22 alexia/apps/billing/models.py:43 alexia/apps/billing/models.py:136 alexia/apps/billing/models.py:222 alexia/apps/billing/models.py:340 alexia/apps/organization/models.py:146 alexia/apps/organization/models.py:199 alexia/apps/scheduling/models.py:24 alexia/apps/scheduling/models.py:203
+#: alexia/apps/billing/models.py:22 alexia/apps/billing/models.py:43 alexia/apps/billing/models.py:136 alexia/apps/billing/models.py:222 alexia/apps/billing/models.py:340 alexia/apps/organization/models.py:148 alexia/apps/organization/models.py:201 alexia/apps/scheduling/models.py:24 alexia/apps/scheduling/models.py:203
 msgid "organization"
 msgstr "organisatie"
 
@@ -130,7 +130,7 @@ msgstr "is actief"
 msgid "registered at"
 msgstr "geregistreerd op"
 
-#: alexia/apps/billing/models.py:196 alexia/apps/billing/models.py:216 alexia/apps/organization/models.py:37 alexia/apps/organization/models.py:51 alexia/apps/organization/models.py:194
+#: alexia/apps/billing/models.py:196 alexia/apps/billing/models.py:216 alexia/apps/organization/models.py:37 alexia/apps/organization/models.py:51 alexia/apps/organization/models.py:196
 msgid "user"
 msgstr "gebruiker"
 
@@ -254,7 +254,7 @@ msgstr "Afschrijvingstransacties"
 msgid "{time} on {event}"
 msgstr "{time} bij {event}"
 
-#: alexia/apps/billing/views.py:48 alexia/apps/consumption/views.py:73
+#: alexia/apps/billing/views.py:48 alexia/apps/consumption/views.py:74
 msgid "You are not a tender for this event"
 msgstr "Je bent geen tapper bij deze borrel!"
 
@@ -346,7 +346,7 @@ msgstr "Jaar"
 msgid "File format"
 msgstr "Bestandsformaat"
 
-#: alexia/apps/consumption/models.py:11 alexia/apps/organization/models.py:205
+#: alexia/apps/consumption/models.py:11 alexia/apps/organization/models.py:207
 msgid "is currently active"
 msgstr "is actief"
 
@@ -390,7 +390,7 @@ msgstr "afgerond door"
 msgid "completed at"
 msgstr "afgerond op"
 
-#: alexia/apps/consumption/models.py:54 alexia/apps/organization/models.py:201
+#: alexia/apps/consumption/models.py:54 alexia/apps/organization/models.py:203
 msgid "comments"
 msgstr "commentaar"
 
@@ -461,11 +461,11 @@ msgstr "invoer op eenheid"
 msgid "unit entries"
 msgstr "invoer op eenheid"
 
-#: alexia/apps/consumption/views.py:38
+#: alexia/apps/consumption/views.py:39
 msgid "You are not a tender for this event."
 msgstr "Je bent geen tapper bij deze borrel."
 
-#: alexia/apps/consumption/views.py:46 alexia/apps/consumption/views.py:82
+#: alexia/apps/consumption/views.py:47 alexia/apps/consumption/views.py:83
 msgid "This consumption form has been completed."
 msgstr "Dit verbruiksformulier is al afgerond."
 
@@ -585,60 +585,66 @@ msgstr "leeftijdscontrole API endpoint"
 msgid "age check API key"
 msgstr "leeftijdscontrole API key"
 
-#: alexia/apps/organization/models.py:140
+#: alexia/apps/organization/models.py:137
+#, fuzzy
+#| msgid "Registration"
+msgid "card registration URL"
+msgstr "Registratie"
+
+#: alexia/apps/organization/models.py:142
 msgid "users"
 msgstr "gebruikers"
 
-#: alexia/apps/organization/models.py:147
+#: alexia/apps/organization/models.py:149
 msgid "organizations"
 msgstr "organisatie"
 
-#: alexia/apps/organization/models.py:155
+#: alexia/apps/organization/models.py:157
 msgid "You must specify an API endpoint and an API key if you enable the age check functionality."
 msgstr "Je moet een API endpoint en API key invoeren als je de leeftijdscontrolefunctionaliteit inschakelt."
 
-#: alexia/apps/organization/models.py:202
+#: alexia/apps/organization/models.py:204
 msgid "may tend on events"
 msgstr "mag op borrels tappen"
 
-#: alexia/apps/organization/models.py:203
+#: alexia/apps/organization/models.py:205
 msgid "may create and modify events"
 msgstr "mag borrels aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:204
+#: alexia/apps/organization/models.py:206
 msgid "may create and modify users"
 msgstr "mag gebruikers aanmaken en wijzigen"
 
-#: alexia/apps/organization/models.py:209
+#: alexia/apps/organization/models.py:211
 msgid "membership"
 msgstr "lidmaatschap"
 
-#: alexia/apps/organization/models.py:210
+#: alexia/apps/organization/models.py:212
 msgid "memberships"
 msgstr "lidmaatschappen"
 
-#: alexia/apps/organization/models.py:213
+#: alexia/apps/organization/models.py:215
 #, python-format
 msgid "%(user)s of %(organization)s"
 msgstr "%(user)s van %(organization)s"
 
-#: alexia/apps/organization/models.py:252 alexia/apps/organization/models.py:265
+#: alexia/apps/organization/models.py:254 alexia/apps/organization/models.py:267
 msgid "certificate"
 msgstr "certificaat"
 
-#: alexia/apps/organization/models.py:253
+#: alexia/apps/organization/models.py:255
 msgid "uploaded at"
 msgstr "geüpload op"
 
-#: alexia/apps/organization/models.py:259
+#: alexia/apps/organization/models.py:261
 msgid "approved by"
 msgstr "goedgekeurd door"
 
-#: alexia/apps/organization/models.py:261
+#: alexia/apps/organization/models.py:263
 msgid "approved at"
 msgstr "goedgekeurd op"
 
-#: alexia/apps/organization/models.py:270
+#: alexia/apps/organization/models.py:272
 msgid "IVA certificate of"
 msgstr "IVA certificaat van"
 
@@ -728,8 +734,8 @@ msgid "tender enrollment closed"
 msgstr "tappersinschrijving gesloten"
 
 #: alexia/apps/scheduling/models.py:68
-msgid "Designates if tenders can sign up for this event."
-msgstr "Geeft aan of tappers zich kunnen inschrijven voor deze activiteit."
+msgid "If checked, tenders will not be able to sign up for this event (note: tenders get e-mailed about events with open enrollments)."
+msgstr "Als dit aangevinkt is zullen tappers zich niet kunnen inschrijven voor deze activiteit (let op: tappers worden gemaild als de inschrijving open staat)"
 
 #: alexia/apps/scheduling/models.py:75
 msgid "bartenders"
