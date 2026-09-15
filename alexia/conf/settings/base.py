@@ -15,7 +15,8 @@ LOGIN_URL = '/oidc/authenticate/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Crispy forms
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 # Debugging
 DEBUG = False
@@ -45,6 +46,9 @@ USE_TZ = True
 
 # HTTP
 INTERNAL_IPS = ['127.0.0.1']
+# The IVA membership list is embedded in a same-origin iframe (for printing);
+# Django's default of DENY blocks that too, so relax it to SAMEORIGIN.
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -72,7 +76,7 @@ INSTALLED_APPS = [
 
     'compressor',
     'crispy_forms',
-    'crispy_bootstrap3',
+    'crispy_bootstrap5',
     'debug_toolbar',
     'modernrpc',
     'wkhtmltopdf',

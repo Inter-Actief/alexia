@@ -11,29 +11,29 @@
     <h4>{% blocktrans with organization=request.organization %}Transactions of {{ organization }}{% endblocktrans %}</h4>
 </div>
 <h4>{% trans 'Summary' %}</h4>
-<table class="table table-condensed table-bordered">
+<table class="table table-sm table-bordered">
     <thead>
         <tr>
-            <th class="col-xs-10">{% trans 'Month' %}</th>
-            <th class="col-xs-2 text-right">{% trans 'Revenue' %}</th>
+            <th class="col-10">{% trans 'Month' %}</th>
+            <th class="col-2 text-end">{% trans 'Revenue' %}</th>
         </tr>
     </thead>
     <tbody>
     {% for s in summary %}
         <tr>
             <td>{{ s.month|date:"F Y" }}</td>
-            <td class="text-right">&euro; {{ s.revenue|floatformat:2 }}</td>
+            <td class="text-end">&euro; {{ s.revenue|floatformat:2 }}</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 <h4>{% trans 'Specification' %}</h4>
-<table class="table table-condensed table-bordered">
+<table class="table table-sm table-bordered">
     <thead>
         <tr>
-            <th class="col-xs-3">{% trans 'Date' %}</th>
-            <th class="col-xs-7">{% trans 'Name' %}</th>
-            <th class="col-xs-2 text-right">{% trans 'Revenue' %}</th>
+            <th class="col-3">{% trans 'Date' %}</th>
+            <th class="col-7">{% trans 'Name' %}</th>
+            <th class="col-2 text-end">{% trans 'Revenue' %}</th>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
         <tr>
             <td>{{ event.starts_at|date }}</td>
             <td>{{ event.name }}</td>
-            <td class="text-right">&euro; {{ event.revenue|floatformat:2 }}</td>
+            <td class="text-end">&euro; {{ event.revenue|floatformat:2 }}</td>
         </tr>
     {% endfor %}
     </tbody>

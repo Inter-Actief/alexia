@@ -6,13 +6,13 @@
 <div class="page-header">
     <h1>
          {% trans 'Consumption products' %}
-         <div class="pull-right">
+         <div class="float-end">
              <a class="btn btn-primary" href="{% url 'weightconsumptionproduct_create' %}">
-                 <span class="glyphicon glyphicon-plus"></span>
+                 <span class="bi bi-plus-lg"></span>
                  {% trans 'Add (KG)' %}
              </a>
              <a class="btn btn-primary" href="{% url 'consumptionproduct_create' %}">
-                 <span class="glyphicon glyphicon-plus"></span>
+                 <span class="bi bi-plus-lg"></span>
                  {% trans 'Add (CE)' %}
              </a>
          </div>
@@ -33,17 +33,17 @@
                 <td>{{ consumptionproduct.name }}</td>
                 <td>
                     {% if consumptionproduct.is_weighted %}
-                    <span class="label label-danger">KG</span>
+                    <span class="badge text-bg-danger">KG</span>
                     {% if consumptionproduct.weighted.has_flowmeter %}
-                    <span class="label label-default">Flowmeter</span>
+                    <span class="badge text-bg-secondary">Flowmeter</span>
                     {% endif %}
                     {% else %}
-                    <span class="label label-primary">CE</span>
+                    <span class="badge text-bg-primary">CE</span>
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-xs btn-default" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
-                        <span class="glyphicon glyphicon-pencil"></span>
+                    <a class="btn btn-sm btn-secondary" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
+                        <span class="bi bi-pencil"></span>
                         {% trans 'Modify' %}
                     </a>
                 </td>
@@ -52,13 +52,15 @@
         </tbody>
     </table>
 </div>
-<div class="panel-group" id="archived">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a data-toggle="collapse" data-parent="#archived" href="#archived_contents">{% trans 'Archived products' %}</a>
-        </div>
-        <div id="archived_contents" class="panel-collapse collapse">
-            <div class="panel-body">
+<div class="accordion" id="archived">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#archived_contents">
+                {% trans 'Archived products' %}
+            </button>
+        </h2>
+        <div id="archived_contents" class="accordion-collapse collapse" data-bs-parent="#archived">
+            <div class="accordion-body">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -73,17 +75,17 @@
                             <td>{{ consumptionproduct.name }}</td>
                             <td>
                                 {% if consumptionproduct.is_weighted %}
-                                <span class="label label-danger">KG</span>
+                                <span class="badge text-bg-danger">KG</span>
                                 {% if consumptionproduct.weighted.has_flowmeter %}
-                                <span class="label label-default">Flowmeter</span>
+                                <span class="badge text-bg-secondary">Flowmeter</span>
                                 {% endif %}
                                 {% else %}
-                                <span class="label label-primary">CE</span>
+                                <span class="badge text-bg-primary">CE</span>
                                 {% endif %}
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-default" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
-                                    <span class="glyphicon glyphicon-pencil"></span>
+                                <a class="btn btn-sm btn-secondary" href="{% if consumptionproduct.is_weighted %}{% url 'weightconsumptionproduct_update' consumptionproduct.pk %}{% else %}{% url 'consumptionproduct_update' consumptionproduct.pk %}{% endif %}">
+                                    <span class="bi bi-pencil"></span>
                                     {% trans 'Modify' %}
                                 </a>
                             </td>

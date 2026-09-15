@@ -21,7 +21,7 @@
         };
 
         var colspan = $('thead tr th', $parent.parent()).length + 2;
-        $parent.append('<tr class="dynamic-form-add" ><td colspan="' + colspan + '"><a href="#"><span class="glyphicon glyphicon-plus"></span></a></td></tr>');
+        $parent.append('<tr class="dynamic-form-add" ><td colspan="' + colspan + '"><a href="#"><span class="bi bi-plus-lg"></span></a></td></tr>');
         var $addButton = $('tr:last a', $parent);
 
         $addButton.click(function(event) {

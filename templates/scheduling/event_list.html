@@ -8,41 +8,135 @@
     <h1>
         {% trans 'Planning' %}
         {% if is_planner %}
-        <div class="pull-right">
+        <div class="float-end">
             <a href="{% url 'new-event' %}" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span>
+                <span class="bi bi-plus-lg"></span>
                 {% trans 'Add event' %}
             </a>
         </div>
         {% endif %}
     </h1>
 </div>
-<div class="panel-group" id="filters">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a data-toggle="collapse" data-parent="#filters" href="#filters_form">{% trans 'Filters' %}</a>
-        </div>
-        <div id="filters_form" class="panel-collapse collapse">
-            <div class="panel-body">
+<div class="accordion mb-3" id="filters">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filters_form" aria-expanded="false" aria-controls="filters_form">{% trans 'Filters' %}</button>
+        </h2>
+        <div id="filters_form" class="accordion-collapse collapse" data-bs-parent="#filters">
+            <div class="accordion-body">
                 {% crispy filter_form %}
             </div>
         </div>
     </div>
 </div>
-<div class="table-responsive">
-    <table class="table table-hover table-condensed table-events">
+{% if not events %}
+<p>
+    {% if end_time %}
+    {% blocktrans with a=from_time|date:"j F H:i" b=end_time|date:"j F H:i" %}There's nothing scheduled between {{ a }} and {{ b }}.{% endblocktrans %}
+    {% else %}
+    {% blocktrans with datetime=from_time|date:"j F H:i" %}There's nothing scheduled after {{ datetime }}.{% endblocktrans %}
+    {% endif %}
+</p>
+{% endif %}
+
+<div class="d-md-none vstack gap-2">
+{% for e in events %}
+    <div class="card event-card{% if e.option %} tr-muted{% endif %}{% if e.is_risky %} tr-yellow{% endif %}">
+        <div class="card-body">
+            <h5 class="card-title mb-1">
+                <a style="{% if e.organizer.color %}color: #{{ e.organizer.color }};{% endif %}" href="{% url 'event' e.pk %}">
+                    {{ e.name }}
+                </a>
+                {% if e.tender_comments and e in events_tending %}
+                    <span class="bi bi-info-circle" aria-hidden="true"
+                            title="{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}"></span>
+                    <span class="visually-hidden">{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}</span>
+                {% endif %}
+                {% if e.is_risky %}
+                    <span class="bi bi-exclamation-triangle" title="{% trans 'Risky activity' %}"></span>
+                {% endif %}
+            </h5>
+            <div class="text-secondary-emphasis small mb-1">
+                <span class="bi bi-calendar-event me-1" aria-hidden="true"></span>
+                {% if e.starts_at|date == e.ends_at|date %}
+                    {{ e.starts_at|date:"D d b" }}, {{ e.starts_at|time:"TIME_FORMAT" }}&ndash;{{ e.ends_at|time:"TIME_FORMAT" }}
+                {% else %}
+                    {{ e.starts_at|date:"D d b" }} {{ e.starts_at|time:"TIME_FORMAT" }} &ndash; {{ e.ends_at|date:"D d b" }} {{ e.ends_at|time:"TIME_FORMAT" }}
+                {% endif %}
+            </div>
+            <div class="text-secondary-emphasis small mb-2">
+                <span class="bi bi-people me-1" aria-hidden="true"></span>{{ e.organizer }}
+                {% if e.location.all %}
+                    <span class="mx-1">&middot;</span>
+                    <span class="bi bi-geo-alt me-1" aria-hidden="true"></span>{% for location in e.location.all %}{{ location }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                {% endif %}
+            </div>
+            <div class="d-flex flex-wrap align-items-center gap-2 small mb-2">
+                <span id="iva_mobile_{{ e.pk }}">{% include 'scheduling/partials/iva_status.html' with e=e mobile=True %}</span>
+                {% if e.kegs %}
+                <span>{{ e.kegs }} &times; {% trans 'Kegs' %}</span>
+                {% endif %}
+            </div>
+            <div class="small mb-2">
+                <span class="bi bi-person-badge me-1" aria-hidden="true"></span>
+                <span id="assigned_bartenders_mobile_{{ e.pk }}">{% include 'scheduling/partials/assigned_bartenders.html' with e=e %}</span>
+            </div>
+            {% if is_tender %}
+                {% if not e.is_closed and request.organization in e.participants.all %}
+                {% if not e.organizer.assigns_tenders or not user in e.get_assigned_bartenders %}
+                    {% with ba=e.pk|get_item:bartender_availabilities %}
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <select class="bartender_availability form-control form-control-sm" data-event-id="{{ e.pk }}">
+                                <option value="-1">---</option>
+                                {% for a in availabilities %}
+                                    <option value="{{ a.pk }}"{% if ba.availability_id == a.pk and ba.event_id == e.pk %} selected="selected"{% endif %}>{{ a.name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% include "scheduling/partials/availability_comment.html" %}
+                        </div>
+                    {% endwith %}
+                {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if is_tender or is_planner %}
+            <div class="d-flex flex-wrap gap-2">
+                {% if is_planner and e.organizer == request.organization %}
+                <div class="btn-group btn-group-sm">
+                    <a class="btn btn-secondary" href="{% url 'edit-event' e.pk %}"><span class="bi bi-pencil"></span></a>
+                    <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="bi bi-trash"></i></a>
+                </div>
+                {% endif %}
+                {% if is_tender and e.can_be_opened %}
+                {% if e in events_tending or request.organization == e.organizer and request.organization.assigns_tenders and is_tender %}
+                <div class="btn-group btn-group-sm">
+                    <a class="btn btn-primary text-nowrap" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
+                    {% if not e.consumptionform.is_completed %}
+                    <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<div class="table-responsive d-none d-md-block">
+    <table class="table table-hover table-sm table-events">
         <thead>
             <tr>
-                <th class="col-xs-1">{% trans 'Date' %}</th>
-                <th class="col-xs-1">{% trans 'Time' %}</th>
-                <th class="col-xs-1">{% trans 'Organization' %}</th>
-                <th class="col-xs-1">{% trans 'Location' %}</th>
+                <th class="col-1">{% trans 'Date' %}</th>
+                <th class="col-1">{% trans 'Time' %}</th>
+                <th class="col-1">{% trans 'Organization' %}</th>
+                <th class="col-1">{% trans 'Location' %}</th>
                 <th>{% trans 'Name' %}</th>
                 <th>{% trans 'Kegs' %}</th>
                 <th>{% trans 'IVA' %}</th>
                 <th>{% trans 'Bartenders' %}</th>
                 {% if is_tender %}<th></th>{% endif %}
-                {% if is_planner or is_tender %}<th class="col-xs-1"></th>{% endif %}
+                {% if is_planner or is_tender %}<th class="col-1"></th>{% endif %}
             </tr>
         </thead>
         <tbody>
@@ -75,29 +169,17 @@
                         {{ e.name }}
                     </a>
                     {% if e.tender_comments and e in events_tending %}
-                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"
+                        <span class="bi bi-info-circle" aria-hidden="true"
                                 title="{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}"></span>
-                        <span class="sr-only">{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}</span>
+                        <span class="visually-hidden">{% trans 'Has tender comment:' %} {{ e.tender_comments|escape }}</span>
                     {% endif %}
                     {% if e.is_risky %}
-                        <span class="glyphicon glyphicon-warning-sign" title="{% trans 'Risky activity' %}"></span>
+                        <span class="bi bi-exclamation-triangle" title="{% trans 'Risky activity' %}"></span>
                     {% endif %}
                 </td>
                 <td>{{ e.kegs|default:'&mdash;' }}</td>
-                <td>
-                    {% if e.needs_iva %}
-                    {% with ivacheck=e.meets_iva_requirement %}
-                    {% if ivacheck == "YES" %}
-                    <i class="icon-alexia-ok"></i>
-                    {% elif ivacheck == "MAYBE" %}
-                    <span class="text-warning glyphicon glyphicon-warning-sign" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
-                    {% else %}
-                    <i class="icon-alexia-notok"></i>
-                    {% endif %}
-                    {% endwith %}
-                    {% else %}
-                    &mdash;
-                    {% endif %}
+                <td id="iva_{{ e.pk }}">
+                    {% include 'scheduling/partials/iva_status.html' with e=e %}
                 </td>
                 <td id="assigned_bartenders_{{ e.pk }}">
                     {% include 'scheduling/partials/assigned_bartenders.html' with e=e %}
@@ -123,34 +205,28 @@
                 {% endif %}
                 {% if is_tender or is_planner %}
                 <td>
-                    <div class="btn-group btn-group-xs">
+                    <div class="d-flex flex-column gap-1">
                     {% if is_planner %}
                     {% if e.organizer == request.organization %}
-                    <a class="btn btn-default" href="{% url 'edit-event' e.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="glyphicon glyphicon-trash"></i></a>
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-secondary" href="{% url 'edit-event' e.pk %}"><span class="bi bi-pencil"></span></a>
+                        <a class="btn btn-danger" href="{% url 'delete-event' e.pk %}"><i class="bi bi-trash"></i></a>
+                    </div>
                     {% endif %}
                     {% endif %}
                     {% if is_tender and e.can_be_opened %}
                     {% if e in events_tending or request.organization == e.organizer and request.organization.assigns_tenders and is_tender %}
-                    <a class="btn btn-primary" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
-                    {% if not e.consumptionform.is_completed %}
-                    <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
-                    {% endif %}
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-primary text-nowrap" href="{% url 'juliana' e.pk %}">{% trans 'Point of sale' %}</a>
+                        {% if not e.consumptionform.is_completed %}
+                        <a class="btn btn-warning" href="{% url 'dcf' e.pk %}" target="_blank">{% trans 'DCF' %}</a>
+                        {% endif %}
+                    </div>
                     {% endif %}
                     {% endif %}
                     </div>
                 </td>
                 {% endif %}
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="10">
-                    {% if end_time %}
-            		{% blocktrans with a=from_time|date:"j F H:i" b=end_time|date:"j F H:i" %}There's nothing scheduled between {{ a }} and {{ b }}.{% endblocktrans %}
-                	{% else %}
-            		{% blocktrans with datetime=from_time|date:"j F H:i" %}There's nothing scheduled after {{ datetime }}.{% endblocktrans %}
-                	{% endif %}
-                </td>
             </tr>
         {% endfor %}
         </tbody>

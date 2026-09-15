@@ -10,7 +10,7 @@
     {% csrf_token %}
     <p>{% blocktrans with product=temporaryproduct event=temporaryproduct.event %}Are you sure you want to delete {{ product }} from {{ event }}?{% endblocktrans %}</p>
     <button type="submit" class="btn btn-danger">
-        <span class="glyphicon glyphicon-trash"></span>
+        <span class="bi bi-trash"></span>
         {% trans 'Delete' %}
     </button>
 </form>

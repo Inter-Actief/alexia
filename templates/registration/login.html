@@ -5,8 +5,8 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-            <div class="well login-form">
+        <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+            <div class="card card-body login-form">
                 <img src="{% static 'img/alexia.svg' %}" alt="Alexia" class="login-logo">
                 <h2>{% trans 'Log in' %}</h2>
                 <p>{% trans 'Log in with your local Alexia account and password.' %}</p>
@@ -20,9 +20,10 @@
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ next }}">
                     {{ form | crispy }}
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">{% trans 'Log in' %}</button>
-                        <a href="{% url 'help' %}" class="btn">{% trans 'Help' %}</a>
+                    <div class="form-actions center">
+                        <button type="submit" class="btn btn-primary w-100">{% trans 'Log in' %}</button>
+                        <br>
+                        Having problems? Check the <a href="{% url 'help' %}" class="link">{% trans 'Help' %}</a> page
                     </div>
                 </form>
             </div>

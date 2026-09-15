@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from alexia.apps.billing.models import (
     PermanentProduct, PriceGroup, ProductGroup, SellingPrice,
 )
-from alexia.forms import AlexiaForm
+from alexia.forms import AlexiaForm, NativeSplitDateTimeWidget
 
 
 class PermanentProductForm(forms.ModelForm):
@@ -50,8 +50,20 @@ def get_previous_month_end():
 class FilterEventForm(AlexiaForm):
     submit_text = _('Export')
 
-    from_time = forms.SplitDateTimeField(label=_('From time'), initial=get_previous_month)
-    till_time = forms.SplitDateTimeField(label=_('Till time'), initial=get_previous_month_end)
+    from_time = forms.SplitDateTimeField(
+        label=_('From time'),
+        initial=get_previous_month,
+        widget=NativeSplitDateTimeWidget,
+        input_date_formats=['%Y-%m-%d'],
+        input_time_formats=['%H:%M', '%H:%M:%S'],
+    )
+    till_time = forms.SplitDateTimeField(
+        label=_('Till time'),
+        initial=get_previous_month_end,
+        widget=NativeSplitDateTimeWidget,
+        input_date_formats=['%Y-%m-%d'],
+        input_time_formats=['%H:%M', '%H:%M:%S'],
+    )
 
     def get_helper(self):
         helper = super(FilterEventForm, self).get_helper()

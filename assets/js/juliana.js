@@ -69,7 +69,7 @@ State = {
                     receiptHTML += '</tr>';
                     total += receipt[i].price;
                 }
-                receiptHTML += '<tr class="active"><td><strong>Totaal:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
+                receiptHTML += '<tr class="table-active"><td><strong>Totaal:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
                 $('#payment-receipt').html(receiptHTML);
 
                 $('#agecheckbox').hide();
@@ -91,7 +91,7 @@ State = {
                     receiptHTML += '</tr>';
                     total += receipt[i].price;
                 }
-                receiptHTML += '<tr class="active"><td><strong>Total:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
+                receiptHTML += '<tr class="table-active"><td><strong>Total:</strong></td><td></td><td><strong>&euro;' + (total / 100).toFixed(2) + '</strong></td></tr>';
                 $('#writeoff-receipt').html(receiptHTML);
 
                 $('#writeoff-timer-screen').show();

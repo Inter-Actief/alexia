@@ -10,7 +10,7 @@
             <small>{{ event }}</small>
         </h1>
     </div>
-    <div class="well text-center">
+    <div class="card card-body text-center">
         <h2>
             {% trans 'Finished!' %}
             <br>
@@ -21,7 +21,7 @@
     </div>
     <p class="text-center">
         <a href="{% url 'event-list' %}" class="btn btn-primary">
-            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="bi bi-hand-thumbs-up"></span>
             {% trans 'Back' %}
         </a>
     </p>

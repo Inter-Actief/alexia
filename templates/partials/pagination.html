@@ -1,26 +1,27 @@
-<nav class="text-center">
-    <ul class="pagination">
-        <li{% if not page_obj.has_previous %} class="disabled"{% endif %}>
+{% load i18n %}
+<nav aria-label="{% trans 'Page navigation' %}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="{% trans 'Previous' %}">&lsaquo;</a>
             {% else %}
-            <a href="#">&laquo;</a>
+            <span class="page-link" aria-hidden="true">&lsaquo;</span>
             {% endif %}
         </li>
         {% for page in page_obj.paginator.page_range %}
-        <li{% if page == page_obj.number %} class="active"{% endif %}>
+        <li class="page-item{% if page == page_obj.number %} active{% endif %}"{% if page == page_obj.number %} aria-current="page"{% endif %}>
             {% if page == page_obj.number %}
-            <a href="#">{{ page }}</a>
+            <span class="page-link">{{ page }}</span>
             {% else %}
-            <a href="?page={{ page }}">{{ page }}</a>
+            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
             {% endif %}
         </li>
         {% endfor %}
-        <li{% if not page_obj.has_next %} class="disabled"{% endif %}>
+        <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="{% trans 'Next' %}">&rsaquo;</a>
             {% else %}
-            <a href="#">&raquo;</a>
+            <span class="page-link" aria-hidden="true">&rsaquo;</span>
             {% endif %}
         </li>
     </ul>
