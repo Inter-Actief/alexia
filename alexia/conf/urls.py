@@ -38,6 +38,8 @@ urlpatterns = [
     path('login_complete/', general_views.login_complete, name='login_complete'),
     path('legacy_login/', general_views.login, name='login'),
     path('legacy_logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('legacy_password_change/', auth_views.PasswordChangeView.as_view(), name='change_password'),
+    path('legacy_password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
     path('register/', general_views.RegisterView.as_view(), name='register'),
     path('change_current_organization/<str:slug>/',
         general_views.ChangeCurrentOrganizationView.as_view(), name='change-current-organization'),
