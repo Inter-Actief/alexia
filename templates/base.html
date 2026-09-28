@@ -29,6 +29,19 @@
         {# Alexia #}
         <link rel="stylesheet" href="{% static 'css/application.css' %}">
         {% endcompress %}
+        <style>
+            /* Colors for each organization for both dark and light themes */
+            {% for org in organizations %}
+                .color-org-{{ org.id }} {
+                    color: #{{ org.color_dark or org.color }};
+                }
+                {% if org.color_light %}
+                [data-bs-theme=dark] .color-org-{{ org.id }} {
+                    color: #{{ org.color_light }};
+                }
+                {% endif %}
+            {% endfor %}
+        </style>
     </head>
     <body>
         {% block body %}{% endblock body %}
