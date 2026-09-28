@@ -11,8 +11,8 @@
         <h3>{% trans 'Details' %}</h3>
         <table class="table table-bordered">
             <tr>
-                <th class="col-xs-6">{% trans 'Category' %}</th>
-                <td class="col-xs-6">
+                <th class="col-6">{% trans 'Category' %}</th>
+                <td class="col-6">
                     {{ object.writeoff_category.name }}<br />
                     <em><small>{{ object.writeoff_category.description }}</small></em>
                 </td>
@@ -35,13 +35,13 @@
             </tr>
         </table>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-12 col-sm-6">
         <h3>{% trans 'Items' %}</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="col-xs-6">{% trans 'Product' %}</th>
-                    <th class="col-xs-6">{% trans 'Price' %}</th>
+                    <th class="col-6">{% trans 'Product' %}</th>
+                    <th class="col-6">{% trans 'Price' %}</th>
                 </tr>
             </thead>
             <tbody>

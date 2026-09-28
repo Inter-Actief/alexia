@@ -64,6 +64,13 @@
 </p>
 <h2 id="plannen">{% trans 'Schedule events' %}</h2>
 <p>
+<<<<<<< HEAD
+    Met de knop <a href="{% url 'new-event' %}">Nieuwe activiteit</a> op de pagina
+    <a href="{% url 'event-list' %}">Planning</a> kun je als Planner nieuwe borrels inplannen. Met het potloodje
+    <a class="btn btn-sm btn-secondary"><span class="bi bi-pencil"></span></a> kun je borrels wijzigen en
+    met het prullenbakje <a class="btn btn-sm btn-danger"><span class="bi bi-trash"></span></a> kun je
+    geplande borrels verwijderen.
+=======
     {% blocktrans trimmed with new_event_url=new_event_url event_list_url=event_list_url %}
     With the <a href="{{ new_event_url }}">Add event</a> button on the <a href="{{ event_list_url }}">Planning</a>
     page, you can schedule new events as a Planner. With the pencil icon
@@ -71,6 +78,7 @@
     with the trash icon <a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></a> you can
     delete scheduled events.
     {% endblocktrans %}
+>>>>>>> main
 </p>
 <dl>
     <dt>{% trans 'participants' as t %}{{ t|capfirst }}</dt>

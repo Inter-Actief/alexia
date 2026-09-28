@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied, SuspiciousOperation
 from django.db.models import Prefetch, Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from datetime import timezone
 from django.utils import timezone as django_timezone
@@ -140,8 +141,14 @@ class EventCalendarFetch(View):
         if not (start and end) or not is_ajax(request):
             raise SuspiciousOperation('Bad calendar fetch request')
 
-        from_time = datetime.fromtimestamp(float(start), tz=timezone.utc)
-        till_time = datetime.fromtimestamp(float(end), tz=timezone.utc)
+        # Use Django's parse_datetime (rather than datetime.fromisoformat) since it handles
+        # a trailing 'Z' UTC designator, which datetime.fromisoformat only supports as of
+        # Python 3.11 and this project also needs to run on older Python versions.
+        from_time = parse_datetime(start)
+        till_time = parse_datetime(end)
+
+        if from_time is None or till_time is None:
+            raise SuspiciousOperation('Bad calendar fetch request')
 
         data = []
         for event in Event.objects.filter(ends_at__gte=from_time,
@@ -159,9 +166,11 @@ class EventCalendarFetch(View):
                 'start': event.starts_at.isoformat(),
                 'end': event.ends_at.isoformat(),
                 'color': color,
-                'organizers': ', '.join(map(lambda x: x.name, event.participants.all())),
-                'location': ', '.join(map(lambda x: x.name, event.location.all())),
-                'tenders': ', '.join(map(lambda x: x.first_name, event.get_assigned_bartenders())) or '<i>geen</i>',
+                'extendedProps': {
+                    'organizers': ', '.join(map(lambda x: x.name, event.participants.all())),
+                    'location': ', '.join(map(lambda x: x.name, event.location.all())),
+                    'tenders': ', '.join(map(lambda x: x.first_name, event.get_assigned_bartenders())) or '<i>geen</i>',
+                },
             })
         return JsonResponse(data, safe=False)
 
@@ -395,8 +404,19 @@ def set_bartender_availability(request):
         else:
             log.availability_created(
                 request.user, event, request.user, availability)
-        return render(request, 'scheduling/partials/assigned_bartenders.html',
-                      {'e': event})
+        # Both the assigned bartenders and the (derived) IVA status can change,
+        # so return every fragment the event list needs to refresh in place.
+        return JsonResponse({
+            'bartenders': render_to_string(
+                'scheduling/partials/assigned_bartenders.html',
+                {'e': event}, request=request),
+            'iva': render_to_string(
+                'scheduling/partials/iva_status.html',
+                {'e': event}, request=request),
+            'iva_mobile': render_to_string(
+                'scheduling/partials/iva_status.html',
+                {'e': event, 'mobile': True}, request=request),
+        })
     else:
         # TODO Better error message and HTTP status code [JZ]
         return HttpResponse("NOTOK")

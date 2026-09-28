@@ -1,0 +1,23 @@
+{% if e.needs_iva %}
+{% with ivacheck=e.meets_iva_requirement %}
+{% if mobile %}
+    {% if ivacheck == "YES" %}
+    <span><i class="icon-alexia-ok"></i> IVA</span>
+    {% elif ivacheck == "MAYBE" %}
+    <span class="text-warning"><span class="bi bi-exclamation-triangle"></span> {% trans 'Some bartenders have IVA, but not everyone' %}</span>
+    {% else %}
+    <span><i class="icon-alexia-notok"></i> IVA</span>
+    {% endif %}
+{% else %}
+    {% if ivacheck == "YES" %}
+    <i class="icon-alexia-ok"></i>
+    {% elif ivacheck == "MAYBE" %}
+    <span class="text-warning bi bi-exclamation-triangle" title="{% trans 'Some bartenders have IVA, but not everyone' %}"></span>
+    {% else %}
+    <i class="icon-alexia-notok"></i>
+    {% endif %}
+{% endif %}
+{% endwith %}
+{% else %}
+{% if not mobile %}&mdash;{% endif %}
+{% endif %}

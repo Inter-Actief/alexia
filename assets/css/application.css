@@ -5,6 +5,10 @@
 
 .login-form { text-align: center; }
 
+.login-form form { text-align: left; }
+
+.login-form .form-actions.center { text-align: center; }
+
 .login-form .login-logo {
 	height: 150px;
 	max-width: 100%;
@@ -16,7 +20,21 @@
     }
 }
 
-label.control-label { font-weight: bold; }
+.form-label,
+.col-form-label { font-weight: bold; }
+
+/* Bootstrap dropped the .page-header component; restore its Bootstrap 3 look. */
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+@media (max-width: 767px) {
+    .page-header {
+        margin-top: 20px;
+    }
+}
 
 body {
     padding-top: 60px;
@@ -36,8 +54,8 @@ body {
     padding-bottom: 0;
 }
 
-.label.label-has-ba-comment {
-  border: 2px dotted black;
+.badge.label-has-ba-comment {
+  border: 2px dotted var(--bs-body-color);
 }
 
 .input-static {
@@ -46,13 +64,13 @@ body {
 
 .table tbody > tr.tr-muted > td,
 .table tbody > tr.tr-muted > th {
-  background-color: #ebebeb;
+  background-color: var(--bs-secondary-bg);
   font-style: italic;
 }
 
 .table tbody > tr.tr-yellow > td,
 .table tbody > tr.tr-yellow > th {
-  background-color: #fdfd96;
+  background-color: var(--bs-warning-bg-subtle);
 }
 
 .table tbody > tr > td.overflow-protect {
@@ -63,6 +81,23 @@ body {
 
 .table-events {
   font-size: 13px;
+}
+
+.tab-content {
+  padding-top: 1rem;
+}
+
+.event-card.tr-muted {
+  background-color: var(--bs-secondary-bg);
+  font-style: italic;
+}
+
+.event-card.tr-yellow {
+  background-color: var(--bs-warning-bg-subtle);
+}
+
+.event-card .card-title a {
+  text-decoration: none;
 }
 
 [class^="icon-alexia"] {
@@ -97,6 +132,48 @@ body {
 
 .icon-alexia-upload {
   background-image: url('/static/img/icon/alexia-upload.png');
+}
+
+[data-bs-theme="dark"] .navbar-brand > img,
+[data-bs-theme="dark"] .login-logo {
+  content: url('/static/img/alexia-white.svg');
+}
+
+[data-bs-theme="dark"] .icon-bottle {
+  content: url('/static/img/bottle-white.svg');
+}
+
+[data-bs-theme="dark"] .icon-tap {
+  content: url('/static/img/tap-white.svg');
+}
+
+/* Keep the debug toolbar panel below the fixed navbar; at top: 0 it covers
+   the right-hand navbar items (theme toggle, language) and swallows their
+   clicks. Inert in production, where the toolbar is not rendered. */
+/* The extra html qualifier outranks the toolbar's own id+id rule, which is
+   loaded after this stylesheet. */
+html #djDebug #djDebugToolbar {
+    top: 60px;
+}
+
+/* With the toolbar pushed below the navbar, opened navbar dropdowns (theme,
+   language) extend into the toolbar's area; lift the navbar above the
+   toolbar's z-index (100000000) so those menus stay clickable. Scoped to
+   pages where the toolbar is rendered so production stacking is unchanged. */
+body:has(#djDebug) .navbar.fixed-top {
+    z-index: 100000001;
+}
+
+.flag-icon {
+  width: 21px;
+  height: 14px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--bs-border-color);
+  vertical-align: -2px;
+}
+
+footer {
+  font-size: 14px;
 }
 
 @media print {
@@ -137,18 +214,18 @@ ul.dcf-issues {
 }
 
 ul.dcf-issues li:before {
-	font-family: 'Glyphicons Halflings';
+	font-family: 'bootstrap-icons';
 	display: inline-block;
     margin-left: -1.3em;
     width: 1.3em;
 }
 
 ul.dcf-issues li.text-danger:before {
-	content: "\e101";
+	content: "\f623";
 }
 
 ul.dcf-issues li.text-warning:before {
-	content: "\e107";
+	content: "\f33b";
 }
 
 iframe#iva-list {
@@ -177,5 +254,14 @@ span.reverse {
 }
 
 .table > tbody > tr.dynamic-form-add > td > a:hover {
-	background-color: #ccc;
+	background-color: var(--bs-secondary-bg);
+}
+
+/* Match the FullCalendar classic theme's toolbar buttons to Bootstrap's .btn-primary */
+:root {
+	--fc-classic-button: #0d6efd;
+	--fc-classic-button-border: #0d6efd;
+	--fc-classic-button-strong: #0b5ed7;
+	--fc-classic-button-strong-border: #0a58ca;
+	--fc-classic-button-outline: #0d6efd80;
 }

@@ -139,7 +139,7 @@ class AboutView(TemplateView):
             'users': get_user_model().objects.count(),
             'tenders': Membership.objects.values('user_id').distinct().count(),
             'locations': Location.objects.count(),
-            'first_event': Event.objects.order_by('starts_at')[0],
+            'first_event': Event.objects.order_by('starts_at').first(),
             'events': Event.objects.count(),
             'bartender_availabilities': BartenderAvailability.objects.count(),
             'bartender_availabilities_yes': BartenderAvailability.objects.filter(

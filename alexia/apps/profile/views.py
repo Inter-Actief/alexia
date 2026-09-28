@@ -65,7 +65,7 @@ class GenerateIcalView(TenderRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         self.request.user.profile.ical_id = uuid.uuid4()
         self.request.user.profile.save()
-        return reverse('profile')
+        return reverse('profile') + '?tab=bartender'
 
 
 class ProfileUpdate(LoginRequiredMixin, CrispyFormMixin, UpdateView):
