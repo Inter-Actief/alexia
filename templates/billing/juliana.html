@@ -126,34 +126,32 @@
                     </div>
                     {% if writeoff %}
                     <div class="col-9" id="writeoff-screen">
-                        <div class="col-9">
-                            <div class="tab tab-sale tab-writeoff">
-                                <div class="card card-body">
-                                    <div class="row">
-                                        {% for category in writeoff_categories %}
-                                            <div class="col-4">
-                                                <a href="#" class="btn w-100 btn-info btn-writeoff command"
-                                                   {% if category.color %}style="background-color: #{{ category.color }}; border-color: #{{ category.color }};"{% endif %}
-                                                   data-command="writeoffCategory" data-category="{{ category.id }}">
-                                                    <span style="color: #ffffff">
-                                                        {{ category.name }}<br />
-                                                        <small style="color: #ffffff"><em>{{ category.description }}</em></small>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="" id="cancel-writeoff-buttons">
-                                            <a class="btn w-100 btn-danger btn-specialpad command" data-command="cancelWriteoff"
-                                            id="cancel-writeoff">{% trans 'Cancel' %}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						<div class="tab tab-sale tab-writeoff">
+							<div class="card card-body">
+								<div class="row">
+									{% for category in writeoff_categories %}
+										<div class="col-4">
+											<a href="#" class="btn w-100 btn-info btn-writeoff command"
+											   {% if category.color %}style="background-color: #{{ category.color }}; border-color: #{{ category.color }};"{% endif %}
+											   data-command="writeoffCategory" data-category="{{ category.id }}">
+												<span style="color: #ffffff">
+													{{ category.name }}<br />
+													<small style="color: #ffffff"><em>{{ category.description }}</em></small>
+												</span>
+											</a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12">
+									<div class="" id="cancel-writeoff-buttons">
+										<a class="btn w-100 btn-danger btn-specialpad command" data-command="cancelWriteoff"
+										id="cancel-writeoff">{% trans 'Cancel' %}</a>
+									</div>
+								</div>
+							</div>
+						</div>
                     </div>
                     {% endif %}
                     <div class="col-3 receipt-container">
