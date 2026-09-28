@@ -44,7 +44,7 @@
     <div class="card event-card{% if e.option %} tr-muted{% endif %}{% if e.is_risky %} tr-yellow{% endif %}">
         <div class="card-body">
             <h5 class="card-title mb-1">
-                <a style="{% if e.organizer.color %}color: #{{ e.organizer.color }};{% endif %}" href="{% url 'event' e.pk %}">
+                <a class="color-org-{{ e.organizer.id }}" href="{% url 'event' e.pk %}">
                     {{ e.name }}
                 </a>
                 {% if e.tender_comments and e in events_tending %}
@@ -165,7 +165,7 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a style="{% if e.organizer.color %}color: #{{ e.organizer.color }};{% endif %}" href="{% url 'event' e.pk %}">
+                    <a class="color-org-{{ e.organizer.id }}" href="{% url 'event' e.pk %}">
                         {{ e.name }}
                     </a>
                     {% if e.tender_comments and e in events_tending %}

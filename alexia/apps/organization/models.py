@@ -127,7 +127,8 @@ class Profile(models.Model):
 class Organization(models.Model):
     name = models.CharField(_('name'), max_length=32, unique=True)
     slug = models.SlugField(_('slug'), editable=False, unique=True)
-    color = models.CharField(verbose_name=_('color'), blank=True, max_length=6, validators=[validate_color])
+    color_light = models.CharField(verbose_name=_('light color (used in dark mode)'), blank=True, max_length=6, validators=[validate_color])
+    color_dark = models.CharField(verbose_name=_('dark color (used in light mode)'), blank=True, max_length=6, validators=[validate_color])
     assigns_tenders = models.BooleanField(_('assigns tenders'), default=False)
     is_active = models.BooleanField(_('is active'), default=True)
     writeoff_enabled = models.BooleanField(_('writeoff enabled'), default=False)
@@ -160,6 +161,11 @@ class Organization(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.__str__())
         super(Organization, self).save(*args, **kwargs)
+
+    @property
+    def color(self):
+        """For compatibility"""
+        return self.color_dark or self.color_light
 
     def age_check_rfid(self, rfid_code: str) -> Optional[bool]:
         """
