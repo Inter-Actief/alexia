@@ -59,9 +59,17 @@
             <div class="text-secondary-emphasis small mb-1">
                 <span class="bi bi-calendar-event me-1" aria-hidden="true"></span>
                 {% if e.starts_at|date == e.ends_at|date %}
-                    {{ e.starts_at|date:"D d b" }}, {{ e.starts_at|time:"TIME_FORMAT" }}&ndash;{{ e.ends_at|time:"TIME_FORMAT" }}
+                    {% if e.starts_at|date:"Y" == current_year %}
+                        {{ e.starts_at|date:"D d b" }}, {{ e.starts_at|time:"TIME_FORMAT" }}&ndash;{{ e.ends_at|time:"TIME_FORMAT" }}
+                    {% else %}
+                        {{ e.starts_at|date:"D d b 'y" }}, {{ e.starts_at|time:"TIME_FORMAT" }}&ndash;{{ e.ends_at|time:"TIME_FORMAT" }}
+                    {% endif %}
                 {% else %}
-                    {{ e.starts_at|date:"D d b" }} {{ e.starts_at|time:"TIME_FORMAT" }} &ndash; {{ e.ends_at|date:"D d b" }} {{ e.ends_at|time:"TIME_FORMAT" }}
+                    {% if e.starts_at|date:"Y" == current_year %}
+                        {{ e.starts_at|date:"D d b" }} {{ e.starts_at|time:"TIME_FORMAT" }} &ndash; {{ e.ends_at|date:"D d b" }} {{ e.ends_at|time:"TIME_FORMAT" }}
+                    {% else %}
+                        {{ e.starts_at|date:"D d b 'y" }} {{ e.starts_at|time:"TIME_FORMAT" }} &ndash; {{ e.ends_at|date:"D d b 'y" }} {{ e.ends_at|time:"TIME_FORMAT" }}
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="text-secondary-emphasis small mb-2">
@@ -144,10 +152,19 @@
             <tr{% if e.option or e.is_risky %} class="{% if e.option %}tr-muted{% endif %}{% if e.is_risky %} tr-yellow {% endif %}"{% endif %}>
                 <td>
                     {% if e.starts_at|date == e.ends_at|date %}
-                        {{ e.starts_at|date:"D d b" }}
+                        {% if e.starts_at|date:"Y" == current_year %}
+                            {{ e.starts_at|date:"D d b" }}
+                        {% else %}
+                            {{ e.starts_at|date:"D d b 'y" }}
+                        {% endif %}
                     {% else %}
-                        {{ e.starts_at|date:"D d b" }}<br />
-                        {{ e.ends_at|date:"D d b" }}
+                        {% if e.starts_at|date:"Y" == current_year %}
+                            {{ e.starts_at|date:"D d b" }}<br />
+                            {{ e.ends_at|date:"D d b" }}
+                        {% else %}
+                            {{ e.starts_at|date:"D d b 'y" }}<br />
+                            {{ e.ends_at|date:"D d b 'y" }}
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td>

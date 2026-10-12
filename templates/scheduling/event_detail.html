@@ -57,11 +57,11 @@
             </tr>
             <tr>
                 <th>{% trans 'Start' %}</th>
-                <td>{{ event.starts_at|date:"l d F H:i" }}</td>
+                <td>{{ event.starts_at|date:"l d F 'y H:i" }}</td>
             </tr>
             <tr>
                 <th>{% trans 'End' %}</th>
-                <td>{{ event.ends_at|date:"l d F H:i" }}</td>
+                <td>{{ event.ends_at|date:"l d F 'y H:i" }}</td>
             </tr>
             {% if event.organizer == request.organization %}{% if is_tender or is_planner or is_manager %}
                 <tr>
