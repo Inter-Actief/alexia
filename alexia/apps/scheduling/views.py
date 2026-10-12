@@ -115,6 +115,8 @@ def event_list_view(request):
 
     bartender_availabilities = {ba['event_id']: ba for ba in bartender_availabilities}
 
+    current_year = str(django_timezone.localdate().year)
+
     return render(request, 'scheduling/event_list.html', locals())
 
 
@@ -233,6 +235,8 @@ class EventDetailView(DetailView):
         context = super(EventDetailView, self).get_context_data(**kwargs)
         if hasattr(self.request.user, 'profile') and self.request.user.profile.is_planner(self.object.organizer):
             context.update(self.get_tender_list())
+
+        context['current_year'] = str(django_timezone.localdate().year)
         return context
 
     def get_tender_list(self):
