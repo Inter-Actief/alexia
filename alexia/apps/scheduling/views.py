@@ -236,7 +236,6 @@ class EventDetailView(DetailView):
         if hasattr(self.request.user, 'profile') and self.request.user.profile.is_planner(self.object.organizer):
             context.update(self.get_tender_list())
 
-        context['current_year'] = str(django_timezone.localdate().year)
         return context
 
     def get_tender_list(self):
