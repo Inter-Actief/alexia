@@ -4,7 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
     "crispy-bootstrap5>=2026.0,<2027.0",
-    "django>=6.1,<6.2",
+    "django>=6.1.1,<6.2",
     "django-compressor>=4.6,<4.7",
     "django-crispy-forms>=2.6,<2.7",
     "django-debug-toolbar>=7,<8",
